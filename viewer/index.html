@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python LLDB Memory Profiler – Viewer</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            padding: 12px 24px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        header h1 { font-size: 18px; font-weight: 600; }
+        #file-input {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            cursor: pointer;
+        }
+        #status { font-size: 13px; color: #8b949e; margin-left: auto; }
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        #viz {
+            flex: 2;
+            position: relative;
+        }
+        #sidebar {
+            flex: 1;
+            min-width: 320px;
+            max-width: 480px;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #sidebar h2 {
+            font-size: 14px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        #stats {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+        #stats table { width: 100%; }
+        #stats td { padding: 2px 0; }
+        #stats td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+        #query-area {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        #query-area textarea {
+            width: 100%;
+            height: 60px;
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+        #query-area button {
+            margin-top: 8px;
+            padding: 6px 16px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        #results {
+            flex: 1;
+            overflow: auto;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-family: "SFMono-Regular", Consolas, monospace;
+        }
+        #results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #results th, #results td {
+            text-align: left;
+            padding: 4px 8px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        #results th { position: sticky; top: 0; background: var(--surface); }
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 14px;
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔬 Python LLDB Memory Profiler</h1>
+        <input type="file" id="file-input" accept=".parquet" />
+        <span id="status">Load a .parquet file to begin</span>
+    </header>
+    <div class="container">
+        <div id="viz">
+            <div class="loading" id="viz-placeholder">3D visualisation will appear here</div>
+            <canvas id="canvas"></canvas>
+        </div>
+        <div id="sidebar">
+            <h2>Summary</h2>
+            <div id="stats"><em>No data loaded</em></div>
+            <div id="query-area">
+                <textarea id="query" placeholder="SELECT event, count(*) as cnt, sum(size) as total_bytes FROM allocations GROUP BY event ORDER BY total_bytes DESC"></textarea>
+                <button id="run-query">Run Query</button>
+            </div>
+            <h2>Query Results</h2>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <!-- DuckDB WASM -->
+    <script src="https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.29.0/dist/duckdb-browser-blocking.js"></script>
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+    (async () => {
+        // ---- DuckDB WASM initialisation ----
+        const DUCKDB_BUNDLES = duckdb.getJsDeliveryBundles();
+        const logger = new duckdb.ConsoleLogger();
+        const worker = false; // use blocking bundle for simplicity
+        const db = new duckdb.DuckDBClient(logger, DUCKDB_BUNDLES);
+        await db.instantiate();
+
+        const statusEl  = document.getElementById("status");
+        const statsEl   = document.getElementById("stats");
+        const resultsEl = document.getElementById("results");
+        const queryEl   = document.getElementById("query");
+
+        let allocationRows = [];  // used for 3-D rendering
+
+        // ---- File loading ----
+        document.getElementById("file-input").addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            statusEl.textContent = "Loading…";
+
+            const buf = await file.arrayBuffer();
+            await db.query("DROP TABLE IF EXISTS allocations");
+            await db.registerFileBuffer(file.name, new Uint8Array(buf));
+            await db.query(`CREATE TABLE allocations AS SELECT * FROM read_parquet('${file.name}')`);
+
+            // Summary stats
+            const summary = await db.query(`
+                SELECT
+                    count(*)                     AS total_events,
+                    count(*) FILTER (event = 'malloc')  AS mallocs,
+                    count(*) FILTER (event = 'free')    AS frees,
+                    count(*) FILTER (event = 'realloc') AS reallocs,
+                    sum(size)                    AS total_bytes,
+                    max(size)                    AS max_alloc,
+                    max(timestamp_ns)            AS duration_ns
+                FROM allocations
+            `);
+            const s = summary.toArray()[0];
+            statsEl.innerHTML = `<table>
+                <tr><td>Total events</td><td>${Number(s.total_events).toLocaleString()}</td></tr>
+                <tr><td>Mallocs</td><td>${Number(s.mallocs).toLocaleString()}</td></tr>
+                <tr><td>Frees</td><td>${Number(s.frees).toLocaleString()}</td></tr>
+                <tr><td>Reallocs</td><td>${Number(s.reallocs).toLocaleString()}</td></tr>
+                <tr><td>Total bytes</td><td>${Number(s.total_bytes).toLocaleString()}</td></tr>
+                <tr><td>Max single alloc</td><td>${Number(s.max_alloc).toLocaleString()} B</td></tr>
+                <tr><td>Duration</td><td>${(Number(s.duration_ns) / 1e9).toFixed(2)} s</td></tr>
+            </table>`;
+
+            // Grab rows for 3-D
+            const vizData = await db.query(`
+                SELECT timestamp_ns, size, event FROM allocations
+                WHERE event IN ('malloc','realloc') AND size > 0
+                ORDER BY timestamp_ns
+                LIMIT 100000
+            `);
+            allocationRows = vizData.toArray();
+            render3D(allocationRows);
+
+            statusEl.textContent = `Loaded ${file.name}`;
+        });
+
+        // ---- Custom query runner ----
+        document.getElementById("run-query").addEventListener("click", async () => {
+            const sql = queryEl.value.trim();
+            if (!sql) return;
+            try {
+                const res = await db.query(sql);
+                const rows = res.toArray();
+                if (rows.length === 0) {
+                    resultsEl.innerHTML = "<em>No results</em>";
+                    return;
+                }
+                const cols = Object.keys(rows[0]);
+                let html = "<table><tr>" + cols.map(c => `<th>${c}</th>`).join("") + "</tr>";
+                for (const row of rows.slice(0, 500)) {
+                    html += "<tr>" + cols.map(c => `<td>${row[c]}</td>`).join("") + "</tr>";
+                }
+                html += "</table>";
+                resultsEl.innerHTML = html;
+            } catch (err) {
+                resultsEl.innerHTML = `<pre style="color:#f85149">${err.message}</pre>`;
+            }
+        });
+
+        // ---- Three.js 3-D Visualisation ----
+        const canvas = document.getElementById("canvas");
+        const vizDiv = document.getElementById("viz");
+
+        let scene, camera, renderer, controls, pointsMesh;
+
+        function initThree() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0d1117);
+
+            camera = new THREE.PerspectiveCamera(60, vizDiv.clientWidth / vizDiv.clientHeight, 0.1, 5000);
+            camera.position.set(0, 50, 150);
+
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            renderer.setSize(vizDiv.clientWidth, vizDiv.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            // Grid helper
+            const grid = new THREE.GridHelper(200, 40, 0x30363d, 0x21262d);
+            scene.add(grid);
+
+            // Axes
+            const axes = new THREE.AxesHelper(100);
+            scene.add(axes);
+
+            window.addEventListener("resize", () => {
+                camera.aspect = vizDiv.clientWidth / vizDiv.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(vizDiv.clientWidth, vizDiv.clientHeight);
+            });
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        function render3D(rows) {
+            document.getElementById("viz-placeholder").style.display = "none";
+            if (!scene) initThree();
+
+            // Remove old points
+            if (pointsMesh) { scene.remove(pointsMesh); pointsMesh.geometry.dispose(); pointsMesh.material.dispose(); }
+
+            if (rows.length === 0) return;
+
+            const positions = new Float32Array(rows.length * 3);
+            const colors    = new Float32Array(rows.length * 3);
+            const sizes     = new Float32Array(rows.length);
+
+            const maxTs   = Number(rows[rows.length - 1].timestamp_ns) || 1;
+            const maxSize = Math.max(...rows.map(r => Number(r.size))) || 1;
+
+            for (let i = 0; i < rows.length; i++) {
+                const ts   = Number(rows[i].timestamp_ns);
+                const sz   = Number(rows[i].size);
+                const ev   = rows[i].event;
+
+                // X = time, Y = size (log), Z = random spread
+                const x = (ts / maxTs) * 200 - 100;
+                const y = Math.log2(sz + 1) * 5;
+                const z = (Math.random() - 0.5) * 40;
+
+                positions[i * 3]     = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+
+                // Color by size: small = blue, large = red
+                const t = sz / maxSize;
+                colors[i * 3]     = t;          // R
+                colors[i * 3 + 1] = 0.3;        // G
+                colors[i * 3 + 2] = 1.0 - t;    // B
+
+                sizes[i] = Math.max(1.0, Math.log2(sz + 1));
+            }
+
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+            geom.setAttribute("color",    new THREE.BufferAttribute(colors, 3));
+            geom.setAttribute("size",     new THREE.BufferAttribute(sizes, 1));
+
+            const mat = new THREE.PointsMaterial({
+                size: 1.5,
+                vertexColors: true,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.7,
+            });
+
+            pointsMesh = new THREE.Points(geom, mat);
+            scene.add(pointsMesh);
+
+            camera.position.set(0, 60, 180);
+            controls.target.set(0, 20, 0);
+            controls.update();
+        }
+    })();
+    </script>
+</body>
+</html>
