@@ -31,12 +31,17 @@ _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def _find_lldb() -> str | None:
-    """Return the path to an ``lldb`` binary, or *None*."""
-    for name in ("lldb-18", "lldb-17", "lldb-16", "lldb"):
-        path = shutil.which(name)
+    """Return the path to an ``lldb`` binary, or *None*.
+
+    Tries versioned names in descending order, then falls back to the
+    unversioned ``lldb``.
+    """
+    # Check common versioned names (descending so we prefer newer)
+    for ver in range(25, 13, -1):
+        path = shutil.which(f"lldb-{ver}")
         if path is not None:
             return path
-    return None
+    return shutil.which("lldb")
 
 
 LLDB = _find_lldb()

@@ -50,6 +50,10 @@ _start_time_ns: int = 0
 # ``lldb_profiler``), so we detect it at import time.
 _MODULE_NAME: str = __name__
 
+# Any reported allocation larger than this is treated as a misread
+# register value and recorded as 0.
+_MAX_REASONABLE_ALLOC_SIZE = 1 << 40  # 1 TiB
+
 # CPython allocation entry points we instrument.
 _ALLOC_FUNCTIONS = [
     # Object domain
@@ -123,7 +127,7 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
             # Clamp to a reasonable range to avoid int64 overflow.
             # Anything larger than 1 TiB is almost certainly a
             # misread register value rather than an actual allocation.
-            size = raw if raw <= (1 << 40) else 0
+            size = raw if raw <= _MAX_REASONABLE_ALLOC_SIZE else 0
 
     address = 0  # we don't have the return value at entry
 
@@ -269,12 +273,9 @@ def __lldb_init_module(debugger, internal_dict):  # noqa: N807
     """Called by LLDB when the script is imported via ``command script import``."""
     global _MODULE_NAME
     # LLDB registers the module using just the filename stem, so discover
-    # the name it actually used.
-    import sys
-    for name, mod in sys.modules.items():
-        if mod is sys.modules[__name__]:
-            _MODULE_NAME = name
-            break
+    # the name it actually used.  ``internal_dict`` is the module's
+    # ``__dict__``, which contains ``__name__``.
+    _MODULE_NAME = internal_dict.get("__name__", __name__)
 
     debugger.HandleCommand(
         f'command script add -f {_MODULE_NAME}._profile_command profile'
