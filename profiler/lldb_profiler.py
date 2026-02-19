@@ -45,6 +45,11 @@ _writer: Optional[ParquetWriter] = None
 _breakpoint_ids: list[int] = []
 _start_time_ns: int = 0
 
+# The module name as seen by LLDB after ``command script import``.
+# LLDB registers the script using just the filename stem (e.g.
+# ``lldb_profiler``), so we detect it at import time.
+_MODULE_NAME: str = __name__
+
 # CPython allocation entry points we instrument.
 _ALLOC_FUNCTIONS = [
     # Object domain
@@ -94,20 +99,31 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
     # First argument is typically the size (for malloc) or ctx pointer
     size = 0
     if event in ("malloc", "realloc"):
-        # For CPython allocators the signature is:
-        #   void *_PyObject_Malloc(void *ctx, size_t nbytes)
-        # The size is the second argument (index 1).
+        # Internal CPython allocators: void *_PyObject_Malloc(void *ctx, size_t nbytes)
+        #   size is 2nd arg (index 1).
+        # Public API: void *PyObject_Malloc(size_t size)
+        #   size is 1st arg (index 0).
         size_val = frame.FindVariable("nbytes")
         if not size_val.IsValid():
-            # Try positional: arg index 1
+            size_val = frame.FindVariable("size")
+        if not size_val.IsValid():
             if frame.GetFunction().IsValid():
                 args = frame.GetVariables(True, False, False, False)
-                if args.GetSize() >= 2:
-                    size_val = args.GetValueAtIndex(1)
+                is_internal = symbol.startswith("_Py")
+                arg_idx = 1 if is_internal and args.GetSize() >= 2 else 0
+                if args.GetSize() > arg_idx:
+                    size_val = args.GetValueAtIndex(arg_idx)
             if not size_val.IsValid():
-                size_val = frame.FindRegister("rsi")  # x86-64 SysV 2nd arg
+                # x86-64 SysV: rdi=1st arg, rsi=2nd arg
+                is_internal = symbol.startswith("_Py")
+                reg = "rsi" if is_internal else "rdi"
+                size_val = frame.FindRegister(reg)
         if size_val.IsValid():
-            size = size_val.GetValueAsUnsigned(0)
+            raw = size_val.GetValueAsUnsigned(0)
+            # Clamp to a reasonable range to avoid int64 overflow.
+            # Anything larger than 1 TiB is almost certainly a
+            # misread register value rather than an actual allocation.
+            size = raw if raw <= (1 << 40) else 0
 
     address = 0  # we don't have the return value at entry
 
@@ -211,13 +227,12 @@ def _start_profiling(debugger, args, result):
         bp.SetAutoContinue(True)
         _breakpoint_ids.append(bp.GetID())
 
-        callback = _on_free if event_kind == "free" else _on_alloc
         # Register the callback via the script bridge.  The function
-        # must be reachable by its qualified module path.
+        # must be reachable by its module name as seen by LLDB.
         cb_name = (
-            "profiler.lldb_profiler._on_free"
+            f"{_MODULE_NAME}._on_free"
             if event_kind == "free"
-            else "profiler.lldb_profiler._on_alloc"
+            else f"{_MODULE_NAME}._on_alloc"
         )
         bp.SetScriptCallbackFunction(cb_name)
 
@@ -252,8 +267,17 @@ def _stop_profiling(debugger, result):
 
 def __lldb_init_module(debugger, internal_dict):  # noqa: N807
     """Called by LLDB when the script is imported via ``command script import``."""
+    global _MODULE_NAME
+    # LLDB registers the module using just the filename stem, so discover
+    # the name it actually used.
+    import sys
+    for name, mod in sys.modules.items():
+        if mod is sys.modules[__name__]:
+            _MODULE_NAME = name
+            break
+
     debugger.HandleCommand(
-        'command script add -f profiler.lldb_profiler._profile_command profile'
+        f'command script add -f {_MODULE_NAME}._profile_command profile'
     )
     print(
         "python_lldb_profiler loaded.  Use 'profile start [output.parquet]' "
