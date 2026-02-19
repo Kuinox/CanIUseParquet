@@ -5,7 +5,7 @@ functions (`_PyObject_Malloc`, `PyMem_Malloc`, etc.), capture Python stack
 traces, allocation sizes, and timestamps, and write the results to an
 Apache Parquet file.  A bundled static web viewer uses
 [DuckDB WASM](https://duckdb.org/docs/api/wasm/overview.html) for
-querying and [Three.js](https://threejs.org/) for 3-D visualisation.
+querying and [Three.js](https://threejs.org/) for 3-D visualization.
 
 ## Quick start
 
