@@ -19,6 +19,7 @@ Environment variable ``PROFILER_OUTPUT`` can also specify the output path.
 from __future__ import annotations
 
 import os
+import platform
 import sys
 import time
 from typing import Optional
@@ -118,13 +119,22 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
                 if args.GetSize() > arg_idx:
                     size_val = args.GetValueAtIndex(arg_idx)
             if not size_val.IsValid():
-                # x86-64 SysV ABI: rdi=1st, rsi=2nd, rdx=3rd arg.
-                # Select register based on function signature.
+                # Register-based fallback when debug info is unavailable.
+                # x86-64 SysV ABI (Linux/macOS): rdi, rsi, rdx, rcx, …
+                # Microsoft x64 ABI (Windows):   rcx, rdx, r8,  r9, …
                 is_internal = symbol.startswith("_Py")
-                if event == "realloc":
-                    reg = "rdx" if is_internal else "rsi"
+                if platform.system() == "Windows":
+                    # Microsoft x64: rcx=1st, rdx=2nd, r8=3rd
+                    if event == "realloc":
+                        reg = "r8" if is_internal else "rdx"
+                    else:
+                        reg = "rdx" if is_internal else "rcx"
                 else:
-                    reg = "rsi" if is_internal else "rdi"
+                    # SysV (Linux/macOS): rdi=1st, rsi=2nd, rdx=3rd
+                    if event == "realloc":
+                        reg = "rdx" if is_internal else "rsi"
+                    else:
+                        reg = "rsi" if is_internal else "rdi"
                 size_val = frame.FindRegister(reg)
         if size_val.IsValid():
             size = size_val.GetValueAsUnsigned(0)
@@ -168,9 +178,14 @@ def _on_free(frame, bp_loc, extra_args, internal_dict):
             if args.GetSize() > arg_idx:
                 ptr_val = args.GetValueAtIndex(arg_idx)
         if not ptr_val.IsValid():
-            # x86-64 SysV ABI register fallback
+            # Register-based fallback when debug info is unavailable.
+            # x86-64 SysV ABI (Linux/macOS): rdi, rsi, rdx, rcx, …
+            # Microsoft x64 ABI (Windows):   rcx, rdx, r8,  r9, …
             is_internal = symbol.startswith("_Py")
-            reg = "rsi" if is_internal else "rdi"
+            if platform.system() == "Windows":
+                reg = "rdx" if is_internal else "rcx"
+            else:
+                reg = "rsi" if is_internal else "rdi"
             ptr_val = frame.FindRegister(reg)
     if ptr_val.IsValid():
         address = ptr_val.GetValueAsUnsigned(0)

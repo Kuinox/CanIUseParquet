@@ -16,7 +16,13 @@ querying and [Three.js](https://threejs.org/) for 3-D visualization.
 
   # macOS (ships with Xcode command-line tools)
   xcode-select --install
+
+  # Windows — install via the LLVM installer or winget
+  winget install LLVM.LLVM
   ```
+
+  On Windows, make sure the LLVM `bin` directory (e.g.
+  `C:\Program Files\LLVM\bin`) is on your `PATH`.
 
 - **Python 3.9+** — a standard CPython build with exported allocation symbols.
 
@@ -54,6 +60,7 @@ You can run everything in a single command without entering the LLDB
 shell:
 
 ```bash
+# Linux / macOS
 lldb --batch \
   -o "target create python" \
   -o "command script import profiler/lldb_profiler.py" \
@@ -62,13 +69,39 @@ lldb --batch \
   -o "profile stop"
 ```
 
+```powershell
+# Windows (PowerShell)
+lldb --batch `
+  -o "target create python" `
+  -o "command script import profiler/lldb_profiler.py" `
+  -o "profile start output.parquet" `
+  -o "run my_script.py" `
+  -o "profile stop"
+```
+
+```cmd
+rem Windows (Command Prompt)
+lldb --batch -o "target create python" -o "command script import profiler/lldb_profiler.py" -o "profile start output.parquet" -o "run my_script.py" -o "profile stop"
+```
+
 ### Environment variable
 
 Instead of passing the output path to `profile start`, you can set
 `PROFILER_OUTPUT`:
 
 ```bash
+# Linux / macOS
 export PROFILER_OUTPUT=output.parquet
+```
+
+```powershell
+# Windows (PowerShell)
+$env:PROFILER_OUTPUT = "output.parquet"
+```
+
+```cmd
+rem Windows (Command Prompt)
+set PROFILER_OUTPUT=output.parquet
 ```
 
 Then just run `profile start` (without arguments) inside LLDB.
