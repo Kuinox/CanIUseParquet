@@ -50,10 +50,6 @@ _start_time_ns: int = 0
 # ``lldb_profiler``), so we detect it at import time.
 _MODULE_NAME: str = __name__
 
-# Any reported allocation larger than this is treated as a misread
-# register value and recorded as 0.
-_MAX_REASONABLE_ALLOC_SIZE = 1 << 40  # 1 TiB
-
 # CPython allocation entry points we instrument.
 _ALLOC_FUNCTIONS = [
     # Object domain
@@ -111,23 +107,30 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
         if not size_val.IsValid():
             size_val = frame.FindVariable("size")
         if not size_val.IsValid():
+            size_val = frame.FindVariable("new_size")
+        if not size_val.IsValid():
             if frame.GetFunction().IsValid():
                 args = frame.GetVariables(True, False, False, False)
                 is_internal = symbol.startswith("_Py")
-                arg_idx = 1 if is_internal and args.GetSize() >= 2 else 0
+                if event == "realloc":
+                    # Realloc: void *PyObject_Realloc(void *p, size_t size)
+                    #          void *_PyObject_Realloc(void *ctx, void *p, size_t nbytes)
+                    arg_idx = 2 if is_internal and args.GetSize() >= 3 else 1
+                else:
+                    arg_idx = 1 if is_internal and args.GetSize() >= 2 else 0
                 if args.GetSize() > arg_idx:
                     size_val = args.GetValueAtIndex(arg_idx)
             if not size_val.IsValid():
-                # x86-64 SysV: rdi=1st arg, rsi=2nd arg
+                # x86-64 SysV ABI: rdi=1st, rsi=2nd, rdx=3rd arg.
+                # Select register based on function signature.
                 is_internal = symbol.startswith("_Py")
-                reg = "rsi" if is_internal else "rdi"
+                if event == "realloc":
+                    reg = "rdx" if is_internal else "rsi"
+                else:
+                    reg = "rsi" if is_internal else "rdi"
                 size_val = frame.FindRegister(reg)
         if size_val.IsValid():
-            raw = size_val.GetValueAsUnsigned(0)
-            # Clamp to a reasonable range to avoid int64 overflow.
-            # Anything larger than 1 TiB is almost certainly a
-            # misread register value rather than an actual allocation.
-            size = raw if raw <= _MAX_REASONABLE_ALLOC_SIZE else 0
+            size = size_val.GetValueAsUnsigned(0)
 
     address = 0  # we don't have the return value at entry
 
@@ -152,15 +155,26 @@ def _on_free(frame, bp_loc, extra_args, internal_dict):
     if _writer is None:
         return False
 
+    symbol = frame.GetFunctionName() or ""
+
     address = 0
     ptr_val = frame.FindVariable("p")
     if not ptr_val.IsValid():
+        ptr_val = frame.FindVariable("ptr")
+    if not ptr_val.IsValid():
         if frame.GetFunction().IsValid():
             args = frame.GetVariables(True, False, False, False)
-            if args.GetSize() >= 2:
-                ptr_val = args.GetValueAtIndex(1)
+            is_internal = symbol.startswith("_Py")
+            # Internal: void _PyObject_Free(void *ctx, void *p) → p is arg 1
+            # Public:   void PyObject_Free(void *p) → p is arg 0
+            arg_idx = 1 if is_internal and args.GetSize() >= 2 else 0
+            if args.GetSize() > arg_idx:
+                ptr_val = args.GetValueAtIndex(arg_idx)
         if not ptr_val.IsValid():
-            ptr_val = frame.FindRegister("rsi")
+            # x86-64 SysV ABI register fallback
+            is_internal = symbol.startswith("_Py")
+            reg = "rsi" if is_internal else "rdi"
+            ptr_val = frame.FindRegister(reg)
     if ptr_val.IsValid():
         address = ptr_val.GetValueAsUnsigned(0)
 

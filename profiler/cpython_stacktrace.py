@@ -16,7 +16,7 @@ from typing import List, Optional
 
 # ``lldb`` is provided by the LLDB runtime when the script is loaded
 # via ``command script import``.  We import it conditionally so that
-# tooling (linters, tests with mocks) does not fail.
+# linters do not fail when run outside LLDB.
 try:
     import lldb  # type: ignore[import-not-found]
 except ImportError:
