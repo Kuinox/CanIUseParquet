@@ -50,9 +50,11 @@ class ParquetWriter:
         self._flush_every = flush_every
         self._records: List[AllocationRecord] = []
         self._writer: Optional[pq.ParquetWriter] = None
+        self._total_records: int = 0
 
     def add(self, record: AllocationRecord) -> None:
         self._records.append(record)
+        self._total_records += 1
         if len(self._records) >= self._flush_every:
             self.flush()
 

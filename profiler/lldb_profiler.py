@@ -286,8 +286,11 @@ def _stop_profiling(debugger, result):
 
     _writer.close()
     path = _writer._path
+    total = _writer._total_records
     _writer = None
-    result.AppendMessage(f"Profiling stopped.  Data written to {path}")
+    result.AppendMessage(
+        f"Profiling stopped.  {total} allocations recorded.  Data written to {path}"
+    )
 
 
 # ---------------------------------------------------------------------------
