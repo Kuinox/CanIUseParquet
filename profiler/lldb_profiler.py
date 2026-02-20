@@ -29,10 +29,7 @@ _PACKAGE_DIR = os.path.dirname(_HERE)
 if _PACKAGE_DIR not in sys.path:
     sys.path.insert(0, _PACKAGE_DIR)
 
-try:
-    import lldb  # type: ignore[import-not-found]
-except ImportError:
-    lldb = None  # type: ignore[assignment]
+import lldb  # type: ignore[import-not-found]
 
 from profiler.cpython_stacktrace import PythonFrame, get_python_stacktrace
 from profiler.parquet_writer import AllocationRecord, ParquetWriter

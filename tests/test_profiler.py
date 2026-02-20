@@ -1,4 +1,4 @@
-"""Tests for the Parquet writer and stack trace data structures."""
+"""Tests for the Parquet writer and data structures."""
 
 import os
 import tempfile
@@ -7,7 +7,6 @@ import pyarrow.parquet as pq
 import pytest
 
 from profiler.parquet_writer import AllocationRecord, ParquetWriter, SCHEMA
-from profiler.cpython_stacktrace import PythonFrame
 
 
 class TestAllocationRecord:
@@ -83,11 +82,3 @@ class TestParquetWriter:
         table = pq.read_table(path)
         assert table.num_rows == 3
         assert table.column("event").to_pylist() == ["malloc", "realloc", "free"]
-
-
-class TestPythonFrame:
-    def test_fields(self):
-        frame = PythonFrame(filename="test.py", function="main", lineno=42)
-        assert frame.filename == "test.py"
-        assert frame.function == "main"
-        assert frame.lineno == 42

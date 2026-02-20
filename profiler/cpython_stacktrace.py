@@ -14,13 +14,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
-# ``lldb`` is provided by the LLDB runtime when the script is loaded
-# via ``command script import``.  We import it conditionally so that
-# linters do not fail when run outside LLDB.
-try:
-    import lldb  # type: ignore[import-not-found]
-except ImportError:
-    lldb = None  # type: ignore[assignment]
+import lldb  # type: ignore[import-not-found]
 
 
 @dataclass
