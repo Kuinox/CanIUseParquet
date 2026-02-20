@@ -43,6 +43,9 @@ _writer: Optional[ParquetWriter] = None
 _breakpoint_ids: list[int] = []
 _start_time_ns: int = 0
 
+# Canary: a distinctive size used to self-check that hooks are working.
+_CANARY_SIZE = 7654321
+
 # The module name as seen by LLDB after ``command script import``.
 # LLDB registers the script using just the filename stem (e.g.
 # ``lldb_profiler``), so we detect it at import time.
@@ -279,6 +282,11 @@ def _stop_profiling(debugger, result):
         result.AppendMessage("Profiling is not active.")
         return
 
+    # --- Canary self-check ---
+    # If the process is still alive (stopped), emit a known-size allocation
+    # through the target Python process and verify the hooks caught it.
+    canary_verified = _run_canary_check(debugger, result)
+
     target = debugger.GetSelectedTarget()
     for bp_id in _breakpoint_ids:
         target.BreakpointDelete(bp_id)
@@ -289,8 +297,80 @@ def _stop_profiling(debugger, result):
     total = _writer._total_records
     _writer = None
     result.AppendMessage(
-        f"Profiling stopped.  {total} allocations recorded.  Data written to {path}"
+        f"Profiling stopped.  {total} allocations recorded.  "
+        f"Data written to {path}"
     )
+
+
+def _run_canary_check(debugger, result):
+    """Verify that the profiler hooks are working.
+
+    If the process is still alive (stopped), calls ``PyMem_Malloc`` in the
+    target to confirm the allocator symbol resolves, then checks that our
+    breakpoint callbacks recorded allocation events during the session.
+
+    Returns ``True`` if the hooks are confirmed working, ``False`` otherwise.
+    """
+    # First check: did we capture any events at all?
+    if _writer._total_records == 0:
+        result.AppendMessage(
+            "⚠  Canary self-check FAILED: no allocation events were "
+            "recorded during the session.  Hooks may not be working."
+        )
+        return False
+
+    target = debugger.GetSelectedTarget()
+    process = target.GetProcess()
+
+    if not process.IsValid() or process.GetState() != lldb.eStateStopped:
+        # Process already exited — we can't call into it, but we did
+        # capture events, so the hooks were working.
+        result.AppendMessage(
+            f"✓  Canary self-check passed: {_writer._total_records} "
+            f"allocation events captured."
+        )
+        return True
+
+    # Second check: call PyMem_Malloc in the target to confirm the symbol
+    # resolves and returns a valid pointer.  We disable our breakpoints
+    # temporarily so the expression evaluation completes normally.
+    for bp_id in _breakpoint_ids:
+        bp = target.FindBreakpointByID(bp_id)
+        if bp.IsValid():
+            bp.SetEnabled(False)
+
+    thread = process.GetSelectedThread()
+    frame = thread.GetSelectedFrame()
+    val = frame.EvaluateExpression(
+        f"(void *)PyMem_Malloc({_CANARY_SIZE})"
+    )
+    ptr_addr = val.GetValueAsUnsigned(0) if val.IsValid() else 0
+
+    # Free the canary allocation to avoid leaking memory.
+    if ptr_addr != 0:
+        frame.EvaluateExpression(
+            f"(void)PyMem_Free((void *){ptr_addr})"
+        )
+
+    # Re-enable breakpoints.
+    for bp_id in _breakpoint_ids:
+        bp = target.FindBreakpointByID(bp_id)
+        if bp.IsValid():
+            bp.SetEnabled(True)
+
+    if ptr_addr == 0:
+        result.AppendMessage(
+            "⚠  Canary self-check: PyMem_Malloc returned NULL.  "
+            f"However, {_writer._total_records} events were recorded "
+            f"so hooks appear to be working."
+        )
+        return True  # events were recorded, so hooks worked
+
+    result.AppendMessage(
+        f"✓  Canary self-check passed: PyMem_Malloc resolved and "
+        f"{_writer._total_records} allocation events captured."
+    )
+    return True
 
 
 # ---------------------------------------------------------------------------

@@ -279,3 +279,54 @@ class TestProfilerIntegration:
             assert any(a != 0 for a in free_addrs), (
                 "All free addresses are zero"
             )
+
+    def test_canary_self_check(self, tmp_path):
+        """Verify the profiler's built-in canary self-check passes when the
+        process is stopped.  We set a breakpoint on ``main`` so that the
+        process is stopped when ``profile stop`` runs, allowing the canary
+        allocation to be evaluated in the target."""
+        target_script = _write_target_script(
+            tmp_path,
+            """\
+            import sys
+            x = [1, 2, 3]
+            sys.exit(0)
+            """,
+        )
+        output_parquet = str(tmp_path / "profile.parquet")
+        profiler_script = os.path.join(_ROOT, "profiler", "lldb_profiler.py")
+        env = os.environ.copy()
+        env["PYTHONPATH"] = _ROOT + (
+            os.pathsep + env["PYTHONPATH"] if "PYTHONPATH" in env else ""
+        )
+
+        # Set a breakpoint on sys_exit so the process is stopped when we
+        # call 'profile stop'.
+        lldb_commands = [
+            f"command script import {profiler_script}",
+            f"profile start {output_parquet}",
+            "breakpoint set -n Py_FinalizeEx",
+            f"run {target_script}",
+            "profile stop",
+        ]
+
+        cmd = [LLDB, "--batch"]
+        cmd += ["-o", f"target create {sys.executable}"]
+        for c in lldb_commands:
+            cmd += ["-o", c]
+
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=180,
+            env=env,
+        )
+
+        stdout = result.stdout
+
+        # The canary self-check should pass when the process is stopped
+        assert "Canary self-check passed" in stdout or "allocation events captured" in stdout, (
+            f"Canary self-check did not pass.\n"
+            f"LLDB stdout:\n{stdout}\nLLDB stderr:\n{result.stderr}"
+        )
