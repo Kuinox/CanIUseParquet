@@ -204,6 +204,54 @@ class TestProfilerIntegration:
                 f"{timestamps[i - 1]} > {timestamps[i]}"
             )
 
+    def test_canary_allocation_is_captured(self, tmp_path):
+        """Emit a known-size allocation (canary) via ``PyMem_Malloc`` and
+        verify the profiler catches it.  This proves the hooks are
+        actually intercepting CPython allocations."""
+        canary_size = 12345
+        target = _write_target_script(
+            tmp_path,
+            f"""\
+            import ctypes
+            import sys
+
+            # Call PyMem_Malloc directly — this goes through our hooked function
+            pymem_malloc = ctypes.pythonapi.PyMem_Malloc
+            pymem_malloc.restype = ctypes.c_void_p
+            pymem_malloc.argtypes = [ctypes.c_size_t]
+
+            pymem_free = ctypes.pythonapi.PyMem_Free
+            pymem_free.restype = None
+            pymem_free.argtypes = [ctypes.c_void_p]
+
+            ptr = pymem_malloc({canary_size})
+            pymem_free(ptr)
+            sys.exit(0)
+            """,
+        )
+
+        output, stdout, stderr = _run_profiler(tmp_path, target)
+        assert os.path.exists(output), (
+            f"Parquet output file was not created.\n"
+            f"LLDB stdout:\n{stdout}\nLLDB stderr:\n{stderr}"
+        )
+
+        table = pq.read_table(output)
+        events = table.column("event").to_pylist()
+        sizes = table.column("size").to_pylist()
+
+        # The exact canary size must appear as a malloc event
+        canary_found = any(
+            e == "malloc" and s == canary_size
+            for e, s in zip(events, sizes)
+        )
+        assert canary_found, (
+            f"Canary allocation of {canary_size} bytes was not captured.\n"
+            f"Total malloc events: {events.count('malloc')}\n"
+            f"Unique malloc sizes (first 30): "
+            f"{sorted(set(s for e, s in zip(events, sizes) if e == 'malloc'))[:30]}"
+        )
+
     def test_free_events_have_address(self, tmp_path):
         """Free events should record a non-zero pointer address."""
         target = _write_target_script(
