@@ -42,6 +42,7 @@ from profiler.parquet_writer import AllocationRecord, ParquetWriter
 _writer: Optional[ParquetWriter] = None
 _breakpoint_ids: list[int] = []
 _start_time_ns: int = 0
+_canary_done: bool = False
 
 # Canary: a distinctive size used to self-check that hooks are working.
 _CANARY_SIZE = 7654321
@@ -79,6 +80,54 @@ def _format_stacktrace(frames: list[PythonFrame]) -> str:
     return "\n".join(lines)
 
 
+def _maybe_run_canary(frame):
+    """Run the canary self-check on the first breakpoint hit.
+
+    Temporarily disables all profiler breakpoints, calls
+    ``PyMem_Malloc(CANARY_SIZE)`` in the target process, checks the
+    return value, frees it, then re-enables breakpoints.  Because
+    breakpoints are disabled during the call the canary allocation
+    does not appear in the final trace.
+    """
+    global _canary_done
+    if _canary_done:
+        return
+    _canary_done = True
+
+    target = frame.GetThread().GetProcess().GetTarget()
+
+    # Disable profiler breakpoints so the canary is not recorded.
+    for bp_id in _breakpoint_ids:
+        bp = target.FindBreakpointByID(bp_id)
+        if bp.IsValid():
+            bp.SetEnabled(False)
+
+    val = frame.EvaluateExpression(
+        f"(void *)PyMem_Malloc({_CANARY_SIZE})"
+    )
+    ptr_addr = val.GetValueAsUnsigned(0) if val.IsValid() else 0
+
+    if ptr_addr != 0:
+        frame.EvaluateExpression(
+            f"(void)PyMem_Free((void *){ptr_addr})"
+        )
+        print(
+            f"✓  Canary self-check passed: PyMem_Malloc({_CANARY_SIZE}) "
+            f"returned {ptr_addr:#x} — hooks are working."
+        )
+    else:
+        print(
+            f"⚠  Canary self-check: PyMem_Malloc({_CANARY_SIZE}) "
+            f"returned NULL — allocator may not be available."
+        )
+
+    # Re-enable profiler breakpoints.
+    for bp_id in _breakpoint_ids:
+        bp = target.FindBreakpointByID(bp_id)
+        if bp.IsValid():
+            bp.SetEnabled(True)
+
+
 # ---------------------------------------------------------------------------
 # Breakpoint callbacks
 # ---------------------------------------------------------------------------
@@ -89,6 +138,8 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
     global _writer, _start_time_ns
     if _writer is None:
         return False  # auto-continue
+
+    _maybe_run_canary(frame)
 
     event = "malloc"
     symbol = frame.GetFunctionName() or ""
@@ -165,6 +216,8 @@ def _on_free(frame, bp_loc, extra_args, internal_dict):
     if _writer is None:
         return False
 
+    _maybe_run_canary(frame)
+
     symbol = frame.GetFunctionName() or ""
 
     address = 0
@@ -232,7 +285,7 @@ def _profile_command(debugger, command, exe_ctx, result, internal_dict):
 
 
 def _start_profiling(debugger, args, result):
-    global _writer, _breakpoint_ids, _start_time_ns
+    global _writer, _breakpoint_ids, _start_time_ns, _canary_done
 
     if _writer is not None:
         result.AppendMessage("Profiling is already active.  Use 'profile stop' first.")
@@ -252,6 +305,7 @@ def _start_profiling(debugger, args, result):
     _writer = ParquetWriter(output_path)
     _start_time_ns = time.time_ns()
     _breakpoint_ids.clear()
+    _canary_done = False
 
     for func_name, event_kind in _ALLOC_FUNCTIONS:
         bp = target.BreakpointCreateByName(func_name)
@@ -276,16 +330,11 @@ def _start_profiling(debugger, args, result):
 
 
 def _stop_profiling(debugger, result):
-    global _writer, _breakpoint_ids
+    global _writer, _breakpoint_ids, _canary_done
 
     if _writer is None:
         result.AppendMessage("Profiling is not active.")
         return
-
-    # --- Canary self-check ---
-    # If the process is still alive (stopped), emit a known-size allocation
-    # through the target Python process and verify the hooks caught it.
-    canary_verified = _run_canary_check(debugger, result)
 
     target = debugger.GetSelectedTarget()
     for bp_id in _breakpoint_ids:
@@ -296,81 +345,11 @@ def _stop_profiling(debugger, result):
     path = _writer._path
     total = _writer._total_records
     _writer = None
+    _canary_done = False
     result.AppendMessage(
         f"Profiling stopped.  {total} allocations recorded.  "
         f"Data written to {path}"
     )
-
-
-def _run_canary_check(debugger, result):
-    """Verify that the profiler hooks are working.
-
-    If the process is still alive (stopped), calls ``PyMem_Malloc`` in the
-    target to confirm the allocator symbol resolves, then checks that our
-    breakpoint callbacks recorded allocation events during the session.
-
-    Returns ``True`` if the hooks are confirmed working, ``False`` otherwise.
-    """
-    # First check: did we capture any events at all?
-    if _writer._total_records == 0:
-        result.AppendMessage(
-            "⚠  Canary self-check FAILED: no allocation events were "
-            "recorded during the session.  Hooks may not be working."
-        )
-        return False
-
-    target = debugger.GetSelectedTarget()
-    process = target.GetProcess()
-
-    if not process.IsValid() or process.GetState() != lldb.eStateStopped:
-        # Process already exited — we can't call into it, but we did
-        # capture events, so the hooks were working.
-        result.AppendMessage(
-            f"✓  Canary self-check passed: {_writer._total_records} "
-            f"allocation events captured."
-        )
-        return True
-
-    # Second check: call PyMem_Malloc in the target to confirm the symbol
-    # resolves and returns a valid pointer.  We disable our breakpoints
-    # temporarily so the expression evaluation completes normally.
-    for bp_id in _breakpoint_ids:
-        bp = target.FindBreakpointByID(bp_id)
-        if bp.IsValid():
-            bp.SetEnabled(False)
-
-    thread = process.GetSelectedThread()
-    frame = thread.GetSelectedFrame()
-    val = frame.EvaluateExpression(
-        f"(void *)PyMem_Malloc({_CANARY_SIZE})"
-    )
-    ptr_addr = val.GetValueAsUnsigned(0) if val.IsValid() else 0
-
-    # Free the canary allocation to avoid leaking memory.
-    if ptr_addr != 0:
-        frame.EvaluateExpression(
-            f"(void)PyMem_Free((void *){ptr_addr})"
-        )
-
-    # Re-enable breakpoints.
-    for bp_id in _breakpoint_ids:
-        bp = target.FindBreakpointByID(bp_id)
-        if bp.IsValid():
-            bp.SetEnabled(True)
-
-    if ptr_addr == 0:
-        result.AppendMessage(
-            "⚠  Canary self-check: PyMem_Malloc returned NULL.  "
-            f"However, {_writer._total_records} events were recorded "
-            f"so hooks appear to be working."
-        )
-        return True  # events were recorded, so hooks worked
-
-    result.AppendMessage(
-        f"✓  Canary self-check passed: PyMem_Malloc resolved and "
-        f"{_writer._total_records} allocation events captured."
-    )
-    return True
 
 
 # ---------------------------------------------------------------------------
