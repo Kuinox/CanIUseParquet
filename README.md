@@ -118,6 +118,30 @@ Each allocation event is recorded as a row in the Parquet file:
 | `address`           | `uint64` | Pointer address (for `free` events)      |
 | `python_stacktrace` | `string` | Python-level call stack at time of event |
 
+## Sample output
+
+The profiler was run against a sample script that exercises various
+allocation patterns (list comprehensions, string concatenation, nested
+data structures, bytearray allocation/deletion):
+
+![Sample profiler output](docs/sample_output.png)
+
+**Summary** for the sample run:
+
+| Metric                | Value              |
+|-----------------------|--------------------|
+| Total events          | 70,845             |
+| Malloc events         | 34,704 (49.0%)     |
+| Free events           | 34,889 (49.2%)     |
+| Realloc events        | 1,252 (1.8%)       |
+| Total bytes allocated | 4.1 MB             |
+| Largest allocation    | 73,123 bytes       |
+| Size range            | 1 – 73,123 bytes   |
+
+Most allocations (62.6%) are small (1–64 bytes), consistent with
+CPython's frequent creation of small objects like ints, strings, and
+tuple headers.
+
 ## Analysing the trace
 
 Open `viewer/index.html` in a browser and load the `.parquet` file.
