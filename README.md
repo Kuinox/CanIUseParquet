@@ -7,52 +7,119 @@ Apache Parquet file.  A bundled static web viewer uses
 [DuckDB WASM](https://duckdb.org/docs/api/wasm/overview.html) for
 querying and [Three.js](https://threejs.org/) for 3-D visualization.
 
-## Quick start
+## Prerequisites
 
-### 1. Install dependencies
+- **LLDB** (version 14 or later) — install via your system package manager:
+  ```bash
+  # Ubuntu / Debian
+  sudo apt install lldb
+
+  # macOS (ships with Xcode command-line tools)
+  xcode-select --install
+  ```
+
+- **Python 3.9+** — a standard CPython build with exported allocation symbols.
+
+- **PyArrow** — required by the profiler to write Parquet files:
+  ```bash
+  pip install pyarrow
+  ```
+
+## Usage
+
+### Interactive mode
+
+1. Start LLDB with your Python binary:
+   ```bash
+   lldb python
+   ```
+
+2. Inside the LLDB session, load the profiler plugin and start profiling:
+   ```
+   (lldb) command script import profiler/lldb_profiler.py
+   (lldb) profile start output.parquet
+   (lldb) run my_script.py
+   ```
+
+3. Once the program finishes (or you interrupt it), stop profiling:
+   ```
+   (lldb) profile stop
+   ```
+
+   The trace is written to `output.parquet`.
+
+### Batch mode (non-interactive)
+
+You can run everything in a single command without entering the LLDB
+shell:
 
 ```bash
-pip install pyarrow
+lldb --batch \
+  -o "target create python" \
+  -o "command script import profiler/lldb_profiler.py" \
+  -o "profile start output.parquet" \
+  -o "run my_script.py" \
+  -o "profile stop"
 ```
 
-### 2. Profile a Python program
+### Environment variable
 
-Start LLDB with your Python binary and the target script:
+Instead of passing the output path to `profile start`, you can set
+`PROFILER_OUTPUT`:
 
 ```bash
-lldb -- python my_script.py
+export PROFILER_OUTPUT=output.parquet
 ```
 
-Inside the LLDB session, load the profiler and start tracing:
+Then just run `profile start` (without arguments) inside LLDB.
 
-```
-(lldb) command script import profiler/lldb_profiler.py
-(lldb) profile start output.parquet
-(lldb) run
-# … let the program execute …
-(lldb) profile stop
-```
+## Output schema
 
-The profiler sets breakpoints on CPython's internal allocation functions.
-Each hit records:
+Each allocation event is recorded as a row in the Parquet file:
 
-| Field               | Description                                 |
-|---------------------|---------------------------------------------|
-| `timestamp_ns`      | Nanoseconds since profiling started         |
-| `event`             | `malloc`, `realloc`, or `free`              |
-| `size`              | Requested allocation size in bytes          |
-| `address`           | Pointer address (for `free` events)         |
-| `python_stacktrace` | Python-level call stack at time of event    |
+| Field               | Type     | Description                              |
+|---------------------|----------|------------------------------------------|
+| `timestamp_ns`      | `int64`  | Nanoseconds since profiling started      |
+| `event`             | `string` | `malloc`, `realloc`, or `free`           |
+| `size`              | `int64`  | Requested allocation size in bytes       |
+| `address`           | `uint64` | Pointer address (for `free` events)      |
+| `python_stacktrace` | `string` | Python-level call stack at time of event |
 
-### 3. Analyse the trace
+## Analysing the trace
 
 Open `viewer/index.html` in a browser and load the `.parquet` file.
 The viewer provides:
 
-* **Summary statistics** – total events, bytes allocated, duration.
-* **SQL query console** – run arbitrary DuckDB SQL against the data.
-* **3-D scatter plot** – allocations plotted over time (X) vs size (Y)
+* **Summary statistics** — total events, bytes allocated, duration.
+* **SQL query console** — run arbitrary DuckDB SQL against the data.
+* **3-D scatter plot** — allocations plotted over time (X) vs size (Y)
   with colour coding (blue → small, red → large).
+
+You can also query the Parquet file directly with any tool that reads
+Parquet (pandas, DuckDB CLI, etc.):
+
+```python
+import pyarrow.parquet as pq
+
+table = pq.read_table("output.parquet")
+print(table.to_pandas().head())
+```
+
+## Running the tests
+
+Install dev dependencies and run with pytest:
+
+```bash
+pip install pyarrow pytest
+python -m pytest tests/ -v
+```
+
+- **Unit tests** (`tests/test_profiler.py`) — test ParquetWriter and data
+  structures. No LLDB required.
+- **Integration tests** (`tests/test_integration.py`) — run the full
+  profiler end-to-end via `lldb --batch` against a live CPython process.
+  These require LLDB to be installed and are skipped automatically if it
+  is not available.
 
 ## Project structure
 
@@ -64,6 +131,9 @@ profiler/
   parquet_writer.py        # buffered Parquet writer
 viewer/
   index.html               # static web viewer (DuckDB WASM + Three.js)
+tests/
+  test_profiler.py         # unit tests (ParquetWriter, AllocationRecord)
+  test_integration.py      # integration tests (real LLDB + CPython)
 pyproject.toml             # packaging metadata
 ```
 
