@@ -15,6 +15,7 @@ breakpoints, so the tests use a minimal target and a generous timeout.
 from __future__ import annotations
 
 import os
+import site
 import shutil
 import subprocess
 import sys
@@ -34,20 +35,37 @@ def _find_lldb() -> str | None:
     """Return the path to an ``lldb`` binary, or *None*.
 
     Tries versioned names in descending order, then falls back to the
-    unversioned ``lldb``.
+    unversioned ``lldb``.  Also verifies the binary is functional by
+    running ``lldb --version``.
     """
-    # Check common versioned names (descending so we prefer newer)
+    candidates: list[str] = []
     for ver in range(25, 13, -1):
         path = shutil.which(f"lldb-{ver}")
         if path is not None:
-            return path
-    return shutil.which("lldb")
+            candidates.append(path)
+    plain = shutil.which("lldb")
+    if plain is not None:
+        candidates.append(plain)
+
+    for path in candidates:
+        try:
+            r = subprocess.run(
+                [path, "--version"],
+                capture_output=True,
+                text=True,
+                timeout=10,
+            )
+            if r.returncode == 0:
+                return path
+        except (OSError, subprocess.TimeoutExpired):
+            continue
+    return None
 
 
 LLDB = _find_lldb()
 
 requires_lldb = pytest.mark.skipif(
-    LLDB is None, reason="lldb not found on this system"
+    LLDB is None, reason="lldb not found or not functional on this system"
 )
 
 
@@ -72,10 +90,20 @@ def _run_profiler(
     output_parquet = str(tmp_path / output_name)
     profiler_script = os.path.join(_ROOT, "profiler", "lldb_profiler.py")
 
-    # We need to set PYTHONPATH so that the ``profiler`` package is importable
+    # We need to set PYTHONPATH so that the ``profiler`` package and its
+    # dependencies (e.g. pyarrow) are importable inside LLDB's Python,
+    # which may be different from the test-runner's Python.
     env = os.environ.copy()
-    env["PYTHONPATH"] = _ROOT + (
-        os.pathsep + env["PYTHONPATH"] if "PYTHONPATH" in env else ""
+    extra_paths = [_ROOT]
+    for sp in site.getsitepackages():
+        if os.path.isdir(sp):
+            extra_paths.append(sp)
+    user_sp = site.getusersitepackages()
+    if isinstance(user_sp, str) and os.path.isdir(user_sp):
+        extra_paths.append(user_sp)
+    existing = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = os.pathsep.join(extra_paths) + (
+        os.pathsep + existing if existing else ""
     )
 
     # Build the LLDB commands.
