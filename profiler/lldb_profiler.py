@@ -42,10 +42,8 @@ from profiler.parquet_writer import AllocationRecord, ParquetWriter
 _writer: Optional[ParquetWriter] = None
 _breakpoint_ids: list[int] = []
 _start_time_ns: int = 0
-_canary_done: bool = False
-
-# Canary: a distinctive size used to self-check that hooks are working.
-_CANARY_SIZE = 7654321
+_canary_in_progress: bool = False
+_canary_hit_count: int = 0
 
 # The module name as seen by LLDB after ``command script import``.
 # LLDB registers the script using just the filename stem (e.g.
@@ -80,83 +78,89 @@ def _format_stacktrace(frames: list[PythonFrame]) -> str:
     return "\n".join(lines)
 
 
-def _try_eval_canary(frame):
-    """Try to call ``PyMem_Malloc`` via expression evaluation.
+def _run_canary(debugger, target, result):
+    """Launch a canary Python script to verify hooks are working.
 
-    Returns the pointer address (non-zero on success), or 0.
-    Tries several expression variants to handle different platforms.
+    Runs a tiny script (``python -c "x=[0]*100"``) that triggers CPython
+    allocations.  During the canary, breakpoint auto-continue is disabled
+    and callbacks return True (stop) so we can stop after just a few hits
+    instead of processing every allocation.  This keeps the canary fast
+    (seconds, not minutes).  The canary data never enters the final trace.
     """
-    # Try different expression syntaxes — LLDB on Windows may need
-    # explicit prototypes or different casting.
-    expressions = [
-        f"(void *)PyMem_Malloc((size_t){_CANARY_SIZE})",
-        f"(void *)PyMem_Malloc({_CANARY_SIZE})",
-        f"((void *(*)(unsigned long long))PyMem_Malloc)({_CANARY_SIZE})",
-    ]
-    for expr in expressions:
-        val = frame.EvaluateExpression(expr)
-        if val.IsValid() and not val.GetError().Fail():
-            addr = val.GetValueAsUnsigned(0)
-            if addr != 0:
-                return addr
-    return 0
+    global _canary_in_progress, _canary_hit_count, _start_time_ns
 
+    _canary_in_progress = True
+    _canary_hit_count = 0
 
-def _maybe_run_canary(frame):
-    """Run the canary self-check on the first breakpoint hit.
+    was_async = debugger.GetAsync()
+    debugger.SetAsync(False)
 
-    Verifies hooks are working.  The fact that this callback runs at all
-    means a breakpoint on an allocation function was hit — this is
-    already strong evidence the hooks are working.  Additionally, we try
-    to call ``PyMem_Malloc(CANARY_SIZE)`` in the target process (with
-    breakpoints disabled so it doesn't appear in the trace) to confirm
-    the allocator is functional.  If expression evaluation fails (e.g.
-    on Windows without debug info), we still report success based on the
-    breakpoint hit.
-    """
-    global _canary_done
-    if _canary_done:
-        return
-    _canary_done = True
-
-    target = frame.GetThread().GetProcess().GetTarget()
-
-    # The function we stopped in — proves hooks are intercepting allocations.
-    hit_symbol = frame.GetFunctionName() or "<unknown>"
-
-    # Disable profiler breakpoints so the canary allocation is not recorded.
+    # Disable auto-continue so we can stop after a few hits.
     for bp_id in _breakpoint_ids:
         bp = target.FindBreakpointByID(bp_id)
         if bp.IsValid():
-            bp.SetEnabled(False)
+            bp.SetAutoContinue(False)
 
-    ptr_addr = _try_eval_canary(frame)
+    error = lldb.SBError()
+    launch_info = lldb.SBLaunchInfo(["-c", "x=[0]*100"])
+    process = target.Launch(launch_info, error)
 
-    if ptr_addr != 0:
-        # Free the canary allocation.
-        frame.EvaluateExpression(
-            f"(void)PyMem_Free((void *){ptr_addr})"
+    if error.Fail() or not process or not process.IsValid():
+        result.AppendMessage(
+            f"⚠  Canary: could not launch process — {error.GetCString()}"
         )
-        print(
-            f"✓  Canary self-check passed: PyMem_Malloc({_CANARY_SIZE}) "
-            f"returned {ptr_addr:#x} — hooks are working.",
-            flush=True,
+        _canary_in_progress = False
+        # Restore auto-continue.
+        for bp_id in _breakpoint_ids:
+            bp = target.FindBreakpointByID(bp_id)
+            if bp.IsValid():
+                bp.SetAutoContinue(True)
+        debugger.SetAsync(was_async)
+        return
+
+    # Continue until we see a few breakpoint hits, then stop early.
+    _CANARY_MIN_HITS = 5
+    deadline = time.time() + 15
+    while process.GetState() == lldb.eStateStopped:
+        if _canary_hit_count >= _CANARY_MIN_HITS:
+            break
+        err = process.Continue()
+        if err.Fail():
+            break
+        if time.time() > deadline:
+            break
+
+    # Kill the canary process (no need to wait for full exit).
+    if process.GetState() != lldb.eStateExited:
+        process.Kill()
+
+    _canary_in_progress = False
+
+    # Restore auto-continue for the real profiling run.
+    for bp_id in _breakpoint_ids:
+        bp = target.FindBreakpointByID(bp_id)
+        if bp.IsValid():
+            bp.SetAutoContinue(True)
+
+    debugger.SetAsync(was_async)
+
+    if _canary_hit_count > 0:
+        result.AppendMessage(
+            f"✓  Canary: {_canary_hit_count} allocation breakpoints hit "
+            f"— hooks are working."
         )
     else:
-        # Expression evaluation failed, but we're in a breakpoint callback
-        # on an allocation function — that alone proves hooks are working.
-        print(
-            f"✓  Canary self-check passed: breakpoint hit on '{hit_symbol}' "
-            f"— hooks are working.  (Expression evaluation of PyMem_Malloc "
-            f"was not available; this is normal on Windows or release builds.)",
-            flush=True,
+        result.AppendMessage(
+            "⚠  Canary: no allocation breakpoints were hit — hooks may "
+            "not be working.\n"
+            "  Possible causes:\n"
+            "  • On Windows: try targeting the base Python interpreter "
+            "instead of a venv python.exe\n"
+            "  • Symbols may not be available in a stripped binary"
         )
 
-    # Re-enable profiler breakpoints.
-    for bp_id in _breakpoint_ids:
-        bp = target.FindBreakpointByID(bp_id)
-        if bp.IsValid():
-            bp.SetEnabled(True)
+    # Reset the start time so user timestamps begin after the canary.
+    _start_time_ns = time.time_ns()
 
 
 # ---------------------------------------------------------------------------
@@ -166,11 +170,12 @@ def _maybe_run_canary(frame):
 
 def _on_alloc(frame, bp_loc, extra_args, internal_dict):
     """Breakpoint callback for malloc / realloc functions."""
-    global _writer, _start_time_ns
+    global _writer, _start_time_ns, _canary_hit_count
+    if _canary_in_progress:
+        _canary_hit_count += 1
+        return True  # stop during canary so we can limit hits
     if _writer is None:
         return False  # auto-continue
-
-    _maybe_run_canary(frame)
 
     event = "malloc"
     symbol = frame.GetFunctionName() or ""
@@ -243,11 +248,12 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
 
 def _on_free(frame, bp_loc, extra_args, internal_dict):
     """Breakpoint callback for free functions."""
-    global _writer, _start_time_ns
+    global _writer, _start_time_ns, _canary_hit_count
+    if _canary_in_progress:
+        _canary_hit_count += 1
+        return True  # stop during canary so we can limit hits
     if _writer is None:
         return False
-
-    _maybe_run_canary(frame)
 
     symbol = frame.GetFunctionName() or ""
 
@@ -316,7 +322,7 @@ def _profile_command(debugger, command, exe_ctx, result, internal_dict):
 
 
 def _start_profiling(debugger, args, result):
-    global _writer, _breakpoint_ids, _start_time_ns, _canary_done
+    global _writer, _breakpoint_ids, _start_time_ns
 
     if _writer is not None:
         result.AppendMessage("Profiling is already active.  Use 'profile stop' first.")
@@ -336,7 +342,6 @@ def _start_profiling(debugger, args, result):
     _writer = ParquetWriter(output_path)
     _start_time_ns = time.time_ns()
     _breakpoint_ids.clear()
-    _canary_done = False
 
     resolved_count = 0
     pending_count = 0
@@ -386,9 +391,12 @@ def _start_profiling(debugger, args, result):
             "CPython binary with allocation symbols."
         )
 
+    # Run a canary: launch a tiny Python script to verify hooks work.
+    _run_canary(debugger, target, result)
+
 
 def _stop_profiling(debugger, result):
-    global _writer, _breakpoint_ids, _canary_done
+    global _writer, _breakpoint_ids
 
     if _writer is None:
         result.AppendMessage("Profiling is not active.")
@@ -403,19 +411,6 @@ def _stop_profiling(debugger, result):
     path = _writer._path
     total = _writer._total_records
     _writer = None
-
-    if not _canary_done:
-        result.AppendMessage(
-            "⚠  Canary self-check never ran — no allocation breakpoints "
-            "were hit during this session.  Possible causes:\n"
-            "  • The process exited before any Python allocations occurred\n"
-            "  • On Windows: the python.exe in your venv may not link to "
-            "python3XX.dll in a way LLDB can follow — try targeting the "
-            "base Python interpreter instead (e.g. "
-            "C:\\Python312\\python.exe)\n"
-            "  • Symbols may not be available in a stripped binary"
-        )
-    _canary_done = False
 
     result.AppendMessage(
         f"Profiling stopped.  {total} allocations recorded.  "
