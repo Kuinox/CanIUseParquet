@@ -139,7 +139,8 @@ def _maybe_run_canary(frame):
         )
         print(
             f"✓  Canary self-check passed: PyMem_Malloc({_CANARY_SIZE}) "
-            f"returned {ptr_addr:#x} — hooks are working."
+            f"returned {ptr_addr:#x} — hooks are working.",
+            flush=True,
         )
     else:
         # Expression evaluation failed, but we're in a breakpoint callback
@@ -147,7 +148,8 @@ def _maybe_run_canary(frame):
         print(
             f"✓  Canary self-check passed: breakpoint hit on '{hit_symbol}' "
             f"— hooks are working.  (Expression evaluation of PyMem_Malloc "
-            f"was not available; this is normal on Windows or release builds.)"
+            f"was not available; this is normal on Windows or release builds.)",
+            flush=True,
         )
 
     # Re-enable profiler breakpoints.
@@ -336,12 +338,22 @@ def _start_profiling(debugger, args, result):
     _breakpoint_ids.clear()
     _canary_done = False
 
+    resolved_count = 0
+    pending_count = 0
+    failed_names = []
+
     for func_name, event_kind in _ALLOC_FUNCTIONS:
         bp = target.BreakpointCreateByName(func_name)
         if not bp.IsValid():
+            failed_names.append(func_name)
             continue
         bp.SetAutoContinue(True)
         _breakpoint_ids.append(bp.GetID())
+
+        if bp.GetNumLocations() > 0:
+            resolved_count += 1
+        else:
+            pending_count += 1
 
         # Register the callback via the script bridge.  The function
         # must be reachable by its module name as seen by LLDB.
@@ -353,9 +365,26 @@ def _start_profiling(debugger, args, result):
         bp.SetScriptCallbackFunction(cb_name)
 
     result.AppendMessage(
-        f"Profiling started – {len(_breakpoint_ids)} breakpoints set.  "
+        f"Profiling started – {len(_breakpoint_ids)} breakpoints set "
+        f"({resolved_count} resolved, {pending_count} pending).  "
         f"Output → {output_path}"
     )
+    if pending_count > 0:
+        result.AppendMessage(
+            f"  {pending_count} breakpoints are pending — they will resolve "
+            f"when the target's shared libraries are loaded (after 'run')."
+        )
+        if platform.system() == "Windows":
+            result.AppendMessage(
+                "  Note (Windows): internal _Py* symbols are not exported "
+                "from python3XX.dll.  Only public API breakpoints "
+                "(PyMem_Malloc, PyObject_Malloc, etc.) will resolve."
+            )
+    if resolved_count == 0 and pending_count == 0:
+        result.AppendMessage(
+            "⚠  No breakpoints could be set.  Make sure the target is a "
+            "CPython binary with allocation symbols."
+        )
 
 
 def _stop_profiling(debugger, result):
@@ -374,7 +403,20 @@ def _stop_profiling(debugger, result):
     path = _writer._path
     total = _writer._total_records
     _writer = None
+
+    if not _canary_done:
+        result.AppendMessage(
+            "⚠  Canary self-check never ran — no allocation breakpoints "
+            "were hit during this session.  Possible causes:\n"
+            "  • The process exited before any Python allocations occurred\n"
+            "  • On Windows: the python.exe in your venv may not link to "
+            "python3XX.dll in a way LLDB can follow — try targeting the "
+            "base Python interpreter instead (e.g. "
+            "C:\\Python312\\python.exe)\n"
+            "  • Symbols may not be available in a stripped binary"
+        )
     _canary_done = False
+
     result.AppendMessage(
         f"Profiling stopped.  {total} allocations recorded.  "
         f"Data written to {path}"
