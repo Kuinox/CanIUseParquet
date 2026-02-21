@@ -8,10 +8,13 @@ version = "0.1.0"
 description = "Memory profiler for CPython using an LLDB plugin"
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "MIT"}
+license = "MIT"
 dependencies = [
     "pyarrow>=14.0.1",
 ]
+
+[tool.setuptools.packages.find]
+include = ["profiler*"]
 
 [project.optional-dependencies]
 dev = [
