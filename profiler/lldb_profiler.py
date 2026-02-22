@@ -70,6 +70,59 @@ _ALLOC_FUNCTIONS = [
 ]
 
 
+def _resolve_real_python(exe_path: str) -> Optional[str]:
+    """If *exe_path* is inside a Python venv, return the base interpreter.
+
+    Every venv has a ``pyvenv.cfg`` file in its root directory with a
+    ``home`` key pointing to the directory containing the real Python
+    binary.  On Windows the venv ``python.exe`` is a thin launcher that
+    delegates to ``python3XX.dll`` in the base installation — LLDB may
+    not be able to resolve CPython symbols through it.  This function
+    detects that situation and returns the path to the base interpreter.
+
+    Returns *None* if this is not a venv or the base interpreter cannot
+    be found.
+    """
+    exe_path = os.path.abspath(exe_path)
+    exe_dir = os.path.dirname(exe_path)
+    exe_name = os.path.basename(exe_path)
+
+    # pyvenv.cfg lives in the venv root.
+    # Windows: venv/Scripts/python.exe → cfg at venv/pyvenv.cfg
+    # Unix:    venv/bin/python         → cfg at venv/pyvenv.cfg
+    for cfg_dir in [exe_dir, os.path.dirname(exe_dir)]:
+        cfg_path = os.path.join(cfg_dir, "pyvenv.cfg")
+        if not os.path.isfile(cfg_path):
+            continue
+
+        home = None
+        with open(cfg_path, encoding="utf-8") as f:
+            for line in f:
+                key_val = line.split("=", 1)
+                if len(key_val) == 2 and key_val[0].strip().lower() == "home":
+                    home = key_val[1].strip()
+                    break
+
+        if not home or not os.path.isdir(home):
+            return None
+
+        # Try the same filename first, then common interpreter names.
+        candidates = [exe_name]
+        if platform.system() == "Windows":
+            candidates += ["python.exe", "python3.exe"]
+        else:
+            candidates += ["python3", "python"]
+
+        for name in candidates:
+            real = os.path.join(home, name)
+            if os.path.isfile(real):
+                return os.path.abspath(real)
+
+        return None
+
+    return None
+
+
 def _format_stacktrace(frames: list[PythonFrame]) -> str:
     """Render a list of ``PythonFrame`` objects as a newline-separated string."""
     lines = []
@@ -338,6 +391,32 @@ def _start_profiling(debugger, args, result):
     if not target.IsValid():
         result.AppendMessage("No valid target.  Load a Python binary first.")
         return
+
+    # Detect venv and resolve to base interpreter for reliable symbol access.
+    exe = target.GetExecutable()
+    if exe.IsValid():
+        exe_path = exe.fullpath or os.path.join(
+            exe.GetDirectory() or "", exe.GetFilename() or ""
+        )
+        real_python = _resolve_real_python(exe_path)
+        if real_python is not None:
+            result.AppendMessage(
+                f"Detected venv Python: {exe_path}\n"
+                f"  → Resolving to base interpreter: {real_python}"
+            )
+            error = lldb.SBError()
+            new_target = debugger.CreateTarget(
+                real_python, None, None, True, error
+            )
+            if new_target.IsValid():
+                debugger.SetSelectedTarget(new_target)
+                target = new_target
+            else:
+                result.AppendMessage(
+                    f"  ⚠  Could not create target for base interpreter: "
+                    f"{error.GetCString()}\n"
+                    f"  Continuing with venv Python."
+                )
 
     _writer = ParquetWriter(output_path)
     _start_time_ns = time.time_ns()
