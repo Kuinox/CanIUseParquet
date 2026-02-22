@@ -32,7 +32,11 @@ if _PACKAGE_DIR not in sys.path:
 
 import lldb  # type: ignore[import-not-found]
 
-from profiler.cpython_stacktrace import PythonFrame, get_python_stacktrace
+from profiler.cpython_stacktrace import (
+    PythonFrame,
+    get_python_stacktrace,
+    reset_offset_cache,
+)
 from profiler.parquet_writer import AllocationRecord, ParquetWriter
 
 # ---------------------------------------------------------------------------
@@ -45,6 +49,8 @@ _start_time_ns: int = 0
 _canary_in_progress: bool = False
 _canary_hit_count: int = 0
 _capture_stacktrace: bool = True
+_sample_rate: int = 1  # capture every Nth event (1 = all)
+_hit_counter: int = 0  # total breakpoint hits (for sampling)
 
 # The module name as seen by LLDB after ``command script import``.
 # LLDB registers the script using just the filename stem (e.g.
@@ -52,22 +58,26 @@ _capture_stacktrace: bool = True
 _MODULE_NAME: str = __name__
 
 # CPython allocation entry points we instrument.
-_ALLOC_FUNCTIONS = [
-    # Object domain
-    ("_PyObject_Malloc", "malloc"),
-    ("_PyObject_Realloc", "realloc"),
-    ("_PyObject_Free", "free"),
-    # Mem domain
-    ("_PyMem_Malloc", "malloc"),
-    ("_PyMem_Realloc", "realloc"),
-    ("_PyMem_Free", "free"),
-    # Public API
+# Public API functions — the common entry points used by Python code.
+# These are sufficient for most profiling since internal functions are
+# called *by* the public API, so instrumenting both would double-count.
+_ALLOC_FUNCTIONS_PUBLIC = [
     ("PyObject_Malloc", "malloc"),
     ("PyObject_Realloc", "realloc"),
     ("PyObject_Free", "free"),
     ("PyMem_Malloc", "malloc"),
     ("PyMem_Realloc", "realloc"),
     ("PyMem_Free", "free"),
+]
+
+# Internal CPython allocators — only used with --include-internal.
+_ALLOC_FUNCTIONS_INTERNAL = [
+    ("_PyObject_Malloc", "malloc"),
+    ("_PyObject_Realloc", "realloc"),
+    ("_PyObject_Free", "free"),
+    ("_PyMem_Malloc", "malloc"),
+    ("_PyMem_Realloc", "realloc"),
+    ("_PyMem_Free", "free"),
 ]
 
 
@@ -190,6 +200,10 @@ def _run_canary(debugger, target, result):
 
     _canary_in_progress = False
 
+    # Reset the stack trace offset cache -- the canary process is gone
+    # and the next process will have different addresses.
+    reset_offset_cache()
+
     # Restore auto-continue for the real profiling run.
     for bp_id in _breakpoint_ids:
         bp = target.FindBreakpointByID(bp_id)
@@ -224,16 +238,22 @@ def _run_canary(debugger, target, result):
 
 def _on_alloc(frame, bp_loc, extra_args, internal_dict):
     """Breakpoint callback for malloc / realloc functions."""
-    global _writer, _start_time_ns, _canary_hit_count
+    global _writer, _start_time_ns, _canary_hit_count, _hit_counter
     if _canary_in_progress:
         _canary_hit_count += 1
         return True  # stop during canary so we can limit hits
     if _writer is None:
         return False  # auto-continue
 
+    # Sampling: skip events that don't match the sample rate.
+    _hit_counter += 1
+    if _sample_rate > 1 and (_hit_counter % _sample_rate) != 0:
+        return False
+
     event = "malloc"
     symbol = frame.GetFunctionName() or ""
-    for sym, ev in _ALLOC_FUNCTIONS:
+    all_funcs = _ALLOC_FUNCTIONS_PUBLIC + _ALLOC_FUNCTIONS_INTERNAL
+    for sym, ev in all_funcs:
         if sym in symbol:
             event = ev
             break
@@ -305,11 +325,16 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
 
 def _on_free(frame, bp_loc, extra_args, internal_dict):
     """Breakpoint callback for free functions."""
-    global _writer, _start_time_ns, _canary_hit_count
+    global _writer, _start_time_ns, _canary_hit_count, _hit_counter
     if _canary_in_progress:
         _canary_hit_count += 1
         return True  # stop during canary so we can limit hits
     if _writer is None:
+        return False
+
+    # Sampling: skip events that don't match the sample rate.
+    _hit_counter += 1
+    if _sample_rate > 1 and (_hit_counter % _sample_rate) != 0:
         return False
 
     symbol = frame.GetFunctionName() or ""
@@ -368,7 +393,8 @@ def _profile_command(debugger, command, exe_ctx, result, internal_dict):
     args = command.strip().split()
     if not args:
         result.AppendMessage(
-            "Usage: profile start [output.parquet] [--no-stacktrace] | profile stop"
+            "Usage: profile start [output.parquet] [--no-stacktrace] "
+            "[--sample-rate N] [--include-internal] | profile stop"
         )
         return
 
@@ -385,6 +411,7 @@ def _profile_command(debugger, command, exe_ctx, result, internal_dict):
 
 def _start_profiling(debugger, args, result):
     global _writer, _breakpoint_ids, _start_time_ns, _capture_stacktrace
+    global _sample_rate, _hit_counter
 
     if _writer is not None:
         result.AppendMessage("Profiling is already active.  Use 'profile stop' first.")
@@ -393,11 +420,27 @@ def _start_profiling(debugger, args, result):
     # Parse flags.
     positional = []
     _capture_stacktrace = True
-    for a in args:
-        if a == "--no-stacktrace":
+    _sample_rate = 1
+    _hit_counter = 0
+    include_internal = False
+    i = 0
+    while i < len(args):
+        if args[i] == "--no-stacktrace":
             _capture_stacktrace = False
+        elif args[i] == "--include-internal":
+            include_internal = True
+        elif args[i] == "--sample-rate" and i + 1 < len(args):
+            i += 1
+            try:
+                _sample_rate = max(1, int(args[i]))
+            except ValueError:
+                result.AppendMessage(
+                    f"Invalid --sample-rate value: {args[i]}.  Using 1."
+                )
+                _sample_rate = 1
         else:
-            positional.append(a)
+            positional.append(args[i])
+        i += 1
 
     output_path = (
         positional[0]
@@ -440,11 +483,18 @@ def _start_profiling(debugger, args, result):
     _start_time_ns = time.time_ns()
     _breakpoint_ids.clear()
 
+    # Select which functions to instrument.
+    # Default: public API only (6 functions).  This avoids double-counting
+    # since PyMem_Malloc calls _PyMem_Malloc internally.
+    alloc_functions = list(_ALLOC_FUNCTIONS_PUBLIC)
+    if include_internal:
+        alloc_functions += _ALLOC_FUNCTIONS_INTERNAL
+
     resolved_count = 0
     pending_count = 0
     failed_names = []
 
-    for func_name, event_kind in _ALLOC_FUNCTIONS:
+    for func_name, event_kind in alloc_functions:
         bp = target.BreakpointCreateByName(func_name)
         if not bp.IsValid():
             failed_names.append(func_name)
@@ -471,6 +521,11 @@ def _start_profiling(debugger, args, result):
         f"({resolved_count} resolved, {pending_count} pending).  "
         f"Output: {output_path}"
     )
+    if _sample_rate > 1:
+        result.AppendMessage(
+            f"  Sampling: capturing 1 out of every "
+            f"{_sample_rate} events to reduce overhead."
+        )
     if not _capture_stacktrace:
         result.AppendMessage(
             "  Stack trace capture disabled (--no-stacktrace).  "
@@ -514,10 +569,14 @@ def _stop_profiling(debugger, result):
     total = _writer._total_records
     _writer = None
 
-    result.AppendMessage(
-        f"Profiling stopped.  {total} allocations recorded.  "
-        f"Data written to {path}"
-    )
+    msg = f"Profiling stopped.  {total} allocations recorded."
+    if _sample_rate > 1:
+        msg += (
+            f"  ({_hit_counter} total breakpoint hits, "
+            f"sampled at 1/{_sample_rate}.)"
+        )
+    msg += f"  Data written to {path}"
+    result.AppendMessage(msg)
 
 
 # ---------------------------------------------------------------------------
