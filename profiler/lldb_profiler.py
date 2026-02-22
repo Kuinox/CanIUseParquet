@@ -44,6 +44,7 @@ _breakpoint_ids: list[int] = []
 _start_time_ns: int = 0
 _canary_in_progress: bool = False
 _canary_hit_count: int = 0
+_capture_stacktrace: bool = True
 
 # The module name as seen by LLDB after ``command script import``.
 # LLDB registers the script using just the filename stem (e.g.
@@ -160,7 +161,7 @@ def _run_canary(debugger, target, result):
 
     if error.Fail() or not process or not process.IsValid():
         result.AppendMessage(
-            f"⚠  Canary: could not launch process — {error.GetCString()}"
+            f"WARNING: Canary: could not launch process -- {error.GetCString()}"
         )
         _canary_in_progress = False
         # Restore auto-continue.
@@ -199,17 +200,17 @@ def _run_canary(debugger, target, result):
 
     if _canary_hit_count > 0:
         result.AppendMessage(
-            f"✓  Canary: {_canary_hit_count} allocation breakpoints hit "
-            f"— hooks are working."
+            f"OK: Canary: {_canary_hit_count} allocation breakpoints hit "
+            f"-- hooks are working."
         )
     else:
         result.AppendMessage(
-            "⚠  Canary: no allocation breakpoints were hit — hooks may "
+            "WARNING: Canary: no allocation breakpoints were hit -- hooks may "
             "not be working.\n"
             "  Possible causes:\n"
-            "  • On Windows: try targeting the base Python interpreter "
+            "  * On Windows: try targeting the base Python interpreter "
             "instead of a venv python.exe\n"
-            "  • Symbols may not be available in a stripped binary"
+            "  * Symbols may not be available in a stripped binary"
         )
 
     # Reset the start time so user timestamps begin after the canary.
@@ -284,7 +285,10 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
 
     address = 0  # we don't have the return value at entry
 
-    stacktrace = get_python_stacktrace(frame)
+    stacktrace_str = ""
+    if _capture_stacktrace:
+        stacktrace = get_python_stacktrace(frame)
+        stacktrace_str = _format_stacktrace(stacktrace)
     ts = time.time_ns() - _start_time_ns
 
     _writer.add(
@@ -293,7 +297,7 @@ def _on_alloc(frame, bp_loc, extra_args, internal_dict):
             event=event,
             size=size,
             address=address,
-            python_stacktrace=_format_stacktrace(stacktrace),
+            python_stacktrace=stacktrace_str,
         )
     )
     return False  # auto-continue
@@ -336,7 +340,10 @@ def _on_free(frame, bp_loc, extra_args, internal_dict):
     if ptr_val.IsValid():
         address = ptr_val.GetValueAsUnsigned(0)
 
-    stacktrace = get_python_stacktrace(frame)
+    stacktrace_str = ""
+    if _capture_stacktrace:
+        stacktrace = get_python_stacktrace(frame)
+        stacktrace_str = _format_stacktrace(stacktrace)
     ts = time.time_ns() - _start_time_ns
 
     _writer.add(
@@ -345,7 +352,7 @@ def _on_free(frame, bp_loc, extra_args, internal_dict):
             event="free",
             size=0,
             address=address,
-            python_stacktrace=_format_stacktrace(stacktrace),
+            python_stacktrace=stacktrace_str,
         )
     )
     return False
@@ -360,7 +367,9 @@ def _profile_command(debugger, command, exe_ctx, result, internal_dict):
     """Handle ``profile start [path]`` / ``profile stop`` commands."""
     args = command.strip().split()
     if not args:
-        result.AppendMessage("Usage: profile start [output.parquet] | profile stop")
+        result.AppendMessage(
+            "Usage: profile start [output.parquet] [--no-stacktrace] | profile stop"
+        )
         return
 
     subcommand = args[0].lower()
@@ -375,15 +384,24 @@ def _profile_command(debugger, command, exe_ctx, result, internal_dict):
 
 
 def _start_profiling(debugger, args, result):
-    global _writer, _breakpoint_ids, _start_time_ns
+    global _writer, _breakpoint_ids, _start_time_ns, _capture_stacktrace
 
     if _writer is not None:
         result.AppendMessage("Profiling is already active.  Use 'profile stop' first.")
         return
 
+    # Parse flags.
+    positional = []
+    _capture_stacktrace = True
+    for a in args:
+        if a == "--no-stacktrace":
+            _capture_stacktrace = False
+        else:
+            positional.append(a)
+
     output_path = (
-        args[0]
-        if args
+        positional[0]
+        if positional
         else os.environ.get("PROFILER_OUTPUT", "profile_output.parquet")
     )
 
@@ -402,7 +420,7 @@ def _start_profiling(debugger, args, result):
         if real_python is not None:
             result.AppendMessage(
                 f"Detected venv Python: {exe_path}\n"
-                f"  → Resolving to base interpreter: {real_python}"
+                f"  Resolving to base interpreter: {real_python}"
             )
             error = lldb.SBError()
             new_target = debugger.CreateTarget(
@@ -413,7 +431,7 @@ def _start_profiling(debugger, args, result):
                 target = new_target
             else:
                 result.AppendMessage(
-                    f"  ⚠  Could not create target for base interpreter: "
+                    f"  WARNING: Could not create target for base interpreter: "
                     f"{error.GetCString()}\n"
                     f"  Continuing with venv Python."
                 )
@@ -449,13 +467,18 @@ def _start_profiling(debugger, args, result):
         bp.SetScriptCallbackFunction(cb_name)
 
     result.AppendMessage(
-        f"Profiling started – {len(_breakpoint_ids)} breakpoints set "
+        f"Profiling started - {len(_breakpoint_ids)} breakpoints set "
         f"({resolved_count} resolved, {pending_count} pending).  "
-        f"Output → {output_path}"
+        f"Output: {output_path}"
     )
+    if not _capture_stacktrace:
+        result.AppendMessage(
+            "  Stack trace capture disabled (--no-stacktrace).  "
+            "This significantly reduces overhead."
+        )
     if pending_count > 0:
         result.AppendMessage(
-            f"  {pending_count} breakpoints are pending — they will resolve "
+            f"  {pending_count} breakpoints are pending -- they will resolve "
             f"when the target's shared libraries are loaded (after 'run')."
         )
         if platform.system() == "Windows":
@@ -466,7 +489,7 @@ def _start_profiling(debugger, args, result):
             )
     if resolved_count == 0 and pending_count == 0:
         result.AppendMessage(
-            "⚠  No breakpoints could be set.  Make sure the target is a "
+            "WARNING: No breakpoints could be set.  Make sure the target is a "
             "CPython binary with allocation symbols."
         )
 
