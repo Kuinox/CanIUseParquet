@@ -142,30 +142,38 @@ def _read_pyunicode_fast(process: lldb.SBProcess, addr: int) -> str:
     if addr == 0 or _unicode_length_offset is None or _unicode_header_size is None:
         return "<unknown>"
 
-    err = lldb.SBError()
+    try:
+        err = lldb.SBError()
 
-    # Read the length field.
-    length_bytes = process.ReadMemory(addr + _unicode_length_offset, _ptr_size, err)
-    if err.Fail() or length_bytes is None:
+        # Read the length field.
+        length_bytes = process.ReadMemory(addr + _unicode_length_offset, _ptr_size, err)
+        if err.Fail() or length_bytes is None or len(length_bytes) != _ptr_size:
+            return "<unreadable>"
+        length = int.from_bytes(length_bytes, byteorder="little", signed=False)
+
+        if length == 0 or length > 4096:
+            return "<empty>" if length == 0 else "<too-long>"
+
+        # Read compact-ASCII data after the header.
+        data_addr = addr + _unicode_header_size
+        buf = process.ReadMemory(data_addr, length, err)
+        if err.Fail() or buf is None:
+            return "<unreadable>"
+        return buf.decode("utf-8", errors="replace")
+    except Exception:
         return "<unreadable>"
-    length = int.from_bytes(length_bytes, byteorder="little", signed=False)
-
-    if length == 0 or length > 4096:
-        return "<empty>" if length == 0 else "<too-long>"
-
-    # Read compact-ASCII data after the header.
-    data_addr = addr + _unicode_header_size
-    buf = process.ReadMemory(data_addr, length, err)
-    if err.Fail() or buf is None:
-        return "<unreadable>"
-    return buf.decode("utf-8", errors="replace")
 
 
 def _read_ptr(process: lldb.SBProcess, addr: int) -> int:
     """Read a pointer-sized value from *addr*."""
+    if addr == 0 or _ptr_size == 0:
+        return 0
     err = lldb.SBError()
-    buf = process.ReadMemory(addr, _ptr_size, err)
-    if err.Fail() or buf is None:
+    try:
+        buf = process.ReadMemory(addr, _ptr_size, err)
+    except Exception:
+        return 0
+    if err.Fail() or buf is None or len(buf) != _ptr_size:
         return 0
     return int.from_bytes(buf, byteorder="little", signed=False)
 
@@ -343,18 +351,23 @@ def get_python_stacktrace(frame) -> List[PythonFrame]:
     """
     global _offsets_initialized
 
-    process = frame.GetThread().GetProcess()
+    try:
+        process = frame.GetThread().GetProcess()
+        if not process or not process.IsValid():
+            return []
 
-    # Fast path: use cached offsets with direct memory reads.
-    if _offsets_initialized and _runtime_addr is not None:
-        return _get_stacktrace_fast(process)
+        # Fast path: use cached offsets with direct memory reads.
+        if _offsets_initialized and _runtime_addr is not None:
+            return _get_stacktrace_fast(process)
 
-    # First call: try to initialize offset cache.
-    if _init_offsets(frame):
-        return _get_stacktrace_fast(process)
+        # First call: try to initialize offset cache.
+        if _init_offsets(frame):
+            return _get_stacktrace_fast(process)
 
-    # Fallback: SBValue-based walk (slow but always works).
-    return _get_stacktrace_slow(frame)
+        # Fallback: SBValue-based walk (slow but always works).
+        return _get_stacktrace_slow(frame)
+    except Exception:
+        return []
 
 
 def _get_stacktrace_fast(process: lldb.SBProcess) -> List[PythonFrame]:

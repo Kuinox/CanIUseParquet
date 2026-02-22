@@ -142,43 +142,78 @@ def _format_stacktrace(frames: list[PythonFrame]) -> str:
     return "\n".join(lines)
 
 
-def _run_canary(debugger, target, result):
-    """Launch a canary Python script to verify hooks are working.
+def _run_canary(debugger, user_target, result):
+    """Launch a canary Python script to verify allocation hooks work.
 
-    Runs a tiny script (``python -c "x=[0]*100"``) that triggers CPython
-    allocations.  During the canary, breakpoint auto-continue is disabled
-    and callbacks return True (stop) so we can stop after just a few hits
-    instead of processing every allocation.  This keeps the canary fast
-    (seconds, not minutes).  The canary data never enters the final trace.
+    Creates a **separate temporary target** (never touches the user's
+    target) so that the user's launch configuration, environment, and
+    process state are preserved.  The canary target is deleted at the
+    end regardless of outcome.
     """
     global _canary_in_progress, _canary_hit_count, _start_time_ns
 
     _canary_in_progress = True
     _canary_hit_count = 0
 
+    # Determine which Python executable to use for the canary.
+    # Prefer the base interpreter when a venv is detected so that
+    # allocation symbols in python3XX.dll are accessible.
+    exe = user_target.GetExecutable()
+    python_path = None
+    if exe.IsValid():
+        python_path = exe.fullpath or os.path.join(
+            exe.GetDirectory() or "", exe.GetFilename() or ""
+        )
+        real = _resolve_real_python(python_path)
+        if real is not None:
+            result.AppendMessage(
+                f"Detected venv Python: {python_path}\n"
+                f"  Canary will use base interpreter: {real}"
+            )
+            python_path = real
+
+    if not python_path:
+        result.AppendMessage("WARNING: Canary: no Python executable found.")
+        _canary_in_progress = False
+        return
+
+    # Create a temporary target for the canary — never modify the user's.
+    error = lldb.SBError()
+    canary_target = debugger.CreateTarget(python_path, None, None, True, error)
+    if not canary_target.IsValid():
+        result.AppendMessage(
+            f"WARNING: Canary: could not create target -- {error.GetCString()}"
+        )
+        _canary_in_progress = False
+        return
+
     was_async = debugger.GetAsync()
     debugger.SetAsync(False)
 
-    # Disable auto-continue so we can stop after a few hits.
-    for bp_id in _breakpoint_ids:
-        bp = target.FindBreakpointByID(bp_id)
+    # Set breakpoints on the canary target (same symbols as the profiler).
+    canary_bp_ids = []
+    for func_name, event_kind in _ALLOC_FUNCTIONS_PUBLIC:
+        bp = canary_target.BreakpointCreateByName(func_name)
         if bp.IsValid():
             bp.SetAutoContinue(False)
+            canary_bp_ids.append(bp.GetID())
+            cb_name = (
+                f"{_MODULE_NAME}._on_free"
+                if event_kind == "free"
+                else f"{_MODULE_NAME}._on_alloc"
+            )
+            bp.SetScriptCallbackFunction(cb_name)
 
-    error = lldb.SBError()
+    # Launch the canary script on the temporary target.
     launch_info = lldb.SBLaunchInfo(["-c", "x=[0]*100"])
-    process = target.Launch(launch_info, error)
+    process = canary_target.Launch(launch_info, error)
 
     if error.Fail() or not process or not process.IsValid():
         result.AppendMessage(
             f"WARNING: Canary: could not launch process -- {error.GetCString()}"
         )
         _canary_in_progress = False
-        # Restore auto-continue.
-        for bp_id in _breakpoint_ids:
-            bp = target.FindBreakpointByID(bp_id)
-            if bp.IsValid():
-                bp.SetAutoContinue(True)
+        debugger.DeleteTarget(canary_target)
         debugger.SetAsync(was_async)
         return
 
@@ -194,32 +229,31 @@ def _run_canary(debugger, target, result):
         if time.time() > deadline:
             break
 
-    # Kill the canary process (no need to wait for full exit).
+    # Kill the canary process.
     if process.GetState() != lldb.eStateExited:
         process.Kill()
 
     _canary_in_progress = False
 
-    # Reset the stack trace offset cache -- the canary process is gone
-    # and the next process will have different addresses.
-    reset_offset_cache()
+    # Delete the temporary canary target entirely.
+    debugger.DeleteTarget(canary_target)
 
-    # Restore auto-continue for the real profiling run.
-    for bp_id in _breakpoint_ids:
-        bp = target.FindBreakpointByID(bp_id)
-        if bp.IsValid():
-            bp.SetAutoContinue(True)
-
+    # Ensure the user's original target is still selected.
+    debugger.SetSelectedTarget(user_target)
     debugger.SetAsync(was_async)
+
+    # Reset the stack trace offset cache — the canary was a different
+    # process, so any cached addresses are invalid.
+    reset_offset_cache()
 
     if _canary_hit_count > 0:
         result.AppendMessage(
-            f"OK: Canary: {_canary_hit_count} allocation breakpoints hit "
+            f"[OK] Canary: {_canary_hit_count} allocation breakpoints hit "
             f"-- hooks are working."
         )
     else:
         result.AppendMessage(
-            "WARNING: Canary: no allocation breakpoints were hit -- hooks may "
+            "[WARNING] Canary: no allocation breakpoints were hit -- hooks may "
             "not be working.\n"
             "  Possible causes:\n"
             "  * On Windows: try targeting the base Python interpreter "
@@ -452,32 +486,6 @@ def _start_profiling(debugger, args, result):
     if not target.IsValid():
         result.AppendMessage("No valid target.  Load a Python binary first.")
         return
-
-    # Detect venv and resolve to base interpreter for reliable symbol access.
-    exe = target.GetExecutable()
-    if exe.IsValid():
-        exe_path = exe.fullpath or os.path.join(
-            exe.GetDirectory() or "", exe.GetFilename() or ""
-        )
-        real_python = _resolve_real_python(exe_path)
-        if real_python is not None:
-            result.AppendMessage(
-                f"Detected venv Python: {exe_path}\n"
-                f"  Resolving to base interpreter: {real_python}"
-            )
-            error = lldb.SBError()
-            new_target = debugger.CreateTarget(
-                real_python, None, None, True, error
-            )
-            if new_target.IsValid():
-                debugger.SetSelectedTarget(new_target)
-                target = new_target
-            else:
-                result.AppendMessage(
-                    f"  WARNING: Could not create target for base interpreter: "
-                    f"{error.GetCString()}\n"
-                    f"  Continuing with venv Python."
-                )
 
     _writer = ParquetWriter(output_path)
     _start_time_ns = time.time_ns()
