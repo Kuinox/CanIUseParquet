@@ -142,6 +142,40 @@ def _format_stacktrace(frames: list[PythonFrame]) -> str:
     return "\n".join(lines)
 
 
+def _suppress_lldb_errors(debugger):
+    """Redirect LLDB's error output to devnull.
+
+    On Windows, loading python3XX.dll triggers LLDB type-parser warnings
+    like ``Class 'pyruntimestate' has a member ... which does not have a
+    complete definition.``  These are harmless but confusing because they
+    are printed as ``error:`` messages.  This function silences them.
+
+    Returns ``(old_error_file, devnull_fh)`` which must be passed to
+    ``_restore_lldb_errors`` afterwards.
+    """
+    try:
+        devnull_fh = open(os.devnull, "w")
+        old_error = debugger.GetErrorFile()
+        debugger.SetErrorFile(lldb.SBFile(devnull_fh.fileno(), "w", False))
+        return old_error, devnull_fh
+    except Exception:
+        return None, None
+
+
+def _restore_lldb_errors(debugger, old_error, devnull_fh):
+    """Restore LLDB's error output after ``_suppress_lldb_errors``."""
+    try:
+        if old_error is not None:
+            debugger.SetErrorFile(old_error)
+    except Exception:
+        pass
+    try:
+        if devnull_fh is not None:
+            devnull_fh.close()
+    except Exception:
+        pass
+
+
 def _run_canary(debugger, user_target, result):
     """Launch a canary Python script to verify allocation hooks work.
 
@@ -177,7 +211,25 @@ def _run_canary(debugger, user_target, result):
         _canary_in_progress = False
         return
 
-    # Create a temporary target for the canary — never modify the user's.
+    # Suppress LLDB's type-parser diagnostics during canary.
+    # On Windows, loading python3XX.dll emits harmless 'error:' messages
+    # about incomplete PDB type definitions (pyruntimestate, _is, etc.).
+    old_error, devnull_fh = _suppress_lldb_errors(debugger)
+
+    try:
+        _run_canary_inner(debugger, user_target, python_path, result)
+    finally:
+        _restore_lldb_errors(debugger, old_error, devnull_fh)
+
+    # Reset the start time so user timestamps begin after the canary.
+    _start_time_ns = time.time_ns()
+
+
+def _run_canary_inner(debugger, user_target, python_path, result):
+    """Inner canary logic (called with LLDB errors suppressed)."""
+    global _canary_in_progress, _canary_hit_count
+
+    # Create a temporary target for the canary -- never modify the user's.
     error = lldb.SBError()
     canary_target = debugger.CreateTarget(python_path, None, None, True, error)
     if not canary_target.IsValid():
@@ -242,7 +294,7 @@ def _run_canary(debugger, user_target, result):
     debugger.SetSelectedTarget(user_target)
     debugger.SetAsync(was_async)
 
-    # Reset the stack trace offset cache — the canary was a different
+    # Reset the stack trace offset cache -- the canary was a different
     # process, so any cached addresses are invalid.
     reset_offset_cache()
 
@@ -260,9 +312,6 @@ def _run_canary(debugger, user_target, result):
             "instead of a venv python.exe\n"
             "  * Symbols may not be available in a stripped binary"
         )
-
-    # Reset the start time so user timestamps begin after the canary.
-    _start_time_ns = time.time_ns()
 
 
 # ---------------------------------------------------------------------------
@@ -502,6 +551,11 @@ def _start_profiling(debugger, args, result):
     pending_count = 0
     failed_names = []
 
+    # Suppress LLDB's type-parser diagnostics during breakpoint setup.
+    # On Windows, resolving symbols in python3XX.dll triggers harmless
+    # 'error:' messages about incomplete PDB types.
+    old_error, devnull_fh = _suppress_lldb_errors(debugger)
+
     for func_name, event_kind in alloc_functions:
         bp = target.BreakpointCreateByName(func_name)
         if not bp.IsValid():
@@ -523,6 +577,8 @@ def _start_profiling(debugger, args, result):
             else f"{_MODULE_NAME}._on_alloc"
         )
         bp.SetScriptCallbackFunction(cb_name)
+
+    _restore_lldb_errors(debugger, old_error, devnull_fh)
 
     result.AppendMessage(
         f"Profiling started - {len(_breakpoint_ids)} breakpoints set "
