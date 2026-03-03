@@ -150,7 +150,7 @@ def _version_sort_key(filepath, tool_id):
     try:
         return tuple(int(x) for x in version_str.split("."))
     except ValueError:
-        return (0, 0, 0)
+        return (float("inf"), float("inf"), float("inf"))
 
 
 def load_multiversion_results():
