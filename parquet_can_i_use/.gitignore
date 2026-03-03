@@ -6,8 +6,5 @@ cli/java/test_parquet_java/dependency-reduced-pom.xml
 cli/dotnet/test_parquet_dotnet/bin/
 cli/dotnet/test_parquet_dotnet/obj/
 
-# Go module cache
-cli/go/test_parquet_go/go.sum
-
 # Virtual environments for multi-version testing
 .venvs/
