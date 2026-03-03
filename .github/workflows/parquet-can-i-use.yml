@@ -270,7 +270,7 @@ jobs:
       - name: Build site
         working-directory: parquet_can_i_use/site
         env:
-          NEXT_PUBLIC_BASE_PATH: /python_lldb_profiler
+          NEXT_PUBLIC_BASE_PATH: /CanIUseParquet
         run: |
           npm ci
           npm run build
