@@ -11,6 +11,7 @@ async function getMatrixData(): Promise<MatrixData> {
 
 export default async function Home() {
   const data = await getMatrixData();
+  const missingTools = data.build_metadata?.missing_tools ?? [];
 
   return (
     <main className="min-h-screen">
@@ -25,6 +26,15 @@ export default async function Home() {
           </p>
         </div>
       </header>
+      {missingTools.length > 0 && (
+        <div className="bg-yellow-900/60 border-b border-yellow-700 text-yellow-200 text-sm px-4 py-3">
+          <div className="max-w-[1600px] mx-auto">
+            ⚠️ <strong>Partial data:</strong> Some tools could not be tested in the last CI run and are missing from this matrix:{" "}
+            <span className="font-mono">{missingTools.join(", ")}</span>.
+            Results shown may be incomplete.
+          </div>
+        </div>
+      )}
       <div className="max-w-[1600px] mx-auto px-4 py-6">
         <MatrixView data={data} />
       </div>

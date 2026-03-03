@@ -15,6 +15,12 @@ export interface ToolData {
   advanced_features: Record<string, FeatureEntry>;
 }
 
+export interface BuildMetadata {
+  expected_tools: string[];
+  available_tools: string[];
+  missing_tools: string[];
+}
+
 export interface MatrixData {
   tools: Record<string, ToolData>;
   categories: {
@@ -25,4 +31,5 @@ export interface MatrixData {
     nested_types: string[];
     advanced_features: string[];
   };
+  build_metadata?: BuildMetadata;
 }

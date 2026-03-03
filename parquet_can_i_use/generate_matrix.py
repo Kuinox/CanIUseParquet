@@ -259,6 +259,13 @@ def build_matrix_data(multiversion_results):
 
         matrix["tools"][tool_id] = tool_data
 
+    available_tools = list(matrix["tools"].keys())
+    matrix["build_metadata"] = {
+        "expected_tools": TOOL_ORDER,
+        "available_tools": available_tools,
+        "missing_tools": [t for t in TOOL_ORDER if t not in available_tools],
+    }
+
     return matrix
 
 
