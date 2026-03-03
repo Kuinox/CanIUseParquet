@@ -1,7 +1,8 @@
-name: Generate Parquet Can I Use Matrix
+name: Parquet Can I Use
 
 on:
   push:
+    branches: [main, copilot/create-cani-i-use-parquet]
     paths:
       - 'parquet_can_i_use/**'
   pull_request:
@@ -9,9 +10,91 @@ on:
       - 'parquet_can_i_use/**'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  generate-matrix:
+  test-python:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tool: pyarrow
+            version: "0.17.1"
+            deps: "pyarrow==0.17.1"
+          - tool: pyarrow
+            version: "1.0.0"
+            deps: "pyarrow==1.0.0"
+          - tool: pyarrow
+            version: "4.0.0"
+            deps: "pyarrow==4.0.0"
+          - tool: pyarrow
+            version: "8.0.0"
+            deps: "pyarrow==8.0.0"
+          - tool: pyarrow
+            version: "10.0.0"
+            deps: "pyarrow==10.0.0"
+          - tool: pyarrow
+            version: "11.0.0"
+            deps: "pyarrow==11.0.0"
+          - tool: pyarrow
+            version: "14.0.0"
+            deps: "pyarrow==14.0.0"
+          - tool: pyarrow
+            version: "17.0.0"
+            deps: "pyarrow==17.0.0"
+          - tool: pyarrow
+            version: "23.0.1"
+            deps: "pyarrow==23.0.1"
+          - tool: fastparquet
+            version: "0.7.0"
+            deps: "fastparquet==0.7.0 pandas numpy"
+          - tool: fastparquet
+            version: "2023.1.0"
+            deps: "fastparquet==2023.1.0 pandas numpy"
+          - tool: fastparquet
+            version: "2024.2.0"
+            deps: "fastparquet==2024.2.0 pandas numpy"
+          - tool: fastparquet
+            version: "2025.12.0"
+            deps: "fastparquet==2025.12.0 pandas numpy"
+          - tool: polars
+            version: "0.19.0"
+            deps: "polars==0.19.0"
+          - tool: polars
+            version: "0.20.0"
+            deps: "polars==0.20.0"
+          - tool: polars
+            version: "1.0.0"
+            deps: "polars==1.0.0"
+          - tool: polars
+            version: "1.20.0"
+            deps: "polars==1.20.0"
+          - tool: polars
+            version: "1.38.1"
+            deps: "polars==1.38.1"
+          - tool: duckdb
+            version: "0.8.0"
+            deps: "duckdb==0.8.0"
+          - tool: duckdb
+            version: "0.9.0"
+            deps: "duckdb==0.9.0"
+          - tool: duckdb
+            version: "0.10.0"
+            deps: "duckdb==0.10.0"
+          - tool: duckdb
+            version: "1.0.0"
+            deps: "duckdb==1.0.0"
+          - tool: duckdb
+            version: "1.4.4"
+            deps: "duckdb==1.4.4"
     steps:
       - uses: actions/checkout@v4
 
@@ -20,36 +103,186 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install dependencies
+        run: pip install ${{ matrix.deps }}
+        continue-on-error: true
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Run test CLI
+        id: test
+        run: |
+          python parquet_can_i_use/cli/python/test_${{ matrix.tool == 'pyarrow' && 'pyarrow' || matrix.tool == 'fastparquet' && 'fastparquet' || matrix.tool == 'polars' && 'polars' || 'duckdb' }}.py > result.json 2>/dev/null || echo '{}' > result.json
+          cat result.json
+        continue-on-error: true
+
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ matrix.tool }}-${{ matrix.version }}
+          path: result.json
+
+  test-rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build and run
+        working-directory: parquet_can_i_use/cli/rust/test_parquet_rs
+        run: |
+          cargo build --release
+          ./target/release/test_parquet_rs > ../../../../result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-parquet-rs-55.2.0
+          path: result.json
+
+  test-go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
+      - name: Build and run
+        working-directory: parquet_can_i_use/cli/go/test_parquet_go
+        run: |
+          go build -o test_parquet_go
+          ./test_parquet_go > ../../../result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-parquet-go-0.24.0
+          path: parquet_can_i_use/result.json
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+  test-java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
+      - name: Build and run
+        working-directory: parquet_can_i_use/cli/java/test_parquet_java
+        run: |
+          mvn -q package -DskipTests
+          java -jar target/test-parquet-java-1.0-SNAPSHOT.jar > ../../../result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: result-parquet-java-1.15.0
+          path: parquet_can_i_use/result.json
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+  test-dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-
-      - name: Install Python dependencies
-        run: pip install pyarrow fastparquet polars duckdb pandas numpy
-
-      - name: Run matrix generator
-        working-directory: parquet_can_i_use
-        run: python generate_matrix.py
-
-      - name: Upload results
-        uses: actions/upload-artifact@v4
+      - name: Build and run
+        working-directory: parquet_can_i_use/cli/dotnet/test_parquet_dotnet
+        run: |
+          dotnet build -c Release -v q
+          dotnet run -c Release --no-build > ../../../result.json
+      - uses: actions/upload-artifact@v4
         with:
-          name: parquet-results
-          path: |
-            parquet_can_i_use/results/
-            parquet_can_i_use.md
+          name: result-parquet-dotnet-5.0.0
+          path: parquet_can_i_use/result.json
+
+  build-site:
+    needs: [test-python, test-rust, test-go, test-java, test-dotnet]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+          pattern: result-*
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Collect results
+        run: |
+          mkdir -p parquet_can_i_use/results
+          python3 << 'SCRIPT'
+          import json, os, glob
+
+          all_versions = {}
+          for artifact_dir in sorted(glob.glob("artifacts/result-*")):
+              dirname = os.path.basename(artifact_dir)
+              # Parse tool and version from dirname: result-{tool}-{version}
+              parts = dirname.replace("result-", "").rsplit("-", 1)
+              if len(parts) == 2:
+                  tool_id, version = parts
+              else:
+                  continue
+
+              result_file = os.path.join(artifact_dir, "result.json")
+              if not os.path.exists(result_file):
+                  continue
+
+              with open(result_file) as f:
+                  try:
+                      data = json.load(f)
+                  except json.JSONDecodeError:
+                      continue
+
+              if not data:
+                  continue
+
+              data["tested_version"] = version
+
+              if tool_id not in all_versions:
+                  all_versions[tool_id] = []
+              all_versions[tool_id].append(data)
+
+          # Sort each tool's results by version
+          for tool_id in all_versions:
+              all_versions[tool_id].sort(key=lambda x: x.get("tested_version", ""))
+
+          with open("parquet_can_i_use/results/all_versions.json", "w") as f:
+              json.dump(all_versions, f, indent=2)
+
+          print(f"Collected results for: {list(all_versions.keys())}")
+          for tool_id, results in all_versions.items():
+              versions = [r.get("tested_version", "?") for r in results]
+              print(f"  {tool_id}: {versions}")
+          SCRIPT
+
+      - name: Generate matrix
+        run: |
+          cd parquet_can_i_use
+          python generate_matrix.py --load-results
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build site
+        working-directory: parquet_can_i_use/site
+        env:
+          NEXT_PUBLIC_BASE_PATH: /python_lldb_profiler
+        run: |
+          npm ci
+          npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: parquet_can_i_use/site/out
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build-site
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
