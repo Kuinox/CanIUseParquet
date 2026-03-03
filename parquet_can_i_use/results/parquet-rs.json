@@ -1,0 +1,61 @@
+{
+  "advanced_features": {
+    "BLOOM_FILTER": true,
+    "COLUMN_ENCRYPTION": false,
+    "DATA_PAGE_V2": true,
+    "PAGE_INDEX": true,
+    "PREDICATE_PUSHDOWN": true,
+    "PROJECTION_PUSHDOWN": true,
+    "SCHEMA_EVOLUTION": false,
+    "STATISTICS": true
+  },
+  "compression": {
+    "BROTLI": true,
+    "GZIP": true,
+    "LZ4": true,
+    "LZ4_RAW": true,
+    "LZO": false,
+    "NONE": true,
+    "SNAPPY": true,
+    "ZSTD": true
+  },
+  "encoding": {
+    "BIT_PACKED": false,
+    "BYTE_STREAM_SPLIT": true,
+    "DELTA_BINARY_PACKED": true,
+    "DELTA_BYTE_ARRAY": true,
+    "DELTA_LENGTH_BYTE_ARRAY": true,
+    "PLAIN": true,
+    "PLAIN_DICTIONARY": false,
+    "RLE": true,
+    "RLE_DICTIONARY": false
+  },
+  "logical_types": {
+    "BSON": false,
+    "DATE": true,
+    "DECIMAL": true,
+    "ENUM": true,
+    "FLOAT16": true,
+    "INT96": false,
+    "INTERVAL": true,
+    "JSON": true,
+    "STRING": true,
+    "TIMESTAMP_MICROS": true,
+    "TIMESTAMP_MILLIS": true,
+    "TIMESTAMP_NANOS": true,
+    "TIME_MICROS": true,
+    "TIME_MILLIS": true,
+    "TIME_NANOS": true,
+    "UUID": true
+  },
+  "nested_types": {
+    "DEEP_NESTING": true,
+    "LIST": true,
+    "MAP": true,
+    "NESTED_LIST": true,
+    "NESTED_MAP": true,
+    "STRUCT": true
+  },
+  "tool": "parquet-rs",
+  "version": "55.2.0"
+}

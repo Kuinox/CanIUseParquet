@@ -1,0 +1,11 @@
+[package]
+name = "test_parquet_rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+parquet = { version = "55", features = ["snap", "brotli", "flate2", "lz4", "zstd"] }
+arrow = { version = "55", features = ["prettyprint"] }
+serde_json = "1"
+tempfile = "3"
+half = "2"

@@ -1,0 +1,61 @@
+{
+  "tool": "parquet-java",
+  "version": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
+  "compression": {
+    "NONE": true,
+    "SNAPPY": true,
+    "GZIP": true,
+    "BROTLI": false,
+    "LZO": false,
+    "LZ4": true,
+    "LZ4_RAW": true,
+    "ZSTD": true
+  },
+  "encoding": {
+    "PLAIN": true,
+    "PLAIN_DICTIONARY": true,
+    "RLE_DICTIONARY": true,
+    "RLE": true,
+    "BIT_PACKED": true,
+    "DELTA_BINARY_PACKED": true,
+    "DELTA_LENGTH_BYTE_ARRAY": true,
+    "DELTA_BYTE_ARRAY": true,
+    "BYTE_STREAM_SPLIT": true
+  },
+  "logical_types": {
+    "STRING": true,
+    "DATE": true,
+    "TIME_MILLIS": true,
+    "TIME_MICROS": true,
+    "TIME_NANOS": true,
+    "TIMESTAMP_MILLIS": true,
+    "TIMESTAMP_MICROS": true,
+    "TIMESTAMP_NANOS": true,
+    "INT96": true,
+    "DECIMAL": true,
+    "UUID": true,
+    "JSON": true,
+    "FLOAT16": true,
+    "ENUM": true,
+    "BSON": true,
+    "INTERVAL": true
+  },
+  "nested_types": {
+    "LIST": true,
+    "MAP": true,
+    "STRUCT": true,
+    "NESTED_LIST": true,
+    "NESTED_MAP": true,
+    "DEEP_NESTING": true
+  },
+  "advanced_features": {
+    "STATISTICS": true,
+    "PAGE_INDEX": true,
+    "BLOOM_FILTER": true,
+    "DATA_PAGE_V2": true,
+    "COLUMN_ENCRYPTION": true,
+    "PREDICATE_PUSHDOWN": true,
+    "PROJECTION_PUSHDOWN": true,
+    "SCHEMA_EVOLUTION": true
+  }
+}

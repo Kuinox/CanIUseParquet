@@ -1,0 +1,206 @@
+#!/usr/bin/env python3
+"""Test PyArrow's Parquet feature support and output JSON results."""
+
+import json
+import sys
+import tempfile
+import os
+
+def test_feature(name, fn):
+    """Run a test function, return True/False."""
+    try:
+        fn()
+        return True
+    except Exception:
+        return False
+
+def main():
+    try:
+        import pyarrow as pa
+        import pyarrow.parquet as pq
+    except ImportError:
+        print(json.dumps({"error": "pyarrow not installed"}))
+        sys.exit(1)
+
+    results = {
+        "tool": "PyArrow",
+        "version": pa.__version__,
+        "compression": {},
+        "encoding": {},
+        "logical_types": {},
+        "nested_types": {},
+        "advanced_features": {},
+    }
+
+    tmpdir = tempfile.mkdtemp()
+
+    # --- Compression ---
+    # PyArrow codec name mapping (PyArrow uses specific names)
+    codec_map = {
+        "NONE": "NONE",
+        "SNAPPY": "SNAPPY",
+        "GZIP": "GZIP",
+        "BROTLI": "BROTLI",
+        "LZO": "LZO",
+        "LZ4": "LZ4",
+        "LZ4_RAW": "lz4",  # PyArrow uses 'lz4' for LZ4_RAW (Hadoop-compatible)
+        "ZSTD": "ZSTD",
+    }
+    for codec_name, codec_val in codec_map.items():
+        path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+        table = pa.table({"col": [1, 2, 3]})
+        def write_read_codec(c=codec_val, p=path, t=table):
+            pq.write_table(t, p, compression=c)
+            pq.read_table(p)
+        results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
+
+    # --- Encoding ---
+    # Dictionary encodings use use_dictionary=True; others use column_encoding with use_dictionary=False
+    for enc_name in ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+                     "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]:
+        path = os.path.join(tmpdir, f"enc_{enc_name}.parquet")
+        if enc_name == "BYTE_STREAM_SPLIT":
+            table = pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float32())})
+        elif enc_name in ("DELTA_BINARY_PACKED",):
+            table = pa.table({"col": pa.array([1, 2, 3], type=pa.int32())})
+        elif enc_name in ("DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY"):
+            table = pa.table({"col": pa.array(["a", "b", "c"])})
+        elif enc_name in ("RLE", "BIT_PACKED"):
+            table = pa.table({"col": pa.array([True, False, True])})
+        else:
+            table = pa.table({"col": pa.array(["hello", "world", "test"])})
+        def write_read_enc(e=enc_name, p=path, t=table):
+            if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
+                # Dictionary encodings use use_dictionary=True
+                pq.write_table(t, p, use_dictionary=True)
+            else:
+                pq.write_table(t, p, use_dictionary=False, column_encoding=e)
+            pq.read_table(p)
+        results["encoding"][enc_name] = test_feature(enc_name, write_read_enc)
+
+    # --- Logical Types ---
+    import datetime
+    import decimal
+
+    logical_tests = {}
+    logical_tests["STRING"] = lambda: pa.table({"c": pa.array(["hello"])})
+    logical_tests["DATE"] = lambda: pa.table({"c": pa.array([datetime.date(2024,1,1)])})
+    logical_tests["TIME_MILLIS"] = lambda: pa.table({"c": pa.array([datetime.time(12,0,0)], type=pa.time32("ms"))})
+    logical_tests["TIME_MICROS"] = lambda: pa.table({"c": pa.array([datetime.time(12,0,0)], type=pa.time64("us"))})
+    logical_tests["TIME_NANOS"] = lambda: pa.table({"c": pa.array([datetime.time(12,0,0)], type=pa.time64("ns"))})
+    logical_tests["TIMESTAMP_MILLIS"] = lambda: pa.table({"c": pa.array([datetime.datetime(2024,1,1)], type=pa.timestamp("ms"))})
+    logical_tests["TIMESTAMP_MICROS"] = lambda: pa.table({"c": pa.array([datetime.datetime(2024,1,1)], type=pa.timestamp("us"))})
+    logical_tests["TIMESTAMP_NANOS"] = lambda: pa.table({"c": pa.array([datetime.datetime(2024,1,1)], type=pa.timestamp("ns"))})
+    logical_tests["INT96"] = lambda: pa.table({"c": pa.array([datetime.datetime(2024,1,1)], type=pa.timestamp("ns"))})
+    logical_tests["DECIMAL"] = lambda: pa.table({"c": pa.array([decimal.Decimal("123.45")], type=pa.decimal128(10, 2))})
+    logical_tests["UUID"] = lambda: pa.table({"c": pa.array(["550e8400-e29b-41d4-a716-446655440000"])})
+    logical_tests["JSON"] = lambda: pa.table({"c": pa.array(['{"key":"val"}'])})
+    logical_tests["FLOAT16"] = lambda: pa.table({"c": pa.array([1.0], type=pa.float16())})
+    logical_tests["ENUM"] = lambda: pa.table({"c": pa.array(["A"], type=pa.dictionary(pa.int8(), pa.string()))})
+    logical_tests["BSON"] = lambda: pa.table({"c": pa.array([b'\x05\x00\x00\x00\x00'], type=pa.binary())})
+    logical_tests["INTERVAL"] = lambda: pa.table({"c": pa.array([pa.scalar((1, 2, 3), type=pa.month_day_nano_interval())])})
+
+    for type_name, make_table in logical_tests.items():
+        path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
+        def write_read_lt(mk=make_table, p=path):
+            t = mk()
+            if type_name == "INT96":
+                pq.write_table(t, p, use_deprecated_int96_timestamps=True)
+            else:
+                pq.write_table(t, p)
+            pq.read_table(p)
+        results["logical_types"][type_name] = test_feature(type_name, write_read_lt)
+
+    # --- Nested Types ---
+    nested_tests = {}
+    nested_tests["LIST"] = lambda: pa.table({"c": pa.array([[1, 2], [3]])})
+    nested_tests["MAP"] = lambda: pa.table({"c": pa.array([[("a", 1), ("b", 2)]], type=pa.map_(pa.string(), pa.int64()))})
+    nested_tests["STRUCT"] = lambda: pa.table({"c": pa.array([{"x": 1, "y": 2}])})
+    nested_tests["NESTED_LIST"] = lambda: pa.table({"c": pa.array([[[1, 2], [3]], [[4]]])})
+    nested_tests["NESTED_MAP"] = lambda: pa.table({"c": pa.array([[("a", [1,2]), ("b", [3])]], type=pa.map_(pa.string(), pa.list_(pa.int64())))})
+    nested_tests["DEEP_NESTING"] = lambda: pa.table({"c": pa.array([[{"x": [1, 2]}]])})
+
+    for type_name, make_table in nested_tests.items():
+        path = os.path.join(tmpdir, f"nt_{type_name}.parquet")
+        def write_read_nt(mk=make_table, p=path):
+            t = mk()
+            pq.write_table(t, p)
+            pq.read_table(p)
+        results["nested_types"][type_name] = test_feature(type_name, write_read_nt)
+
+    # --- Advanced Features ---
+    table = pa.table({"col": pa.array(range(1000)), "str_col": pa.array([f"val_{i}" for i in range(1000)])})
+
+    # Page Index
+    def test_page_index():
+        p = os.path.join(tmpdir, "adv_page_index.parquet")
+        pq.write_table(table, p, write_page_index=True)
+        pq.read_table(p)
+    results["advanced_features"]["PAGE_INDEX"] = test_feature("PAGE_INDEX", test_page_index)
+
+    # Bloom Filters (PyArrow doesn't expose bloom filter writing via write_table)
+    def test_bloom_filter():
+        p = os.path.join(tmpdir, "adv_bloom.parquet")
+        writer = pq.ParquetWriter(p, table.schema)
+        writer.write_table(table)
+        writer.close()
+        pq.read_table(p)
+        # PyArrow has limited bloom filter support (no high-level API as of v23)
+        raise NotImplementedError("No bloom filter write API in write_table")
+    results["advanced_features"]["BLOOM_FILTER"] = test_feature("BLOOM_FILTER", test_bloom_filter)
+
+    # Column Encryption (PyArrow supports Parquet Modular Encryption)
+    def test_encryption():
+        p = os.path.join(tmpdir, "adv_enc.parquet")
+        # Test if encryption classes exist
+        assert hasattr(pq, 'FileEncryptionProperties')
+        assert hasattr(pq, 'FileDecryptionProperties')
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_feature("COLUMN_ENCRYPTION", test_encryption)
+
+    # Data Page V2
+    def test_data_page_v2():
+        p = os.path.join(tmpdir, "adv_v2.parquet")
+        pq.write_table(table, p, data_page_version="2.0")
+        pq.read_table(p)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_feature("DATA_PAGE_V2", test_data_page_v2)
+
+    # Statistics
+    def test_statistics():
+        p = os.path.join(tmpdir, "adv_stats.parquet")
+        pq.write_table(table, p, write_statistics=True)
+        md = pq.read_metadata(p)
+        rg = md.row_group(0)
+        col = rg.column(0)
+        assert col.statistics is not None
+    results["advanced_features"]["STATISTICS"] = test_feature("STATISTICS", test_statistics)
+
+    # Predicate Pushdown (via filters)
+    def test_predicate_pushdown():
+        p = os.path.join(tmpdir, "adv_pred.parquet")
+        pq.write_table(table, p)
+        pq.read_table(p, filters=[("col", ">", 500)])
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_feature("PREDICATE_PUSHDOWN", test_predicate_pushdown)
+
+    # Projection Pushdown
+    def test_projection_pushdown():
+        p = os.path.join(tmpdir, "adv_proj.parquet")
+        pq.write_table(table, p)
+        pq.read_table(p, columns=["col"])
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_feature("PROJECTION_PUSHDOWN", test_projection_pushdown)
+
+    # Schema Evolution (reading with missing columns)
+    def test_schema_evolution():
+        p1 = os.path.join(tmpdir, "adv_schema1.parquet")
+        p2 = os.path.join(tmpdir, "adv_schema2.parquet")
+        t1 = pa.table({"a": [1, 2], "b": [3, 4]})
+        t2 = pa.table({"a": [5, 6], "c": [7, 8]})
+        pq.write_table(t1, p1)
+        pq.write_table(t2, p2)
+        ds = pq.ParquetDataset([p1, p2])
+        ds.read()
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_feature("SCHEMA_EVOLUTION", test_schema_evolution)
+
+    print(json.dumps(results, indent=2))
+
+if __name__ == "__main__":
+    main()
