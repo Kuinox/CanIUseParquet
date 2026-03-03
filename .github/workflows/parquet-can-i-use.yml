@@ -1,0 +1,55 @@
+name: Generate Parquet Can I Use Matrix
+
+on:
+  push:
+    paths:
+      - 'parquet_can_i_use/**'
+  pull_request:
+    paths:
+      - 'parquet_can_i_use/**'
+  workflow_dispatch:
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Python dependencies
+        run: pip install pyarrow fastparquet polars duckdb pandas numpy
+
+      - name: Run matrix generator
+        working-directory: parquet_can_i_use
+        run: python generate_matrix.py
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: parquet-results
+          path: |
+            parquet_can_i_use/results/
+            parquet_can_i_use.md

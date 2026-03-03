@@ -51,29 +51,48 @@ def main():
             pl.read_parquet(p)
         results["compression"][codec_name] = test_feature(codec_name, write_read)
 
-    # --- Encoding ---
-    # Polars doesn't expose per-column encoding control directly
-    # Test what it can read/write by default
+    # --- Encoding × Type matrix ---
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+
+    def make_typed_df(ptype):
+        if ptype == "INT32":
+            return pl.DataFrame({"col": pl.Series([1, 2, 3], dtype=pl.Int32)})
+        elif ptype == "INT64":
+            return pl.DataFrame({"col": pl.Series([1, 2, 3], dtype=pl.Int64)})
+        elif ptype == "FLOAT":
+            return pl.DataFrame({"col": pl.Series([1.0, 2.0, 3.0], dtype=pl.Float32)})
+        elif ptype == "DOUBLE":
+            return pl.DataFrame({"col": pl.Series([1.0, 2.0, 3.0], dtype=pl.Float64)})
+        elif ptype == "BOOLEAN":
+            return pl.DataFrame({"col": pl.Series([True, False, True])})
+        elif ptype == "STRING":
+            return pl.DataFrame({"col": pl.Series(["hello", "world", "test"])})
+        elif ptype == "BINARY":
+            return pl.DataFrame({"col": pl.Series([b"hello", b"world", b"test"])})
+        raise ValueError(f"Unknown type: {ptype}")
+
     enc_tests = {
         "PLAIN": True,
         "PLAIN_DICTIONARY": True,
         "RLE_DICTIONARY": True,
         "RLE": True,
-        "BIT_PACKED": False,  # Polars/arrow-rs dropped BIT_PACKED
+        "BIT_PACKED": False,
         "DELTA_BINARY_PACKED": True,
         "DELTA_LENGTH_BYTE_ARRAY": True,
         "DELTA_BYTE_ARRAY": True,
         "BYTE_STREAM_SPLIT": True,
     }
     for enc_name, supported in enc_tests.items():
-        path = os.path.join(tmpdir, f"enc_{enc_name}.parquet")
-        def write_read_enc(p=path, s=supported):
-            if not s:
-                raise NotImplementedError("Not supported")
-            df = pl.DataFrame({"col": [1, 2, 3]})
-            df.write_parquet(p)
-            pl.read_parquet(p)
-        results["encoding"][enc_name] = test_feature(enc_name, write_read_enc)
+        results["encoding"][enc_name] = {}
+        for ptype in encoding_types:
+            path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
+            def write_read_enc(p=path, s=supported, pt=ptype):
+                if not s:
+                    raise NotImplementedError("Not supported")
+                df = make_typed_df(pt)
+                df.write_parquet(p)
+                pl.read_parquet(p)
+            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
 
     # --- Logical Types ---
     import datetime

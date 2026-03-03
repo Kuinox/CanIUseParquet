@@ -35,7 +35,6 @@ def main():
     tmpdir = tempfile.mkdtemp()
 
     # --- Compression ---
-    # PyArrow codec name mapping (PyArrow uses specific names)
     codec_map = {
         "NONE": "NONE",
         "SNAPPY": "SNAPPY",
@@ -43,7 +42,7 @@ def main():
         "BROTLI": "BROTLI",
         "LZO": "LZO",
         "LZ4": "LZ4",
-        "LZ4_RAW": "lz4",  # PyArrow uses 'lz4' for LZ4_RAW (Hadoop-compatible)
+        "LZ4_RAW": "lz4",
         "ZSTD": "ZSTD",
     }
     for codec_name, codec_val in codec_map.items():
@@ -54,29 +53,39 @@ def main():
             pq.read_table(p)
         results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
 
-    # --- Encoding ---
-    # Dictionary encodings use use_dictionary=True; others use column_encoding with use_dictionary=False
+    # --- Encoding × Type matrix ---
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+
+    def make_typed_table(ptype):
+        if ptype == "INT32":
+            return pa.table({"col": pa.array([1, 2, 3], type=pa.int32())})
+        elif ptype == "INT64":
+            return pa.table({"col": pa.array([1, 2, 3], type=pa.int64())})
+        elif ptype == "FLOAT":
+            return pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float32())})
+        elif ptype == "DOUBLE":
+            return pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float64())})
+        elif ptype == "BOOLEAN":
+            return pa.table({"col": pa.array([True, False, True])})
+        elif ptype == "STRING":
+            return pa.table({"col": pa.array(["hello", "world", "test"])})
+        elif ptype == "BINARY":
+            return pa.table({"col": pa.array([b"hello", b"world", b"test"])})
+        raise ValueError(f"Unknown type: {ptype}")
+
     for enc_name in ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
                      "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]:
-        path = os.path.join(tmpdir, f"enc_{enc_name}.parquet")
-        if enc_name == "BYTE_STREAM_SPLIT":
-            table = pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float32())})
-        elif enc_name in ("DELTA_BINARY_PACKED",):
-            table = pa.table({"col": pa.array([1, 2, 3], type=pa.int32())})
-        elif enc_name in ("DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY"):
-            table = pa.table({"col": pa.array(["a", "b", "c"])})
-        elif enc_name in ("RLE", "BIT_PACKED"):
-            table = pa.table({"col": pa.array([True, False, True])})
-        else:
-            table = pa.table({"col": pa.array(["hello", "world", "test"])})
-        def write_read_enc(e=enc_name, p=path, t=table):
-            if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
-                # Dictionary encodings use use_dictionary=True
-                pq.write_table(t, p, use_dictionary=True)
-            else:
-                pq.write_table(t, p, use_dictionary=False, column_encoding=e)
-            pq.read_table(p)
-        results["encoding"][enc_name] = test_feature(enc_name, write_read_enc)
+        results["encoding"][enc_name] = {}
+        for ptype in encoding_types:
+            path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
+            def write_read_enc(e=enc_name, p=path, pt=ptype):
+                t = make_typed_table(pt)
+                if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
+                    pq.write_table(t, p, use_dictionary=True)
+                else:
+                    pq.write_table(t, p, use_dictionary=False, column_encoding=e)
+                pq.read_table(p)
+            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
 
     # --- Logical Types ---
     import datetime

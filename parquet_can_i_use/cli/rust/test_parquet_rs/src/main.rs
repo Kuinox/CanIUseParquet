@@ -84,7 +84,7 @@ fn main() {
     compression.insert("LZO".into(), json!(lzo_result));
     results.insert("compression".into(), Value::Object(compression));
 
-    // --- Encoding ---
+    // --- Encoding × Type matrix ---
     let mut encoding = Map::new();
     let encodings = vec![
         ("PLAIN", Encoding::PLAIN),
@@ -97,36 +97,56 @@ fn main() {
         ("DELTA_BYTE_ARRAY", Encoding::DELTA_BYTE_ARRAY),
         ("BYTE_STREAM_SPLIT", Encoding::BYTE_STREAM_SPLIT),
     ];
-    for (name, enc) in &encodings {
-        let result = test_feature(|| {
-            let batch = if *name == "BYTE_STREAM_SPLIT" {
+    let type_names = vec!["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"];
+
+    fn make_typed_batch(ptype: &str) -> Result<RecordBatch, Box<dyn std::error::Error>> {
+        match ptype {
+            "INT32" => {
+                let schema = Schema::new(vec![Field::new("col", DataType::Int32, false)]);
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Int32Array::from(vec![1, 2, 3]))])?)
+            }
+            "INT64" => {
+                let schema = Schema::new(vec![Field::new("col", DataType::Int64, false)]);
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Int64Array::from(vec![1, 2, 3]))])?)
+            }
+            "FLOAT" => {
                 let schema = Schema::new(vec![Field::new("col", DataType::Float32, false)]);
-                RecordBatch::try_new(
-                    Arc::new(schema),
-                    vec![Arc::new(Float32Array::from(vec![1.0, 2.0, 3.0]))],
-                )?
-            } else if *name == "DELTA_LENGTH_BYTE_ARRAY" || *name == "DELTA_BYTE_ARRAY" {
-                let schema = Schema::new(vec![Field::new("col", DataType::Utf8, false)]);
-                RecordBatch::try_new(
-                    Arc::new(schema),
-                    vec![Arc::new(StringArray::from(vec!["a", "b", "c"]))],
-                )?
-            } else if *name == "RLE" || *name == "BIT_PACKED" {
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Float32Array::from(vec![1.0, 2.0, 3.0]))])?)
+            }
+            "DOUBLE" => {
+                let schema = Schema::new(vec![Field::new("col", DataType::Float64, false)]);
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Float64Array::from(vec![1.0, 2.0, 3.0]))])?)
+            }
+            "BOOLEAN" => {
                 let schema = Schema::new(vec![Field::new("col", DataType::Boolean, false)]);
-                RecordBatch::try_new(
-                    Arc::new(schema),
-                    vec![Arc::new(BooleanArray::from(vec![true, false, true]))],
-                )?
-            } else {
-                make_simple_batch()
-            };
-            let props = WriterProperties::builder()
-                .set_dictionary_enabled(false)
-                .set_encoding(*enc)
-                .build();
-            write_read_parquet(&tmpdir, &format!("enc_{name}"), &batch, props)
-        });
-        encoding.insert(name.to_string(), json!(result));
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(BooleanArray::from(vec![true, false, true]))])?)
+            }
+            "STRING" => {
+                let schema = Schema::new(vec![Field::new("col", DataType::Utf8, false)]);
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec!["a", "b", "c"]))])?)
+            }
+            "BINARY" => {
+                let schema = Schema::new(vec![Field::new("col", DataType::Binary, false)]);
+                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(BinaryArray::from_vec(vec![b"a", b"b", b"c"]))])?)
+            }
+            _ => Err("Unknown type".into()),
+        }
+    }
+
+    for (enc_name, enc) in &encodings {
+        let mut type_results = Map::new();
+        for ptype in &type_names {
+            let result = test_feature(|| {
+                let batch = make_typed_batch(ptype)?;
+                let props = WriterProperties::builder()
+                    .set_dictionary_enabled(false)
+                    .set_encoding(*enc)
+                    .build();
+                write_read_parquet(&tmpdir, &format!("enc_{enc_name}_{ptype}"), &batch, props)
+            });
+            type_results.insert(ptype.to_string(), json!(result));
+        }
+        encoding.insert(enc_name.to_string(), Value::Object(type_results));
     }
     results.insert("encoding".into(), Value::Object(encoding));
 

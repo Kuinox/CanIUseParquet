@@ -57,41 +57,46 @@ def main():
             fastparquet.ParquetFile(p).to_pandas()
         results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
 
-    # --- Encoding ---
-    # fastparquet has limited encoding control; test what's available
-    enc_tests = {
-        "PLAIN": True,
-        "PLAIN_DICTIONARY": True,
-        "RLE_DICTIONARY": True,
-        "RLE": True,
-        "BIT_PACKED": True,
-        "DELTA_BINARY_PACKED": True,
-        "DELTA_LENGTH_BYTE_ARRAY": True,
-        "DELTA_BYTE_ARRAY": True,
-        "BYTE_STREAM_SPLIT": True,
-    }
-    for enc_name in enc_tests:
-        path = os.path.join(tmpdir, f"enc_{enc_name}.parquet")
-        # fastparquet doesn't expose per-column encoding selection easily
-        # Test by writing with fixed_text for relevant encodings
-        def write_read_enc(e=enc_name, p=path):
-            df = pd.DataFrame({"col": [1, 2, 3]})
-            if e in ("PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY"):
-                fastparquet.write(p, df)
-                fastparquet.ParquetFile(p).to_pandas()
-            elif e == "RLE":
-                df = pd.DataFrame({"col": [True, False, True]})
-                fastparquet.write(p, df)
-                fastparquet.ParquetFile(p).to_pandas()
-            elif e == "BIT_PACKED":
-                df = pd.DataFrame({"col": [True, False, True]})
-                fastparquet.write(p, df)
-                fastparquet.ParquetFile(p).to_pandas()
-            else:
-                # DELTA and BYTE_STREAM_SPLIT - try to read files written with these encodings
-                # fastparquet cannot write these, so we test if it can at least create basic files
-                raise NotImplementedError(f"fastparquet does not support {e} encoding")
-        results["encoding"][enc_name] = test_feature(enc_name, write_read_enc)
+    # --- Encoding × Type matrix ---
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+
+    def make_typed_df_fp(ptype):
+        if ptype == "INT32":
+            return pd.DataFrame({"col": np.array([1, 2, 3], dtype=np.int32)})
+        elif ptype == "INT64":
+            return pd.DataFrame({"col": np.array([1, 2, 3], dtype=np.int64)})
+        elif ptype == "FLOAT":
+            return pd.DataFrame({"col": np.array([1.0, 2.0, 3.0], dtype=np.float32)})
+        elif ptype == "DOUBLE":
+            return pd.DataFrame({"col": np.array([1.0, 2.0, 3.0], dtype=np.float64)})
+        elif ptype == "BOOLEAN":
+            return pd.DataFrame({"col": [True, False, True]})
+        elif ptype == "STRING":
+            return pd.DataFrame({"col": pd.array(["hello", "world", "test"], dtype=pd.StringDtype("python"))})
+        elif ptype == "BINARY":
+            return pd.DataFrame({"col": pd.array([b"hello", b"world", b"test"], dtype="object")})
+        raise ValueError(f"Unknown type: {ptype}")
+
+    enc_names = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+                 "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
+    for enc_name in enc_names:
+        results["encoding"][enc_name] = {}
+        for ptype in encoding_types:
+            path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
+            def write_read_enc(e=enc_name, p=path, pt=ptype):
+                df = make_typed_df_fp(pt)
+                if e in ("PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY"):
+                    fastparquet.write(p, df)
+                    fastparquet.ParquetFile(p).to_pandas()
+                elif e in ("RLE", "BIT_PACKED"):
+                    if pt == "BOOLEAN":
+                        fastparquet.write(p, df)
+                        fastparquet.ParquetFile(p).to_pandas()
+                    else:
+                        raise NotImplementedError(f"fastparquet {e} only for BOOLEAN")
+                else:
+                    raise NotImplementedError(f"fastparquet does not support {e} encoding")
+            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
 
     # --- Logical Types ---
     import datetime

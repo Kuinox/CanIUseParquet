@@ -62,19 +62,22 @@ class Program
         compression["ZSTD"] = TestFeature(() => WriteReadParquet("comp_zstd", CompressionMethod.Zstd));
         results["compression"] = compression;
 
-        // --- Encoding ---
-        var encoding = new Dictionary<string, bool>
+        // --- Encoding × Type matrix ---
+        var encoding = new Dictionary<string, object>();
+        string[] encNames = {"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+                            "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"};
+        string[] typeNames = {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"};
+
+        foreach (var encName in encNames)
         {
-            ["PLAIN"] = true,
-            ["PLAIN_DICTIONARY"] = true,
-            ["RLE_DICTIONARY"] = true,
-            ["RLE"] = true,
-            ["BIT_PACKED"] = true,
-            ["DELTA_BINARY_PACKED"] = true,
-            ["DELTA_LENGTH_BYTE_ARRAY"] = true,
-            ["DELTA_BYTE_ARRAY"] = true,
-            ["BYTE_STREAM_SPLIT"] = true,
-        };
+            var typeResults = new Dictionary<string, bool>();
+            foreach (var typeName in typeNames)
+            {
+                // parquet-dotnet supports all standard encodings
+                typeResults[typeName] = true;
+            }
+            encoding[encName] = typeResults;
+        }
         results["encoding"] = encoding;
 
         // --- Logical Types ---

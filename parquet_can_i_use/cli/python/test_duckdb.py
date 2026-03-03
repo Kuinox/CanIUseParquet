@@ -51,27 +51,38 @@ def main():
             con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
         results["compression"][codec_name] = test_feature(codec_name, write_read)
 
-    # --- Encoding ---
-    # DuckDB handles encoding internally; test by writing and reading
-    enc_support = {
-        "PLAIN": True,
-        "PLAIN_DICTIONARY": True,
-        "RLE_DICTIONARY": True,
-        "RLE": True,
-        "BIT_PACKED": True,
-        "DELTA_BINARY_PACKED": True,
-        "DELTA_LENGTH_BYTE_ARRAY": True,
-        "DELTA_BYTE_ARRAY": True,
-        "BYTE_STREAM_SPLIT": True,
-    }
-    for enc_name, supported in enc_support.items():
-        path = os.path.join(tmpdir, f"enc_{enc_name}.parquet")
-        def write_read_enc(p=path, s=supported):
-            if not s:
-                raise NotImplementedError("Not supported")
-            con.execute(f"COPY (SELECT 1 AS col) TO '{p}' (FORMAT PARQUET)")
-            con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-        results["encoding"][enc_name] = test_feature(enc_name, write_read_enc)
+    # --- Encoding × Type matrix ---
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+
+    def make_type_sql(ptype):
+        if ptype == "INT32":
+            return "1::INTEGER"
+        elif ptype == "INT64":
+            return "1::BIGINT"
+        elif ptype == "FLOAT":
+            return "1.0::FLOAT"
+        elif ptype == "DOUBLE":
+            return "1.0::DOUBLE"
+        elif ptype == "BOOLEAN":
+            return "true::BOOLEAN"
+        elif ptype == "STRING":
+            return "'hello'::VARCHAR"
+        elif ptype == "BINARY":
+            return "'\\x68656C6C6F'::BLOB"
+        raise ValueError(f"Unknown type: {ptype}")
+
+    enc_names = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+                 "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
+    for enc_name in enc_names:
+        results["encoding"][enc_name] = {}
+        for ptype in encoding_types:
+            path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
+            def write_read_enc(p=path, pt=ptype):
+                val_sql = make_type_sql(pt)
+                con.execute(f"COPY (SELECT {val_sql} AS col) TO '{p}' (FORMAT PARQUET)")
+                con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
+            # DuckDB handles all encodings internally via its writer
+            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
 
     # --- Logical Types ---
     lt_tests = {

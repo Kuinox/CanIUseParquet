@@ -1,0 +1,399 @@
+{
+  "_comment": "Version when each feature was first introduced, researched from changelogs and release notes.",
+  "pyarrow": {
+    "compression": {
+      "NONE": "0.8.0",
+      "SNAPPY": "0.8.0",
+      "GZIP": "0.8.0",
+      "BROTLI": "0.11.0",
+      "LZ4": "1.0.0",
+      "LZ4_RAW": "6.0.0",
+      "ZSTD": "0.11.0"
+    },
+    "encoding": {
+      "PLAIN": "0.8.0",
+      "PLAIN_DICTIONARY": "0.8.0",
+      "RLE_DICTIONARY": "0.8.0",
+      "RLE": "0.8.0",
+      "DELTA_BINARY_PACKED": "0.15.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "0.15.0",
+      "DELTA_BYTE_ARRAY": "0.15.0",
+      "BYTE_STREAM_SPLIT": "0.17.0"
+    },
+    "logical_types": {
+      "STRING": "0.8.0",
+      "DATE": "0.8.0",
+      "TIME_MILLIS": "0.8.0",
+      "TIME_MICROS": "0.8.0",
+      "TIME_NANOS": "1.0.0",
+      "TIMESTAMP_MILLIS": "0.8.0",
+      "TIMESTAMP_MICROS": "0.8.0",
+      "TIMESTAMP_NANOS": "1.0.0",
+      "INT96": "0.8.0",
+      "DECIMAL": "0.11.0",
+      "UUID": "10.0.0",
+      "JSON": "0.8.0",
+      "FLOAT16": "11.0.0",
+      "ENUM": "0.8.0",
+      "BSON": "0.8.0"
+    },
+    "nested_types": {
+      "LIST": "0.11.0",
+      "MAP": "0.11.0",
+      "STRUCT": "0.11.0",
+      "NESTED_LIST": "0.11.0",
+      "NESTED_MAP": "0.11.0",
+      "DEEP_NESTING": "0.11.0"
+    },
+    "advanced_features": {
+      "PAGE_INDEX": "8.0.0",
+      "COLUMN_ENCRYPTION": "4.0.0",
+      "DATA_PAGE_V2": "1.0.0",
+      "STATISTICS": "0.8.0",
+      "PREDICATE_PUSHDOWN": "0.9.0",
+      "PROJECTION_PUSHDOWN": "0.8.0",
+      "SCHEMA_EVOLUTION": "0.15.0"
+    }
+  },
+  "fastparquet": {
+    "compression": {
+      "NONE": "0.1.0",
+      "SNAPPY": "0.1.0",
+      "GZIP": "0.1.0",
+      "BROTLI": "0.3.0",
+      "LZ4": "0.3.0",
+      "LZ4_RAW": "0.8.0",
+      "ZSTD": "0.3.0"
+    },
+    "encoding": {
+      "PLAIN": "0.1.0",
+      "PLAIN_DICTIONARY": "0.1.0",
+      "RLE_DICTIONARY": "0.1.0",
+      "RLE": "0.1.0",
+      "BIT_PACKED": "0.1.0"
+    },
+    "logical_types": {
+      "STRING": "0.1.0",
+      "TIMESTAMP_MILLIS": "0.1.0",
+      "TIMESTAMP_MICROS": "0.1.0",
+      "TIMESTAMP_NANOS": "0.7.0",
+      "INT96": "0.1.0",
+      "DECIMAL": "0.1.0",
+      "FLOAT16": "2023.1.0",
+      "BSON": "0.1.0",
+      "INTERVAL": "0.1.0"
+    },
+    "nested_types": {
+      "LIST": "0.2.0",
+      "MAP": "0.2.0",
+      "STRUCT": "0.2.0",
+      "NESTED_LIST": "0.2.0",
+      "NESTED_MAP": "0.2.0",
+      "DEEP_NESTING": "0.2.0"
+    },
+    "advanced_features": {
+      "STATISTICS": "0.1.0",
+      "PREDICATE_PUSHDOWN": "0.1.0",
+      "PROJECTION_PUSHDOWN": "0.1.0",
+      "SCHEMA_EVOLUTION": "0.3.0"
+    }
+  },
+  "polars": {
+    "compression": {
+      "NONE": "0.13.0",
+      "SNAPPY": "0.13.0",
+      "GZIP": "0.13.0",
+      "BROTLI": "0.16.0",
+      "LZ4": "0.13.0",
+      "ZSTD": "0.13.0"
+    },
+    "encoding": {
+      "PLAIN": "0.13.0",
+      "PLAIN_DICTIONARY": "0.13.0",
+      "RLE_DICTIONARY": "0.13.0",
+      "RLE": "0.13.0",
+      "DELTA_BINARY_PACKED": "0.16.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "0.16.0",
+      "DELTA_BYTE_ARRAY": "0.16.0",
+      "BYTE_STREAM_SPLIT": "0.19.0"
+    },
+    "logical_types": {
+      "STRING": "0.13.0",
+      "DATE": "0.13.0",
+      "TIME_MILLIS": "0.13.0",
+      "TIME_MICROS": "0.13.0",
+      "TIME_NANOS": "0.16.0",
+      "TIMESTAMP_MILLIS": "0.13.0",
+      "TIMESTAMP_MICROS": "0.13.0",
+      "TIMESTAMP_NANOS": "0.16.0",
+      "DECIMAL": "0.15.0",
+      "UUID": "0.19.0",
+      "JSON": "0.19.0",
+      "FLOAT16": "0.19.0",
+      "ENUM": "0.13.0",
+      "BSON": "0.19.0",
+      "INTERVAL": "0.15.0"
+    },
+    "nested_types": {
+      "LIST": "0.13.0",
+      "MAP": "0.15.0",
+      "STRUCT": "0.13.0",
+      "NESTED_LIST": "0.15.0",
+      "DEEP_NESTING": "0.16.0"
+    },
+    "advanced_features": {
+      "STATISTICS": "0.13.0",
+      "DATA_PAGE_V2": "0.19.0",
+      "PREDICATE_PUSHDOWN": "0.13.0",
+      "PROJECTION_PUSHDOWN": "0.13.0"
+    }
+  },
+  "duckdb": {
+    "compression": {
+      "NONE": "0.2.0",
+      "SNAPPY": "0.2.0",
+      "GZIP": "0.2.0",
+      "BROTLI": "0.8.0",
+      "LZ4": "0.5.0",
+      "LZ4_RAW": "0.8.0",
+      "ZSTD": "0.3.0"
+    },
+    "encoding": {
+      "PLAIN": "0.2.0",
+      "PLAIN_DICTIONARY": "0.2.0",
+      "RLE_DICTIONARY": "0.2.0",
+      "RLE": "0.2.0",
+      "BIT_PACKED": "0.6.0",
+      "DELTA_BINARY_PACKED": "0.6.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "0.6.0",
+      "DELTA_BYTE_ARRAY": "0.6.0",
+      "BYTE_STREAM_SPLIT": "0.9.0"
+    },
+    "logical_types": {
+      "STRING": "0.2.0",
+      "DATE": "0.2.0",
+      "TIME_MILLIS": "0.2.0",
+      "TIME_MICROS": "0.2.0",
+      "TIME_NANOS": "0.6.0",
+      "TIMESTAMP_MILLIS": "0.2.0",
+      "TIMESTAMP_MICROS": "0.2.0",
+      "TIMESTAMP_NANOS": "0.6.0",
+      "DECIMAL": "0.3.0",
+      "UUID": "0.8.0",
+      "JSON": "0.8.0",
+      "ENUM": "0.5.0",
+      "INTERVAL": "0.5.0"
+    },
+    "nested_types": {
+      "LIST": "0.3.0",
+      "MAP": "0.6.0",
+      "STRUCT": "0.3.0",
+      "NESTED_LIST": "0.6.0",
+      "NESTED_MAP": "0.6.0",
+      "DEEP_NESTING": "0.6.0"
+    },
+    "advanced_features": {
+      "PAGE_INDEX": "0.6.0",
+      "BLOOM_FILTER": "0.9.0",
+      "COLUMN_ENCRYPTION": "0.9.0",
+      "DATA_PAGE_V2": "0.6.0",
+      "STATISTICS": "0.2.0",
+      "PREDICATE_PUSHDOWN": "0.2.0",
+      "PROJECTION_PUSHDOWN": "0.2.0",
+      "SCHEMA_EVOLUTION": "0.8.0"
+    }
+  },
+  "parquet-rs": {
+    "compression": {
+      "NONE": "1.0.0",
+      "SNAPPY": "1.0.0",
+      "GZIP": "1.0.0",
+      "BROTLI": "1.0.0",
+      "LZ4": "5.0.0",
+      "LZ4_RAW": "22.0.0",
+      "ZSTD": "5.0.0"
+    },
+    "encoding": {
+      "PLAIN": "1.0.0",
+      "RLE": "1.0.0",
+      "DELTA_BINARY_PACKED": "5.0.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "5.0.0",
+      "DELTA_BYTE_ARRAY": "5.0.0",
+      "BYTE_STREAM_SPLIT": "22.0.0"
+    },
+    "logical_types": {
+      "STRING": "1.0.0",
+      "DATE": "1.0.0",
+      "TIME_MILLIS": "1.0.0",
+      "TIME_MICROS": "1.0.0",
+      "TIME_NANOS": "1.0.0",
+      "TIMESTAMP_MILLIS": "1.0.0",
+      "TIMESTAMP_MICROS": "1.0.0",
+      "TIMESTAMP_NANOS": "1.0.0",
+      "DECIMAL": "1.0.0",
+      "UUID": "22.0.0",
+      "JSON": "1.0.0",
+      "FLOAT16": "42.0.0",
+      "ENUM": "1.0.0",
+      "INTERVAL": "1.0.0"
+    },
+    "nested_types": {
+      "LIST": "1.0.0",
+      "MAP": "5.0.0",
+      "STRUCT": "1.0.0",
+      "NESTED_LIST": "5.0.0",
+      "NESTED_MAP": "5.0.0",
+      "DEEP_NESTING": "5.0.0"
+    },
+    "advanced_features": {
+      "STATISTICS": "1.0.0",
+      "PAGE_INDEX": "22.0.0",
+      "BLOOM_FILTER": "22.0.0",
+      "DATA_PAGE_V2": "5.0.0",
+      "PREDICATE_PUSHDOWN": "1.0.0",
+      "PROJECTION_PUSHDOWN": "1.0.0"
+    }
+  },
+  "parquet-go": {
+    "compression": {
+      "NONE": "0.1.0",
+      "SNAPPY": "0.1.0",
+      "GZIP": "0.1.0",
+      "LZ4": "0.1.0",
+      "LZ4_RAW": "0.1.0",
+      "ZSTD": "0.1.0"
+    },
+    "encoding": {
+      "PLAIN": "0.1.0",
+      "PLAIN_DICTIONARY": "0.1.0",
+      "RLE_DICTIONARY": "0.1.0",
+      "RLE": "0.1.0",
+      "DELTA_BINARY_PACKED": "0.1.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "0.1.0",
+      "DELTA_BYTE_ARRAY": "0.1.0"
+    },
+    "logical_types": {
+      "STRING": "0.1.0",
+      "DATE": "0.1.0",
+      "TIME_MILLIS": "0.1.0",
+      "TIME_MICROS": "0.1.0",
+      "TIMESTAMP_MILLIS": "0.1.0",
+      "TIMESTAMP_MICROS": "0.1.0",
+      "DECIMAL": "0.1.0"
+    },
+    "nested_types": {
+      "LIST": "0.1.0",
+      "MAP": "0.1.0",
+      "STRUCT": "0.1.0"
+    },
+    "advanced_features": {
+      "STATISTICS": "0.1.0",
+      "PAGE_INDEX": "0.10.0",
+      "BLOOM_FILTER": "0.10.0",
+      "PROJECTION_PUSHDOWN": "0.1.0"
+    }
+  },
+  "parquet-java": {
+    "compression": {
+      "NONE": "1.0.0",
+      "SNAPPY": "1.0.0",
+      "GZIP": "1.0.0",
+      "BROTLI": "1.8.0",
+      "LZ4": "1.8.0",
+      "LZ4_RAW": "1.12.0",
+      "ZSTD": "1.10.0"
+    },
+    "encoding": {
+      "PLAIN": "1.0.0",
+      "PLAIN_DICTIONARY": "1.0.0",
+      "RLE_DICTIONARY": "1.5.0",
+      "RLE": "1.0.0",
+      "BIT_PACKED": "1.0.0",
+      "DELTA_BINARY_PACKED": "1.5.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "1.5.0",
+      "DELTA_BYTE_ARRAY": "1.5.0",
+      "BYTE_STREAM_SPLIT": "1.11.0"
+    },
+    "logical_types": {
+      "STRING": "1.0.0",
+      "DATE": "1.0.0",
+      "TIME_MILLIS": "1.0.0",
+      "TIME_MICROS": "1.0.0",
+      "TIME_NANOS": "1.10.0",
+      "TIMESTAMP_MILLIS": "1.0.0",
+      "TIMESTAMP_MICROS": "1.0.0",
+      "TIMESTAMP_NANOS": "1.10.0",
+      "INT96": "1.0.0",
+      "DECIMAL": "1.0.0",
+      "UUID": "1.12.0",
+      "JSON": "1.0.0",
+      "FLOAT16": "1.14.0",
+      "ENUM": "1.0.0",
+      "BSON": "1.0.0",
+      "INTERVAL": "1.0.0"
+    },
+    "nested_types": {
+      "LIST": "1.0.0",
+      "MAP": "1.0.0",
+      "STRUCT": "1.0.0",
+      "NESTED_LIST": "1.0.0",
+      "NESTED_MAP": "1.0.0",
+      "DEEP_NESTING": "1.0.0"
+    },
+    "advanced_features": {
+      "STATISTICS": "1.0.0",
+      "PAGE_INDEX": "1.11.0",
+      "BLOOM_FILTER": "1.12.0",
+      "DATA_PAGE_V2": "1.5.0",
+      "COLUMN_ENCRYPTION": "1.12.0",
+      "PREDICATE_PUSHDOWN": "1.0.0",
+      "PROJECTION_PUSHDOWN": "1.0.0",
+      "SCHEMA_EVOLUTION": "1.0.0"
+    }
+  },
+  "parquet-dotnet": {
+    "compression": {
+      "NONE": "1.0.0",
+      "SNAPPY": "1.0.0",
+      "GZIP": "2.0.0",
+      "BROTLI": "4.0.0",
+      "LZ4": "4.0.0",
+      "LZ4_RAW": "4.6.0",
+      "ZSTD": "4.0.0"
+    },
+    "encoding": {
+      "PLAIN": "1.0.0",
+      "PLAIN_DICTIONARY": "1.0.0",
+      "RLE_DICTIONARY": "2.0.0",
+      "RLE": "1.0.0",
+      "BIT_PACKED": "2.0.0",
+      "DELTA_BINARY_PACKED": "3.0.0",
+      "DELTA_LENGTH_BYTE_ARRAY": "3.0.0",
+      "DELTA_BYTE_ARRAY": "3.0.0",
+      "BYTE_STREAM_SPLIT": "4.0.0"
+    },
+    "logical_types": {
+      "STRING": "1.0.0",
+      "DATE": "1.0.0",
+      "TIME_MILLIS": "2.0.0",
+      "TIME_MICROS": "2.0.0",
+      "TIMESTAMP_MILLIS": "1.0.0",
+      "TIMESTAMP_MICROS": "2.0.0",
+      "DECIMAL": "2.0.0",
+      "UUID": "4.0.0",
+      "ENUM": "3.0.0"
+    },
+    "nested_types": {
+      "LIST": "2.0.0",
+      "MAP": "2.0.0",
+      "STRUCT": "2.0.0",
+      "NESTED_LIST": "3.0.0",
+      "NESTED_MAP": "3.0.0",
+      "DEEP_NESTING": "3.0.0"
+    },
+    "advanced_features": {
+      "STATISTICS": "1.0.0",
+      "PROJECTION_PUSHDOWN": "2.0.0"
+    }
+  }
+}

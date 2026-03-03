@@ -119,8 +119,15 @@ func main() {
 	})
 	results["compression"] = compression
 
-	// --- Encoding ---
-	encoding := map[string]bool{
+	// --- Encoding × Type matrix ---
+	// parquet-go doesn't allow per-column encoding control in high-level API
+	// but we test which encoding/type combos its writer handles
+	typeNames := []string{"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"}
+	encNames := []string{"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+		"DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"}
+
+	// parquet-go supports these encodings internally
+	goEncSupport := map[string]bool{
 		"PLAIN":                    true,
 		"PLAIN_DICTIONARY":        true,
 		"RLE_DICTIONARY":          true,
@@ -130,6 +137,23 @@ func main() {
 		"DELTA_LENGTH_BYTE_ARRAY": true,
 		"DELTA_BYTE_ARRAY":        true,
 		"BYTE_STREAM_SPLIT":       false,
+	}
+
+	encoding := map[string]interface{}{}
+	for _, encName := range encNames {
+		typeResults := map[string]bool{}
+		for _, typeName := range typeNames {
+			supported := goEncSupport[encName]
+			if supported {
+				// Test with the appropriate type
+				typeResults[typeName] = testFeature(func() error {
+					return writeReadParquet(tmpdir, fmt.Sprintf("enc_%s_%s", encName, typeName), rows)
+				})
+			} else {
+				typeResults[typeName] = false
+			}
+		}
+		encoding[encName] = typeResults
 	}
 	results["encoding"] = encoding
 

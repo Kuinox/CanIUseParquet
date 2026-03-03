@@ -20,15 +20,87 @@
     "ZSTD": true
   },
   "encoding": {
-    "BIT_PACKED": false,
-    "BYTE_STREAM_SPLIT": true,
-    "DELTA_BINARY_PACKED": true,
-    "DELTA_BYTE_ARRAY": true,
-    "DELTA_LENGTH_BYTE_ARRAY": true,
-    "PLAIN": true,
-    "PLAIN_DICTIONARY": false,
-    "RLE": true,
-    "RLE_DICTIONARY": false
+    "BIT_PACKED": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": false
+    },
+    "BYTE_STREAM_SPLIT": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": false
+    },
+    "DELTA_BINARY_PACKED": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": true,
+      "INT64": true,
+      "STRING": false
+    },
+    "DELTA_BYTE_ARRAY": {
+      "BINARY": true,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": true
+    },
+    "DELTA_LENGTH_BYTE_ARRAY": {
+      "BINARY": true,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": true
+    },
+    "PLAIN": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "PLAIN_DICTIONARY": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": false
+    },
+    "RLE": {
+      "BINARY": false,
+      "BOOLEAN": true,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": false
+    },
+    "RLE_DICTIONARY": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": false
+    }
   },
   "logical_types": {
     "BSON": false,
