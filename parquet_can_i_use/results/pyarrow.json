@@ -1,0 +1,133 @@
+{
+  "tool": "PyArrow",
+  "version": "23.0.1",
+  "compression": {
+    "NONE": true,
+    "SNAPPY": true,
+    "GZIP": true,
+    "BROTLI": true,
+    "LZO": false,
+    "LZ4": true,
+    "LZ4_RAW": true,
+    "ZSTD": true
+  },
+  "encoding": {
+    "PLAIN": {
+      "INT32": true,
+      "INT64": true,
+      "FLOAT": true,
+      "DOUBLE": true,
+      "BOOLEAN": true,
+      "STRING": true,
+      "BINARY": true
+    },
+    "PLAIN_DICTIONARY": {
+      "INT32": true,
+      "INT64": true,
+      "FLOAT": true,
+      "DOUBLE": true,
+      "BOOLEAN": true,
+      "STRING": true,
+      "BINARY": true
+    },
+    "RLE_DICTIONARY": {
+      "INT32": true,
+      "INT64": true,
+      "FLOAT": true,
+      "DOUBLE": true,
+      "BOOLEAN": true,
+      "STRING": true,
+      "BINARY": true
+    },
+    "RLE": {
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": true,
+      "STRING": false,
+      "BINARY": false
+    },
+    "BIT_PACKED": {
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
+    },
+    "DELTA_BINARY_PACKED": {
+      "INT32": true,
+      "INT64": true,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
+    },
+    "DELTA_LENGTH_BYTE_ARRAY": {
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": true,
+      "BINARY": true
+    },
+    "DELTA_BYTE_ARRAY": {
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": true,
+      "BINARY": true
+    },
+    "BYTE_STREAM_SPLIT": {
+      "INT32": true,
+      "INT64": true,
+      "FLOAT": true,
+      "DOUBLE": true,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
+    }
+  },
+  "logical_types": {
+    "STRING": true,
+    "DATE": true,
+    "TIME_MILLIS": true,
+    "TIME_MICROS": true,
+    "TIME_NANOS": true,
+    "TIMESTAMP_MILLIS": true,
+    "TIMESTAMP_MICROS": true,
+    "TIMESTAMP_NANOS": true,
+    "INT96": true,
+    "DECIMAL": true,
+    "UUID": true,
+    "JSON": true,
+    "FLOAT16": true,
+    "ENUM": true,
+    "BSON": true,
+    "INTERVAL": false
+  },
+  "nested_types": {
+    "LIST": true,
+    "MAP": true,
+    "STRUCT": true,
+    "NESTED_LIST": true,
+    "NESTED_MAP": true,
+    "DEEP_NESTING": true
+  },
+  "advanced_features": {
+    "PAGE_INDEX": true,
+    "BLOOM_FILTER": false,
+    "COLUMN_ENCRYPTION": true,
+    "DATA_PAGE_V2": true,
+    "STATISTICS": true,
+    "PREDICATE_PUSHDOWN": true,
+    "PROJECTION_PUSHDOWN": true,
+    "SCHEMA_EVOLUTION": true
+  }
+}

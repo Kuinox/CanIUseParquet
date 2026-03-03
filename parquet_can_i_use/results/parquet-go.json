@@ -1,0 +1,133 @@
+{
+  "advanced_features": {
+    "BLOOM_FILTER": true,
+    "COLUMN_ENCRYPTION": false,
+    "DATA_PAGE_V2": false,
+    "PAGE_INDEX": true,
+    "PREDICATE_PUSHDOWN": false,
+    "PROJECTION_PUSHDOWN": true,
+    "SCHEMA_EVOLUTION": false,
+    "STATISTICS": true
+  },
+  "compression": {
+    "BROTLI": false,
+    "GZIP": true,
+    "LZ4": true,
+    "LZ4_RAW": true,
+    "LZO": false,
+    "NONE": true,
+    "SNAPPY": true,
+    "ZSTD": true
+  },
+  "encoding": {
+    "BIT_PACKED": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": false
+    },
+    "BYTE_STREAM_SPLIT": {
+      "BINARY": false,
+      "BOOLEAN": false,
+      "DOUBLE": false,
+      "FLOAT": false,
+      "INT32": false,
+      "INT64": false,
+      "STRING": false
+    },
+    "DELTA_BINARY_PACKED": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "DELTA_BYTE_ARRAY": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "DELTA_LENGTH_BYTE_ARRAY": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "PLAIN": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "PLAIN_DICTIONARY": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "RLE": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    },
+    "RLE_DICTIONARY": {
+      "BINARY": true,
+      "BOOLEAN": true,
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
+    }
+  },
+  "logical_types": {
+    "BSON": false,
+    "DATE": true,
+    "DECIMAL": true,
+    "ENUM": false,
+    "FLOAT16": false,
+    "INT96": false,
+    "INTERVAL": false,
+    "JSON": false,
+    "STRING": true,
+    "TIMESTAMP_MICROS": true,
+    "TIMESTAMP_MILLIS": true,
+    "TIMESTAMP_NANOS": false,
+    "TIME_MICROS": true,
+    "TIME_MILLIS": true,
+    "TIME_NANOS": false,
+    "UUID": false
+  },
+  "nested_types": {
+    "DEEP_NESTING": false,
+    "LIST": true,
+    "MAP": true,
+    "NESTED_LIST": false,
+    "NESTED_MAP": false,
+    "STRUCT": true
+  },
+  "tool": "parquet-go",
+  "version": "0.24.0"
+}

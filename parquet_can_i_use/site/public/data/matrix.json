@@ -1,0 +1,3592 @@
+{
+  "tools": {
+    "pyarrow": {
+      "display_name": "PyArrow",
+      "language": "Python",
+      "latest_version": "23.0.1",
+      "tested_versions": [
+        "23.0.1"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "BROTLI": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "23.0.1"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "23.0.1"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "23.0.1"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "23.0.1"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "23.0.1"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "23.0.1"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "23.0.1"
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "TIME_NANOS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "INT96": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "JSON": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "FLOAT16": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "ENUM": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "BSON": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "INTERVAL": {
+          "supported": false,
+          "since": null
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "NESTED_MAP": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "23.0.1"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "PAGE_INDEX": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "BLOOM_FILTER": {
+          "supported": false,
+          "since": null
+        },
+        "DATA_PAGE_V2": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "23.0.1"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": true,
+          "since": "23.0.1"
+        }
+      }
+    },
+    "fastparquet": {
+      "display_name": "fastparquet",
+      "language": "Python",
+      "latest_version": "2025.12.0",
+      "tested_versions": [
+        "2025.12.0"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "BROTLI": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "2025.12.0"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "2025.12.0"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "2025.12.0"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "2025.12.0"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "2025.12.0"
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "DATE": {
+          "supported": false,
+          "since": null
+        },
+        "TIME_MILLIS": {
+          "supported": false,
+          "since": null
+        },
+        "TIME_MICROS": {
+          "supported": false,
+          "since": null
+        },
+        "TIME_NANOS": {
+          "supported": false,
+          "since": null
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "INT96": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "JSON": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "FLOAT16": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "ENUM": {
+          "supported": false,
+          "since": null
+        },
+        "BSON": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "INTERVAL": {
+          "supported": true,
+          "since": "2025.12.0"
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "NESTED_MAP": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "2025.12.0"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "PAGE_INDEX": {
+          "supported": false,
+          "since": null
+        },
+        "BLOOM_FILTER": {
+          "supported": false,
+          "since": null
+        },
+        "DATA_PAGE_V2": {
+          "supported": false,
+          "since": null
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": false,
+          "since": null
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "2025.12.0"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": true,
+          "since": "2025.12.0"
+        }
+      }
+    },
+    "polars": {
+      "display_name": "Polars",
+      "language": "Rust / Python",
+      "latest_version": "1.38.1",
+      "tested_versions": [
+        "1.38.1"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "BROTLI": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "LZ4_RAW": {
+          "supported": false,
+          "since": null
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "1.38.1"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.38.1"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.38.1"
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "TIME_NANOS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "INT96": {
+          "supported": false,
+          "since": null
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "JSON": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "FLOAT16": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "ENUM": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "BSON": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "INTERVAL": {
+          "supported": true,
+          "since": "1.38.1"
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "NESTED_MAP": {
+          "supported": false,
+          "since": null
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "1.38.1"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "PAGE_INDEX": {
+          "supported": false,
+          "since": null
+        },
+        "BLOOM_FILTER": {
+          "supported": false,
+          "since": null
+        },
+        "DATA_PAGE_V2": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": false,
+          "since": null
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "1.38.1"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": false,
+          "since": null
+        }
+      }
+    },
+    "duckdb": {
+      "display_name": "DuckDB",
+      "language": "C++",
+      "latest_version": "1.4.4",
+      "tested_versions": [
+        "1.4.4"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "BROTLI": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "1.4.4"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "1.4.4"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "1.4.4"
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "TIME_NANOS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "INT96": {
+          "supported": false,
+          "since": null
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "JSON": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "FLOAT16": {
+          "supported": false,
+          "since": null
+        },
+        "ENUM": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "BSON": {
+          "supported": false,
+          "since": null
+        },
+        "INTERVAL": {
+          "supported": true,
+          "since": "1.4.4"
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "NESTED_MAP": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "1.4.4"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "PAGE_INDEX": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "BLOOM_FILTER": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "DATA_PAGE_V2": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": false,
+          "since": null
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "1.4.4"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": true,
+          "since": "1.4.4"
+        }
+      }
+    },
+    "parquet-rs": {
+      "display_name": "parquet-rs",
+      "language": "Rust",
+      "latest_version": "55.2.0",
+      "tested_versions": [
+        "55.2.0"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "BROTLI": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "55.2.0"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "55.2.0"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "55.2.0"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "55.2.0"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "55.2.0"
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "TIME_NANOS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "INT96": {
+          "supported": false,
+          "since": null
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "JSON": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "FLOAT16": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "ENUM": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "BSON": {
+          "supported": false,
+          "since": null
+        },
+        "INTERVAL": {
+          "supported": true,
+          "since": "55.2.0"
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "NESTED_MAP": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "55.2.0"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "PAGE_INDEX": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "BLOOM_FILTER": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "DATA_PAGE_V2": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": false,
+          "since": null
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "55.2.0"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": false,
+          "since": null
+        }
+      }
+    },
+    "parquet-go": {
+      "display_name": "parquet-go",
+      "language": "Go",
+      "latest_version": "0.24.0",
+      "tested_versions": [
+        "0.24.0"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "BROTLI": {
+          "supported": false,
+          "since": null
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "0.24.0"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "0.24.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "0.24.0"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": false,
+            "since": null
+          },
+          "INT64": {
+            "supported": false,
+            "since": null
+          },
+          "FLOAT": {
+            "supported": false,
+            "since": null
+          },
+          "DOUBLE": {
+            "supported": false,
+            "since": null
+          },
+          "BOOLEAN": {
+            "supported": false,
+            "since": null
+          },
+          "STRING": {
+            "supported": false,
+            "since": null
+          },
+          "BINARY": {
+            "supported": false,
+            "since": null
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "TIME_NANOS": {
+          "supported": false,
+          "since": null
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": false,
+          "since": null
+        },
+        "INT96": {
+          "supported": false,
+          "since": null
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "UUID": {
+          "supported": false,
+          "since": null
+        },
+        "JSON": {
+          "supported": false,
+          "since": null
+        },
+        "FLOAT16": {
+          "supported": false,
+          "since": null
+        },
+        "ENUM": {
+          "supported": false,
+          "since": null
+        },
+        "BSON": {
+          "supported": false,
+          "since": null
+        },
+        "INTERVAL": {
+          "supported": false,
+          "since": null
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "NESTED_LIST": {
+          "supported": false,
+          "since": null
+        },
+        "NESTED_MAP": {
+          "supported": false,
+          "since": null
+        },
+        "DEEP_NESTING": {
+          "supported": false,
+          "since": null
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "PAGE_INDEX": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "BLOOM_FILTER": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "DATA_PAGE_V2": {
+          "supported": false,
+          "since": null
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": false,
+          "since": null
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": false,
+          "since": null
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "0.24.0"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": false,
+          "since": null
+        }
+      }
+    },
+    "parquet-java": {
+      "display_name": "parquet-java",
+      "language": "Java",
+      "latest_version": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
+      "tested_versions": [
+        "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "BROTLI": {
+          "supported": false,
+          "since": null
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "TIME_NANOS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "INT96": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "JSON": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "FLOAT16": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "ENUM": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "BSON": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "INTERVAL": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "NESTED_MAP": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "PAGE_INDEX": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "BLOOM_FILTER": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "DATA_PAGE_V2": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": true,
+          "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
+        }
+      }
+    },
+    "parquet-dotnet": {
+      "display_name": "parquet-dotnet",
+      "language": "C# / .NET",
+      "latest_version": "5.0.0.0",
+      "tested_versions": [
+        "5.0.0.0"
+      ],
+      "compression": {
+        "NONE": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "SNAPPY": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "GZIP": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "BROTLI": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "LZO": {
+          "supported": false,
+          "since": null
+        },
+        "LZ4": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "LZ4_RAW": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "ZSTD": {
+          "supported": true,
+          "since": "5.0.0.0"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "INT64": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "FLOAT": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "DOUBLE": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BOOLEAN": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "STRING": {
+            "supported": true,
+            "since": "5.0.0.0"
+          },
+          "BINARY": {
+            "supported": true,
+            "since": "5.0.0.0"
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "DATE": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "TIME_MILLIS": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "TIME_MICROS": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "TIME_NANOS": {
+          "supported": false,
+          "since": null
+        },
+        "TIMESTAMP_MILLIS": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "TIMESTAMP_MICROS": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "TIMESTAMP_NANOS": {
+          "supported": false,
+          "since": null
+        },
+        "INT96": {
+          "supported": false,
+          "since": null
+        },
+        "DECIMAL": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "UUID": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "JSON": {
+          "supported": false,
+          "since": null
+        },
+        "FLOAT16": {
+          "supported": false,
+          "since": null
+        },
+        "ENUM": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "BSON": {
+          "supported": false,
+          "since": null
+        },
+        "INTERVAL": {
+          "supported": false,
+          "since": null
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "MAP": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "STRUCT": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "NESTED_LIST": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "NESTED_MAP": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "DEEP_NESTING": {
+          "supported": true,
+          "since": "5.0.0.0"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "PAGE_INDEX": {
+          "supported": false,
+          "since": null
+        },
+        "BLOOM_FILTER": {
+          "supported": false,
+          "since": null
+        },
+        "DATA_PAGE_V2": {
+          "supported": false,
+          "since": null
+        },
+        "COLUMN_ENCRYPTION": {
+          "supported": false,
+          "since": null
+        },
+        "PREDICATE_PUSHDOWN": {
+          "supported": false,
+          "since": null
+        },
+        "PROJECTION_PUSHDOWN": {
+          "supported": true,
+          "since": "5.0.0.0"
+        },
+        "SCHEMA_EVOLUTION": {
+          "supported": false,
+          "since": null
+        }
+      }
+    }
+  },
+  "categories": {
+    "compression": [
+      "NONE",
+      "SNAPPY",
+      "GZIP",
+      "BROTLI",
+      "LZO",
+      "LZ4",
+      "LZ4_RAW",
+      "ZSTD"
+    ],
+    "encoding": [
+      "PLAIN",
+      "PLAIN_DICTIONARY",
+      "RLE_DICTIONARY",
+      "RLE",
+      "BIT_PACKED",
+      "DELTA_BINARY_PACKED",
+      "DELTA_LENGTH_BYTE_ARRAY",
+      "DELTA_BYTE_ARRAY",
+      "BYTE_STREAM_SPLIT"
+    ],
+    "encoding_types": [
+      "INT32",
+      "INT64",
+      "FLOAT",
+      "DOUBLE",
+      "BOOLEAN",
+      "STRING",
+      "BINARY"
+    ],
+    "logical_types": [
+      "STRING",
+      "DATE",
+      "TIME_MILLIS",
+      "TIME_MICROS",
+      "TIME_NANOS",
+      "TIMESTAMP_MILLIS",
+      "TIMESTAMP_MICROS",
+      "TIMESTAMP_NANOS",
+      "INT96",
+      "DECIMAL",
+      "UUID",
+      "JSON",
+      "FLOAT16",
+      "ENUM",
+      "BSON",
+      "INTERVAL"
+    ],
+    "nested_types": [
+      "LIST",
+      "MAP",
+      "STRUCT",
+      "NESTED_LIST",
+      "NESTED_MAP",
+      "DEEP_NESTING"
+    ],
+    "advanced_features": [
+      "STATISTICS",
+      "PAGE_INDEX",
+      "BLOOM_FILTER",
+      "DATA_PAGE_V2",
+      "COLUMN_ENCRYPTION",
+      "PREDICATE_PUSHDOWN",
+      "PROJECTION_PUSHDOWN",
+      "SCHEMA_EVOLUTION"
+    ]
+  }
+}
