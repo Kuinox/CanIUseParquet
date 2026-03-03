@@ -110,7 +110,7 @@ jobs:
       - name: Run test CLI
         id: test
         run: |
-          python parquet_can_i_use/cli/python/test_${{ matrix.tool == 'pyarrow' && 'pyarrow' || matrix.tool == 'fastparquet' && 'fastparquet' || matrix.tool == 'polars' && 'polars' || 'duckdb' }}.py > result.json 2>/dev/null || echo '{}' > result.json
+          python parquet_can_i_use/cli/python/test_${{ matrix.tool }}.py > result.json 2>/dev/null || echo '{}' > result.json
           cat result.json
         continue-on-error: true
 
