@@ -90,8 +90,8 @@
             "since": "23.0.1"
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "23.0.1"
+            "supported": false,
+            "since": null
           },
           "STRING": {
             "supported": true,
@@ -120,8 +120,8 @@
             "since": "23.0.1"
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "23.0.1"
+            "supported": false,
+            "since": null
           },
           "STRING": {
             "supported": true,
@@ -135,19 +135,23 @@
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": true,
@@ -155,41 +159,50 @@
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "BIT_PACKED": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
@@ -203,45 +216,55 @@
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_LENGTH_BYTE_ARRAY": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": true,
@@ -255,23 +278,28 @@
         "DELTA_BYTE_ARRAY": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": true,
@@ -301,15 +329,18 @@
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         }
       },
@@ -575,19 +606,23 @@
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": true,
@@ -595,29 +630,35 @@
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "BIT_PACKED": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": true,
@@ -625,11 +666,13 @@
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
@@ -643,45 +686,55 @@
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_LENGTH_BYTE_ARRAY": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
@@ -695,23 +748,28 @@
         "DELTA_BYTE_ARRAY": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
@@ -741,15 +799,18 @@
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         }
       },
@@ -1045,31 +1106,38 @@
         "BIT_PACKED": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
@@ -1394,242 +1462,273 @@
         },
         "PLAIN_DICTIONARY": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           }
         },
         "RLE_DICTIONARY": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           }
         },
         "RLE": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         },
         "BIT_PACKED": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_LENGTH_BYTE_ARRAY": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           }
         },
         "DELTA_BYTE_ARRAY": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           }
         },
         "BYTE_STREAM_SPLIT": {
           "INT32": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "1.4.4"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         }
       },
@@ -1834,80 +1933,84 @@
         },
         "PLAIN_DICTIONARY": {
           "INT32": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "INT64": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "FLOAT": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "DOUBLE": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "BOOLEAN": {
             "supported": false,
             "since": null
           },
           "STRING": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "BINARY": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           }
         },
         "RLE_DICTIONARY": {
           "INT32": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "INT64": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "FLOAT": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "DOUBLE": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "BOOLEAN": {
             "supported": false,
             "since": null
           },
           "STRING": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           },
           "BINARY": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "55.2.0"
           }
         },
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": true,
@@ -1915,41 +2018,50 @@
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "BIT_PACKED": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
@@ -1963,45 +2075,55 @@
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_LENGTH_BYTE_ARRAY": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": true,
@@ -2015,23 +2137,28 @@
         "DELTA_BYTE_ARRAY": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": true,
@@ -2061,15 +2188,18 @@
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         }
       },
@@ -2365,31 +2495,38 @@
         "BIT_PACKED": {
           "INT32": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
@@ -2501,15 +2638,18 @@
           },
           "BOOLEAN": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
             "supported": false,
-            "since": null
+            "since": null,
+            "not_applicable": true
           }
         }
       },
@@ -3124,12 +3264,12 @@
       "encoding": {
         "PLAIN": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
             "supported": true,
@@ -3154,62 +3294,62 @@
         },
         "PLAIN_DICTIONARY": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           }
         },
         "RLE_DICTIONARY": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           }
         },
         "RLE": {
@@ -3244,32 +3384,39 @@
         },
         "BIT_PACKED": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_BINARY_PACKED": {
@@ -3282,114 +3429,132 @@
             "since": "5.0.0.0"
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         },
         "DELTA_LENGTH_BYTE_ARRAY": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           }
         },
         "DELTA_BYTE_ARRAY": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           }
         },
         "BYTE_STREAM_SPLIT": {
           "INT32": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "INT64": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "FLOAT": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "DOUBLE": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null
           },
           "BOOLEAN": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           },
           "BINARY": {
-            "supported": true,
-            "since": "5.0.0.0"
+            "supported": false,
+            "since": null,
+            "not_applicable": true
           }
         }
       },
@@ -3588,5 +3753,28 @@
       "PROJECTION_PUSHDOWN",
       "SCHEMA_EVOLUTION"
     ]
+  },
+  "build_metadata": {
+    "expected_tools": [
+      "pyarrow",
+      "fastparquet",
+      "polars",
+      "duckdb",
+      "parquet-rs",
+      "parquet-go",
+      "parquet-java",
+      "parquet-dotnet"
+    ],
+    "available_tools": [
+      "pyarrow",
+      "fastparquet",
+      "polars",
+      "duckdb",
+      "parquet-rs",
+      "parquet-go",
+      "parquet-java",
+      "parquet-dotnet"
+    ],
+    "missing_tools": []
   }
 }

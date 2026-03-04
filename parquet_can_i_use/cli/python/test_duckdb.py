@@ -71,17 +71,40 @@ def main():
             return "'\\x68656C6C6F'::BLOB"
         raise ValueError(f"Unknown type: {ptype}")
 
+    def get_actual_encodings_duckdb(path):
+        """Return the set of encodings actually used in the file via DuckDB parquet_metadata."""
+        rows = con.execute(f"SELECT encodings FROM parquet_metadata('{path}')").fetchall()
+        enc_set = set()
+        for row in rows:
+            # encodings is returned as a comma-separated string or a list
+            val = row[0]
+            if val is None:
+                continue
+            if isinstance(val, (list, tuple)):
+                enc_set.update(str(e).strip() for e in val)
+            else:
+                enc_set.update(e.strip() for e in str(val).split(","))
+        return enc_set
+
     enc_names = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
                  "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
     for enc_name in enc_names:
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
             path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
-            def write_read_enc(p=path, pt=ptype):
+            def write_read_enc(p=path, pt=ptype, e=enc_name):
                 val_sql = make_type_sql(pt)
                 con.execute(f"COPY (SELECT {val_sql} AS col) TO '{p}' (FORMAT PARQUET)")
+                # Verify that DuckDB actually wrote the expected encoding
+                actual = get_actual_encodings_duckdb(p)
+                # RLE_DICTIONARY and PLAIN_DICTIONARY: look for dictionary encoding
+                if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
+                    if "RLE_DICTIONARY" not in actual and "PLAIN_DICTIONARY" not in actual:
+                        raise ValueError(f"Expected dictionary encoding, got {actual}")
+                else:
+                    if e not in actual:
+                        raise ValueError(f"Expected {e} in encodings, got {actual}")
                 con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-            # DuckDB handles all encodings internally via its writer
             results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
 
     # --- Logical Types ---

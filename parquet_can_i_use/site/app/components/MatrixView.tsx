@@ -12,6 +12,14 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
     );
   }
 
+  if (entry.not_applicable) {
+    return (
+      <td className="px-3 py-2 text-center bg-gray-800/30">
+        <span className="text-gray-500 cursor-default" title="Not applicable per Parquet spec">—</span>
+      </td>
+    );
+  }
+
   if (entry.supported) {
     return (
       <td className="px-3 py-2 text-center bg-green-950/30">
@@ -118,6 +126,9 @@ export default function MatrixView({ data }: { data: MatrixData }) {
         </span>
         <span>
           <span className="text-red-400">❌</span> Not supported
+        </span>
+        <span>
+          <span className="text-gray-500">—</span> Not applicable per Parquet spec
         </span>
         <span>
           <span className="text-gray-600">➖</span> Not tested

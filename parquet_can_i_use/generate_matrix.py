@@ -60,6 +60,22 @@ TOOL_LANGUAGES = {
 TOOL_ORDER = ["pyarrow", "fastparquet", "polars", "duckdb",
               "parquet-rs", "parquet-go", "parquet-java", "parquet-dotnet"]
 
+# Encoding × Type combinations that are valid per the Apache Parquet format spec.
+# Combinations not listed here are not defined by the spec; if a library cannot
+# produce them either, we mark them as "not_applicable" (gray) rather than red.
+# Libraries are free to support extras beyond the spec.
+SPEC_VALID_ENCODING_TYPES = {
+    "PLAIN":                    {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"},
+    "PLAIN_DICTIONARY":         {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"},
+    "RLE_DICTIONARY":           {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"},
+    "RLE":                      {"BOOLEAN"},
+    "BIT_PACKED":               set(),  # deprecated; not for data pages
+    "DELTA_BINARY_PACKED":      {"INT32", "INT64"},
+    "DELTA_LENGTH_BYTE_ARRAY":  {"STRING", "BINARY"},
+    "DELTA_BYTE_ARRAY":         {"STRING", "BINARY"},
+    "BYTE_STREAM_SPLIT":        {"FLOAT", "DOUBLE", "INT32", "INT64"},
+}
+
 # For running single-version tests (fallback)
 TOOLS = {
     "pyarrow": {
@@ -235,10 +251,15 @@ def build_matrix_data(multiversion_results):
                 else:
                     supported = None
                 first_ver = find_first_version(version_results, "encoding", enc, ptype)
-                tool_data["encoding"][enc][ptype] = {
-                    "supported": bool(supported) if supported is not None else False,
-                    "since": first_ver,
-                }
+                is_supported = bool(supported) if supported is not None else False
+                entry = {"supported": is_supported, "since": first_ver}
+                # If unsupported and the spec doesn't define this combination,
+                # mark as not_applicable (shown as gray) instead of red.
+                if not is_supported:
+                    spec_valid = SPEC_VALID_ENCODING_TYPES.get(enc, set())
+                    if ptype not in spec_valid:
+                        entry["not_applicable"] = True
+                tool_data["encoding"][enc][ptype] = entry
 
         # Logical Types
         for lt in LOGICAL_TYPES:
@@ -282,6 +303,8 @@ def build_matrix_data(multiversion_results):
 def symbol(entry):
     """Convert a feature entry to a markdown symbol."""
     if isinstance(entry, dict):
+        if entry.get("not_applicable"):
+            return "➖"
         if entry.get("supported"):
             since = entry.get("since")
             if since:

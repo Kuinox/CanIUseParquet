@@ -7,6 +7,7 @@ use parquet::basic::Compression;
 use parquet::basic::Encoding;
 use parquet::file::properties::WriterProperties;
 use serde_json::{json, Map, Value};
+use std::collections::HashSet;
 use std::fs::File;
 use std::sync::Arc;
 use tempfile::TempDir;
@@ -39,6 +40,49 @@ fn write_read_parquet(
     writer.write(batch)?;
     writer.close()?;
 
+    let file = File::open(&path)?;
+    let reader = ParquetRecordBatchReaderBuilder::try_new(file)?.build()?;
+    for batch in reader {
+        batch?;
+    }
+    Ok(())
+}
+
+/// Write a parquet file and verify that the requested encoding was actually used
+/// in the first column of the first row group.
+fn write_verify_encoding(
+    tmpdir: &TempDir,
+    name: &str,
+    batch: &RecordBatch,
+    props: WriterProperties,
+    expected_enc: Encoding,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let path = tmpdir.path().join(format!("{name}.parquet"));
+    let file = File::create(&path)?;
+    let mut writer = ArrowWriter::try_new(file, batch.schema(), Some(props))?;
+    writer.write(batch)?;
+    writer.close()?;
+
+    // Read back and verify the actual encoding used
+    let file = File::open(&path)?;
+    let builder = ParquetRecordBatchReaderBuilder::try_new(file)?;
+    let metadata = builder.metadata().clone();
+    let actual_encodings: HashSet<Encoding> = metadata
+        .row_group(0)
+        .column(0)
+        .encodings()
+        .iter()
+        .cloned()
+        .collect();
+    if !actual_encodings.contains(&expected_enc) {
+        return Err(format!(
+            "Expected encoding {:?} but file uses {:?}",
+            expected_enc, actual_encodings
+        )
+        .into());
+    }
+
+    // Read through to completion
     let file = File::open(&path)?;
     let reader = ParquetRecordBatchReaderBuilder::try_new(file)?.build()?;
     for batch in reader {
@@ -138,11 +182,25 @@ fn main() {
         for ptype in &type_names {
             let result = test_feature(|| {
                 let batch = make_typed_batch(ptype)?;
-                let props = WriterProperties::builder()
-                    .set_dictionary_enabled(false)
-                    .set_encoding(*enc)
-                    .build();
-                write_read_parquet(&tmpdir, &format!("enc_{enc_name}_{ptype}"), &batch, props)
+                // PLAIN_DICTIONARY/RLE_DICTIONARY use dictionary encoding; verify via
+                // RLE_DICTIONARY appearing in the column's actual encodings.
+                let (props, verify_enc) = if *enc == Encoding::PLAIN_DICTIONARY || *enc == Encoding::RLE_DICTIONARY {
+                    (
+                        WriterProperties::builder()
+                            .set_dictionary_enabled(true)
+                            .build(),
+                        Encoding::RLE_DICTIONARY,
+                    )
+                } else {
+                    (
+                        WriterProperties::builder()
+                            .set_dictionary_enabled(false)
+                            .set_encoding(*enc)
+                            .build(),
+                        *enc,
+                    )
+                };
+                write_verify_encoding(&tmpdir, &format!("enc_{enc_name}_{ptype}"), &batch, props, verify_enc)
             });
             type_results.insert(ptype.to_string(), json!(result));
         }
