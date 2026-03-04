@@ -1,6 +1,7 @@
 export interface FeatureEntry {
   supported: boolean;
   since: string | null;
+  not_applicable?: boolean;
 }
 
 export interface ToolData {

@@ -73,6 +73,15 @@ def main():
             return pa.table({"col": pa.array([b"hello", b"world", b"test"])})
         raise ValueError(f"Unknown type: {ptype}")
 
+    def get_column_encodings(path):
+        """Return the set of encodings actually used in the first column."""
+        meta = pq.read_metadata(path)
+        encodings = set()
+        for i in range(meta.num_row_groups):
+            col = meta.row_group(i).column(0)
+            encodings.update(col.encodings)
+        return encodings
+
     for enc_name in ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
                      "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]:
         results["encoding"][enc_name] = {}
@@ -82,8 +91,17 @@ def main():
                 t = make_typed_table(pt)
                 if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
                     pq.write_table(t, p, use_dictionary=True)
+                    actual = get_column_encodings(p)
+                    # Dictionary encoding uses RLE_DICTIONARY for data pages
+                    if "RLE_DICTIONARY" not in actual and "PLAIN_DICTIONARY" not in actual:
+                        raise ValueError(f"Expected dictionary encoding, got {actual}")
                 else:
                     pq.write_table(t, p, use_dictionary=False, column_encoding=e)
+                    actual = get_column_encodings(p)
+                    # Verify the requested encoding was actually used in the file.
+                    # RLE_DICTIONARY/PLAIN may appear alongside for level encoding.
+                    if e not in actual:
+                        raise ValueError(f"Expected {e} in encodings, got {actual}")
                 pq.read_table(p)
             results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
 

@@ -75,13 +75,13 @@
       "STRING": true
     },
     "PLAIN_DICTIONARY": {
-      "BINARY": false,
+      "BINARY": true,
       "BOOLEAN": false,
-      "DOUBLE": false,
-      "FLOAT": false,
-      "INT32": false,
-      "INT64": false,
-      "STRING": false
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
     },
     "RLE": {
       "BINARY": false,
@@ -93,13 +93,13 @@
       "STRING": false
     },
     "RLE_DICTIONARY": {
-      "BINARY": false,
+      "BINARY": true,
       "BOOLEAN": false,
-      "DOUBLE": false,
-      "FLOAT": false,
-      "INT32": false,
-      "INT64": false,
-      "STRING": false
+      "DOUBLE": true,
+      "FLOAT": true,
+      "INT32": true,
+      "INT64": true,
+      "STRING": true
     }
   },
   "logical_types": {

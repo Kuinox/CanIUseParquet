@@ -22,76 +22,76 @@
       "BINARY": true
     },
     "PLAIN_DICTIONARY": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "RLE_DICTIONARY": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "RLE": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "BIT_PACKED": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "DELTA_BINARY_PACKED": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "DELTA_BYTE_ARRAY": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     },
     "BYTE_STREAM_SPLIT": {
-      "INT32": true,
-      "INT64": true,
-      "FLOAT": true,
-      "DOUBLE": true,
-      "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "INT32": false,
+      "INT64": false,
+      "FLOAT": false,
+      "DOUBLE": false,
+      "BOOLEAN": false,
+      "STRING": false,
+      "BINARY": false
     }
   },
   "logical_types": {
