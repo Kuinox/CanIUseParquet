@@ -41,7 +41,19 @@ func testFeature(fn func() error) bool {
 	return err == nil
 }
 
-func writeReadParquet[T any](tmpdir string, name string, rows []T, opts ...parquet.WriterOption) error {
+type RWResult struct {
+	Write bool `json:"write"`
+	Read  bool `json:"read"`
+}
+
+func testRW(writeFn func() error, readFn func() error) RWResult {
+	return RWResult{
+		Write: testFeature(writeFn),
+		Read:  testFeature(readFn),
+	}
+}
+
+func writeParquet[T any](tmpdir string, name string, rows []T, opts ...parquet.WriterOption) error {
 	path := filepath.Join(tmpdir, name+".parquet")
 	f, err := os.Create(path)
 	if err != nil {
@@ -57,8 +69,11 @@ func writeReadParquet[T any](tmpdir string, name string, rows []T, opts ...parqu
 	if err != nil {
 		return err
 	}
-	f.Close()
+	return f.Close()
+}
 
+func readParquet[T any](tmpdir string, name string) error {
+	path := filepath.Join(tmpdir, name+".parquet")
 	rf, err := os.Open(path)
 	if err != nil {
 		return err
@@ -71,6 +86,13 @@ func writeReadParquet[T any](tmpdir string, name string, rows []T, opts ...parqu
 		return err
 	}
 	return reader.Close()
+}
+
+func writeReadParquet[T any](tmpdir string, name string, rows []T, opts ...parquet.WriterOption) error {
+	if err := writeParquet(tmpdir, name, rows, opts...); err != nil {
+		return err
+	}
+	return readParquet[T](tmpdir, name)
 }
 
 func main() {
@@ -86,37 +108,45 @@ func main() {
 	}
 
 	// --- Compression ---
-	compression := map[string]bool{}
+	compression := map[string]interface{}{}
 	rows := []SimpleRow{{Col: 1}, {Col: 2}, {Col: 3}}
 
-	compression["NONE"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "comp_none", rows, parquet.Compression(&uncompressed.Codec{}))
-	})
-	compression["SNAPPY"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "comp_snappy", rows, parquet.Compression(&snappy.Codec{}))
-	})
-	compression["GZIP"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "comp_gzip", rows, parquet.Compression(&gzip.Codec{}))
-	})
-	compression["ZSTD"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "comp_zstd", rows, parquet.Compression(&zstd.Codec{}))
-	})
+	compression["NONE"] = testRW(
+		func() error { return writeParquet(tmpdir, "comp_none", rows, parquet.Compression(&uncompressed.Codec{})) },
+		func() error { return readParquet[SimpleRow](tmpdir, "comp_none") },
+	)
+	compression["SNAPPY"] = testRW(
+		func() error { return writeParquet(tmpdir, "comp_snappy", rows, parquet.Compression(&snappy.Codec{})) },
+		func() error { return readParquet[SimpleRow](tmpdir, "comp_snappy") },
+	)
+	compression["GZIP"] = testRW(
+		func() error { return writeParquet(tmpdir, "comp_gzip", rows, parquet.Compression(&gzip.Codec{})) },
+		func() error { return readParquet[SimpleRow](tmpdir, "comp_gzip") },
+	)
+	compression["ZSTD"] = testRW(
+		func() error { return writeParquet(tmpdir, "comp_zstd", rows, parquet.Compression(&zstd.Codec{})) },
+		func() error { return readParquet[SimpleRow](tmpdir, "comp_zstd") },
+	)
 
 	// Brotli - not available in parquet-go
-	compression["BROTLI"] = testFeature(func() error {
-		return fmt.Errorf("brotli not supported")
-	})
+	compression["BROTLI"] = testRW(
+		func() error { return fmt.Errorf("brotli not supported") },
+		func() error { return fmt.Errorf("brotli not supported") },
+	)
 	// LZO - not available
-	compression["LZO"] = testFeature(func() error {
-		return fmt.Errorf("lzo not supported")
-	})
+	compression["LZO"] = testRW(
+		func() error { return fmt.Errorf("lzo not supported") },
+		func() error { return fmt.Errorf("lzo not supported") },
+	)
 	// LZ4
-	compression["LZ4"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "comp_lz4", rows)
-	})
-	compression["LZ4_RAW"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "comp_lz4raw", rows)
-	})
+	compression["LZ4"] = testRW(
+		func() error { return writeParquet(tmpdir, "comp_lz4", rows) },
+		func() error { return readParquet[SimpleRow](tmpdir, "comp_lz4") },
+	)
+	compression["LZ4_RAW"] = testRW(
+		func() error { return writeParquet(tmpdir, "comp_lz4raw", rows) },
+		func() error { return readParquet[SimpleRow](tmpdir, "comp_lz4raw") },
+	)
 	results["compression"] = compression
 
 	// --- Encoding × Type matrix ---
@@ -141,16 +171,23 @@ func main() {
 
 	encoding := map[string]interface{}{}
 	for _, encName := range encNames {
-		typeResults := map[string]bool{}
+		typeResults := map[string]interface{}{}
 		for _, typeName := range typeNames {
 			supported := goEncSupport[encName]
 			if supported {
-				// Test with the appropriate type
-				typeResults[typeName] = testFeature(func() error {
-					return writeReadParquet(tmpdir, fmt.Sprintf("enc_%s_%s", encName, typeName), rows)
-				})
+				// Test write and read separately
+				eName := encName
+				tName := typeName
+				typeResults[typeName] = testRW(
+					func() error {
+						return writeParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName), rows)
+					},
+					func() error {
+						return readParquet[SimpleRow](tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName))
+					},
+				)
 			} else {
-				typeResults[typeName] = false
+				typeResults[typeName] = RWResult{Write: false, Read: false}
 			}
 		}
 		encoding[encName] = typeResults
@@ -158,57 +195,65 @@ func main() {
 	results["encoding"] = encoding
 
 	// --- Logical Types ---
-	logicalTypes := map[string]bool{}
+	logicalTypes := map[string]interface{}{}
 
-	logicalTypes["STRING"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "lt_string", []StringRow{{Col: "hello"}})
-	})
-	logicalTypes["DATE"] = true
-	logicalTypes["TIME_MILLIS"] = true
-	logicalTypes["TIME_MICROS"] = true
-	logicalTypes["TIME_NANOS"] = false
-	logicalTypes["TIMESTAMP_MILLIS"] = true
-	logicalTypes["TIMESTAMP_MICROS"] = true
-	logicalTypes["TIMESTAMP_NANOS"] = false
-	logicalTypes["INT96"] = false
-	logicalTypes["DECIMAL"] = true
-	logicalTypes["UUID"] = false
-	logicalTypes["JSON"] = false
-	logicalTypes["FLOAT16"] = false
-	logicalTypes["ENUM"] = false
-	logicalTypes["BSON"] = false
-	logicalTypes["INTERVAL"] = false
+	logicalTypes["STRING"] = testRW(
+		func() error { return writeParquet(tmpdir, "lt_string", []StringRow{{Col: "hello"}}) },
+		func() error { return readParquet[StringRow](tmpdir, "lt_string") },
+	)
+	logicalTypes["DATE"] = RWResult{Write: true, Read: true}
+	logicalTypes["TIME_MILLIS"] = RWResult{Write: true, Read: true}
+	logicalTypes["TIME_MICROS"] = RWResult{Write: true, Read: true}
+	logicalTypes["TIME_NANOS"] = RWResult{Write: false, Read: false}
+	logicalTypes["TIMESTAMP_MILLIS"] = RWResult{Write: true, Read: true}
+	logicalTypes["TIMESTAMP_MICROS"] = RWResult{Write: true, Read: true}
+	logicalTypes["TIMESTAMP_NANOS"] = RWResult{Write: false, Read: false}
+	logicalTypes["INT96"] = RWResult{Write: false, Read: false}
+	logicalTypes["DECIMAL"] = RWResult{Write: true, Read: true}
+	logicalTypes["UUID"] = RWResult{Write: false, Read: false}
+	logicalTypes["JSON"] = RWResult{Write: false, Read: false}
+	logicalTypes["FLOAT16"] = RWResult{Write: false, Read: false}
+	logicalTypes["ENUM"] = RWResult{Write: false, Read: false}
+	logicalTypes["BSON"] = RWResult{Write: false, Read: false}
+	logicalTypes["INTERVAL"] = RWResult{Write: false, Read: false}
 	results["logical_types"] = logicalTypes
 
 	// --- Nested Types ---
-	nestedTypes := map[string]bool{}
-	nestedTypes["LIST"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "nt_list", []NestedRow{{Col: []int32{1, 2, 3}}})
-	})
-	nestedTypes["STRUCT"] = testFeature(func() error {
-		r := StructRow{}
-		r.Col.X = 1
-		r.Col.Y = 2
-		return writeReadParquet(tmpdir, "nt_struct", []StructRow{r})
-	})
-	nestedTypes["MAP"] = testFeature(func() error {
-		return writeReadParquet(tmpdir, "nt_map", []MapRow{{Col: map[string]int32{"a": 1}}})
-	})
-	nestedTypes["NESTED_LIST"] = false
-	nestedTypes["NESTED_MAP"] = false
-	nestedTypes["DEEP_NESTING"] = false
+	nestedTypes := map[string]interface{}{}
+	nestedTypes["LIST"] = testRW(
+		func() error { return writeParquet(tmpdir, "nt_list", []NestedRow{{Col: []int32{1, 2, 3}}}) },
+		func() error { return readParquet[NestedRow](tmpdir, "nt_list") },
+	)
+	nestedTypes["STRUCT"] = testRW(
+		func() error {
+			r := StructRow{}
+			r.Col.X = 1
+			r.Col.Y = 2
+			return writeParquet(tmpdir, "nt_struct", []StructRow{r})
+		},
+		func() error { return readParquet[StructRow](tmpdir, "nt_struct") },
+	)
+	nestedTypes["MAP"] = testRW(
+		func() error {
+			return writeParquet(tmpdir, "nt_map", []MapRow{{Col: map[string]int32{"a": 1}}})
+		},
+		func() error { return readParquet[MapRow](tmpdir, "nt_map") },
+	)
+	nestedTypes["NESTED_LIST"] = RWResult{Write: false, Read: false}
+	nestedTypes["NESTED_MAP"] = RWResult{Write: false, Read: false}
+	nestedTypes["DEEP_NESTING"] = RWResult{Write: false, Read: false}
 	results["nested_types"] = nestedTypes
 
 	// --- Advanced Features ---
-	advanced := map[string]bool{
-		"STATISTICS":          true,
-		"PAGE_INDEX":          true,
-		"BLOOM_FILTER":        true,
-		"DATA_PAGE_V2":        false,
-		"COLUMN_ENCRYPTION":   false,
-		"PREDICATE_PUSHDOWN":  false,
-		"PROJECTION_PUSHDOWN": true,
-		"SCHEMA_EVOLUTION":    false,
+	advanced := map[string]interface{}{
+		"STATISTICS":          RWResult{Write: true, Read: true},
+		"PAGE_INDEX":          RWResult{Write: true, Read: true},
+		"BLOOM_FILTER":        RWResult{Write: true, Read: true},
+		"DATA_PAGE_V2":        RWResult{Write: false, Read: false},
+		"COLUMN_ENCRYPTION":   RWResult{Write: false, Read: false},
+		"PREDICATE_PUSHDOWN":  RWResult{Write: false, Read: false},
+		"PROJECTION_PUSHDOWN": RWResult{Write: true, Read: true},
+		"SCHEMA_EVOLUTION":    RWResult{Write: false, Read: false},
 	}
 	results["advanced_features"] = advanced
 
