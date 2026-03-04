@@ -13,6 +13,12 @@ def test_feature(name, fn):
     except Exception:
         return False
 
+def test_rw(write_fn, read_fn):
+    """Run separate write and read tests, return {"write": bool, "read": bool}."""
+    write_ok = test_feature("write", write_fn)
+    read_ok = test_feature("read", read_fn)
+    return {"write": write_ok, "read": read_ok}
+
 def main():
     try:
         import polars as pl
@@ -46,10 +52,11 @@ def main():
     for codec_name, codec_val in codecs.items():
         path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
         df = pl.DataFrame({"col": [1, 2, 3]})
-        def write_read(c=codec_val, p=path, d=df):
+        def write_codec(c=codec_val, p=path, d=df):
             d.write_parquet(p, compression=c)
+        def read_codec(p=path):
             pl.read_parquet(p)
-        results["compression"][codec_name] = test_feature(codec_name, write_read)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
@@ -86,13 +93,14 @@ def main():
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
             path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
-            def write_read_enc(p=path, s=supported, pt=ptype):
+            def write_enc(p=path, s=supported, pt=ptype):
                 if not s:
                     raise NotImplementedError("Not supported")
                 df = make_typed_df(pt)
                 df.write_parquet(p)
+            def read_enc(p=path):
                 pl.read_parquet(p)
-            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
 
     # --- Logical Types ---
     import datetime
@@ -118,11 +126,12 @@ def main():
 
     for type_name, make_df in lt_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
-        def write_read_lt(mk=make_df, p=path):
+        def write_lt(mk=make_df, p=path):
             df = mk()
             df.write_parquet(p)
+        def read_lt(p=path):
             pl.read_parquet(p)
-        results["logical_types"][type_name] = test_feature(type_name, write_read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
 
     # --- Nested Types ---
     nt_tests = {}
@@ -135,44 +144,53 @@ def main():
 
     for type_name, make_df in nt_tests.items():
         path = os.path.join(tmpdir, f"nt_{type_name}.parquet")
-        def write_read_nt(mk=make_df, p=path):
+        def write_nt(mk=make_df, p=path):
             df = mk()
             df.write_parquet(p)
+        def read_nt(p=path):
             pl.read_parquet(p)
-        results["nested_types"][type_name] = test_feature(type_name, write_read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
 
     # --- Advanced Features ---
     df = pl.DataFrame({"col": range(1000), "str_col": [f"val_{i}" for i in range(1000)]})
 
-    def test_statistics():
+    def write_statistics():
         p = os.path.join(tmpdir, "adv_stats.parquet")
         df.write_parquet(p, statistics=True)
+    def read_statistics():
+        p = os.path.join(tmpdir, "adv_stats.parquet")
         pl.read_parquet(p)
-    results["advanced_features"]["STATISTICS"] = test_feature("STATISTICS", test_statistics)
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
 
-    def test_predicate_pushdown():
+    def write_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
         df.write_parquet(p)
+    def read_predicate_pushdown():
+        p = os.path.join(tmpdir, "adv_pred.parquet")
         pl.scan_parquet(p).filter(pl.col("col") > 500).collect()
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_feature("PREDICATE_PUSHDOWN", test_predicate_pushdown)
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
 
-    def test_projection_pushdown():
+    def write_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
         df.write_parquet(p)
+    def read_projection_pushdown():
+        p = os.path.join(tmpdir, "adv_proj.parquet")
         pl.scan_parquet(p).select("col").collect()
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_feature("PROJECTION_PUSHDOWN", test_projection_pushdown)
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
 
-    results["advanced_features"]["PAGE_INDEX"] = False
-    results["advanced_features"]["BLOOM_FILTER"] = False
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = False
+    results["advanced_features"]["PAGE_INDEX"] = {"write": False, "read": False}
+    results["advanced_features"]["BLOOM_FILTER"] = {"write": False, "read": False}
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
 
-    def test_data_page_v2():
+    def write_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
         df.write_parquet(p, data_page_size=1024)
+    def read_data_page_v2():
+        p = os.path.join(tmpdir, "adv_v2.parquet")
         pl.read_parquet(p)
-    results["advanced_features"]["DATA_PAGE_V2"] = test_feature("DATA_PAGE_V2", test_data_page_v2)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
 
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = False
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = {"write": False, "read": False}
 
     print(json.dumps(results, indent=2))
 

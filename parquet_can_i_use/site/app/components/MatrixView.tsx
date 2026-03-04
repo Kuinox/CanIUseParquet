@@ -3,6 +3,24 @@
 import { useState } from "react";
 import { MatrixData, FeatureEntry, ToolData } from "../types/matrix";
 
+function ReadWriteBadge({ supported, since, label }: { supported: boolean; since?: string | null; label: string }) {
+  if (supported) {
+    return (
+      <span className="flex items-center gap-0.5 text-[10px]">
+        <span className="text-gray-500">{label}:</span>
+        <span className="text-green-400">✅</span>
+        {since && <span className="text-green-500">{since}+</span>}
+      </span>
+    );
+  }
+  return (
+    <span className="flex items-center gap-0.5 text-[10px]">
+      <span className="text-gray-500">{label}:</span>
+      <span className="text-red-400">❌</span>
+    </span>
+  );
+}
+
 function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   if (!entry) {
     return (
@@ -20,26 +38,20 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
     );
   }
 
-  if (entry.supported) {
-    return (
-      <td className="px-3 py-2 text-center bg-green-950/30">
-        <span
-          className="text-green-400 cursor-default"
-          title={entry.since ? `Supported since v${entry.since}` : "Supported"}
-        >
-          ✅{entry.since && (
-            <span className="text-[10px] text-green-500 block leading-tight">
-              {entry.since}+
-            </span>
-          )}
-        </span>
-      </td>
-    );
-  }
+  const bothSupported = entry.write && entry.read;
+  const neitherSupported = !entry.write && !entry.read;
+
+  let bgClass = "";
+  if (bothSupported) bgClass = "bg-green-950/30";
+  else if (neitherSupported) bgClass = "bg-red-950/20";
+  else bgClass = "bg-yellow-950/20";
 
   return (
-    <td className="px-3 py-2 text-center bg-red-950/20">
-      <span className="text-red-400 cursor-default" title="Not supported">❌</span>
+    <td className={`px-3 py-2 text-center ${bgClass}`}>
+      <div className="flex flex-col items-center gap-0.5">
+        <ReadWriteBadge supported={entry.write} since={entry.write_since} label="W" />
+        <ReadWriteBadge supported={entry.read} since={entry.read_since} label="R" />
+      </div>
     </td>
   );
 }
@@ -121,11 +133,20 @@ export default function MatrixView({ data }: { data: MatrixData }) {
       {/* Legend */}
       <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-400">
         <span>
-          <span className="text-green-400">✅</span> Supported{" "}
-          <span className="text-green-500 text-xs">(with version if verified)</span>
+          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-green-400">✅</span> <span className="text-gray-500">R:</span><span className="text-green-400">✅</span></span>{" "}
+          Both read &amp; write supported
         </span>
         <span>
-          <span className="text-red-400">❌</span> Not supported
+          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-green-400">✅</span> <span className="text-gray-500">R:</span><span className="text-red-400">❌</span></span>{" "}
+          Write only
+        </span>
+        <span>
+          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-red-400">❌</span> <span className="text-gray-500">R:</span><span className="text-green-400">✅</span></span>{" "}
+          Read only
+        </span>
+        <span>
+          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-red-400">❌</span> <span className="text-gray-500">R:</span><span className="text-red-400">❌</span></span>{" "}
+          Not supported
         </span>
         <span>
           <span className="text-gray-500">—</span> Not applicable per Parquet spec

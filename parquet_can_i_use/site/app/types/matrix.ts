@@ -1,6 +1,8 @@
 export interface FeatureEntry {
-  supported: boolean;
-  since: string | null;
+  write: boolean;
+  read: boolean;
+  write_since?: string | null;
+  read_since?: string | null;
   not_applicable?: boolean;
 }
 

@@ -145,8 +145,8 @@ def run_tool(name, tool_config, skip_build=False):
         return None
 
 
-def find_first_version(version_results, category, feature, sub_feature=None):
-    """Find the first version where a feature was supported."""
+def find_first_version(version_results, category, feature, sub_feature=None, access="write"):
+    """Find the first version where a feature was supported (for write or read)."""
     for vr in version_results:
         cat_data = vr.get(category, {})
         if sub_feature:
@@ -155,9 +155,24 @@ def find_first_version(version_results, category, feature, sub_feature=None):
                 val = val.get(sub_feature)
         else:
             val = cat_data.get(feature)
+        # Handle both old bool format and new {"write": bool, "read": bool} format
+        if isinstance(val, dict) and ("write" in val or "read" in val):
+            val = val.get(access)
         if val is True:
             return vr.get("tested_version") or vr.get("version")
     return None
+
+
+def _get_rw(entry, access):
+    """Extract write or read support from an entry (handles old bool and new dict format)."""
+    if isinstance(entry, bool):
+        return entry
+    if isinstance(entry, dict):
+        if "write" in entry or "read" in entry:
+            return bool(entry.get(access, False))
+        # not_applicable or other metadata dict - no rw keys
+        return False
+    return bool(entry) if entry is not None else False
 
 
 def _version_sort_key(filepath, tool_id):
@@ -232,11 +247,16 @@ def build_matrix_data(multiversion_results):
 
         # Compression
         for codec in COMPRESSION_CODECS:
-            supported = latest.get("compression", {}).get(codec)
-            first_ver = find_first_version(version_results, "compression", codec)
+            entry = latest.get("compression", {}).get(codec)
+            write_ok = _get_rw(entry, "write")
+            read_ok = _get_rw(entry, "read")
+            write_since = find_first_version(version_results, "compression", codec, access="write")
+            read_since = find_first_version(version_results, "compression", codec, access="read")
             tool_data["compression"][codec] = {
-                "supported": bool(supported) if supported is not None else False,
-                "since": first_ver,
+                "write": write_ok,
+                "write_since": write_since,
+                "read": read_ok,
+                "read_since": read_since,
             }
 
         # Encoding x Type
@@ -244,48 +264,74 @@ def build_matrix_data(multiversion_results):
             tool_data["encoding"][enc] = {}
             enc_data = latest.get("encoding", {}).get(enc, {})
             for ptype in ENCODING_TYPES:
-                if isinstance(enc_data, dict):
-                    supported = enc_data.get(ptype)
+                if isinstance(enc_data, dict) and ("write" in enc_data or "read" in enc_data):
+                    # enc_data is itself a rw entry (whole encoding)
+                    entry = enc_data
+                elif isinstance(enc_data, dict):
+                    entry = enc_data.get(ptype)
                 elif isinstance(enc_data, bool):
-                    supported = enc_data
+                    entry = enc_data
                 else:
-                    supported = None
-                first_ver = find_first_version(version_results, "encoding", enc, ptype)
-                is_supported = bool(supported) if supported is not None else False
-                entry = {"supported": is_supported, "since": first_ver}
-                # If unsupported and the spec doesn't define this combination,
+                    entry = None
+                write_ok = _get_rw(entry, "write")
+                read_ok = _get_rw(entry, "read")
+                write_since = find_first_version(version_results, "encoding", enc, ptype, access="write")
+                read_since = find_first_version(version_results, "encoding", enc, ptype, access="read")
+                is_supported = write_ok or read_ok
+                cell = {
+                    "write": write_ok,
+                    "write_since": write_since,
+                    "read": read_ok,
+                    "read_since": read_since,
+                }
+                # If neither supported and the spec doesn't define this combination,
                 # mark as not_applicable (shown as gray) instead of red.
                 if not is_supported:
                     spec_valid = SPEC_VALID_ENCODING_TYPES.get(enc, set())
                     if ptype not in spec_valid:
-                        entry["not_applicable"] = True
-                tool_data["encoding"][enc][ptype] = entry
+                        cell["not_applicable"] = True
+                tool_data["encoding"][enc][ptype] = cell
 
         # Logical Types
         for lt in LOGICAL_TYPES:
-            supported = latest.get("logical_types", {}).get(lt)
-            first_ver = find_first_version(version_results, "logical_types", lt)
+            entry = latest.get("logical_types", {}).get(lt)
+            write_ok = _get_rw(entry, "write")
+            read_ok = _get_rw(entry, "read")
+            write_since = find_first_version(version_results, "logical_types", lt, access="write")
+            read_since = find_first_version(version_results, "logical_types", lt, access="read")
             tool_data["logical_types"][lt] = {
-                "supported": bool(supported) if supported is not None else False,
-                "since": first_ver,
+                "write": write_ok,
+                "write_since": write_since,
+                "read": read_ok,
+                "read_since": read_since,
             }
 
         # Nested Types
         for nt in NESTED_TYPES:
-            supported = latest.get("nested_types", {}).get(nt)
-            first_ver = find_first_version(version_results, "nested_types", nt)
+            entry = latest.get("nested_types", {}).get(nt)
+            write_ok = _get_rw(entry, "write")
+            read_ok = _get_rw(entry, "read")
+            write_since = find_first_version(version_results, "nested_types", nt, access="write")
+            read_since = find_first_version(version_results, "nested_types", nt, access="read")
             tool_data["nested_types"][nt] = {
-                "supported": bool(supported) if supported is not None else False,
-                "since": first_ver,
+                "write": write_ok,
+                "write_since": write_since,
+                "read": read_ok,
+                "read_since": read_since,
             }
 
         # Advanced Features
         for af in ADVANCED_FEATURES:
-            supported = latest.get("advanced_features", {}).get(af)
-            first_ver = find_first_version(version_results, "advanced_features", af)
+            entry = latest.get("advanced_features", {}).get(af)
+            write_ok = _get_rw(entry, "write")
+            read_ok = _get_rw(entry, "read")
+            write_since = find_first_version(version_results, "advanced_features", af, access="write")
+            read_since = find_first_version(version_results, "advanced_features", af, access="read")
             tool_data["advanced_features"][af] = {
-                "supported": bool(supported) if supported is not None else False,
-                "since": first_ver,
+                "write": write_ok,
+                "write_since": write_since,
+                "read": read_ok,
+                "read_since": read_since,
             }
 
         matrix["tools"][tool_id] = tool_data
@@ -305,6 +351,24 @@ def symbol(entry):
     if isinstance(entry, dict):
         if entry.get("not_applicable"):
             return "➖"
+        # New format with write/read keys
+        if "write" in entry or "read" in entry:
+            write = entry.get("write", False)
+            read = entry.get("read", False)
+            write_since = entry.get("write_since")
+            read_since = entry.get("read_since")
+            if write and read:
+                since = write_since or read_since
+                return f"✅ {since}+" if since else "✅"
+            elif write and not read:
+                since = f" {write_since}+" if write_since else ""
+                return f"W✅{since} R❌"
+            elif not write and read:
+                since = f" {read_since}+" if read_since else ""
+                return f"W❌ R✅{since}"
+            else:
+                return "❌"
+        # Legacy format
         if entry.get("supported"):
             since = entry.get("since")
             if since:
