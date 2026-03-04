@@ -39,11 +39,11 @@
     "PLAIN": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": true,
@@ -57,11 +57,7 @@
         "write": true,
         "read": true
       },
-      "STRING": {
-        "write": true,
-        "read": true
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
@@ -87,11 +83,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -117,11 +109,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -147,11 +135,7 @@
         "write": true,
         "read": true
       },
-      "STRING": {
-        "write": true,
-        "read": true
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
@@ -177,11 +161,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -207,11 +187,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -237,11 +213,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -267,11 +239,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -297,11 +265,7 @@
         "write": false,
         "read": false
       },
-      "STRING": {
-        "write": false,
-        "read": false
-      },
-      "BINARY": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }

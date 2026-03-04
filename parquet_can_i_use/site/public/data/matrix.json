@@ -89,13 +89,7 @@
             "read": true,
             "read_since": "23.0.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "23.0.1",
-            "read": true,
-            "read_since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "23.0.1",
             "read": true,
@@ -133,13 +127,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": true,
-            "write_since": "23.0.1",
-            "read": true,
-            "read_since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "23.0.1",
             "read": true,
@@ -177,13 +165,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": true,
-            "write_since": "23.0.1",
-            "read": true,
-            "read_since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "23.0.1",
             "read": true,
@@ -195,15 +177,13 @@
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "INT64": {
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "FLOAT": {
             "write": false,
@@ -225,14 +205,7 @@
             "read": true,
             "read_since": "23.0.1"
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -276,14 +249,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -325,14 +291,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -376,13 +335,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": true,
-            "write_since": "23.0.1",
-            "read": true,
-            "read_since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "23.0.1",
             "read": true,
@@ -425,13 +378,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": true,
-            "write_since": "23.0.1",
-            "read": true,
-            "read_since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "23.0.1",
             "read": true,
@@ -470,14 +417,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -762,13 +702,7 @@
             "read": true,
             "read_since": "2025.12.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "2025.12.0",
-            "read": true,
-            "read_since": "2025.12.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "2025.12.0",
             "read": true,
@@ -806,13 +740,7 @@
             "read": true,
             "read_since": "2025.12.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "2025.12.0",
-            "read": true,
-            "read_since": "2025.12.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "2025.12.0",
             "read": true,
@@ -850,13 +778,7 @@
             "read": true,
             "read_since": "2025.12.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "2025.12.0",
-            "read": true,
-            "read_since": "2025.12.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "2025.12.0",
             "read": true,
@@ -868,15 +790,13 @@
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "INT64": {
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "FLOAT": {
             "write": false,
@@ -898,14 +818,7 @@
             "read": true,
             "read_since": "2025.12.0"
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -948,14 +861,7 @@
             "read": true,
             "read_since": "2025.12.0"
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -997,14 +903,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -1048,13 +947,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -1097,13 +990,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -1142,14 +1029,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -1434,13 +1314,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1478,13 +1352,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1522,13 +1390,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1566,13 +1428,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1615,14 +1471,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -1661,13 +1510,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1705,13 +1548,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1749,13 +1586,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -1793,13 +1624,7 @@
             "read": true,
             "read_since": "1.38.1"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.38.1",
-            "read": true,
-            "read_since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.38.1",
             "read": true,
@@ -2083,13 +1908,7 @@
             "read": true,
             "read_since": "1.4.4"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "1.4.4",
-            "read": true,
-            "read_since": "1.4.4"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "1.4.4",
             "read": true,
@@ -2127,13 +1946,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2171,13 +1984,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2189,15 +1996,13 @@
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "INT64": {
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "FLOAT": {
             "write": false,
@@ -2219,14 +2024,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2270,14 +2068,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2319,14 +2110,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2370,13 +2154,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2419,13 +2197,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2464,14 +2236,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2756,13 +2521,7 @@
             "read": true,
             "read_since": "55.2.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "55.2.0",
-            "read": true,
-            "read_since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "55.2.0",
             "read": true,
@@ -2800,13 +2559,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": true,
-            "write_since": "55.2.0",
-            "read": true,
-            "read_since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "55.2.0",
             "read": true,
@@ -2844,13 +2597,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": true,
-            "write_since": "55.2.0",
-            "read": true,
-            "read_since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "55.2.0",
             "read": true,
@@ -2862,15 +2609,13 @@
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "INT64": {
             "write": false,
             "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "read_since": null
           },
           "FLOAT": {
             "write": false,
@@ -2892,14 +2637,7 @@
             "read": true,
             "read_since": "55.2.0"
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2943,14 +2681,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -2992,14 +2723,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -3043,13 +2767,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": true,
-            "write_since": "55.2.0",
-            "read": true,
-            "read_since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "55.2.0",
             "read": true,
@@ -3092,13 +2810,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": true,
-            "write_since": "55.2.0",
-            "read": true,
-            "read_since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "55.2.0",
             "read": true,
@@ -3137,14 +2849,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -3429,13 +3134,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3473,13 +3172,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3517,13 +3210,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3561,13 +3248,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3610,14 +3291,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -3656,13 +3330,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3700,13 +3368,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3744,13 +3406,7 @@
             "read": true,
             "read_since": "0.24.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "0.24.0",
-            "read": true,
-            "read_since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "0.24.0",
             "read": true,
@@ -3789,14 +3445,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -4081,13 +3730,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4125,13 +3768,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4169,13 +3806,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4213,13 +3844,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4257,13 +3882,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4301,13 +3920,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4345,13 +3958,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4389,13 +3996,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4433,13 +4034,7 @@
             "read": true,
             "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
-            "read": true,
-            "read_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)",
             "read": true,
@@ -4696,14 +4291,14 @@
           "INT32": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "INT64": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "FLOAT": {
             "write": true,
@@ -4723,13 +4318,7 @@
             "read": true,
             "read_since": "5.0.0.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "5.0.0.0",
-            "read": true,
-            "read_since": "5.0.0.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "5.0.0.0",
             "read": true,
@@ -4767,13 +4356,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -4811,13 +4394,7 @@
             "read": false,
             "read_since": null
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -4855,13 +4432,7 @@
             "read": true,
             "read_since": "5.0.0.0"
           },
-          "STRING": {
-            "write": true,
-            "write_since": "5.0.0.0",
-            "read": true,
-            "read_since": "5.0.0.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": true,
             "write_since": "5.0.0.0",
             "read": true,
@@ -4904,14 +4475,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -4953,14 +4517,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -5004,13 +4561,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -5053,13 +4604,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -5098,14 +4643,7 @@
             "read_since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
             "read": false,
@@ -5330,8 +4868,7 @@
       "FLOAT",
       "DOUBLE",
       "BOOLEAN",
-      "STRING",
-      "BINARY"
+      "BYTE_ARRAY"
     ],
     "logical_types": [
       "STRING",

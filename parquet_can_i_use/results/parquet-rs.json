@@ -69,10 +69,6 @@
   },
   "encoding": {
     "BIT_PACKED": {
-      "BINARY": {
-        "write": false,
-        "read": false
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -93,16 +89,12 @@
         "write": false,
         "read": false
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
     },
     "BYTE_STREAM_SPLIT": {
-      "BINARY": {
-        "write": false,
-        "read": false
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -123,16 +115,12 @@
         "write": true,
         "read": true
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
     },
     "DELTA_BINARY_PACKED": {
-      "BINARY": {
-        "write": false,
-        "read": false
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -153,16 +141,12 @@
         "write": true,
         "read": true
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
     },
     "DELTA_BYTE_ARRAY": {
-      "BINARY": {
-        "write": true,
-        "read": true
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -183,16 +167,12 @@
         "write": false,
         "read": false
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
-      "BINARY": {
-        "write": true,
-        "read": true
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -213,16 +193,12 @@
         "write": false,
         "read": false
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
     },
     "PLAIN": {
-      "BINARY": {
-        "write": true,
-        "read": true
-      },
       "BOOLEAN": {
         "write": true,
         "read": true
@@ -243,16 +219,12 @@
         "write": true,
         "read": true
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
     },
     "PLAIN_DICTIONARY": {
-      "BINARY": {
-        "write": true,
-        "read": true
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -273,16 +245,12 @@
         "write": true,
         "read": true
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
     },
     "RLE": {
-      "BINARY": {
-        "write": false,
-        "read": false
-      },
       "BOOLEAN": {
         "write": true,
         "read": true
@@ -303,16 +271,12 @@
         "write": false,
         "read": false
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
     },
     "RLE_DICTIONARY": {
-      "BINARY": {
-        "write": true,
-        "read": true
-      },
       "BOOLEAN": {
         "write": false,
         "read": false
@@ -333,7 +297,7 @@
         "write": true,
         "read": true
       },
-      "STRING": {
+      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
