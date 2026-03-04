@@ -63,11 +63,7 @@
             "supported": true,
             "since": "23.0.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "23.0.1"
           }
@@ -93,11 +89,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": true,
-            "since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "23.0.1"
           }
@@ -123,11 +115,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": true,
-            "since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "23.0.1"
           }
@@ -135,13 +123,11 @@
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "INT64": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "FLOAT": {
             "supported": false,
@@ -157,12 +143,7 @@
             "supported": true,
             "since": "23.0.1"
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -194,12 +175,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -229,12 +205,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -266,11 +237,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": true,
-            "since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "23.0.1"
           }
@@ -301,11 +268,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": true,
-            "since": "23.0.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "23.0.1"
           }
@@ -332,12 +295,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -534,11 +492,7 @@
             "supported": true,
             "since": "2025.12.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "2025.12.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "2025.12.0"
           }
@@ -564,11 +518,7 @@
             "supported": true,
             "since": "2025.12.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "2025.12.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "2025.12.0"
           }
@@ -594,11 +544,7 @@
             "supported": true,
             "since": "2025.12.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "2025.12.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "2025.12.0"
           }
@@ -606,13 +552,11 @@
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "INT64": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "FLOAT": {
             "supported": false,
@@ -628,12 +572,7 @@
             "supported": true,
             "since": "2025.12.0"
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -664,12 +603,7 @@
             "supported": true,
             "since": "2025.12.0"
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -699,12 +633,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -736,11 +665,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -771,11 +696,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -802,12 +723,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -1004,11 +920,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1034,11 +946,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1064,11 +972,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1094,11 +998,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1129,12 +1029,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -1161,11 +1056,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1191,11 +1082,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1221,11 +1108,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1251,11 +1134,7 @@
             "supported": true,
             "since": "1.38.1"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.38.1"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.38.1"
           }
@@ -1451,11 +1330,7 @@
             "supported": true,
             "since": "1.4.4"
           },
-          "STRING": {
-            "supported": true,
-            "since": "1.4.4"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "1.4.4"
           }
@@ -1481,11 +1356,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -1511,11 +1382,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -1523,13 +1390,11 @@
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "INT64": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "FLOAT": {
             "supported": false,
@@ -1545,12 +1410,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -1582,12 +1442,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -1617,12 +1472,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -1654,11 +1504,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -1689,11 +1535,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -1720,12 +1562,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -1922,11 +1759,7 @@
             "supported": true,
             "since": "55.2.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "55.2.0"
           }
@@ -1952,11 +1785,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": true,
-            "since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "55.2.0"
           }
@@ -1982,11 +1811,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": true,
-            "since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "55.2.0"
           }
@@ -1994,13 +1819,11 @@
         "RLE": {
           "INT32": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "INT64": {
             "supported": false,
-            "since": null,
-            "not_applicable": true
+            "since": null
           },
           "FLOAT": {
             "supported": false,
@@ -2016,12 +1839,7 @@
             "supported": true,
             "since": "55.2.0"
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -2053,12 +1871,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -2088,12 +1901,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -2125,11 +1933,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": true,
-            "since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "55.2.0"
           }
@@ -2160,11 +1964,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": true,
-            "since": "55.2.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "55.2.0"
           }
@@ -2191,12 +1991,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -2393,11 +2188,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2423,11 +2214,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2453,11 +2240,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2483,11 +2266,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2518,12 +2297,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -2550,11 +2324,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2580,11 +2350,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2610,11 +2376,7 @@
             "supported": true,
             "since": "0.24.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "0.24.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "0.24.0"
           }
@@ -2641,12 +2403,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -2843,11 +2600,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -2873,11 +2626,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -2903,11 +2652,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -2933,11 +2678,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -2963,11 +2704,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -2993,11 +2730,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -3023,11 +2756,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -3053,11 +2782,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -3083,11 +2808,7 @@
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           },
-          "STRING": {
-            "supported": true,
-            "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
           }
@@ -3264,12 +2985,12 @@
       "encoding": {
         "PLAIN": {
           "INT32": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "5.0.0.0"
           },
           "INT64": {
-            "supported": false,
-            "since": null
+            "supported": true,
+            "since": "5.0.0.0"
           },
           "FLOAT": {
             "supported": true,
@@ -3283,11 +3004,7 @@
             "supported": true,
             "since": "5.0.0.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "5.0.0.0"
           }
@@ -3313,11 +3030,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -3343,11 +3056,7 @@
             "supported": false,
             "since": null
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -3373,11 +3082,7 @@
             "supported": true,
             "since": "5.0.0.0"
           },
-          "STRING": {
-            "supported": true,
-            "since": "5.0.0.0"
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": true,
             "since": "5.0.0.0"
           }
@@ -3408,12 +3113,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -3443,12 +3143,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -3480,11 +3175,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -3515,11 +3206,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null
           }
@@ -3546,12 +3233,7 @@
             "since": null,
             "not_applicable": true
           },
-          "STRING": {
-            "supported": false,
-            "since": null,
-            "not_applicable": true
-          },
-          "BINARY": {
+          "BYTE_ARRAY": {
             "supported": false,
             "since": null,
             "not_applicable": true
@@ -3714,8 +3396,7 @@
       "FLOAT",
       "DOUBLE",
       "BOOLEAN",
-      "STRING",
-      "BINARY"
+      "BYTE_ARRAY"
     ],
     "logical_types": [
       "STRING",

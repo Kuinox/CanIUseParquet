@@ -58,7 +58,7 @@ def main():
         results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
 
     # --- Encoding × Type matrix ---
-    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
 
     def make_typed_df_fp(ptype):
         if ptype == "INT32":
@@ -71,9 +71,7 @@ def main():
             return pd.DataFrame({"col": np.array([1.0, 2.0, 3.0], dtype=np.float64)})
         elif ptype == "BOOLEAN":
             return pd.DataFrame({"col": [True, False, True]})
-        elif ptype == "STRING":
-            return pd.DataFrame({"col": pd.array(["hello", "world", "test"], dtype=pd.StringDtype("python"))})
-        elif ptype == "BINARY":
+        elif ptype == "BYTE_ARRAY":
             return pd.DataFrame({"col": pd.array([b"hello", b"world", b"test"], dtype="object")})
         raise ValueError(f"Unknown type: {ptype}")
 

@@ -43,13 +43,12 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 
 | Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
 |---|---|---|---|---|---|---|---|---|
-| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 | FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 | DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 | BOOLEAN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| STRING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BINARY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 
 ### PLAIN_DICTIONARY
 
@@ -60,8 +59,7 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 | DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 | BOOLEAN | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| STRING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BINARY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 
 ### RLE_DICTIONARY
 
@@ -72,20 +70,18 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 | DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 | BOOLEAN | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| STRING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BINARY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 
 ### RLE
 
 | Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
 |---|---|---|---|---|---|---|---|---|
-| INT32 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| INT64 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| INT32 | ❌ | ❌ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| INT64 | ❌ | ❌ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 | FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 | DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 | BOOLEAN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| STRING | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BINARY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
 
 ### BIT_PACKED
 
@@ -96,8 +92,7 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | DOUBLE | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | BOOLEAN | ➖ | ✅ 2025.12.0+ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| STRING | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BINARY | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
+| BYTE_ARRAY | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 
 ### DELTA_BINARY_PACKED
 
@@ -108,8 +103,7 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| STRING | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BINARY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
+| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 
 ### DELTA_LENGTH_BYTE_ARRAY
 
@@ -120,8 +114,7 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| STRING | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BINARY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 
 ### DELTA_BYTE_ARRAY
 
@@ -132,8 +125,7 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 | BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| STRING | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BINARY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 
 ### BYTE_STREAM_SPLIT
 
@@ -144,8 +136,7 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | FLOAT | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 | DOUBLE | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
 | BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| STRING | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BINARY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
+| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
 
 ---
 

@@ -27,7 +27,7 @@ OUTPUT_JSON = SCRIPT_DIR / "site" / "public" / "data" / "matrix.json"
 COMPRESSION_CODECS = ["NONE", "SNAPPY", "GZIP", "BROTLI", "LZO", "LZ4", "LZ4_RAW", "ZSTD"]
 ENCODINGS = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
              "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
-ENCODING_TYPES = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+ENCODING_TYPES = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
 LOGICAL_TYPES = ["STRING", "DATE", "TIME_MILLIS", "TIME_MICROS", "TIME_NANOS",
                  "TIMESTAMP_MILLIS", "TIMESTAMP_MICROS", "TIMESTAMP_NANOS", "INT96",
                  "DECIMAL", "UUID", "JSON", "FLOAT16", "ENUM", "BSON", "INTERVAL"]
@@ -65,14 +65,14 @@ TOOL_ORDER = ["pyarrow", "fastparquet", "polars", "duckdb",
 # produce them either, we mark them as "not_applicable" (gray) rather than red.
 # Libraries are free to support extras beyond the spec.
 SPEC_VALID_ENCODING_TYPES = {
-    "PLAIN":                    {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"},
-    "PLAIN_DICTIONARY":         {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"},
-    "RLE_DICTIONARY":           {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"},
-    "RLE":                      {"BOOLEAN"},
+    "PLAIN":                    {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+    "PLAIN_DICTIONARY":         {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+    "RLE_DICTIONARY":           {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+    "RLE":                      {"BOOLEAN", "INT32", "INT64"},
     "BIT_PACKED":               set(),  # deprecated; not for data pages
     "DELTA_BINARY_PACKED":      {"INT32", "INT64"},
-    "DELTA_LENGTH_BYTE_ARRAY":  {"STRING", "BINARY"},
-    "DELTA_BYTE_ARRAY":         {"STRING", "BINARY"},
+    "DELTA_LENGTH_BYTE_ARRAY":  {"BYTE_ARRAY"},
+    "DELTA_BYTE_ARRAY":         {"BYTE_ARRAY"},
     "BYTE_STREAM_SPLIT":        {"FLOAT", "DOUBLE", "INT32", "INT64"},
 }
 

@@ -80,7 +80,7 @@ public class TestParquetJava {
         // --- Encoding × Type matrix ---
         String[] encNames = {"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
                             "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"};
-        String[] typeNames = {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"};
+        String[] typeNames = {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"};
 
         // parquet-java supports all encoding/type combinations via Avro writer
         Map<String, Object> encoding = new LinkedHashMap<>();

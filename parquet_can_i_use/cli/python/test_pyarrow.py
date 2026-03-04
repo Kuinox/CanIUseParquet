@@ -54,7 +54,7 @@ def main():
         results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
 
     # --- Encoding × Type matrix ---
-    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
 
     def make_typed_table(ptype):
         if ptype == "INT32":
@@ -67,9 +67,7 @@ def main():
             return pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float64())})
         elif ptype == "BOOLEAN":
             return pa.table({"col": pa.array([True, False, True])})
-        elif ptype == "STRING":
-            return pa.table({"col": pa.array(["hello", "world", "test"])})
-        elif ptype == "BINARY":
+        elif ptype == "BYTE_ARRAY":
             return pa.table({"col": pa.array([b"hello", b"world", b"test"])})
         raise ValueError(f"Unknown type: {ptype}")
 

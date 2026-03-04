@@ -52,7 +52,7 @@ def main():
         results["compression"][codec_name] = test_feature(codec_name, write_read)
 
     # --- Encoding × Type matrix ---
-    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
 
     def make_type_sql(ptype):
         if ptype == "INT32":
@@ -65,9 +65,7 @@ def main():
             return "1.0::DOUBLE"
         elif ptype == "BOOLEAN":
             return "true::BOOLEAN"
-        elif ptype == "STRING":
-            return "'hello'::VARCHAR"
-        elif ptype == "BINARY":
+        elif ptype == "BYTE_ARRAY":
             return "'\\x68656C6C6F'::BLOB"
         raise ValueError(f"Unknown type: {ptype}")
 

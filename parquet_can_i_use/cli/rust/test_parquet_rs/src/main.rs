@@ -141,7 +141,7 @@ fn main() {
         ("DELTA_BYTE_ARRAY", Encoding::DELTA_BYTE_ARRAY),
         ("BYTE_STREAM_SPLIT", Encoding::BYTE_STREAM_SPLIT),
     ];
-    let type_names = vec!["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"];
+    let type_names = vec!["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"];
 
     fn make_typed_batch(ptype: &str) -> Result<RecordBatch, Box<dyn std::error::Error>> {
         match ptype {
@@ -165,11 +165,9 @@ fn main() {
                 let schema = Schema::new(vec![Field::new("col", DataType::Boolean, false)]);
                 Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(BooleanArray::from(vec![true, false, true]))])?)
             }
-            "STRING" => {
-                let schema = Schema::new(vec![Field::new("col", DataType::Utf8, false)]);
-                Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec!["a", "b", "c"]))])?)
-            }
-            "BINARY" => {
+            // BYTE_ARRAY covers both the STRING logical type (UTF-8 annotated) and raw binary;
+            // encoding behaviour is identical since both use the BYTE_ARRAY physical type.
+            "BYTE_ARRAY" => {
                 let schema = Schema::new(vec![Field::new("col", DataType::Binary, false)]);
                 Ok(RecordBatch::try_new(Arc::new(schema), vec![Arc::new(BinaryArray::from_vec(vec![b"a", b"b", b"c"]))])?)
             }

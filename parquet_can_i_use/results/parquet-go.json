@@ -21,85 +21,76 @@
   },
   "encoding": {
     "BIT_PACKED": {
-      "BINARY": false,
       "BOOLEAN": false,
       "DOUBLE": false,
       "FLOAT": false,
       "INT32": false,
       "INT64": false,
-      "STRING": false
+      "BYTE_ARRAY": false
     },
     "BYTE_STREAM_SPLIT": {
-      "BINARY": false,
       "BOOLEAN": false,
       "DOUBLE": false,
       "FLOAT": false,
       "INT32": false,
       "INT64": false,
-      "STRING": false
+      "BYTE_ARRAY": false
     },
     "DELTA_BINARY_PACKED": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     },
     "DELTA_BYTE_ARRAY": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     },
     "PLAIN": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     },
     "PLAIN_DICTIONARY": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     },
     "RLE": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     },
     "RLE_DICTIONARY": {
-      "BINARY": true,
       "BOOLEAN": true,
       "DOUBLE": true,
       "FLOAT": true,
       "INT32": true,
       "INT64": true,
-      "STRING": true
+      "BYTE_ARRAY": true
     }
   },
   "logical_types": {

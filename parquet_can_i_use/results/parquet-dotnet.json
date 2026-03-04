@@ -13,13 +13,12 @@
   },
   "encoding": {
     "PLAIN": {
-      "INT32": false,
-      "INT64": false,
+      "INT32": true,
+      "INT64": true,
       "FLOAT": true,
       "DOUBLE": true,
       "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "BYTE_ARRAY": true
     },
     "PLAIN_DICTIONARY": {
       "INT32": false,
@@ -27,8 +26,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     },
     "RLE_DICTIONARY": {
       "INT32": false,
@@ -36,8 +34,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     },
     "RLE": {
       "INT32": true,
@@ -45,8 +42,7 @@
       "FLOAT": true,
       "DOUBLE": true,
       "BOOLEAN": true,
-      "STRING": true,
-      "BINARY": true
+      "BYTE_ARRAY": true
     },
     "BIT_PACKED": {
       "INT32": false,
@@ -54,8 +50,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     },
     "DELTA_BINARY_PACKED": {
       "INT32": true,
@@ -63,8 +58,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": false,
@@ -72,8 +66,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": false,
@@ -81,8 +74,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     },
     "BYTE_STREAM_SPLIT": {
       "INT32": false,
@@ -90,8 +82,7 @@
       "FLOAT": false,
       "DOUBLE": false,
       "BOOLEAN": false,
-      "STRING": false,
-      "BINARY": false
+      "BYTE_ARRAY": false
     }
   },
   "logical_types": {

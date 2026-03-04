@@ -251,15 +251,45 @@ class Program
             catch { typeEncodings[typeName] = new HashSet<int>(); }
         }
 
-        WriteAndCache("INT32",   new ParquetSchema(new DataField<int>("col")),    new DataColumn(new ParquetSchema(new DataField<int>("col")).DataFields[0],    new int[]    { 1, 2, 3 }));
-        WriteAndCache("INT64",   new ParquetSchema(new DataField<long>("col")),   new DataColumn(new ParquetSchema(new DataField<long>("col")).DataFields[0],   new long[]   { 1L, 2L, 3L }));
-        WriteAndCache("FLOAT",   new ParquetSchema(new DataField<float>("col")),  new DataColumn(new ParquetSchema(new DataField<float>("col")).DataFields[0],  new float[]  { 1f, 2f, 3f }));
-        WriteAndCache("DOUBLE",  new ParquetSchema(new DataField<double>("col")), new DataColumn(new ParquetSchema(new DataField<double>("col")).DataFields[0], new double[] { 1.0, 2.0, 3.0 }));
-        WriteAndCache("BOOLEAN", new ParquetSchema(new DataField<bool>("col")),   new DataColumn(new ParquetSchema(new DataField<bool>("col")).DataFields[0],   new bool[]   { true, false, true }));
-        WriteAndCache("STRING",  new ParquetSchema(new DataField<string>("col")), new DataColumn(new ParquetSchema(new DataField<string>("col")).DataFields[0], new string[] { "a", "b", "c" }));
-        WriteAndCache("BINARY",  new ParquetSchema(new DataField<byte[]>("col")), new DataColumn(new ParquetSchema(new DataField<byte[]>("col")).DataFields[0], new byte[][] { new byte[]{1}, new byte[]{2}, new byte[]{3} }));
+        WriteAndCache("INT32",      new ParquetSchema(new DataField<int>("col")),    new DataColumn(new ParquetSchema(new DataField<int>("col")).DataFields[0],    new int[]    { 1, 2, 3 }));
+        WriteAndCache("INT64",      new ParquetSchema(new DataField<long>("col")),   new DataColumn(new ParquetSchema(new DataField<long>("col")).DataFields[0],   new long[]   { 1L, 2L, 3L }));
+        WriteAndCache("FLOAT",      new ParquetSchema(new DataField<float>("col")),  new DataColumn(new ParquetSchema(new DataField<float>("col")).DataFields[0],  new float[]  { 1f, 2f, 3f }));
+        WriteAndCache("DOUBLE",     new ParquetSchema(new DataField<double>("col")), new DataColumn(new ParquetSchema(new DataField<double>("col")).DataFields[0], new double[] { 1.0, 2.0, 3.0 }));
+        WriteAndCache("BOOLEAN",    new ParquetSchema(new DataField<bool>("col")),   new DataColumn(new ParquetSchema(new DataField<bool>("col")).DataFields[0],   new bool[]   { true, false, true }));
+        WriteAndCache("BYTE_ARRAY", new ParquetSchema(new DataField<byte[]>("col")), new DataColumn(new ParquetSchema(new DataField<byte[]>("col")).DataFields[0], new byte[][] { new byte[]{1}, new byte[]{2}, new byte[]{3} }));
 
-        string[] typeNames = { "INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY" };
+        // parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, not PLAIN.
+        // Verify PLAIN read support by trying to read a pre-made PLAIN-encoded file.
+        bool TestReadPlain(string b64)
+        {
+            try
+            {
+                var bytes = Convert.FromBase64String(b64);
+                var path = Path.Combine(tmpDir, $"plain_read_{Guid.NewGuid():N}.parquet");
+                File.WriteAllBytes(path, bytes);
+                using var stream = File.OpenRead(path);
+                using var reader = ParquetReader.CreateAsync(stream).Result;
+                using var rg = reader.OpenRowGroupReader(0);
+                rg.ReadColumnAsync(reader.Schema.DataFields[0]).Wait();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        // Minimal PLAIN-encoded parquet files (values [1,2,3]) produced by PyArrow 23.0.1:
+        //   import pyarrow as pa, pyarrow.parquet as pq, io, base64
+        //   t = pa.table({"col": pa.array([1,2,3], type=pa.int32())})
+        //   buf = io.BytesIO()
+        //   pq.write_table(t, buf, use_dictionary=False, column_encoding="PLAIN", compression="NONE")
+        //   print(base64.b64encode(buf.getvalue()).decode())
+        const string plainInt32B64 = "UEFSMRUAFSQVJCwVBhUAFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAABERAAAAAgAAAAYBAQAAAAIAAAADAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUCGANjb2wAFgYZHBkcJgAcFQIZJQYAGRgDY29sFQAWBhaCARaCASYIPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAEREAGRwVABUAFQIAPCkGGSYABgAAABaCARYGJggWggEAGRwYDEFSUk9XOnNjaGVtYRisAS8vLy8vM2dBQUFBUUFBQUFBQUFLQUF3QUJnQUZBQWdBQ2dBQUFBQUJCQUFNQUFBQUNBQUlBQUFBQkFBSUFBQUFCQUFBQUFFQUFBQVVBQUFBRUFBVUFBZ0FCZ0FIQUF3QUFBQVFBQkFBQUFBQUFBRUNFQUFBQUJ3QUFBQUVBQUFBQUFBQUFBTUFBQUJqYjJ3QUNBQU1BQWdBQndBSUFBQUFBQUFBQVNBQUFBQT0AGCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIzLjAuMRkcHAAAAGABAABQQVIx";
+        // Same for INT64, using pa.int64() and pa.array([1,2,3], type=pa.int64()).
+        const string plainInt64B64 = "UEFSMRUAFTwVPCwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAAAAIAAAAGAQEAAAAAAAAAAgAAAAAAAAADAAAAAAAAABUEGSw1ABgGc2NoZW1hFQIAFQQlAhgDY29sABYGGRwZHCYAHBUEGSUGABkYA2NvbBUAFgYWugEWugEmCDwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAZHBUAFQAVAgA8KQYZJgAGAAAAFroBFgYmCBa6AQAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFRQUFBQUFBQUtBQXdBQmdBRkFBZ0FDZ0FBQUFBQkJBQU1BQUFBQ0FBSUFBQUFCQUFJQUFBQUJBQUFBQUVBQUFBVUFBQUFFQUFVQUFnQUJnQUhBQXdBQUFBUUFCQUFBQUFBQUFFQ0VBQUFBQndBQUFBRUFBQUFBQUFBQUFNQUFBQmpiMndBQ0FBTUFBZ0FCd0FJQUFBQUFBQUFBVUFBQUFBPQAYIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjMuMC4xGRwcAAAAcAEAAFBBUjE=";
+
+        bool plainInt32ReadOk = TestReadPlain(plainInt32B64);
+        bool plainInt64ReadOk = TestReadPlain(plainInt64B64);
+
+        string[] typeNames = { "INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY" };
         foreach (var encName in encValues.Keys)
         {
             var typeResults = new Dictionary<string, bool>();
@@ -267,7 +297,12 @@ class Program
             foreach (var typeName in typeNames)
             {
                 var actuals = typeEncodings.GetValueOrDefault(typeName, new HashSet<int>());
-                typeResults[typeName] = actuals.Contains(encVal);
+                bool supported = actuals.Contains(encVal);
+                // PLAIN encoding: also mark as supported if the library can READ a PLAIN-encoded file
+                // (parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, but can read PLAIN)
+                if (encName == "PLAIN" && typeName == "INT32" && plainInt32ReadOk) supported = true;
+                if (encName == "PLAIN" && typeName == "INT64" && plainInt64ReadOk) supported = true;
+                typeResults[typeName] = supported;
             }
             encoding[encName] = typeResults;
         }
