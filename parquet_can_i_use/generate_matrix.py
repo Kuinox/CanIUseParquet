@@ -144,6 +144,15 @@ def find_first_version(version_results, category, feature, sub_feature=None):
     return None
 
 
+def _version_sort_key(filepath, tool_id):
+    """Return a sortable key for a versioned result file by semantic version."""
+    version_str = filepath.stem[len(tool_id) + 1:]
+    try:
+        return tuple(int(x) for x in version_str.split("."))
+    except ValueError:
+        return (float("inf"), float("inf"), float("inf"))
+
+
 def load_multiversion_results():
     """Load multi-version results from results/all_versions.json or individual files."""
     combined_file = RESULTS_DIR / "all_versions.json"
@@ -155,8 +164,9 @@ def load_multiversion_results():
     results = {}
     for tool_id in TOOL_ORDER:
         tool_results = []
-        # Look for versioned result files
-        for f in sorted(RESULTS_DIR.glob(f"{tool_id}-*.json")):
+        # Look for versioned result files, sorted by semantic version
+        for f in sorted(RESULTS_DIR.glob(f"{tool_id}-*.json"),
+                        key=lambda f: _version_sort_key(f, tool_id)):
             with open(f) as fh:
                 tool_results.append(json.load(fh))
         # Fall back to un-versioned result file
