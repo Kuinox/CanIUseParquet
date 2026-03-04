@@ -6,7 +6,7 @@ For each library, installs multiple versions (in separate venvs for Python libra
 and runs the same CLI against each version. Results are saved per library per version.
 
 Usage:
-    python run_multiversion.py [--only TOOL...] [--skip-compiled]
+    python run_multiversion.py [--only TOOL...] [--skip-compiled] [--bisect]
 """
 
 import argparse
@@ -219,10 +219,76 @@ def run_compiled_tool(tool_id, tool_config):
         return None
 
 
+def flatten_features(data):
+    """Return a frozenset of all (category, feature, subfeature) tuples that are True."""
+    if not data:
+        return frozenset()
+    supported = set()
+    for cat in ("compression", "logical_types", "nested_types", "advanced_features"):
+        for k, v in data.get(cat, {}).items():
+            if v is True:
+                supported.add((cat, k, None))
+    for enc, types in data.get("encoding", {}).items():
+        if isinstance(types, dict):
+            for ptype, v in types.items():
+                if v is True:
+                    supported.add(("encoding", enc, ptype))
+        elif types is True:
+            supported.add(("encoding", enc, None))
+    return frozenset(supported)
+
+
+def bisect_versions(versions, run_func):
+    """Use binary search to find version transition points.
+
+    Tests the oldest and newest version first, then recursively bisects any
+    range where the set of supported features differs between the endpoints.
+    Returns a dict of {index: result_data} for every version that was tested.
+    """
+    n = len(versions)
+    if n == 0:
+        return {}
+
+    tested = {}  # index -> result data (None if the run failed)
+
+    def test(idx):
+        if idx not in tested:
+            tested[idx] = run_func(versions[idx])
+        return tested[idx]
+
+    def has_diff(idx_a, idx_b):
+        a, b = tested.get(idx_a), tested.get(idx_b)
+        # flatten_features returns frozenset() for None, so a failed version
+        # (no features) will compare as different from a successful one.
+        return flatten_features(a) != flatten_features(b)
+
+    # Always test oldest and newest
+    test(0)
+    test(n - 1)
+
+    stack = [(0, n - 1)]
+    while stack:
+        lo, hi = stack.pop()
+        if hi - lo <= 1:
+            continue
+        if not has_diff(lo, hi):
+            continue  # Endpoints identical, no transition in this range
+        mid = (lo + hi) // 2
+        test(mid)
+        if has_diff(lo, mid):
+            stack.append((lo, mid))
+        if has_diff(mid, hi):
+            stack.append((mid, hi))
+
+    return tested
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run multi-version Parquet tests")
     parser.add_argument("--only", nargs="*", help="Only test specific tools")
     parser.add_argument("--skip-compiled", action="store_true", help="Skip compiled language tools")
+    parser.add_argument("--bisect", action="store_true",
+                        help="Use binary search to find feature transition versions instead of testing all versions")
     args = parser.parse_args()
 
     RESULTS_DIR.mkdir(exist_ok=True)
@@ -247,21 +313,32 @@ def main():
             if "install" in config:
                 tool_type = "python"
 
+        versions = config["versions"]
+
         if tool_type == "python" or "install" in config:
-            # Python library - test multiple versions
+            # Python library
             cli_path = SCRIPT_DIR / config["cli"]
             extra_deps = config.get("extra_deps", [])
             install_template = config["install"]
 
-            version_results = []
-            for version in config["versions"]:
-                data = run_python_version(tool_id, version, cli_path, extra_deps, install_template)
-                if data:
-                    data["tested_version"] = version
-                    version_results.append(data)
+            def _run_py(version):
+                return run_python_version(tool_id, version, cli_path, extra_deps, install_template)
 
-                    # Also save individual result
-                    result_file = RESULTS_DIR / f"{tool_id}-{version}.json"
+            if args.bisect:
+                print(f"  [{tool_id}] Bisecting {len(versions)} versions...")
+                tested = bisect_versions(versions, _run_py)
+                indices = sorted(tested.keys())
+            else:
+                tested = {i: _run_py(versions[i]) for i in range(len(versions))}
+                indices = list(range(len(versions)))
+
+            version_results = []
+            for idx in indices:
+                data = tested[idx]
+                if data:
+                    data["tested_version"] = versions[idx]
+                    version_results.append(data)
+                    result_file = RESULTS_DIR / f"{tool_id}-{versions[idx]}.json"
                     with open(result_file, "w") as f:
                         json.dump(data, f, indent=2)
 
@@ -271,15 +348,25 @@ def main():
                 print(f"  [{tool_id}] Skipping (compiled)")
                 continue
 
-            # Compiled language - test multiple versions
-            version_results = []
-            for version in config["versions"]:
-                data = run_compiled_version(tool_id, config, version)
-                if data:
-                    data["tested_version"] = version
-                    version_results.append(data)
+            # Compiled language
+            def _run_compiled(version):
+                return run_compiled_version(tool_id, config, version)
 
-                    result_file = RESULTS_DIR / f"{tool_id}-{version}.json"
+            if args.bisect:
+                print(f"  [{tool_id}] Bisecting {len(versions)} versions...")
+                tested = bisect_versions(versions, _run_compiled)
+                indices = sorted(tested.keys())
+            else:
+                tested = {i: _run_compiled(versions[i]) for i in range(len(versions))}
+                indices = list(range(len(versions)))
+
+            version_results = []
+            for idx in indices:
+                data = tested[idx]
+                if data:
+                    data["tested_version"] = versions[idx]
+                    version_results.append(data)
+                    result_file = RESULTS_DIR / f"{tool_id}-{versions[idx]}.json"
                     with open(result_file, "w") as f:
                         json.dump(data, f, indent=2)
 

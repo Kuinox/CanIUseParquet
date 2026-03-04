@@ -2,7 +2,7 @@ name: Parquet Can I Use
 
 on:
   push:
-    branches: [main, copilot/create-cani-i-use-parquet]
+    branches: [main]
     paths:
       - 'parquet_can_i_use/**'
   pull_request:
@@ -20,216 +20,151 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test-python:
+  test-pyarrow:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - tool: pyarrow
-            version: "0.17.1"
-            deps: "pyarrow==0.17.1"
-          - tool: pyarrow
-            version: "1.0.0"
-            deps: "pyarrow==1.0.0"
-          - tool: pyarrow
-            version: "4.0.0"
-            deps: "pyarrow==4.0.0"
-          - tool: pyarrow
-            version: "8.0.0"
-            deps: "pyarrow==8.0.0"
-          - tool: pyarrow
-            version: "10.0.0"
-            deps: "pyarrow==10.0.0"
-          - tool: pyarrow
-            version: "11.0.0"
-            deps: "pyarrow==11.0.0"
-          - tool: pyarrow
-            version: "14.0.0"
-            deps: "pyarrow==14.0.0"
-          - tool: pyarrow
-            version: "17.0.0"
-            deps: "pyarrow==17.0.0"
-          - tool: pyarrow
-            version: "23.0.1"
-            deps: "pyarrow==23.0.1"
-          - tool: fastparquet
-            version: "0.7.0"
-            deps: "fastparquet==0.7.0 pandas numpy"
-          - tool: fastparquet
-            version: "2023.1.0"
-            deps: "fastparquet==2023.1.0 pandas numpy"
-          - tool: fastparquet
-            version: "2024.2.0"
-            deps: "fastparquet==2024.2.0 pandas numpy"
-          - tool: fastparquet
-            version: "2025.12.0"
-            deps: "fastparquet==2025.12.0 pandas numpy"
-          - tool: polars
-            version: "0.19.0"
-            deps: "polars==0.19.0"
-          - tool: polars
-            version: "0.20.0"
-            deps: "polars==0.20.0"
-          - tool: polars
-            version: "1.0.0"
-            deps: "polars==1.0.0"
-          - tool: polars
-            version: "1.20.0"
-            deps: "polars==1.20.0"
-          - tool: polars
-            version: "1.38.1"
-            deps: "polars==1.38.1"
-          - tool: duckdb
-            version: "0.8.0"
-            deps: "duckdb==0.8.0"
-          - tool: duckdb
-            version: "0.9.0"
-            deps: "duckdb==0.9.0"
-          - tool: duckdb
-            version: "0.10.0"
-            deps: "duckdb==0.10.0"
-          - tool: duckdb
-            version: "1.0.0"
-            deps: "duckdb==1.0.0"
-          - tool: duckdb
-            version: "1.4.4"
-            deps: "duckdb==1.4.4"
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Install dependencies
-        run: pip install ${{ matrix.deps }}
-        continue-on-error: true
-
-      - name: Run test CLI
-        id: test
+      - name: Run bisect tests for pyarrow
         run: |
-          python parquet_can_i_use/cli/python/test_${{ matrix.tool }}.py > result.json 2>/dev/null || echo '{}' > result.json
-          cat result.json
-        continue-on-error: true
-
-      - name: Upload result
-        uses: actions/upload-artifact@v4
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only pyarrow
+      - uses: actions/upload-artifact@v4
         with:
-          name: result-${{ matrix.tool }}-${{ matrix.version }}
-          path: result.json
+          name: results-pyarrow
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-fastparquet:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bisect tests for fastparquet
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only fastparquet
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-fastparquet
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-polars:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bisect tests for polars
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only polars
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-polars
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-duckdb:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bisect tests for duckdb
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only duckdb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-duckdb
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
 
   test-rust:
     runs-on: ubuntu-latest
     continue-on-error: true
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ["52.0.0", "53.0.0", "54.0.0", "55.2.0"]
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - name: Set parquet/arrow version
-        working-directory: parquet_can_i_use/cli/rust/test_parquet_rs
+      - name: Run bisect tests for parquet-rs
         run: |
-          MAJOR=$(echo "${{ matrix.version }}" | cut -d. -f1)
-          sed -i "s/parquet = { version = \"[0-9]*/parquet = { version = \"${MAJOR}/" Cargo.toml
-          sed -i "s/arrow = { version = \"[0-9]*/arrow = { version = \"${MAJOR}/" Cargo.toml
-          rm -f Cargo.lock
-      - name: Build and run
-        working-directory: parquet_can_i_use/cli/rust/test_parquet_rs
-        run: |
-          cargo build --release
-          ./target/release/test_parquet_rs > ../../../../result.json
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only parquet-rs
       - uses: actions/upload-artifact@v4
         with:
-          name: result-parquet-rs-${{ matrix.version }}
-          path: result.json
+          name: results-rust
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
 
   test-go:
     runs-on: ubuntu-latest
     continue-on-error: true
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ["0.19.0", "0.20.0", "0.22.0", "0.24.0"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
-      - name: Set parquet-go version
-        working-directory: parquet_can_i_use/cli/go/test_parquet_go
+      - name: Run bisect tests for parquet-go
         run: |
-          go get github.com/parquet-go/parquet-go@v${{ matrix.version }}
-          go mod tidy
-      - name: Build and run
-        working-directory: parquet_can_i_use/cli/go/test_parquet_go
-        run: |
-          go build -o test_parquet_go
-          ./test_parquet_go > ../../../result.json
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only parquet-go
       - uses: actions/upload-artifact@v4
         with:
-          name: result-parquet-go-${{ matrix.version }}
-          path: parquet_can_i_use/result.json
+          name: results-go
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
 
   test-java:
     runs-on: ubuntu-latest
     continue-on-error: true
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ["1.12.0", "1.13.0", "1.14.0", "1.15.0"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Set parquet-java version
-        working-directory: parquet_can_i_use/cli/java/test_parquet_java
+      - name: Run bisect tests for parquet-java
         run: |
-          sed -i "s|<parquet.version>[^<]*</parquet.version>|<parquet.version>${{ matrix.version }}</parquet.version>|" pom.xml
-      - name: Build and run
-        working-directory: parquet_can_i_use/cli/java/test_parquet_java
-        run: |
-          mvn -q package -DskipTests
-          java -jar target/test-parquet-java-1.0-SNAPSHOT.jar > ../../../result.json
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only parquet-java
       - uses: actions/upload-artifact@v4
         with:
-          name: result-parquet-java-${{ matrix.version }}
-          path: parquet_can_i_use/result.json
+          name: results-java
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
 
   test-dotnet:
     runs-on: ubuntu-latest
     continue-on-error: true
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ["4.23.0", "5.0.0", "5.5.0"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
-      - name: Set Parquet.Net version
-        working-directory: parquet_can_i_use/cli/dotnet/test_parquet_dotnet
+      - name: Run bisect tests for parquet-dotnet
         run: |
-          VER="${{ matrix.version }}"
-          sed -i "s|<PackageReference Include=\"Parquet\.Net\" Version=\"[^\"]*\"|<PackageReference Include=\"Parquet.Net\" Version=\"${VER}\"|" test_parquet_dotnet.csproj
-      - name: Build and run
-        working-directory: parquet_can_i_use/cli/dotnet/test_parquet_dotnet
-        run: |
-          dotnet build -c Release -v q
-          dotnet run -c Release --no-build > ../../../result.json
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only parquet-dotnet
       - uses: actions/upload-artifact@v4
         with:
-          name: result-parquet-dotnet-${{ matrix.version }}
-          path: parquet_can_i_use/result.json
+          name: results-dotnet
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
 
   build-site:
-    needs: [test-python, test-rust, test-go, test-java, test-dotnet]
+    needs: [test-pyarrow, test-fastparquet, test-polars, test-duckdb, test-rust, test-go, test-java, test-dotnet]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -238,64 +173,18 @@ jobs:
       - name: Download all results
         uses: actions/download-artifact@v4
         with:
-          path: artifacts/
-          pattern: result-*
+          path: parquet_can_i_use/results/
+          merge-multiple: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Collect results
-        run: |
-          mkdir -p parquet_can_i_use/results
-          python3 << 'SCRIPT'
-          import json, os, glob
-
-          all_versions = {}
-          for artifact_dir in sorted(glob.glob("artifacts/result-*")):
-              dirname = os.path.basename(artifact_dir)
-              # Parse tool and version from dirname: result-{tool}-{version}
-              parts = dirname.replace("result-", "").rsplit("-", 1)
-              if len(parts) == 2:
-                  tool_id, version = parts
-              else:
-                  continue
-
-              result_file = os.path.join(artifact_dir, "result.json")
-              if not os.path.exists(result_file):
-                  continue
-
-              with open(result_file) as f:
-                  try:
-                      data = json.load(f)
-                  except json.JSONDecodeError:
-                      continue
-
-              if not data:
-                  continue
-
-              data["tested_version"] = version
-
-              if tool_id not in all_versions:
-                  all_versions[tool_id] = []
-              all_versions[tool_id].append(data)
-
-          # Sort each tool's results by version
-          for tool_id in all_versions:
-              all_versions[tool_id].sort(key=lambda x: x.get("tested_version", ""))
-
-          with open("parquet_can_i_use/results/all_versions.json", "w") as f:
-              json.dump(all_versions, f, indent=2)
-
-          print(f"Collected results for: {list(all_versions.keys())}")
-          for tool_id, results in all_versions.items():
-              versions = [r.get("tested_version", "?") for r in results]
-              print(f"  {tool_id}: {versions}")
-          SCRIPT
-
       - name: Generate matrix
         run: |
+          # Remove any partial all_versions.json so generate_matrix.py uses individual files
+          rm -f parquet_can_i_use/results/all_versions.json
           cd parquet_can_i_use
           python generate_matrix.py --load-results
 
