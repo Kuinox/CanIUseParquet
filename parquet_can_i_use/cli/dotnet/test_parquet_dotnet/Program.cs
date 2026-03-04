@@ -16,30 +16,49 @@ class Program
         catch { return false; }
     }
 
-    static void WriteReadParquet(string name, CompressionMethod compression)
+    static Dictionary<string, bool> TestRW(Action writeFn, Action readFn)
+    {
+        return new Dictionary<string, bool>
+        {
+            ["write"] = TestFeature(writeFn),
+            ["read"] = TestFeature(readFn),
+        };
+    }
+
+    static Dictionary<string, bool> RW(bool write, bool read) =>
+        new Dictionary<string, bool> { ["write"] = write, ["read"] = read };
+
+    static void WriteParquet(string name, CompressionMethod compression)
     {
         Directory.CreateDirectory(tmpDir);
         var path = Path.Combine(tmpDir, name + ".parquet");
         var schema = new ParquetSchema(new DataField<int>("col"));
         var col = new DataColumn(schema.DataFields[0], new int[] { 1, 2, 3 });
 
-        using (var stream = File.Create(path))
-        {
-            using var writer = ParquetWriter.CreateAsync(schema, stream).Result;
-            writer.CompressionMethod = compression;
-            using var group = writer.CreateRowGroup();
-            group.WriteColumnAsync(col).Wait();
-        }
+        using var stream = File.Create(path);
+        using var writer = ParquetWriter.CreateAsync(schema, stream).Result;
+        writer.CompressionMethod = compression;
+        using var group = writer.CreateRowGroup();
+        group.WriteColumnAsync(col).Wait();
+    }
 
-        using (var stream = File.OpenRead(path))
+    static void ReadParquet(string name)
+    {
+        var path = Path.Combine(tmpDir, name + ".parquet");
+        var schema = new ParquetSchema(new DataField<int>("col"));
+        using var stream = File.OpenRead(path);
+        using var reader = ParquetReader.CreateAsync(stream).Result;
+        for (int i = 0; i < reader.RowGroupCount; i++)
         {
-            using var reader = ParquetReader.CreateAsync(stream).Result;
-            for (int i = 0; i < reader.RowGroupCount; i++)
-            {
-                using var rg = reader.OpenRowGroupReader(i);
-                rg.ReadColumnAsync(schema.DataFields[0]).Wait();
-            }
+            using var rg = reader.OpenRowGroupReader(i);
+            rg.ReadColumnAsync(schema.DataFields[0]).Wait();
         }
+    }
+
+    static void WriteReadParquet(string name, CompressionMethod compression)
+    {
+        WriteParquet(name, compression);
+        ReadParquet(name);
     }
 
     /// <summary>
@@ -202,15 +221,15 @@ class Program
         };
 
         // --- Compression ---
-        var compression = new Dictionary<string, bool>();
-        compression["NONE"] = TestFeature(() => WriteReadParquet("comp_none", CompressionMethod.None));
-        compression["SNAPPY"] = TestFeature(() => WriteReadParquet("comp_snappy", CompressionMethod.Snappy));
-        compression["GZIP"] = TestFeature(() => WriteReadParquet("comp_gzip", CompressionMethod.Gzip));
-        compression["BROTLI"] = TestFeature(() => WriteReadParquet("comp_brotli", CompressionMethod.Brotli));
-        compression["LZO"] = TestFeature(() => WriteReadParquet("comp_lzo", CompressionMethod.Lzo));
-        compression["LZ4"] = TestFeature(() => WriteReadParquet("comp_lz4", CompressionMethod.LZ4));
-        compression["LZ4_RAW"] = TestFeature(() => WriteReadParquet("comp_lz4raw", CompressionMethod.Lz4Raw));
-        compression["ZSTD"] = TestFeature(() => WriteReadParquet("comp_zstd", CompressionMethod.Zstd));
+        var compression = new Dictionary<string, object>();
+        compression["NONE"] = TestRW(() => WriteParquet("comp_none", CompressionMethod.None), () => ReadParquet("comp_none"));
+        compression["SNAPPY"] = TestRW(() => WriteParquet("comp_snappy", CompressionMethod.Snappy), () => ReadParquet("comp_snappy"));
+        compression["GZIP"] = TestRW(() => WriteParquet("comp_gzip", CompressionMethod.Gzip), () => ReadParquet("comp_gzip"));
+        compression["BROTLI"] = TestRW(() => WriteParquet("comp_brotli", CompressionMethod.Brotli), () => ReadParquet("comp_brotli"));
+        compression["LZO"] = TestRW(() => WriteParquet("comp_lzo", CompressionMethod.Lzo), () => ReadParquet("comp_lzo"));
+        compression["LZ4"] = TestRW(() => WriteParquet("comp_lz4", CompressionMethod.LZ4), () => ReadParquet("comp_lz4"));
+        compression["LZ4_RAW"] = TestRW(() => WriteParquet("comp_lz4raw", CompressionMethod.Lz4Raw), () => ReadParquet("comp_lz4raw"));
+        compression["ZSTD"] = TestRW(() => WriteParquet("comp_zstd", CompressionMethod.Zstd), () => ReadParquet("comp_zstd"));
         results["compression"] = compression;
 
         // --- Encoding × Type matrix ---
@@ -251,108 +270,74 @@ class Program
             catch { typeEncodings[typeName] = new HashSet<int>(); }
         }
 
-        WriteAndCache("INT32",      new ParquetSchema(new DataField<int>("col")),    new DataColumn(new ParquetSchema(new DataField<int>("col")).DataFields[0],    new int[]    { 1, 2, 3 }));
-        WriteAndCache("INT64",      new ParquetSchema(new DataField<long>("col")),   new DataColumn(new ParquetSchema(new DataField<long>("col")).DataFields[0],   new long[]   { 1L, 2L, 3L }));
-        WriteAndCache("FLOAT",      new ParquetSchema(new DataField<float>("col")),  new DataColumn(new ParquetSchema(new DataField<float>("col")).DataFields[0],  new float[]  { 1f, 2f, 3f }));
-        WriteAndCache("DOUBLE",     new ParquetSchema(new DataField<double>("col")), new DataColumn(new ParquetSchema(new DataField<double>("col")).DataFields[0], new double[] { 1.0, 2.0, 3.0 }));
-        WriteAndCache("BOOLEAN",    new ParquetSchema(new DataField<bool>("col")),   new DataColumn(new ParquetSchema(new DataField<bool>("col")).DataFields[0],   new bool[]   { true, false, true }));
-        WriteAndCache("BYTE_ARRAY", new ParquetSchema(new DataField<byte[]>("col")), new DataColumn(new ParquetSchema(new DataField<byte[]>("col")).DataFields[0], new byte[][] { new byte[]{1}, new byte[]{2}, new byte[]{3} }));
+        WriteAndCache("INT32",   new ParquetSchema(new DataField<int>("col")),    new DataColumn(new ParquetSchema(new DataField<int>("col")).DataFields[0],    new int[]    { 1, 2, 3 }));
+        WriteAndCache("INT64",   new ParquetSchema(new DataField<long>("col")),   new DataColumn(new ParquetSchema(new DataField<long>("col")).DataFields[0],   new long[]   { 1L, 2L, 3L }));
+        WriteAndCache("FLOAT",   new ParquetSchema(new DataField<float>("col")),  new DataColumn(new ParquetSchema(new DataField<float>("col")).DataFields[0],  new float[]  { 1f, 2f, 3f }));
+        WriteAndCache("DOUBLE",  new ParquetSchema(new DataField<double>("col")), new DataColumn(new ParquetSchema(new DataField<double>("col")).DataFields[0], new double[] { 1.0, 2.0, 3.0 }));
+        WriteAndCache("BOOLEAN", new ParquetSchema(new DataField<bool>("col")),   new DataColumn(new ParquetSchema(new DataField<bool>("col")).DataFields[0],   new bool[]   { true, false, true }));
+        WriteAndCache("STRING",  new ParquetSchema(new DataField<string>("col")), new DataColumn(new ParquetSchema(new DataField<string>("col")).DataFields[0], new string[] { "a", "b", "c" }));
+        WriteAndCache("BINARY",  new ParquetSchema(new DataField<byte[]>("col")), new DataColumn(new ParquetSchema(new DataField<byte[]>("col")).DataFields[0], new byte[][] { new byte[]{1}, new byte[]{2}, new byte[]{3} }));
 
-        // parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, not PLAIN.
-        // Verify PLAIN read support by trying to read a pre-made PLAIN-encoded file.
-        bool TestReadPlain(string b64)
-        {
-            try
-            {
-                var bytes = Convert.FromBase64String(b64);
-                var path = Path.Combine(tmpDir, $"plain_read_{Guid.NewGuid():N}.parquet");
-                File.WriteAllBytes(path, bytes);
-                using var stream = File.OpenRead(path);
-                using var reader = ParquetReader.CreateAsync(stream).Result;
-                using var rg = reader.OpenRowGroupReader(0);
-                rg.ReadColumnAsync(reader.Schema.DataFields[0]).Wait();
-                return true;
-            }
-            catch { return false; }
-        }
-
-        // Minimal PLAIN-encoded parquet files (values [1,2,3]) produced by PyArrow 23.0.1:
-        //   import pyarrow as pa, pyarrow.parquet as pq, io, base64
-        //   t = pa.table({"col": pa.array([1,2,3], type=pa.int32())})
-        //   buf = io.BytesIO()
-        //   pq.write_table(t, buf, use_dictionary=False, column_encoding="PLAIN", compression="NONE")
-        //   print(base64.b64encode(buf.getvalue()).decode())
-        const string plainInt32B64 = "UEFSMRUAFSQVJCwVBhUAFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAABERAAAAAgAAAAYBAQAAAAIAAAADAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUCGANjb2wAFgYZHBkcJgAcFQIZJQYAGRgDY29sFQAWBhaCARaCASYIPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAEREAGRwVABUAFQIAPCkGGSYABgAAABaCARYGJggWggEAGRwYDEFSUk9XOnNjaGVtYRisAS8vLy8vM2dBQUFBUUFBQUFBQUFLQUF3QUJnQUZBQWdBQ2dBQUFBQUJCQUFNQUFBQUNBQUlBQUFBQkFBSUFBQUFCQUFBQUFFQUFBQVVBQUFBRUFBVUFBZ0FCZ0FIQUF3QUFBQVFBQkFBQUFBQUFBRUNFQUFBQUJ3QUFBQUVBQUFBQUFBQUFBTUFBQUJqYjJ3QUNBQU1BQWdBQndBSUFBQUFBQUFBQVNBQUFBQT0AGCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIzLjAuMRkcHAAAAGABAABQQVIx";
-        // Same for INT64, using pa.int64() and pa.array([1,2,3], type=pa.int64()).
-        const string plainInt64B64 = "UEFSMRUAFTwVPCwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAAAAIAAAAGAQEAAAAAAAAAAgAAAAAAAAADAAAAAAAAABUEGSw1ABgGc2NoZW1hFQIAFQQlAhgDY29sABYGGRwZHCYAHBUEGSUGABkYA2NvbBUAFgYWugEWugEmCDwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAZHBUAFQAVAgA8KQYZJgAGAAAAFroBFgYmCBa6AQAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFRQUFBQUFBQUtBQXdBQmdBRkFBZ0FDZ0FBQUFBQkJBQU1BQUFBQ0FBSUFBQUFCQUFJQUFBQUJBQUFBQUVBQUFBVUFBQUFFQUFVQUFnQUJnQUhBQXdBQUFBUUFCQUFBQUFBQUFFQ0VBQUFBQndBQUFBRUFBQUFBQUFBQUFNQUFBQmpiMndBQ0FBTUFBZ0FCd0FJQUFBQUFBQUFBVUFBQUFBPQAYIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjMuMC4xGRwcAAAAcAEAAFBBUjE=";
-
-        bool plainInt32ReadOk = TestReadPlain(plainInt32B64);
-        bool plainInt64ReadOk = TestReadPlain(plainInt64B64);
-
-        string[] typeNames = { "INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY" };
+        string[] typeNames = { "INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY" };
         foreach (var encName in encValues.Keys)
         {
-            var typeResults = new Dictionary<string, bool>();
+            var typeResults = new Dictionary<string, object>();
             int encVal = encValues[encName];
             foreach (var typeName in typeNames)
             {
                 var actuals = typeEncodings.GetValueOrDefault(typeName, new HashSet<int>());
                 bool supported = actuals.Contains(encVal);
-                // PLAIN encoding: also mark as supported if the library can READ a PLAIN-encoded file
-                // (parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, but can read PLAIN)
-                if (encName == "PLAIN" && typeName == "INT32" && plainInt32ReadOk) supported = true;
-                if (encName == "PLAIN" && typeName == "INT64" && plainInt64ReadOk) supported = true;
-                typeResults[typeName] = supported;
+                typeResults[typeName] = RW(supported, supported);
             }
             encoding[encName] = typeResults;
         }
         results["encoding"] = encoding;
 
         // --- Logical Types ---
-        var logicalTypes = new Dictionary<string, bool>
+        var logicalTypes = new Dictionary<string, object>
         {
-            ["STRING"] = true,
-            ["DATE"] = true,
-            ["TIME_MILLIS"] = true,
-            ["TIME_MICROS"] = true,
-            ["TIME_NANOS"] = false,
-            ["TIMESTAMP_MILLIS"] = true,
-            ["TIMESTAMP_MICROS"] = true,
-            ["TIMESTAMP_NANOS"] = false,
-            ["INT96"] = false,
-            ["DECIMAL"] = true,
-            ["UUID"] = true,
-            ["JSON"] = false,
-            ["FLOAT16"] = false,
-            ["ENUM"] = true,
-            ["BSON"] = false,
-            ["INTERVAL"] = false,
+            ["STRING"] = RW(true, true),
+            ["DATE"] = RW(true, true),
+            ["TIME_MILLIS"] = RW(true, true),
+            ["TIME_MICROS"] = RW(true, true),
+            ["TIME_NANOS"] = RW(false, false),
+            ["TIMESTAMP_MILLIS"] = RW(true, true),
+            ["TIMESTAMP_MICROS"] = RW(true, true),
+            ["TIMESTAMP_NANOS"] = RW(false, false),
+            ["INT96"] = RW(false, false),
+            ["DECIMAL"] = RW(true, true),
+            ["UUID"] = RW(true, true),
+            ["JSON"] = RW(false, false),
+            ["FLOAT16"] = RW(false, false),
+            ["ENUM"] = RW(true, true),
+            ["BSON"] = RW(false, false),
+            ["INTERVAL"] = RW(false, false),
         };
         results["logical_types"] = logicalTypes;
 
         // --- Nested Types ---
-        var nestedTypes = new Dictionary<string, bool>
+        var nestedTypes = new Dictionary<string, object>
         {
-            ["LIST"] = true,
-            ["MAP"] = true,
-            ["STRUCT"] = true,
-            ["NESTED_LIST"] = true,
-            ["NESTED_MAP"] = true,
-            ["DEEP_NESTING"] = true,
+            ["LIST"] = RW(true, true),
+            ["MAP"] = RW(true, true),
+            ["STRUCT"] = RW(true, true),
+            ["NESTED_LIST"] = RW(true, true),
+            ["NESTED_MAP"] = RW(true, true),
+            ["DEEP_NESTING"] = RW(true, true),
         };
         results["nested_types"] = nestedTypes;
 
         // --- Advanced Features ---
-        var advanced = new Dictionary<string, bool>
+        var advanced = new Dictionary<string, object>
         {
-            ["STATISTICS"] = true,
-            ["PAGE_INDEX"] = false,
-            ["BLOOM_FILTER"] = false,
-            ["DATA_PAGE_V2"] = false,
-            ["COLUMN_ENCRYPTION"] = false,
-            ["PREDICATE_PUSHDOWN"] = false,
-            ["PROJECTION_PUSHDOWN"] = true,
-            ["SCHEMA_EVOLUTION"] = false,
+            ["STATISTICS"] = RW(true, true),
+            ["PAGE_INDEX"] = RW(false, false),
+            ["BLOOM_FILTER"] = RW(false, false),
+            ["DATA_PAGE_V2"] = RW(false, false),
+            ["COLUMN_ENCRYPTION"] = RW(false, false),
+            ["PREDICATE_PUSHDOWN"] = RW(false, false),
+            ["PROJECTION_PUSHDOWN"] = RW(true, true),
+            ["SCHEMA_EVOLUTION"] = RW(false, false),
         };
         results["advanced_features"] = advanced;
 

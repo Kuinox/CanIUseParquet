@@ -14,6 +14,12 @@ def test_feature(name, fn):
     except Exception:
         return False
 
+def test_rw(write_fn, read_fn):
+    """Run separate write and read tests, return {"write": bool, "read": bool}."""
+    write_ok = test_feature("write", write_fn)
+    read_ok = test_feature("read", read_fn)
+    return {"write": write_ok, "read": read_ok}
+
 def main():
     try:
         import pyarrow as pa
@@ -48,13 +54,14 @@ def main():
     for codec_name, codec_val in codec_map.items():
         path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
         table = pa.table({"col": [1, 2, 3]})
-        def write_read_codec(c=codec_val, p=path, t=table):
+        def write_codec(c=codec_val, p=path, t=table):
             pq.write_table(t, p, compression=c)
+        def read_codec(p=path):
             pq.read_table(p)
-        results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec)
 
     # --- Encoding × Type matrix ---
-    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
 
     def make_typed_table(ptype):
         if ptype == "INT32":
@@ -67,7 +74,9 @@ def main():
             return pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float64())})
         elif ptype == "BOOLEAN":
             return pa.table({"col": pa.array([True, False, True])})
-        elif ptype == "BYTE_ARRAY":
+        elif ptype == "STRING":
+            return pa.table({"col": pa.array(["hello", "world", "test"])})
+        elif ptype == "BINARY":
             return pa.table({"col": pa.array([b"hello", b"world", b"test"])})
         raise ValueError(f"Unknown type: {ptype}")
 
@@ -85,23 +94,21 @@ def main():
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
             path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
-            def write_read_enc(e=enc_name, p=path, pt=ptype):
+            def write_enc(e=enc_name, p=path, pt=ptype):
                 t = make_typed_table(pt)
                 if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
                     pq.write_table(t, p, use_dictionary=True)
                     actual = get_column_encodings(p)
-                    # Dictionary encoding uses RLE_DICTIONARY for data pages
                     if "RLE_DICTIONARY" not in actual and "PLAIN_DICTIONARY" not in actual:
                         raise ValueError(f"Expected dictionary encoding, got {actual}")
                 else:
                     pq.write_table(t, p, use_dictionary=False, column_encoding=e)
                     actual = get_column_encodings(p)
-                    # Verify the requested encoding was actually used in the file.
-                    # RLE_DICTIONARY/PLAIN may appear alongside for level encoding.
                     if e not in actual:
                         raise ValueError(f"Expected {e} in encodings, got {actual}")
+            def read_enc(p=path):
                 pq.read_table(p)
-            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
 
     # --- Logical Types ---
     import datetime
@@ -127,14 +134,15 @@ def main():
 
     for type_name, make_table in logical_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
-        def write_read_lt(mk=make_table, p=path):
+        def write_lt(mk=make_table, p=path, tn=type_name):
             t = mk()
-            if type_name == "INT96":
+            if tn == "INT96":
                 pq.write_table(t, p, use_deprecated_int96_timestamps=True)
             else:
                 pq.write_table(t, p)
+        def read_lt(p=path):
             pq.read_table(p)
-        results["logical_types"][type_name] = test_feature(type_name, write_read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
 
     # --- Nested Types ---
     nested_tests = {}
@@ -147,83 +155,102 @@ def main():
 
     for type_name, make_table in nested_tests.items():
         path = os.path.join(tmpdir, f"nt_{type_name}.parquet")
-        def write_read_nt(mk=make_table, p=path):
+        def write_nt(mk=make_table, p=path):
             t = mk()
             pq.write_table(t, p)
+        def read_nt(p=path):
             pq.read_table(p)
-        results["nested_types"][type_name] = test_feature(type_name, write_read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
 
     # --- Advanced Features ---
     table = pa.table({"col": pa.array(range(1000)), "str_col": pa.array([f"val_{i}" for i in range(1000)])})
 
     # Page Index
-    def test_page_index():
+    def write_page_index():
         p = os.path.join(tmpdir, "adv_page_index.parquet")
         pq.write_table(table, p, write_page_index=True)
+    def read_page_index():
+        p = os.path.join(tmpdir, "adv_page_index.parquet")
         pq.read_table(p)
-    results["advanced_features"]["PAGE_INDEX"] = test_feature("PAGE_INDEX", test_page_index)
+    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
 
     # Bloom Filters (PyArrow doesn't expose bloom filter writing via write_table)
-    def test_bloom_filter():
+    def write_bloom_filter():
         p = os.path.join(tmpdir, "adv_bloom.parquet")
         writer = pq.ParquetWriter(p, table.schema)
         writer.write_table(table)
         writer.close()
-        pq.read_table(p)
         # PyArrow has limited bloom filter support (no high-level API as of v23)
         raise NotImplementedError("No bloom filter write API in write_table")
-    results["advanced_features"]["BLOOM_FILTER"] = test_feature("BLOOM_FILTER", test_bloom_filter)
+    def read_bloom_filter():
+        p = os.path.join(tmpdir, "adv_bloom.parquet")
+        pq.read_table(p)
+    results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter)
 
     # Column Encryption (PyArrow supports Parquet Modular Encryption)
-    def test_encryption():
-        p = os.path.join(tmpdir, "adv_enc.parquet")
+    def write_encryption():
         # Test if encryption classes exist
         assert hasattr(pq, 'FileEncryptionProperties')
         assert hasattr(pq, 'FileDecryptionProperties')
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_feature("COLUMN_ENCRYPTION", test_encryption)
+    def read_encryption():
+        assert hasattr(pq, 'FileDecryptionProperties')
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_rw(write_encryption, read_encryption)
 
     # Data Page V2
-    def test_data_page_v2():
+    def write_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
         pq.write_table(table, p, data_page_version="2.0")
+    def read_data_page_v2():
+        p = os.path.join(tmpdir, "adv_v2.parquet")
         pq.read_table(p)
-    results["advanced_features"]["DATA_PAGE_V2"] = test_feature("DATA_PAGE_V2", test_data_page_v2)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
 
     # Statistics
-    def test_statistics():
+    def write_statistics():
         p = os.path.join(tmpdir, "adv_stats.parquet")
         pq.write_table(table, p, write_statistics=True)
         md = pq.read_metadata(p)
         rg = md.row_group(0)
         col = rg.column(0)
         assert col.statistics is not None
-    results["advanced_features"]["STATISTICS"] = test_feature("STATISTICS", test_statistics)
+    def read_statistics():
+        p = os.path.join(tmpdir, "adv_stats.parquet")
+        md = pq.read_metadata(p)
+        assert md.row_group(0).column(0).statistics is not None
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
 
     # Predicate Pushdown (via filters)
-    def test_predicate_pushdown():
+    def write_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
         pq.write_table(table, p)
+    def read_predicate_pushdown():
+        p = os.path.join(tmpdir, "adv_pred.parquet")
         pq.read_table(p, filters=[("col", ">", 500)])
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_feature("PREDICATE_PUSHDOWN", test_predicate_pushdown)
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
 
     # Projection Pushdown
-    def test_projection_pushdown():
+    def write_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
         pq.write_table(table, p)
+    def read_projection_pushdown():
+        p = os.path.join(tmpdir, "adv_proj.parquet")
         pq.read_table(p, columns=["col"])
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_feature("PROJECTION_PUSHDOWN", test_projection_pushdown)
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
 
     # Schema Evolution (reading with missing columns)
-    def test_schema_evolution():
+    def write_schema_evolution():
         p1 = os.path.join(tmpdir, "adv_schema1.parquet")
         p2 = os.path.join(tmpdir, "adv_schema2.parquet")
         t1 = pa.table({"a": [1, 2], "b": [3, 4]})
         t2 = pa.table({"a": [5, 6], "c": [7, 8]})
         pq.write_table(t1, p1)
         pq.write_table(t2, p2)
+    def read_schema_evolution():
+        p1 = os.path.join(tmpdir, "adv_schema1.parquet")
+        p2 = os.path.join(tmpdir, "adv_schema2.parquet")
         ds = pq.ParquetDataset([p1, p2])
         ds.read()
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_feature("SCHEMA_EVOLUTION", test_schema_evolution)
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
 
     print(json.dumps(results, indent=2))
 

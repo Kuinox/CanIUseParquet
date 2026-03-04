@@ -13,6 +13,12 @@ def test_feature(name, fn):
     except Exception:
         return False
 
+def test_rw(write_fn, read_fn):
+    """Run separate write and read tests, return {"write": bool, "read": bool}."""
+    write_ok = test_feature("write", write_fn)
+    read_ok = test_feature("read", read_fn)
+    return {"write": write_ok, "read": read_ok}
+
 def main():
     try:
         import fastparquet
@@ -49,16 +55,17 @@ def main():
     for codec_name, codec_val in codecs.items():
         path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
         df = pd.DataFrame({"col": [1, 2, 3]})
-        def write_read_codec(c=codec_val, p=path, d=df):
+        def write_codec(c=codec_val, p=path, d=df):
             if c is None:
                 fastparquet.write(p, d, compression="UNCOMPRESSED")
             else:
                 fastparquet.write(p, d, compression=c)
+        def read_codec(p=path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["compression"][codec_name] = test_feature(codec_name, write_read_codec)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec)
 
     # --- Encoding × Type matrix ---
-    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
 
     def make_typed_df_fp(ptype):
         if ptype == "INT32":
@@ -71,7 +78,9 @@ def main():
             return pd.DataFrame({"col": np.array([1.0, 2.0, 3.0], dtype=np.float64)})
         elif ptype == "BOOLEAN":
             return pd.DataFrame({"col": [True, False, True]})
-        elif ptype == "BYTE_ARRAY":
+        elif ptype == "STRING":
+            return pd.DataFrame({"col": pd.array(["hello", "world", "test"], dtype=pd.StringDtype("python"))})
+        elif ptype == "BINARY":
             return pd.DataFrame({"col": pd.array([b"hello", b"world", b"test"], dtype="object")})
         raise ValueError(f"Unknown type: {ptype}")
 
@@ -81,20 +90,20 @@ def main():
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
             path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
-            def write_read_enc(e=enc_name, p=path, pt=ptype):
+            def write_enc(e=enc_name, p=path, pt=ptype):
                 df = make_typed_df_fp(pt)
                 if e in ("PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY"):
                     fastparquet.write(p, df)
-                    fastparquet.ParquetFile(p).to_pandas()
                 elif e in ("RLE", "BIT_PACKED"):
                     if pt == "BOOLEAN":
                         fastparquet.write(p, df)
-                        fastparquet.ParquetFile(p).to_pandas()
                     else:
                         raise NotImplementedError(f"fastparquet {e} only for BOOLEAN")
                 else:
                     raise NotImplementedError(f"fastparquet does not support {e} encoding")
-            results["encoding"][enc_name][ptype] = test_feature(f"{enc_name}_{ptype}", write_read_enc)
+            def read_enc(p=path):
+                fastparquet.ParquetFile(p).to_pandas()
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
 
     # --- Logical Types ---
     import datetime
@@ -119,14 +128,15 @@ def main():
 
     for type_name, make_df in lt_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
-        def write_read_lt(mk=make_df, p=path, tn=type_name):
+        def write_lt(mk=make_df, p=path, tn=type_name):
             df = mk()
             kwargs = {}
             if tn == "INT96":
                 kwargs["times"] = "int96"
             fastparquet.write(p, df, **kwargs)
+        def read_lt(p=path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["logical_types"][type_name] = test_feature(type_name, write_read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
 
     # --- Nested Types ---
     nt_tests = {}
@@ -139,60 +149,73 @@ def main():
 
     for type_name, make_df in nt_tests.items():
         path = os.path.join(tmpdir, f"nt_{type_name}.parquet")
-        def write_read_nt(mk=make_df, p=path):
+        def write_nt(mk=make_df, p=path):
             df = mk()
             fastparquet.write(p, df)
+        def read_nt(p=path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["nested_types"][type_name] = test_feature(type_name, write_read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
 
     # --- Advanced Features ---
     df = pd.DataFrame({"col": range(1000), "str_col": pd.array([f"val_{i}" for i in range(1000)], dtype=pd.StringDtype("python"))})
 
-    def test_statistics():
+    def write_statistics():
         p = os.path.join(tmpdir, "adv_stats.parquet")
         fastparquet.write(p, df)
         pf = fastparquet.ParquetFile(p)
         rg = pf.row_groups[0]
         stats = rg.columns[0].meta_data.statistics
-        # fastparquet writes statistics (min/max) 
+        # fastparquet writes statistics (min/max)
         assert stats is not None
-    results["advanced_features"]["STATISTICS"] = test_feature("STATISTICS", test_statistics)
+    def read_statistics():
+        p = os.path.join(tmpdir, "adv_stats.parquet")
+        pf = fastparquet.ParquetFile(p)
+        assert pf.row_groups[0].columns[0].meta_data.statistics is not None
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
 
-    def test_predicate_pushdown():
+    def write_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
         fastparquet.write(p, df)
+    def read_predicate_pushdown():
+        p = os.path.join(tmpdir, "adv_pred.parquet")
         pf = fastparquet.ParquetFile(p)
         pf.to_pandas(filters=[("col", ">", 500)])
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_feature("PREDICATE_PUSHDOWN", test_predicate_pushdown)
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
 
-    def test_projection_pushdown():
+    def write_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
         fastparquet.write(p, df)
+    def read_projection_pushdown():
+        p = os.path.join(tmpdir, "adv_proj.parquet")
         pf = fastparquet.ParquetFile(p)
         result = pf.to_pandas(columns=["col"])
         assert "col" in result.columns
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_feature("PROJECTION_PUSHDOWN", test_projection_pushdown)
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
 
     # Features fastparquet doesn't support
-    results["advanced_features"]["PAGE_INDEX"] = False
-    results["advanced_features"]["BLOOM_FILTER"] = False
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = False
+    results["advanced_features"]["PAGE_INDEX"] = {"write": False, "read": False}
+    results["advanced_features"]["BLOOM_FILTER"] = {"write": False, "read": False}
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
 
-    def test_data_page_v2():
+    def write_data_page_v2():
         raise NotImplementedError("fastparquet does not support Data Page V2")
-    results["advanced_features"]["DATA_PAGE_V2"] = test_feature("DATA_PAGE_V2", test_data_page_v2)
+    def read_data_page_v2():
+        raise NotImplementedError("fastparquet does not support Data Page V2")
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
 
-    def test_schema_evolution():
+    def write_schema_evolution():
         p1 = os.path.join(tmpdir, "adv_se1.parquet")
         p2 = os.path.join(tmpdir, "adv_se2.parquet")
         df1 = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
         df2 = pd.DataFrame({"a": [5, 6], "c": [7, 8]})
         fastparquet.write(p1, df1)
         fastparquet.write(p2, df2)
+    def read_schema_evolution():
+        p1 = os.path.join(tmpdir, "adv_se1.parquet")
         # Try reading with different schema
         pf = fastparquet.ParquetFile(p1)
         pf.to_pandas()
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_feature("SCHEMA_EVOLUTION", test_schema_evolution)
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
 
     print(json.dumps(results, indent=2))
 
