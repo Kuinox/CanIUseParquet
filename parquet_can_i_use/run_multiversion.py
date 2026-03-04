@@ -12,6 +12,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import venv
@@ -78,6 +79,102 @@ def run_python_version(tool_id, version, cli_path, extra_deps, install_template)
         return None
     except Exception as e:
         print(f"ERROR: {e}")
+        return None
+
+
+def _set_rust_version(cli_dir, version):
+    """Pin parquet and arrow crate major version in Cargo.toml and clear the lock file."""
+    major = version.split(".")[0]
+    cargo_toml = cli_dir / "Cargo.toml"
+    content = cargo_toml.read_text()
+    content = re.sub(r'(parquet = \{ version = ")[^"]*(")', rf'\g<1>{major}\2', content)
+    content = re.sub(r'(arrow = \{ version = ")[^"]*(")', rf'\g<1>{major}\2', content)
+    cargo_toml.write_text(content)
+    lock = cli_dir / "Cargo.lock"
+    if lock.exists():
+        lock.unlink()
+
+
+def _set_java_version(cli_dir, version):
+    """Set the parquet version property in pom.xml."""
+    pom = cli_dir / "pom.xml"
+    content = pom.read_text()
+    content = re.sub(
+        r'<parquet\.version>[^<]*</parquet\.version>',
+        f'<parquet.version>{version}</parquet.version>',
+        content,
+    )
+    pom.write_text(content)
+
+
+def _set_dotnet_version(cli_dir, version):
+    """Set the Parquet.Net package version in the .csproj file."""
+    csproj_files = list(cli_dir.glob("*.csproj"))
+    if not csproj_files:
+        raise FileNotFoundError(f"No .csproj file found in {cli_dir}")
+    csproj = csproj_files[0]
+    content = csproj.read_text()
+    content = re.sub(
+        r'(<PackageReference Include="Parquet\.Net" Version=")[^"]*(")',
+        rf'\g<1>{version}\2',
+        content,
+    )
+    csproj.write_text(content)
+
+
+def run_compiled_version(tool_id, tool_config, version):
+    """Build and run a compiled tool pinned to a specific version."""
+    cli_dir = SCRIPT_DIR / tool_config["cli_dir"]
+    tool_type = tool_config.get("type", "")
+    print(f"  [{tool_id}] Testing v{version}...", end=" ", flush=True)
+
+    try:
+        if tool_type == "rust":
+            _set_rust_version(cli_dir, version)
+            subprocess.run(
+                ["cargo", "build", "--release"], cwd=str(cli_dir),
+                capture_output=True, text=True, check=True, timeout=300,
+            )
+            run_cmd = [str(cli_dir / "target" / "release" / "test_parquet_rs")]
+        elif tool_type == "go":
+            subprocess.run(
+                ["go", "get", f"github.com/parquet-go/parquet-go@v{version}"],
+                cwd=str(cli_dir), capture_output=True, text=True, check=True, timeout=120,
+            )
+            subprocess.run(
+                ["go", "mod", "tidy"],
+                cwd=str(cli_dir), capture_output=True, text=True, check=True, timeout=120,
+            )
+            subprocess.run(
+                ["go", "build", "-o", "test_parquet_go"], cwd=str(cli_dir),
+                capture_output=True, text=True, check=True, timeout=300,
+            )
+            run_cmd = [str(cli_dir / "test_parquet_go")]
+        elif tool_type == "java":
+            _set_java_version(cli_dir, version)
+            subprocess.run(
+                ["mvn", "-q", "package", "-DskipTests"], cwd=str(cli_dir),
+                capture_output=True, text=True, check=True, timeout=300,
+            )
+            run_cmd = ["java", "-jar", str(cli_dir / "target" / "test-parquet-java-1.0-SNAPSHOT.jar")]
+        elif tool_type == "dotnet":
+            _set_dotnet_version(cli_dir, version)
+            subprocess.run(
+                ["dotnet", "build", "-c", "Release", "-v", "q"], cwd=str(cli_dir),
+                capture_output=True, text=True, check=True, timeout=300,
+            )
+            run_cmd = ["dotnet", "run", "--project", str(cli_dir), "-c", "Release", "--no-build"]
+        else:
+            print("UNKNOWN TYPE")
+            return None
+
+        result = subprocess.run(run_cmd, capture_output=True, text=True, check=True, timeout=120)
+        data = json.loads(result.stdout)
+        print(f"OK")
+        return data
+
+    except (subprocess.CalledProcessError, FileNotFoundError, json.JSONDecodeError, subprocess.TimeoutExpired) as e:
+        print(f"FAILED: {e}")
         return None
 
 
@@ -174,15 +271,19 @@ def main():
                 print(f"  [{tool_id}] Skipping (compiled)")
                 continue
 
-            # Compiled language - test current version only
-            data = run_compiled_tool(tool_id, config)
-            if data:
-                data["tested_version"] = config["versions"][-1]
-                all_results[tool_id] = [data]
+            # Compiled language - test multiple versions
+            version_results = []
+            for version in config["versions"]:
+                data = run_compiled_version(tool_id, config, version)
+                if data:
+                    data["tested_version"] = version
+                    version_results.append(data)
 
-                result_file = RESULTS_DIR / f"{tool_id}-{config['versions'][-1]}.json"
-                with open(result_file, "w") as f:
-                    json.dump(data, f, indent=2)
+                    result_file = RESULTS_DIR / f"{tool_id}-{version}.json"
+                    with open(result_file, "w") as f:
+                        json.dump(data, f, indent=2)
+
+            all_results[tool_id] = version_results
 
     # Save combined results
     combined_file = RESULTS_DIR / "all_versions.json"
