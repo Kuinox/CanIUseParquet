@@ -252,39 +252,83 @@ class Program
             ["BYTE_STREAM_SPLIT"]        = ENC_BYTE_STREAM_SPLIT,
         };
 
-        // Write one file per type and cache the actual encodings found
+        // Write one file per type and cache the actual encodings found.
+        // Two files are written per type: one with all-unique values (triggers DELTA_BINARY_PACKED for
+        // integers), and one with repeated values (triggers PLAIN_DICTIONARY when the library uses
+        // dictionary encoding). The detected encodings are unioned so both are reported.
         var typeEncodings = new Dictionary<string, HashSet<int>>();
-        void WriteAndCache(string typeName, ParquetSchema sch, DataColumn dc)
+        void WriteAndCache(string typeName, ParquetSchema sch, DataColumn dcUnique, DataColumn dcRepeated)
         {
-            var path = Path.Combine(tmpDir, $"type_{typeName}.parquet");
+            var pathUnique   = Path.Combine(tmpDir, $"type_{typeName}_unique.parquet");
+            var pathRepeated = Path.Combine(tmpDir, $"type_{typeName}_repeated.parquet");
+            HashSet<int> encUnique   = new HashSet<int>();
+            HashSet<int> encRepeated = new HashSet<int>();
             try
             {
-                using (var stream = File.Create(path))
+                using (var stream = File.Create(pathUnique))
                 {
                     using var writer = ParquetWriter.CreateAsync(sch, stream).Result;
                     using var group = writer.CreateRowGroup();
-                    group.WriteColumnAsync(dc).Wait();
+                    group.WriteColumnAsync(dcUnique).Wait();
                 }
-                typeEncodings[typeName] = ReadActualEncodings(path);
+                encUnique = ReadActualEncodings(pathUnique);
             }
-            catch { typeEncodings[typeName] = new HashSet<int>(); }
+            catch { }
+            try
+            {
+                using (var stream = File.Create(pathRepeated))
+                {
+                    using var writer = ParquetWriter.CreateAsync(sch, stream).Result;
+                    using var group = writer.CreateRowGroup();
+                    group.WriteColumnAsync(dcRepeated).Wait();
+                }
+                encRepeated = ReadActualEncodings(pathRepeated);
+            }
+            catch { }
+            var combined = new HashSet<int>(encUnique);
+            combined.UnionWith(encRepeated);
+            typeEncodings[typeName] = combined;
         }
 
-        WriteAndCache("INT32",      new ParquetSchema(new DataField<int>("col")),    new DataColumn(new ParquetSchema(new DataField<int>("col")).DataFields[0],    new int[]    { 1, 2, 3 }));
-        WriteAndCache("INT64",      new ParquetSchema(new DataField<long>("col")),   new DataColumn(new ParquetSchema(new DataField<long>("col")).DataFields[0],   new long[]   { 1L, 2L, 3L }));
-        WriteAndCache("FLOAT",      new ParquetSchema(new DataField<float>("col")),  new DataColumn(new ParquetSchema(new DataField<float>("col")).DataFields[0],  new float[]  { 1f, 2f, 3f }));
-        WriteAndCache("DOUBLE",     new ParquetSchema(new DataField<double>("col")), new DataColumn(new ParquetSchema(new DataField<double>("col")).DataFields[0], new double[] { 1.0, 2.0, 3.0 }));
-        WriteAndCache("BOOLEAN",    new ParquetSchema(new DataField<bool>("col")),   new DataColumn(new ParquetSchema(new DataField<bool>("col")).DataFields[0],   new bool[]   { true, false, true }));
-        WriteAndCache("BYTE_ARRAY", new ParquetSchema(new DataField<byte[]>("col")), new DataColumn(new ParquetSchema(new DataField<byte[]>("col")).DataFields[0], new byte[][] { new byte[]{1}, new byte[]{2}, new byte[]{3} }));
+        var schI32  = new ParquetSchema(new DataField<int>("col"));
+        var schI64  = new ParquetSchema(new DataField<long>("col"));
+        var schF32  = new ParquetSchema(new DataField<float>("col"));
+        var schF64  = new ParquetSchema(new DataField<double>("col"));
+        var schBool = new ParquetSchema(new DataField<bool>("col"));
+        var schBA   = new ParquetSchema(new DataField<byte[]>("col"));
 
-        // parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, not PLAIN.
-        // Verify PLAIN read support by trying to read a pre-made PLAIN-encoded file.
-        bool TestReadPlain(string b64)
+        WriteAndCache("INT32",
+            schI32,
+            new DataColumn(schI32.DataFields[0], new int[] { 1, 2, 3 }),
+            new DataColumn(schI32.DataFields[0], new int[] { 1, 1, 2, 2, 3, 3, 1, 1, 2, 2 }));
+        WriteAndCache("INT64",
+            schI64,
+            new DataColumn(schI64.DataFields[0], new long[] { 1L, 2L, 3L }),
+            new DataColumn(schI64.DataFields[0], new long[] { 1L, 1L, 2L, 2L, 3L, 3L, 1L, 1L, 2L, 2L }));
+        WriteAndCache("FLOAT",
+            schF32,
+            new DataColumn(schF32.DataFields[0], new float[] { 1f, 2f, 3f }),
+            new DataColumn(schF32.DataFields[0], new float[] { 1f, 1f, 2f, 2f, 3f, 3f, 1f, 1f, 2f, 2f }));
+        WriteAndCache("DOUBLE",
+            schF64,
+            new DataColumn(schF64.DataFields[0], new double[] { 1.0, 2.0, 3.0 }),
+            new DataColumn(schF64.DataFields[0], new double[] { 1.0, 1.0, 2.0, 2.0, 3.0, 3.0, 1.0, 1.0, 2.0, 2.0 }));
+        WriteAndCache("BOOLEAN",
+            schBool,
+            new DataColumn(schBool.DataFields[0], new bool[] { true, false, true }),
+            new DataColumn(schBool.DataFields[0], new bool[] { true, true, false, false, true, true, false, false }));
+        WriteAndCache("BYTE_ARRAY",
+            schBA,
+            new DataColumn(schBA.DataFields[0], new byte[][] { new byte[]{1}, new byte[]{2}, new byte[]{3} }),
+            new DataColumn(schBA.DataFields[0], new byte[][] { new byte[]{1,2}, new byte[]{1,2}, new byte[]{3,4}, new byte[]{3,4}, new byte[]{5,6}, new byte[]{5,6} }));
+
+        // Helper: try to read the first column of a pre-made base64-encoded parquet file.
+        bool TestReadEncoding(string b64)
         {
             try
             {
                 var bytes = Convert.FromBase64String(b64);
-                var path = Path.Combine(tmpDir, $"plain_read_{Guid.NewGuid():N}.parquet");
+                var path = Path.Combine(tmpDir, $"enc_read_{Guid.NewGuid():N}.parquet");
                 File.WriteAllBytes(path, bytes);
                 using var stream = File.OpenRead(path);
                 using var reader = ParquetReader.CreateAsync(stream).Result;
@@ -305,8 +349,43 @@ class Program
         // Same for INT64, using pa.int64() and pa.array([1,2,3], type=pa.int64()).
         const string plainInt64B64 = "UEFSMRUAFTwVPCwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAAAAIAAAAGAQEAAAAAAAAAAgAAAAAAAAADAAAAAAAAABUEGSw1ABgGc2NoZW1hFQIAFQQlAhgDY29sABYGGRwZHCYAHBUEGSUGABkYA2NvbBUAFgYWugEWugEmCDwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAZHBUAFQAVAgA8KQYZJgAGAAAAFroBFgYmCBa6AQAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFRQUFBQUFBQUtBQXdBQmdBRkFBZ0FDZ0FBQUFBQkJBQU1BQUFBQ0FBSUFBQUFCQUFJQUFBQUJBQUFBQUVBQUFBVUFBQUFFQUFVQUFnQUpnQUhBQXdBQUFBUUFCQUFBQUFBQUFFQ0VBQUFBQndBQUFBRUFBQUFBQUFBQUFNQUFBQmpiMndBQ0FBTUFBZ0FCd0FJQUFBQUFBQUFBVUFBQUFBPQAYIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjMuMC4xGRwcAAAAcAEAAFBBUjE=";
 
-        bool plainInt32ReadOk = TestReadPlain(plainInt32B64);
-        bool plainInt64ReadOk = TestReadPlain(plainInt64B64);
+        bool plainInt32ReadOk = TestReadEncoding(plainInt32B64);
+        bool plainInt64ReadOk = TestReadEncoding(plainInt64B64);
+
+        // RLE_DICTIONARY-encoded parquet files produced by PyArrow 23.0.1 (use_dictionary=True):
+        //   t = pa.table({"col": pa.array([1,1,2,2,3,3], type=pa.int32())})
+        //   pq.write_table(t, buf, use_dictionary=True, compression="NONE")
+        const string rleDictInt32B64    = "UEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVFBUULBUMFRAVBhUGHBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAEREAAAACAAAADAECA1AKFQQZLDUAGAZzY2hlbWEVAgAVAiUCGANjb2wAFgwZHBkcJgAcFQIZNQAGEBkYA2NvbBUAFgwWpgEWpgEmPCYIHBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAEREAGSwVBBUAFQIAFQAVEBUCADwpBhkmAAwAAAAWpgEWDCYIFqYBABkcGAxBUlJPVzpzY2hlbWEYrAEvLy8vLzNnQUFBQVFBQUFBQUFBS0FBd0FCZ0FGQUFnQUNnQUFBQUFCQkFBTUFBQUFDQUFJQUFBQUJBQUlBQUFBQkFBQUFBRUFBQUFVQUFBQUVBQVVBQWdBQmdBSEFBd0FBQUFRQUJBQUFBQUFBQUVDRUFBQUFCd0FBQUFFQUFBQUFBQUFBQU1BQUFCamIyd0FDQUFNQUFnQUJ3QUlBQUFBQUFBQUFTQUFBQUE9ABggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMy4wLjEZHBwAAABqAQAAUEFSMQ==";
+        const string rleDictInt64B64    = "UEFSMRUEFTAVMEwVBhUAEgAAAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAFQAVFBUULBUMFRAVBhUGHBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAABERAAAAAgAAAAwBAgNQChUEGSw1ABgGc2NoZW1hFQIAFQQlAhgDY29sABYMGRwZHCYAHBUEGTUABhAZGANjb2wVABYMFt4BFt4BJlQmCBwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAREQAZLBUEFQAVAgAVABUQFQIAPCkGGSYADAAAABbeARYMJggW3gEAGRwYDEFSUk9XOnNjaGVtYRisAS8vLy8vM2dBQUFBUUFBQUFBQUFLQUF3QUJnQUZBQWdBQ2dBQUFBQUJCQUFNQUFBQUNBQUlBQUFBQkFBSUFBQUFCQUFBQUFFQUFBQVVBQUFBRUFBVUFBZ0FCZ0FIQUF3QUFBQVFBQkFBQUFBQUFBRUNFQUFBQUJ3QUFBQUVBQUFBQUFBQUFBTUFBQUJqYjJ3QUNBQU1BQWdBQndBSUFBQUFBQUFBQVVBQUFBQT0AGCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIzLjAuMRkcHAAAAHoBAABQQVIx";
+        const string rleDictFloatB64    = "UEFSMRUEFRgVGEwVBhUAEgAAAACAPwAAAEAAAEBAFQAVFBUULBUMFRAVBhUGHBgEAABAQBgEAACAPxYAKAQAAEBAGAQAAIA/EREAAAACAAAADAECA1AKFQQZLDUAGAZzY2hlbWEVAgAVCCUCGANjb2wAFgwZHBkcJgAcFQgZNQAGEBkYA2NvbBUAFgwWpgEWpgEmPCYIHBgEAABAQBgEAACAPxYAKAQAAEBAGAQAAIA/EREAGSwVBBUAFQIAFQAVEBUCADwpBhkmAAwAAAAWpgEWDCYIFqYBABkcGAxBUlJPVzpzY2hlbWEYrAEvLy8vLzNnQUFBQVFBQUFBQUFBS0FBd0FCZ0FGQUFnQUNnQUFBQUFCQkFBTUFBQUFDQUFJQUFBQUJBQUlBQUFBQkFBQUFBRUFBQUFVQUFBQUVBQVVBQWdBQmdBSEFBd0FBQUFRQUJBQUFBQUFBQUVERUFBQUFCd0FBQUFFQUFBQUFBQUFBQU1BQUFCamIyd0FBQUFHQUFnQUJnQUdBQUFBQUFBQkFBQUFBQUE5ABggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMy4wLjEZHBwAAABqAQAAUEFSMQ==";
+        const string rleDictDoubleB64   = "UEFSMRUEFTAVMEwVBhUAEgAAAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAFQAVFBUULBUMFRAVBhUGHBgIAAAAAAAACEAYCAAAAAAAAPA/FgAoCAAAAAAAAAhAGAgAAAAAAADwPxERAAAAAgAAAAwBAgNQChUEGSw1ABgGc2NoZW1hFQIAFQolAhgDY29sABYMGRwZHCYAHBUKGTUABhAZGANjb2wVABYMFt4BFt4BJlQmCBwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8REQAZLBUEFQAVAgAVABUQFQIAPCkGGSYADAAAABbeARYMJggW3gEAGRwYDEFSUk9XOnNjaGVtYRisAS8vLy8vM2dBQUFBUUFBQUFBQUFLQUF3QUJnQUZBQWdBQ2dBQUFBQUJCQUFNQUFBQUNBQUlBQUFBQkFBSUFBQUFCQUFBQUFFQUFBQVVBQUFBRUFBVUFBZ0FCZ0FIQUF3QUFBQVFBQkFBQUFBQUFBRURFQUFBQUJ3QUFBQUVBQUFBQUFBQUFBTUFBQUJqYjJ3QUFBQUdBQWdBQmdBR0FBQUFBQUFDQUFBQUFBQT0AGCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIzLjAuMRkcHAAAAHoBAABQQVIx";
+        const string rleDictByteArrayB64 = "UEFSMRUEFRwVHEwVBBUAEgAAAwAAAGFiYwMAAABkZWYVABUSFRIsFQgVEBUGFQYcNgAoA2RlZhgDYWJjEREAAAACAAAACAEBAwwVBBksNQAYBnNjaGVtYRUCABUMJQIYA2NvbAAWCBkcGRwmABwVDBk1AAYQGRgDY29sFQAWCBaMARaMASZAJggcNgAoA2RlZhgDYWJjEREAGSwVBBUAFQIAFQAVEBUCADwWGBkGGSYACAAAABaMARYIJggWjAEAGRwYDEFSUk9XOnNjaGVtYRigAS8vLy8vM0FBQUFBUUFBQUFBQUFLQUF3QUJnQUZBQWdBQ2dBQUFBQUJCQUFNQUFBQUNBQUlBQUFBQkFBSUFBQUFCQUFBQUFFQUFBQVVBQUFBRUFBVUFBZ0FCZ0FIQUF3QUFBQVFBQkFBQUFBQUFBRUVFQUFBQUJnQUFBQUVBQUFBQUFBQUFBTUFBQUJqYjJ3QUJBQUVBQVFBQUFBQUFBQUEAGCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIzLjAuMRkcHAAAAFIBAABQQVIx";
+
+        // DELTA_LENGTH_BYTE_ARRAY-encoded file (BYTE_ARRAY) produced by PyArrow 23.0.1:
+        //   t = pa.table({"col": pa.array([b"hello", b"world", b"test"], type=pa.binary())})
+        //   pq.write_table(t, buf, use_dictionary=False, column_encoding="DELTA_LENGTH_BYTE_ARRAY", compression="NONE")
+        const string deltaLenByteArrayB64 = "UEFSMRUAFUQVRCwVBhUMFQYVBhw2ACgFd29ybGQYBWhlbGxvEREAAAACAAAABgGAAQQDCgEBAAAAAQAAAGhlbGxvd29ybGR0ZXN0FQQZLDUAGAZzY2hlbWEVAgAVDCUCGANjb2wAFgYZHBkcJgAcFQwZJQYMGRgDY29sFQAWBhaOARaOASYIPDYAKAV3b3JsZBgFaGVsbG8REQAZHBUAFQwVAgA8FhwZBhkmAAYAAAAWjgEWBiYIFo4BABkcGAxBUlJPVzpzY2hlbWEYoAEvLy8vLzNBQUFBQVFBQUFBQUFBS0FBd0FCZ0FGQUFnQUNnQUFBQUFCQkFBTUFBQUFDQUFJQUFBQUJBQUlBQUFBQkFBQUFBRUFBQUFVQUFBQUVBQVVBQWdBQmdBSEFBd0FBQUFRQUJBQUFBQUFBQUVFRUFBQUFCZ0FBQUFFQUFBQUFBQUFBQU1BQUFCamIyd0FCQUFFQUFRQUFBQUFBQUFBABggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMy4wLjEZHBwAAABMAQAAUEFSMQ==";
+
+        // DELTA_BYTE_ARRAY-encoded file (BYTE_ARRAY) produced by PyArrow 23.0.1:
+        //   pq.write_table(t, buf, use_dictionary=False, column_encoding="DELTA_BYTE_ARRAY", compression="NONE")
+        const string deltaByteArrayB64 = "UEFSMRUAFVgVWCwVBhUOFQYVBhw2ACgFd29ybGQYBWhlbGxvEREAAAACAAAABgGAAQQDAAAAAAAAgAEEAwoBAQAAAAEAAABoZWxsb3dvcmxkdGVzdBUEGSw1ABgGc2NoZW1hFQIAFQwlAhgDY29sABYGGRwZHCYAHBUMGSUGDhkYA2NvbBUAFgYWogEWogEmCDw2ACgFd29ybGQYBWhlbGxvEREAGRwVABUOFQIAPBYcGQYZJgAGAAAAFqIBFgYmCBaiAQAZHBgMQVJST1c6c2NoZW1hGKABLy8vLy8zQUFBQUFRQUFBQUFBQUtBQXdBQmdBRkFBZ0FDZ0FBQUFBQkJBQU1BQUFBQ0FBSUFBQUFCQUFJQUFBQUJBQUFBQUVBQUFBVUFBQUFFQUFVQUFnQUJnQUhBQXdBQUFBUUFCQUFBQUFBQUFFRUVBQUFBQmdBQUFBRUFBQUFBQUFBQUFNQUFBQmpiMndBQkFBRUFBUUFBQUFBQUFBQQAYIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjMuMC4xGRwcAAAATAEAAFBBUjE=";
+
+        // BYTE_STREAM_SPLIT-encoded files produced by PyArrow 23.0.1:
+        //   t_float = pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float32())})
+        //   pq.write_table(t_float, buf, use_dictionary=False, column_encoding="BYTE_STREAM_SPLIT", compression="NONE")
+        const string byteStreamSplitFloatB64  = "UEFSMRUAFSQVJCwVBhUSFQYVBhwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPxERAAAAAgAAAAYBAAAAAAAAgABAP0BAFQQZLDUAGAZzY2hlbWEVAgAVCCUCGANjb2wAFgYZHBkcJgAcFQgZJQYSGRgDY29sFQAWBhaCARaCASYIPBgEAABAQBgEAACAPxYAKAQAAEBAGAQAAIA/EREAGRwVABUSFQIAPCkGGSYABgAAABaCARYGJggWggEAGRwYDEFSUk9XOnNjaGVtYRisAS8vLy8vM2dBQUFBUUFBQUFBQUFLQUF3QUJnQUZBQWdBQ2dBQUFBQUJCQUFNQUFBQUNBQUlBQUFBQkFBSUFBQUFCQUFBQUFFQUFBQVVBQUFBRUFBVUFBZ0FCZ0FIQUF3QUFBQVFBQkFBQUFBQUFBRURFQUFBQUJ3QUFBQUVBQUFBQUFBQUFBTUFBQUJqYjJ3QUFBQUdBQWdBQmdBR0FBQUFBQUFCQUFBQUFBQT0AGCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIzLjAuMRkcHAAAAGABAABQQVIx";
+        const string byteStreamSplitDoubleB64 = "UEFSMRUAFTwVPCwVBhUSFQYVBhwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8REQAAAAIAAAAGAQAAAAAAAAAAAAAAAAAAAAAAAPAACD9AQBUEGSw1ABgGc2NoZW1hFQIAFQolAhgDY29sABYGGRwZHCYAHBUKGSUGEhkYA2NvbBUAFgYWugEWugEmCDwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8REQAZHBUAFRIVAgA8KQYZJgAGAAAAFroBFgYmCBa6AQAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFRQUFBQUFBQUtBQXdBQmdBRkFBZ0FDZ0FBQUFBQkJBQU1BQUFBQ0FBSUFBQUFCQUFJQUFBQUJBQUFBQUVBQUFBVUFBQUFFQUFVQUFnQUJnQUhBQXdBQUFBUUFCQUFBQUFBQUFFREVBQUFBQndBQUFBRUFBQUFBQUFBQUFNQUFBQmpiMndBQUFBR0FBZ0FCZ0FHQUFBQUFBQUNBQUFBQUFBPQAYIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjMuMC4xGRwcAAAAcAEAAFBBUjE=";
+
+        // Read tests using pre-made files for encodings the library doesn't write by default
+        bool rleDictInt32ReadOk     = TestReadEncoding(rleDictInt32B64);
+        bool rleDictInt64ReadOk     = TestReadEncoding(rleDictInt64B64);
+        bool rleDictFloatReadOk     = TestReadEncoding(rleDictFloatB64);
+        bool rleDictDoubleReadOk    = TestReadEncoding(rleDictDoubleB64);
+        bool rleDictByteArrayReadOk = TestReadEncoding(rleDictByteArrayB64);
+        bool deltaLenByteArrayReadOk = TestReadEncoding(deltaLenByteArrayB64);
+        bool deltaByteArrayReadOk    = TestReadEncoding(deltaByteArrayB64);
+        bool byteStreamSplitFloatReadOk  = TestReadEncoding(byteStreamSplitFloatB64);
+        bool byteStreamSplitDoubleReadOk = TestReadEncoding(byteStreamSplitDoubleB64);
 
         string[] typeNames = { "INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY" };
         foreach (var encName in encValues.Keys)
@@ -322,6 +401,25 @@ class Program
                 // (parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, but can read PLAIN)
                 if (encName == "PLAIN" && typeName == "INT32" && plainInt32ReadOk) readOk = true;
                 if (encName == "PLAIN" && typeName == "INT64" && plainInt64ReadOk) readOk = true;
+                // RLE_DICTIONARY: the library writes PLAIN_DICTIONARY (old-style), not RLE_DICTIONARY.
+                // Mark read as supported using pre-made files if the library can decode them.
+                if (encName == "RLE_DICTIONARY")
+                {
+                    if (typeName == "INT32"      && rleDictInt32ReadOk)     readOk = true;
+                    if (typeName == "INT64"      && rleDictInt64ReadOk)     readOk = true;
+                    if (typeName == "FLOAT"      && rleDictFloatReadOk)     readOk = true;
+                    if (typeName == "DOUBLE"     && rleDictDoubleReadOk)    readOk = true;
+                    if (typeName == "BYTE_ARRAY" && rleDictByteArrayReadOk) readOk = true;
+                }
+                // DELTA_LENGTH_BYTE_ARRAY / DELTA_BYTE_ARRAY: only valid for BYTE_ARRAY in spec.
+                if (encName == "DELTA_LENGTH_BYTE_ARRAY" && typeName == "BYTE_ARRAY" && deltaLenByteArrayReadOk) readOk = true;
+                if (encName == "DELTA_BYTE_ARRAY"        && typeName == "BYTE_ARRAY" && deltaByteArrayReadOk)    readOk = true;
+                // BYTE_STREAM_SPLIT: library cannot decode INT32/INT64 but can decode FLOAT/DOUBLE.
+                if (encName == "BYTE_STREAM_SPLIT")
+                {
+                    if (typeName == "FLOAT"  && byteStreamSplitFloatReadOk)  readOk = true;
+                    if (typeName == "DOUBLE" && byteStreamSplitDoubleReadOk) readOk = true;
+                }
                 typeResults[typeName] = RW(writeOk, readOk);
             }
             encoding[encName] = typeResults;

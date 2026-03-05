@@ -64,20 +64,20 @@
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "INT64": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "FLOAT": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "DOUBLE": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
@@ -91,19 +91,19 @@
     "RLE_DICTIONARY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
@@ -111,7 +111,7 @@
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "RLE": {
@@ -215,7 +215,7 @@
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "DELTA_BYTE_ARRAY": {
@@ -241,7 +241,7 @@
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "BYTE_STREAM_SPLIT": {
@@ -255,11 +255,11 @@
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
