@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-Fetches release dates for all versions of each tested library from their
-respective package registries (PyPI, crates.io, NuGet, Maven Central, GitHub).
+Developer utility: fetches release dates for all versions of each tested library
+from their respective package registries (PyPI, crates.io, NuGet, Maven Central,
+Go module proxy).
 
-Outputs: release_dates.json
-  {
-    "pyarrow": {"0.10.0": "2019-01-15", ...},
-    "fastparquet": {...},
-    ...
-  }
+Use this when adding new versions to versions.json to look up their release dates.
+The dates should then be hardcoded into the version_dates map in versions.json.
+
+Release dates are NOT fetched dynamically at CI build time — they are hardcoded in
+versions.json so that CI doesn't depend on external package registry availability.
+
+Outputs: release_dates.json  (for reference; dates should be copied into versions.json)
 
 Usage:
     python fetch_release_dates.py [--output PATH]

@@ -186,7 +186,6 @@ jobs:
           # Remove any partial all_versions.json so generate_matrix.py uses individual files
           rm -f parquet_can_i_use/results/all_versions.json
           cd parquet_can_i_use
-          python fetch_release_dates.py
           python generate_matrix.py --load-results
 
       - name: Setup Node.js
