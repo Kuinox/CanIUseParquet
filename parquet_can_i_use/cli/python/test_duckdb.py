@@ -162,8 +162,17 @@ def main():
         results["nested_types"][type_name] = test_rw(write_nt, read_nt)
 
     # --- Advanced Features ---
-    data_path = os.path.join(tmpdir, "adv_data.parquet")
-    con.execute(f"COPY (SELECT i AS col, 'val_' || i AS str_col FROM range(1000) t(i)) TO '{data_path}' (FORMAT PARQUET)")
+    # Create a shared data file used by several read-side tests.  Wrap in
+    # try/except so that a SQL syntax change in very old DuckDB versions cannot
+    # crash the whole script and suppress all results.
+    try:
+        data_path = os.path.join(tmpdir, "adv_data.parquet")
+        con.execute(
+            f"COPY (SELECT i AS col, CAST(i AS VARCHAR) AS str_col "
+            f"FROM range(1000) t(i)) TO '{data_path}' (FORMAT PARQUET)"
+        )
+    except Exception:
+        data_path = None
 
     def write_page_index():
         pass  # DuckDB always writes page index metadata

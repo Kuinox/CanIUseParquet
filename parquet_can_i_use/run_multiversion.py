@@ -28,6 +28,17 @@ def load_versions():
         return json.load(f)
 
 
+def is_cli_error(data):
+    """Return True if data represents a CLI failure (not a library feature failure).
+
+    CLI errors occur when the test harness itself cannot run (e.g. build failure,
+    install failure, or the test script crashes before producing any output).  They
+    must be distinguished from library-level failures where the library simply does
+    not support a feature.
+    """
+    return isinstance(data, dict) and data.get("cli_error") is True
+
+
 def run_python_version(tool_id, version, cli_path, extra_deps, install_template):
     """Test a specific version of a Python library using a virtual environment."""
     venv_dir = SCRIPT_DIR / ".venvs" / f"{tool_id}-{version}"
@@ -64,8 +75,10 @@ def run_python_version(tool_id, version, cli_path, extra_deps, install_template)
                 print(f"OK (partial)")
                 return data
             except (json.JSONDecodeError, ValueError):
+                # The script crashed before printing any JSON.  This is a CLI
+                # compatibility issue, not evidence that the library lacks features.
                 print(f"FAILED (exit {result.returncode})")
-                return None
+                return {"cli_error": True, "version": version, "cli_error_type": "runtime_crash"}
 
         data = json.loads(result.stdout)
         print(f"OK (v{data.get('version', version)})")
@@ -73,13 +86,13 @@ def run_python_version(tool_id, version, cli_path, extra_deps, install_template)
 
     except subprocess.TimeoutExpired:
         print("TIMEOUT")
-        return None
+        return {"cli_error": True, "version": version, "cli_error_type": "timeout"}
     except subprocess.CalledProcessError as e:
         print(f"INSTALL FAILED: {e}")
-        return None
+        return {"cli_error": True, "version": version, "cli_error_type": "install_failed"}
     except Exception as e:
         print(f"ERROR: {e}")
-        return None
+        return {"cli_error": True, "version": version, "cli_error_type": "error"}
 
 
 def _set_rust_version(cli_dir, version):
@@ -194,8 +207,10 @@ def run_compiled_version(tool_id, tool_config, version):
         return data
 
     except (subprocess.CalledProcessError, FileNotFoundError, json.JSONDecodeError, subprocess.TimeoutExpired) as e:
-        print(f"FAILED: {e}")
-        return None
+        # Build or run failure for a specific version means our CLI is incompatible
+        # with that library version's API, not that the library lacks features.
+        print(f"CLI FAILED: {e}")
+        return {"cli_error": True, "version": version, "cli_error_type": type(e).__name__}
 
 
 def run_compiled_tool(tool_id, tool_config):
@@ -239,8 +254,8 @@ def run_compiled_tool(tool_id, tool_config):
         return data
 
     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired) as e:
-        print(f"FAILED: {e}")
-        return None
+        print(f"CLI FAILED: {e}")
+        return {"cli_error": True, "version": version, "cli_error_type": type(e).__name__}
 
 
 def flatten_features(data):
@@ -356,10 +371,19 @@ def main():
                 tested = {i: _run_py(versions[i]) for i in range(len(versions))}
                 indices = list(range(len(versions)))
 
+            # Safeguard: if the CLI fails for the latest version, our test harness is
+            # broken for this tool.  Skip saving results to avoid persisting incorrect
+            # "not supported" data that is really a CLI failure.
+            latest_idx = len(versions) - 1
+            if is_cli_error(tested.get(latest_idx)):
+                print(f"  [{tool_id}] WARNING: CLI failed for latest version "
+                      f"{versions[latest_idx]}. Skipping results to avoid saving incorrect data.")
+                continue
+
             version_results = []
             for idx in indices:
                 data = tested[idx]
-                if data:
+                if data and not is_cli_error(data):
                     data["tested_version"] = versions[idx]
                     version_results.append(data)
                     result_file = RESULTS_DIR / f"{tool_id}-{versions[idx]}.json"
@@ -384,10 +408,19 @@ def main():
                 tested = {i: _run_compiled(versions[i]) for i in range(len(versions))}
                 indices = list(range(len(versions)))
 
+            # Safeguard: if the CLI fails for the latest version, our test harness is
+            # broken for this tool.  Skip saving results to avoid persisting incorrect
+            # "not supported" data that is really a CLI failure.
+            latest_idx = len(versions) - 1
+            if is_cli_error(tested.get(latest_idx)):
+                print(f"  [{tool_id}] WARNING: CLI failed for latest version "
+                      f"{versions[latest_idx]}. Skipping results to avoid saving incorrect data.")
+                continue
+
             version_results = []
             for idx in indices:
                 data = tested[idx]
-                if data:
+                if data and not is_cli_error(data):
                     data["tested_version"] = versions[idx]
                     version_results.append(data)
                     result_file = RESULTS_DIR / f"{tool_id}-{versions[idx]}.json"
