@@ -9,3 +9,7 @@ out/
 __pycache__/
 *.pyc
 .venvs/
+
+# .NET build artifacts
+parquet_can_i_use/cli/dotnet/*/bin/
+parquet_can_i_use/cli/dotnet/*/obj/
