@@ -119,7 +119,7 @@ def _set_trino_version(cli_dir, version):
     pom.write_text(content)
 
 
-def _set_dotnet_version(cli_dir, version):
+def _set_dotnet_version(cli_dir, version, package_name="Parquet.Net"):
     """Set the Parquet.Net package version in the .csproj file."""
     csproj_files = list(cli_dir.glob("*.csproj"))
     if not csproj_files:
