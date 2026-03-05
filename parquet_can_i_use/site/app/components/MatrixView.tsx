@@ -21,6 +21,22 @@ function ReadWriteBadge({ supported, since, label }: { supported: boolean; since
   );
 }
 
+function MergedBadge({ supported, since }: { supported: boolean; since?: string | null }) {
+  if (supported) {
+    return (
+      <span className="flex items-center gap-0.5 text-[10px]">
+        <span className="text-green-400">✅</span>
+        {since && <span className="text-green-500">{since}+</span>}
+      </span>
+    );
+  }
+  return (
+    <span className="flex items-center gap-0.5 text-[10px]">
+      <span className="text-red-400">❌</span>
+    </span>
+  );
+}
+
 function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   if (!entry) {
     return (
@@ -46,11 +62,19 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   else if (neitherSupported) bgClass = "bg-red-950/20";
   else bgClass = "bg-yellow-950/20";
 
+  const canMerge = entry.write === entry.read && entry.write_since === entry.read_since;
+
   return (
     <td className={`px-3 py-2 text-center ${bgClass}`}>
       <div className="flex flex-col items-center gap-0.5">
-        <ReadWriteBadge supported={entry.write} since={entry.write_since} label="W" />
-        <ReadWriteBadge supported={entry.read} since={entry.read_since} label="R" />
+        {canMerge ? (
+          <MergedBadge supported={entry.write} since={entry.write_since} />
+        ) : (
+          <>
+            <ReadWriteBadge supported={entry.write} since={entry.write_since} label="W" />
+            <ReadWriteBadge supported={entry.read} since={entry.read_since} label="R" />
+          </>
+        )}
       </div>
     </td>
   );
@@ -133,8 +157,12 @@ export default function MatrixView({ data }: { data: MatrixData }) {
       {/* Legend */}
       <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-400">
         <span>
+          <span className="text-[10px]"><span className="text-green-400">✅</span></span>{" "}
+          Both read &amp; write supported (same version)
+        </span>
+        <span>
           <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-green-400">✅</span> <span className="text-gray-500">R:</span><span className="text-green-400">✅</span></span>{" "}
-          Both read &amp; write supported
+          Both read &amp; write supported (different versions)
         </span>
         <span>
           <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-green-400">✅</span> <span className="text-gray-500">R:</span><span className="text-red-400">❌</span></span>{" "}
@@ -145,7 +173,7 @@ export default function MatrixView({ data }: { data: MatrixData }) {
           Read only
         </span>
         <span>
-          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-red-400">❌</span> <span className="text-gray-500">R:</span><span className="text-red-400">❌</span></span>{" "}
+          <span className="text-[10px]"><span className="text-red-400">❌</span></span>{" "}
           Not supported
         </span>
         <span>
