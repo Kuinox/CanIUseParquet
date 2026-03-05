@@ -38,11 +38,11 @@
   "encoding": {
     "PLAIN": {
       "INT32": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "INT64": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "FLOAT": {

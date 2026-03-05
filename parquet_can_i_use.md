@@ -19,21 +19,22 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 | parquet-go | 0.24.0 | 0.24.0 | Go |
 | parquet-java | parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede) | parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede) | Java |
 | parquet-dotnet | 5.0.0.0 | 5.0.0.0 | C# / .NET |
+| ParquetSharp | 21.0.0.0 | 12.0.1, 13.0.0, 14.0.2, 15.0.2.1, 16.1.0, 18.1.0, 19.0.1, 20.0.0, 21.0.0 | C# / .NET |
 
 ---
 
 ## Compression Codecs
 
-| Codec | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| NONE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| SNAPPY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| GZIP | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BROTLI | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ❌ | ✅ 5.0.0.0+ |
-| LZO | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| LZ4 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| LZ4_RAW | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| ZSTD | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| Codec | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| NONE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| SNAPPY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| GZIP | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BROTLI | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ❌ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| LZO | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| LZ4 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| LZ4_RAW | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| ZSTD | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
 
 ---
 
@@ -41,153 +42,153 @@ A comprehensive compatibility reference for Apache Parquet features across libra
 
 ### PLAIN
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BOOLEAN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BOOLEAN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
 
 ### PLAIN_DICTIONARY
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BOOLEAN | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ❌ |
+| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ❌ |
+| FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ❌ |
+| DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ❌ |
+| BOOLEAN | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ❌ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ❌ |
 
 ### RLE_DICTIONARY
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| BOOLEAN | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| INT64 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| FLOAT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| DOUBLE | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BOOLEAN | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
 
 ### RLE
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ❌ | ❌ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| INT64 | ❌ | ❌ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BOOLEAN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ❌ | ❌ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ❌ |
+| INT64 | ❌ | ❌ | ✅ 1.38.1+ | ❌ | ❌ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ❌ |
+| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ➖ |
+| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ➖ |
+| BOOLEAN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ➖ |
 
 ### BIT_PACKED
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| INT64 | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| FLOAT | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| DOUBLE | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BOOLEAN | ➖ | ✅ 2025.12.0+ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BYTE_ARRAY | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| INT64 | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| FLOAT | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| DOUBLE | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BOOLEAN | ➖ | ✅ 2025.12.0+ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BYTE_ARRAY | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
 
 ### DELTA_BINARY_PACKED
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| INT64 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| INT64 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
 
 ### DELTA_LENGTH_BYTE_ARRAY
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| INT64 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BYTE_ARRAY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| INT64 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
 
 ### DELTA_BYTE_ARRAY
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| INT64 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BYTE_ARRAY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| INT64 | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| FLOAT | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| DOUBLE | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BYTE_ARRAY | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 14.0.2+ |
 
 ### BYTE_STREAM_SPLIT
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| INT32 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| INT64 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| FLOAT | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| DOUBLE | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ |
-| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
-| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| INT32 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 16.1.0+ |
+| INT64 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 16.1.0+ |
+| FLOAT | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| DOUBLE | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | W❌ R✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BOOLEAN | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
+| BYTE_ARRAY | ➖ | ➖ | ✅ 1.38.1+ | ➖ | ➖ | ➖ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ➖ | ➖ |
 
 ---
 
 ## Logical Types
 
-| Logical Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| STRING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| DATE | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| TIME_MILLIS | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| TIME_MICROS | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| TIME_NANOS | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| TIMESTAMP_MILLIS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| TIMESTAMP_MICROS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| TIMESTAMP_NANOS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| INT96 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ❌ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| DECIMAL | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| UUID | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| JSON | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| FLOAT16 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| ENUM | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| BSON | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| INTERVAL | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| Logical Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| STRING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| DATE | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| TIME_MILLIS | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| TIME_MICROS | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| TIME_NANOS | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| TIMESTAMP_MILLIS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| TIMESTAMP_MICROS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| TIMESTAMP_NANOS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| INT96 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ❌ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| DECIMAL | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| UUID | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| JSON | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| FLOAT16 | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 15.0.2.1+ |
+| ENUM | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| BSON | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ❌ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| INTERVAL | ❌ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ❌ |
 
 ---
 
 ## Nested & Complex Types
 
-| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| LIST | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| MAP | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| STRUCT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| NESTED_LIST | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| NESTED_MAP | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| DEEP_NESTING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
+| Type | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| LIST | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| MAP | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| STRUCT | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| NESTED_LIST | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| NESTED_MAP | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| DEEP_NESTING | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
 
 ---
 
 ## Advanced Features
 
-| Feature | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet |
-|---|---|---|---|---|---|---|---|---|
-| STATISTICS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| PAGE_INDEX | ✅ 23.0.1+ | ❌ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| BLOOM_FILTER | ❌ | ❌ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| DATA_PAGE_V2 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| COLUMN_ENCRYPTION | ✅ 23.0.1+ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| PREDICATE_PUSHDOWN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
-| PROJECTION_PUSHDOWN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ |
-| SCHEMA_EVOLUTION | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ✅ 1.4.4+ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ |
+| Feature | PyArrow | fastparquet | Polars | DuckDB | parquet-rs | parquet-go | parquet-java | parquet-dotnet | ParquetSharp |
+|---|---|---|---|---|---|---|---|---|---|
+| STATISTICS | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| PAGE_INDEX | ✅ 23.0.1+ | ❌ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| BLOOM_FILTER | ❌ | ❌ | ❌ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ❌ |
+| DATA_PAGE_V2 | ✅ 23.0.1+ | ❌ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ❌ |
+| COLUMN_ENCRYPTION | ✅ 23.0.1+ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
+| PREDICATE_PUSHDOWN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ❌ |
+| PROJECTION_PUSHDOWN | ✅ 23.0.1+ | ✅ 2025.12.0+ | ✅ 1.38.1+ | ✅ 1.4.4+ | ✅ 55.2.0+ | ✅ 0.24.0+ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ✅ 5.0.0.0+ | ✅ 12.0.1+ |
+| SCHEMA_EVOLUTION | ✅ 23.0.1+ | ✅ 2025.12.0+ | ❌ | ✅ 1.4.4+ | ❌ | ❌ | ✅ parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)+ | ❌ | ✅ 12.0.1+ |
 
 ---
 
