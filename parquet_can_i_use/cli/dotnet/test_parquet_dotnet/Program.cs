@@ -255,14 +255,18 @@ class Program
         // Write one file per type and cache the actual encodings found.
         // Two files are written per type: one with all-unique values (triggers DELTA_BINARY_PACKED for
         // integers), and one with repeated values (triggers PLAIN_DICTIONARY when the library uses
-        // dictionary encoding). The detected encodings are unioned so both are reported.
+        // dictionary encoding). A third file is written with UseDeltaBinaryPackedEncoding=false and
+        // UseDictionaryEncoding=false to detect PLAIN write support for integer types.
+        // The detected encodings are unioned so all are reported.
         var typeEncodings = new Dictionary<string, HashSet<int>>();
         void WriteAndCache(string typeName, ParquetSchema sch, DataColumn dcUnique, DataColumn dcRepeated)
         {
             var pathUnique   = Path.Combine(tmpDir, $"type_{typeName}_unique.parquet");
             var pathRepeated = Path.Combine(tmpDir, $"type_{typeName}_repeated.parquet");
+            var pathPlain    = Path.Combine(tmpDir, $"type_{typeName}_plain.parquet");
             HashSet<int> encUnique   = new HashSet<int>();
             HashSet<int> encRepeated = new HashSet<int>();
+            HashSet<int> encPlain    = new HashSet<int>();
             try
             {
                 using (var stream = File.Create(pathUnique))
@@ -285,8 +289,24 @@ class Program
                 encRepeated = ReadActualEncodings(pathRepeated);
             }
             catch { }
+            // Write with PLAIN encoding by disabling delta and dictionary encoding.
+            // This surfaces PLAIN write support for integer types (INT32, INT64) which the library
+            // can write in PLAIN when UseDeltaBinaryPackedEncoding is disabled.
+            try
+            {
+                var plainOptions = new ParquetOptions { UseDeltaBinaryPackedEncoding = false, UseDictionaryEncoding = false };
+                using (var stream = File.Create(pathPlain))
+                {
+                    using var writer = ParquetWriter.CreateAsync(sch, stream, plainOptions).Result;
+                    using var group = writer.CreateRowGroup();
+                    group.WriteColumnAsync(dcUnique).Wait();
+                }
+                encPlain = ReadActualEncodings(pathPlain);
+            }
+            catch { }
             var combined = new HashSet<int>(encUnique);
             combined.UnionWith(encRepeated);
+            combined.UnionWith(encPlain);
             typeEncodings[typeName] = combined;
         }
 
@@ -397,8 +417,9 @@ class Program
                 var actuals = typeEncodings.GetValueOrDefault(typeName, new HashSet<int>());
                 bool writeOk = actuals.Contains(encVal);
                 bool readOk = writeOk;
-                // PLAIN encoding: also mark read as supported if the library can READ a PLAIN-encoded file
-                // (parquet-dotnet writes INT32/INT64 with DELTA_BINARY_PACKED by default, but can read PLAIN)
+                // PLAIN encoding: also mark read as supported if the library can READ a PLAIN-encoded file.
+                // (parquet-dotnet writes PLAIN for INT32/INT64 when UseDeltaBinaryPackedEncoding=false,
+                // so writeOk is already set via WriteAndCache; readOk is set from the pre-made file test.)
                 if (encName == "PLAIN" && typeName == "INT32" && plainInt32ReadOk) readOk = true;
                 if (encName == "PLAIN" && typeName == "INT64" && plainInt64ReadOk) readOk = true;
                 // RLE_DICTIONARY: the library writes PLAIN_DICTIONARY (old-style), not RLE_DICTIONARY.

@@ -4404,14 +4404,14 @@
       "encoding": {
         "PLAIN": {
           "INT32": {
-            "write": false,
-            "write_since": null,
+            "write": true,
+            "write_since": "5.0.0.0",
             "read": true,
             "read_since": "5.0.0.0"
           },
           "INT64": {
-            "write": false,
-            "write_since": null,
+            "write": true,
+            "write_since": "5.0.0.0",
             "read": true,
             "read_since": "5.0.0.0"
           },
@@ -4953,6 +4953,638 @@
           "read_since": null
         }
       }
+    },
+    "parquet-sharp": {
+      "display_name": "ParquetSharp",
+      "language": "C# / .NET",
+      "latest_version": "21.0.0.0",
+      "tested_versions": [
+        "12.0.1",
+        "13.0.0",
+        "14.0.2",
+        "15.0.2.1",
+        "16.1.0",
+        "18.1.0",
+        "19.0.1",
+        "20.0.0",
+        "21.0.0"
+      ],
+      "version_dates": {
+        "12.0.1": "2023-07-09",
+        "13.0.0": "2023-11-27",
+        "14.0.2": "2024-02-01",
+        "15.0.2.1": "2024-05-02",
+        "16.1.0": "2024-08-08",
+        "18.1.0": "2025-02-24",
+        "19.0.1": "2025-04-28",
+        "20.0.0": "2025-07-21",
+        "21.0.0": "2025-09-30"
+      },
+      "compression": {
+        "NONE": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "SNAPPY": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "GZIP": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "BROTLI": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "LZO": {
+          "write": false,
+          "write_since": null,
+          "read": false,
+          "read_since": null
+        },
+        "LZ4": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "LZ4_RAW": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "ZSTD": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        }
+      },
+      "encoding": {
+        "PLAIN": {
+          "INT32": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "INT64": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "FLOAT": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "DOUBLE": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "BOOLEAN": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "BYTE_ARRAY": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          }
+        },
+        "PLAIN_DICTIONARY": {
+          "INT32": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "INT64": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "FLOAT": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "DOUBLE": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "BOOLEAN": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "BYTE_ARRAY": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          }
+        },
+        "RLE_DICTIONARY": {
+          "INT32": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "INT64": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "FLOAT": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "DOUBLE": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "BOOLEAN": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "BYTE_ARRAY": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          }
+        },
+        "RLE": {
+          "INT32": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "INT64": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null
+          },
+          "FLOAT": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "DOUBLE": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BOOLEAN": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "BYTE_ARRAY": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          }
+        },
+        "BIT_PACKED": {
+          "INT32": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "INT64": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "FLOAT": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "DOUBLE": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BOOLEAN": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BYTE_ARRAY": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          }
+        },
+        "DELTA_BINARY_PACKED": {
+          "INT32": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "INT64": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "FLOAT": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "DOUBLE": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BOOLEAN": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BYTE_ARRAY": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          }
+        },
+        "DELTA_LENGTH_BYTE_ARRAY": {
+          "INT32": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "INT64": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "FLOAT": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "DOUBLE": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BOOLEAN": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BYTE_ARRAY": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          }
+        },
+        "DELTA_BYTE_ARRAY": {
+          "INT32": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "INT64": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "FLOAT": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "DOUBLE": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BOOLEAN": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BYTE_ARRAY": {
+            "write": true,
+            "write_since": "14.0.2",
+            "read": true,
+            "read_since": "14.0.2"
+          }
+        },
+        "BYTE_STREAM_SPLIT": {
+          "INT32": {
+            "write": true,
+            "write_since": "16.1.0",
+            "read": true,
+            "read_since": "16.1.0"
+          },
+          "INT64": {
+            "write": true,
+            "write_since": "16.1.0",
+            "read": true,
+            "read_since": "16.1.0"
+          },
+          "FLOAT": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "DOUBLE": {
+            "write": true,
+            "write_since": "12.0.1",
+            "read": true,
+            "read_since": "12.0.1"
+          },
+          "BOOLEAN": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          },
+          "BYTE_ARRAY": {
+            "write": false,
+            "write_since": null,
+            "read": false,
+            "read_since": null,
+            "not_applicable": true
+          }
+        }
+      },
+      "logical_types": {
+        "STRING": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "DATE": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "TIME_MILLIS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "TIME_MICROS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "TIME_NANOS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "TIMESTAMP_MILLIS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "TIMESTAMP_MICROS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "TIMESTAMP_NANOS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "INT96": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "DECIMAL": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "UUID": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "JSON": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "FLOAT16": {
+          "write": true,
+          "write_since": "15.0.2.1",
+          "read": true,
+          "read_since": "15.0.2.1"
+        },
+        "ENUM": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "BSON": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "INTERVAL": {
+          "write": false,
+          "write_since": null,
+          "read": false,
+          "read_since": null
+        }
+      },
+      "nested_types": {
+        "LIST": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "MAP": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "STRUCT": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "NESTED_LIST": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "NESTED_MAP": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "DEEP_NESTING": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        }
+      },
+      "advanced_features": {
+        "STATISTICS": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "PAGE_INDEX": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "BLOOM_FILTER": {
+          "write": false,
+          "write_since": null,
+          "read": false,
+          "read_since": null
+        },
+        "DATA_PAGE_V2": {
+          "write": false,
+          "write_since": null,
+          "read": false,
+          "read_since": null
+        },
+        "COLUMN_ENCRYPTION": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "PREDICATE_PUSHDOWN": {
+          "write": false,
+          "write_since": null,
+          "read": false,
+          "read_since": null
+        },
+        "PROJECTION_PUSHDOWN": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        },
+        "SCHEMA_EVOLUTION": {
+          "write": true,
+          "write_since": "12.0.1",
+          "read": true,
+          "read_since": "12.0.1"
+        }
+      }
     }
   },
   "categories": {
@@ -5032,6 +5664,7 @@
       "parquet-go",
       "parquet-java",
       "parquet-dotnet",
+      "parquet-sharp",
       "spark",
       "trino"
     ],
@@ -5043,7 +5676,8 @@
       "parquet-rs",
       "parquet-go",
       "parquet-java",
-      "parquet-dotnet"
+      "parquet-dotnet",
+      "parquet-sharp"
     ],
     "missing_tools": [
       "spark",
