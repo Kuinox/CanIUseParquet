@@ -59,7 +59,7 @@ def main():
         results["compression"][codec_name] = test_rw(write_codec, read_codec)
 
     # --- Encoding × Type matrix ---
-    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"]
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
 
     def make_typed_df(ptype):
         if ptype == "INT32":
@@ -72,9 +72,7 @@ def main():
             return pl.DataFrame({"col": pl.Series([1.0, 2.0, 3.0], dtype=pl.Float64)})
         elif ptype == "BOOLEAN":
             return pl.DataFrame({"col": pl.Series([True, False, True])})
-        elif ptype == "STRING":
-            return pl.DataFrame({"col": pl.Series(["hello", "world", "test"])})
-        elif ptype == "BINARY":
+        elif ptype == "BYTE_ARRAY":
             return pl.DataFrame({"col": pl.Series([b"hello", b"world", b"test"])})
         raise ValueError(f"Unknown type: {ptype}")
 

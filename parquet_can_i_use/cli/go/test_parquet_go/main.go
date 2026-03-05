@@ -152,7 +152,7 @@ func main() {
 	// --- Encoding × Type matrix ---
 	// parquet-go doesn't allow per-column encoding control in high-level API
 	// but we test which encoding/type combos its writer handles
-	typeNames := []string{"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "STRING", "BINARY"}
+	typeNames := []string{"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"}
 	encNames := []string{"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
 		"DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"}
 
