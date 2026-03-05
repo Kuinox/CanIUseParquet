@@ -86,6 +86,7 @@ def main():
         "DELTA_LENGTH_BYTE_ARRAY": True,
         "DELTA_BYTE_ARRAY": True,
         "BYTE_STREAM_SPLIT": True,
+        "BYTE_STREAM_SPLIT_EXTENDED": True,
     }
     for enc_name, supported in enc_tests.items():
         results["encoding"][enc_name] = {}
@@ -121,6 +122,24 @@ def main():
     lt_tests["ENUM"] = lambda: pl.DataFrame({"c": pl.Series(["A", "B", "A"]).cast(pl.Categorical)})
     lt_tests["BSON"] = lambda: pl.DataFrame({"c": [b'\x05\x00\x00\x00\x00']})
     lt_tests["INTERVAL"] = lambda: pl.DataFrame({"c": pl.Series([datetime.timedelta(days=1)]).cast(pl.Duration)})
+
+    # UNKNOWN logical type (always-null column)
+    lt_tests["UNKNOWN"] = lambda: pl.DataFrame({"c": pl.Series([None], dtype=pl.Null)})
+
+    # VARIANT logical type (Parquet format 2.11.0) - not yet supported in Polars
+    def _pl_variant():
+        raise NotImplementedError("VARIANT not yet supported in Polars")
+    lt_tests["VARIANT"] = _pl_variant
+
+    # GEOMETRY logical type (Parquet format 2.11.0) - not yet supported in Polars
+    def _pl_geometry():
+        raise NotImplementedError("GEOMETRY not yet supported in Polars")
+    lt_tests["GEOMETRY"] = _pl_geometry
+
+    # GEOGRAPHY logical type (Parquet format 2.11.0) - not yet supported in Polars
+    def _pl_geography():
+        raise NotImplementedError("GEOGRAPHY not yet supported in Polars")
+    lt_tests["GEOGRAPHY"] = _pl_geography
 
     for type_name, make_df in lt_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
@@ -189,6 +208,12 @@ def main():
     results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
 
     results["advanced_features"]["SCHEMA_EVOLUTION"] = {"write": False, "read": False}
+
+    # Size Statistics (Parquet format 2.10.0) - not directly exposed in Polars public API
+    results["advanced_features"]["SIZE_STATISTICS"] = {"write": False, "read": False}
+
+    # Page CRC32 checksum - not yet supported in Polars
+    results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}
 
     print(json.dumps(results, indent=2))
 

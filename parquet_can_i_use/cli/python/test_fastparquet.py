@@ -83,7 +83,8 @@ def main():
         raise ValueError(f"Unknown type: {ptype}")
 
     enc_names = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
-                 "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
+                 "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+                 "BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED"]
     for enc_name in enc_names:
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
@@ -123,6 +124,16 @@ def main():
     lt_tests["ENUM"] = lambda: pd.DataFrame({"c": pd.Categorical(["A", "B", "A"])})
     lt_tests["BSON"] = lambda: pd.DataFrame({"c": pd.array([b'\x05\x00\x00\x00\x00'], dtype="object")})
     lt_tests["INTERVAL"] = lambda: pd.DataFrame({"c": pd.to_timedelta(["1 days"])})
+
+    def _fp_not_supported(name):
+        def fn():
+            raise NotImplementedError(f"{name} not supported by fastparquet")
+        return fn
+
+    lt_tests["UNKNOWN"] = _fp_not_supported("UNKNOWN")
+    lt_tests["VARIANT"] = _fp_not_supported("VARIANT")
+    lt_tests["GEOMETRY"] = _fp_not_supported("GEOMETRY")
+    lt_tests["GEOGRAPHY"] = _fp_not_supported("GEOGRAPHY")
 
     for type_name, make_df in lt_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
@@ -214,6 +225,12 @@ def main():
         pf = fastparquet.ParquetFile(p1)
         pf.to_pandas()
     results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
+
+    # Size Statistics (Parquet format 2.10.0) - not supported by fastparquet
+    results["advanced_features"]["SIZE_STATISTICS"] = {"write": False, "read": False}
+
+    # Page CRC32 checksum - not supported by fastparquet
+    results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}
 
     print(json.dumps(results, indent=2))
 

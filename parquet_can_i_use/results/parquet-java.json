@@ -269,6 +269,32 @@
         "write": true,
         "read": true
       }
+    },
+    "BYTE_STREAM_SPLIT_EXTENDED": {
+      "INT32": {
+        "write": true,
+        "read": true
+      },
+      "INT64": {
+        "write": true,
+        "read": true
+      },
+      "FLOAT": {
+        "write": true,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": true,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      }
     }
   },
   "logical_types": {
@@ -335,6 +361,22 @@
     "INTERVAL": {
       "write": true,
       "read": true
+    },
+    "UNKNOWN": {
+      "write": false,
+      "read": false
+    },
+    "VARIANT": {
+      "write": false,
+      "read": false
+    },
+    "GEOMETRY": {
+      "write": false,
+      "read": false
+    },
+    "GEOGRAPHY": {
+      "write": false,
+      "read": false
     }
   },
   "nested_types": {
@@ -395,6 +437,14 @@
     "SCHEMA_EVOLUTION": {
       "write": true,
       "read": true
+    },
+    "SIZE_STATISTICS": {
+      "write": false,
+      "read": false
+    },
+    "PAGE_CRC32": {
+      "write": false,
+      "read": false
     }
   }
 }

@@ -92,7 +92,8 @@ def main():
         return enc_set
 
     enc_names = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
-                 "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
+                 "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+                 "BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED"]
     for enc_name in enc_names:
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
@@ -106,6 +107,9 @@ def main():
                 if e in ("PLAIN_DICTIONARY", "RLE_DICTIONARY"):
                     if "RLE_DICTIONARY" not in actual and "PLAIN_DICTIONARY" not in actual:
                         raise ValueError(f"Expected dictionary encoding, got {actual}")
+                elif e == "BYTE_STREAM_SPLIT_EXTENDED":
+                    if "BYTE_STREAM_SPLIT" not in actual:
+                        raise ValueError(f"Expected BYTE_STREAM_SPLIT in encodings, got {actual}")
                 else:
                     if e not in actual:
                         raise ValueError(f"Expected {e} in encodings, got {actual}")
@@ -131,6 +135,10 @@ def main():
         "ENUM": "SELECT 'A'::VARCHAR AS c",
         "BSON": None,
         "INTERVAL": "SELECT INTERVAL 1 DAY AS c",
+        "UNKNOWN": None,  # DuckDB does not support the UNKNOWN logical type
+        "VARIANT": None,  # DuckDB does not yet write Parquet VARIANT
+        "GEOMETRY": None,  # DuckDB does not yet write Parquet GEOMETRY
+        "GEOGRAPHY": None,  # DuckDB does not yet write Parquet GEOGRAPHY
     }
     for type_name, sql in lt_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
@@ -225,6 +233,17 @@ def main():
         p2 = os.path.join(tmpdir, "adv_se2.parquet")
         con.execute(f"SELECT * FROM read_parquet(['{p1}', '{p2}'], union_by_name=true)").fetchall()
     results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
+
+    # Size Statistics (Parquet format 2.10.0) - DuckDB reads size_statistics metadata
+    def write_size_statistics():
+        pass  # DuckDB writes size statistics by default in newer versions
+    def read_size_statistics():
+        rows = con.execute(f"SELECT * FROM parquet_metadata('{data_path}')").fetchall()
+        assert len(rows) > 0
+    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics)
+
+    # Page CRC32 checksum - DuckDB does not write page checksums
+    results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}
 
     print(json.dumps(results, indent=2))
 

@@ -26,14 +26,17 @@ OUTPUT_JSON = SCRIPT_DIR / "site" / "public" / "data" / "matrix.json"
 # Ordered categories and features
 COMPRESSION_CODECS = ["NONE", "SNAPPY", "GZIP", "BROTLI", "LZO", "LZ4", "LZ4_RAW", "ZSTD"]
 ENCODINGS = ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
-             "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"]
+             "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+             "BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED"]
 ENCODING_TYPES = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
 LOGICAL_TYPES = ["STRING", "DATE", "TIME_MILLIS", "TIME_MICROS", "TIME_NANOS",
                  "TIMESTAMP_MILLIS", "TIMESTAMP_MICROS", "TIMESTAMP_NANOS", "INT96",
-                 "DECIMAL", "UUID", "JSON", "FLOAT16", "ENUM", "BSON", "INTERVAL"]
+                 "DECIMAL", "UUID", "JSON", "FLOAT16", "ENUM", "BSON", "INTERVAL",
+                 "UNKNOWN", "VARIANT", "GEOMETRY", "GEOGRAPHY"]
 NESTED_TYPES = ["LIST", "MAP", "STRUCT", "NESTED_LIST", "NESTED_MAP", "DEEP_NESTING"]
 ADVANCED_FEATURES = ["STATISTICS", "PAGE_INDEX", "BLOOM_FILTER", "DATA_PAGE_V2",
-                     "COLUMN_ENCRYPTION", "PREDICATE_PUSHDOWN", "PROJECTION_PUSHDOWN", "SCHEMA_EVOLUTION"]
+                     "COLUMN_ENCRYPTION", "SIZE_STATISTICS", "PAGE_CRC32",
+                     "PREDICATE_PUSHDOWN", "PROJECTION_PUSHDOWN", "SCHEMA_EVOLUTION"]
 
 TOOL_DISPLAY_NAMES = {
     "pyarrow": "PyArrow",
@@ -42,8 +45,10 @@ TOOL_DISPLAY_NAMES = {
     "duckdb": "DuckDB",
     "parquet-rs": "parquet-rs",
     "parquet-go": "parquet-go",
+    "arrow-go": "arrow-go",
     "parquet-java": "parquet-java",
     "parquet-dotnet": "parquet-dotnet",
+    "hyparquet": "hyparquet",
     "spark": "Apache Spark",
     "trino": "Trino",
 }
@@ -55,30 +60,35 @@ TOOL_LANGUAGES = {
     "duckdb": "C++",
     "parquet-rs": "Rust",
     "parquet-go": "Go",
+    "arrow-go": "Go",
     "parquet-java": "Java",
     "parquet-dotnet": "C# / .NET",
+    "hyparquet": "JavaScript",
     "spark": "Java / Python",
     "trino": "Java",
 }
 
 TOOL_ORDER = ["pyarrow", "fastparquet", "polars", "duckdb",
-              "parquet-rs", "parquet-go", "parquet-java", "parquet-dotnet",
-              "spark", "trino"]
+              "parquet-rs", "parquet-go", "arrow-go", "parquet-java", "parquet-dotnet",
+              "hyparquet", "spark", "trino"]
 
 # Encoding × Type combinations that are valid per the Apache Parquet format spec.
 # Combinations not listed here are not defined by the spec; if a library cannot
 # produce them either, we mark them as "not_applicable" (gray) rather than red.
 # Libraries are free to support extras beyond the spec.
 SPEC_VALID_ENCODING_TYPES = {
-    "PLAIN":                    {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
-    "PLAIN_DICTIONARY":         {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
-    "RLE_DICTIONARY":           {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
-    "RLE":                      {"BOOLEAN", "INT32", "INT64"},
-    "BIT_PACKED":               set(),  # deprecated; not for data pages
-    "DELTA_BINARY_PACKED":      {"INT32", "INT64"},
-    "DELTA_LENGTH_BYTE_ARRAY":  {"BYTE_ARRAY"},
-    "DELTA_BYTE_ARRAY":         {"BYTE_ARRAY"},
-    "BYTE_STREAM_SPLIT":        {"FLOAT", "DOUBLE", "INT32", "INT64"},
+    "PLAIN":                         {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+    "PLAIN_DICTIONARY":              {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+    "RLE_DICTIONARY":                {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+    "RLE":                           {"BOOLEAN", "INT32", "INT64"},
+    "BIT_PACKED":                    set(),  # deprecated; not for data pages
+    "DELTA_BINARY_PACKED":           {"INT32", "INT64"},
+    "DELTA_LENGTH_BYTE_ARRAY":       {"BYTE_ARRAY"},
+    "DELTA_BYTE_ARRAY":              {"BYTE_ARRAY"},
+    "BYTE_STREAM_SPLIT":             {"FLOAT", "DOUBLE", "INT32", "INT64"},
+    # BYTE_STREAM_SPLIT_EXTENDED (format 2.11.0) adds FLOAT16 and FIXED_LEN_BYTE_ARRAY;
+    # we proxy this with FLOAT as the test type since FLOAT16 is not in ENCODING_TYPES.
+    "BYTE_STREAM_SPLIT_EXTENDED":    {"FLOAT", "DOUBLE", "INT32", "INT64"},
 }
 
 # For running single-version tests (fallback)
@@ -109,6 +119,11 @@ TOOLS = {
         "build_cwd": str(CLI_DIR / "go" / "test_parquet_go"),
         "run": [str(CLI_DIR / "go" / "test_parquet_go" / "test_parquet_go")],
     },
+    "arrow-go": {
+        "build": ["go", "build", "-o", "test_arrow_go"],
+        "build_cwd": str(CLI_DIR / "go" / "test_arrow_go"),
+        "run": [str(CLI_DIR / "go" / "test_arrow_go" / "test_arrow_go")],
+    },
     "parquet-java": {
         "build": ["mvn", "-q", "package", "-DskipTests"],
         "build_cwd": str(CLI_DIR / "java" / "test_parquet_java"),
@@ -118,6 +133,11 @@ TOOLS = {
         "build": ["dotnet", "build", "-c", "Release", "-v", "q"],
         "build_cwd": str(CLI_DIR / "dotnet" / "test_parquet_dotnet"),
         "run": ["dotnet", "run", "--project", str(CLI_DIR / "dotnet" / "test_parquet_dotnet"), "-c", "Release", "--no-build"],
+    },
+    "hyparquet": {
+        "build": ["npm", "install", "--prefer-offline"],
+        "build_cwd": str(CLI_DIR / "javascript" / "test_hyparquet"),
+        "run": ["node", str(CLI_DIR / "javascript" / "test_hyparquet" / "index.js")],
     },
     "spark": {
         "build": None,

@@ -1,0 +1,11 @@
+{
+  "name": "test-hyparquet",
+  "version": "1.0.0",
+  "description": "Test hyparquet feature support",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "hyparquet": "1.0.0",
+    "@dsnp/parquetjs": "1.3.0"
+  }
+}
