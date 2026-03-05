@@ -1,0 +1,479 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { MatrixData, FeatureEntry, ToolData } from "../types/matrix";
+import { InternalCategory, featureToSlug } from "../lib/data";
+import FeatureTimeline from "./FeatureTimeline";
+
+// ─── Shared cell components ───────────────────────────────────────────────────
+
+function ReadWriteBadge({
+  supported,
+  since,
+  label,
+}: {
+  supported: boolean;
+  since?: string | null;
+  label: string;
+}) {
+  if (supported) {
+    return (
+      <span className="flex items-center gap-0.5 text-[10px]">
+        <span className="text-gray-500">{label}:</span>
+        <span className="text-green-400">✅</span>
+        {since && <span className="text-green-500">{since}+</span>}
+      </span>
+    );
+  }
+  return (
+    <span className="flex items-center gap-0.5 text-[10px]">
+      <span className="text-gray-500">{label}:</span>
+      <span className="text-red-400">❌</span>
+    </span>
+  );
+}
+
+function MergedBadge({
+  supported,
+  since,
+}: {
+  supported: boolean;
+  since?: string | null;
+}) {
+  if (supported) {
+    return (
+      <span className="flex items-center gap-0.5 text-[10px]">
+        <span className="text-green-400">✅</span>
+        {since && <span className="text-green-500">{since}+</span>}
+      </span>
+    );
+  }
+  return (
+    <span className="flex items-center gap-0.5 text-[10px]">
+      <span className="text-red-400">❌</span>
+    </span>
+  );
+}
+
+function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
+  if (!entry) {
+    return (
+      <td className="px-3 py-2 text-center">
+        <span className="text-gray-600" title="Not tested">
+          ➖
+        </span>
+      </td>
+    );
+  }
+  if (entry.not_applicable) {
+    return (
+      <td className="px-3 py-2 text-center bg-gray-800/30">
+        <span
+          className="text-gray-500 cursor-default"
+          title="Not applicable per Parquet spec"
+        >
+          —
+        </span>
+      </td>
+    );
+  }
+
+  const bothSupported = entry.write && entry.read;
+  const neitherSupported = !entry.write && !entry.read;
+  let bgClass = "";
+  if (bothSupported) bgClass = "bg-green-950/30";
+  else if (neitherSupported) bgClass = "bg-red-950/20";
+  else bgClass = "bg-yellow-950/20";
+
+  const canMerge =
+    entry.write === entry.read && entry.write_since === entry.read_since;
+
+  return (
+    <td className={`px-3 py-2 text-center ${bgClass}`}>
+      <div className="flex flex-col items-center gap-0.5">
+        {canMerge ? (
+          <MergedBadge supported={entry.write} since={entry.write_since} />
+        ) : (
+          <>
+            <ReadWriteBadge
+              supported={entry.write}
+              since={entry.write_since}
+              label="W"
+            />
+            <ReadWriteBadge
+              supported={entry.read}
+              since={entry.read_since}
+              label="R"
+            />
+          </>
+        )}
+      </div>
+    </td>
+  );
+}
+
+// ─── Timeline selection state ─────────────────────────────────────────────────
+
+interface TimelineSelection {
+  featureLabel: string;
+  feature: string;
+  getEntry: (tool: ToolData) => FeatureEntry | undefined;
+}
+
+// ─── Non-encoding feature table ───────────────────────────────────────────────
+
+function NonEncodingTable({
+  features,
+  tools,
+  toolIds,
+  getEntry,
+  categorySlug,
+  basePath,
+  onTimelineClick,
+}: {
+  features: string[];
+  tools: Record<string, ToolData>;
+  toolIds: string[];
+  getEntry: (tool: ToolData, feature: string) => FeatureEntry | undefined;
+  categorySlug: string;
+  basePath: string;
+  onTimelineClick: (sel: TimelineSelection) => void;
+}) {
+  return (
+    <div className="overflow-x-auto rounded-lg border border-gray-800">
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="bg-gray-900">
+            <th className="px-3 py-2 text-left text-gray-300 font-medium sticky left-0 bg-gray-900 z-10 min-w-[180px]">
+              Feature
+            </th>
+            {toolIds.map((tid) => (
+              <th
+                key={tid}
+                className="px-3 py-2 text-center text-gray-300 font-medium min-w-[100px]"
+              >
+                <div>{tools[tid].display_name}</div>
+                <div className="text-[10px] text-gray-500 font-normal">
+                  v{tools[tid].latest_version}
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {features.map((feature, i) => (
+            <tr
+              key={feature}
+              className={`group ${
+                i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"
+              } hover:bg-blue-950/30 transition-colors`}
+            >
+              <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`${basePath}/${categorySlug}/${featureToSlug(feature)}`}
+                    className="hover:text-green-400 transition-colors"
+                  >
+                    {feature}
+                  </Link>
+                  <button
+                    onClick={() =>
+                      onTimelineClick({
+                        feature,
+                        featureLabel: feature,
+                        getEntry: (tool) => getEntry(tool, feature),
+                      })
+                    }
+                    className="opacity-0 group-hover:opacity-60 text-blue-400 text-[9px]"
+                    aria-label="View timeline"
+                  >
+                    ▶ timeline
+                  </button>
+                </div>
+              </td>
+              {toolIds.map((tid) => (
+                <FeatureCell
+                  key={tid}
+                  entry={getEntry(tools[tid], feature)}
+                />
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// ─── Encoding table ───────────────────────────────────────────────────────────
+
+function EncodingSection({
+  data,
+  tools,
+  toolIds,
+  basePath,
+  onTimelineClick,
+}: {
+  data: MatrixData;
+  tools: Record<string, ToolData>;
+  toolIds: string[];
+  basePath: string;
+  onTimelineClick: (sel: TimelineSelection) => void;
+}) {
+  const [activeEncoding, setActiveEncoding] = useState<string>(
+    data.categories.encoding[0]
+  );
+
+  return (
+    <div>
+      <p className="text-gray-400 text-sm mb-4">
+        Each encoding is tested with each physical data type. Select an encoding
+        to see type support.
+      </p>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {data.categories.encoding.map((enc) => (
+          <button
+            key={enc}
+            onClick={() => setActiveEncoding(enc)}
+            className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+              activeEncoding === enc
+                ? "bg-blue-600 text-white"
+                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+            }`}
+          >
+            {enc}
+          </button>
+        ))}
+      </div>
+      {activeEncoding && (
+        <div className="mb-2 flex items-center gap-3">
+          <span className="text-sm text-gray-400">
+            Viewing{" "}
+            <span className="font-mono text-gray-200">{activeEncoding}</span>
+          </span>
+          <Link
+            href={`${basePath}/encoding/${featureToSlug(activeEncoding)}`}
+            className="text-xs text-green-400 hover:underline"
+          >
+            View {activeEncoding} feature page →
+          </Link>
+        </div>
+      )}
+      <div className="overflow-x-auto rounded-lg border border-gray-800">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-gray-900">
+              <th className="px-3 py-2 text-left text-gray-300 font-medium sticky left-0 bg-gray-900 z-10 min-w-[180px]">
+                Data Type
+              </th>
+              {toolIds.map((tid) => (
+                <th
+                  key={tid}
+                  className="px-3 py-2 text-center text-gray-300 font-medium min-w-[100px]"
+                >
+                  <div>{tools[tid].display_name}</div>
+                  <div className="text-[10px] text-gray-500 font-normal">
+                    v{tools[tid].latest_version}
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.categories.encoding_types.map((dataType, i) => (
+              <tr
+                key={dataType}
+                className={`group ${
+                  i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"
+                } hover:bg-blue-950/30 transition-colors`}
+              >
+                <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
+                  <div className="flex items-center gap-2">
+                    <span>{dataType}</span>
+                    <button
+                      onClick={() =>
+                        onTimelineClick({
+                          feature: dataType,
+                          featureLabel: `${activeEncoding} × ${dataType}`,
+                          getEntry: (tool) =>
+                            tool.encoding[activeEncoding]?.[dataType],
+                        })
+                      }
+                      className="opacity-0 group-hover:opacity-60 text-blue-400 text-[9px]"
+                      aria-label="View timeline"
+                    >
+                      ▶ timeline
+                    </button>
+                  </div>
+                </td>
+                {toolIds.map((tid) => (
+                  <FeatureCell
+                    key={tid}
+                    entry={tools[tid].encoding[activeEncoding]?.[dataType]}
+                  />
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// ─── Legend ───────────────────────────────────────────────────────────────────
+
+function Legend() {
+  return (
+    <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-400">
+      <span>
+        <span className="text-[10px]">
+          <span className="text-green-400">✅</span>
+        </span>{" "}
+        Both read &amp; write (same version)
+      </span>
+      <span>
+        <span className="text-[10px]">
+          <span className="text-gray-500">W:</span>
+          <span className="text-green-400">✅</span>{" "}
+          <span className="text-gray-500">R:</span>
+          <span className="text-green-400">✅</span>
+        </span>{" "}
+        Both (different versions)
+      </span>
+      <span>
+        <span className="text-[10px]">
+          <span className="text-red-400">❌</span>
+        </span>{" "}
+        Not supported
+      </span>
+      <span>
+        <span className="text-gray-500">—</span> Not applicable
+      </span>
+      <span>
+        <span className="text-gray-600">➖</span> Not tested
+      </span>
+    </div>
+  );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
+
+interface Props {
+  data: MatrixData;
+  category: InternalCategory;
+  categorySlug: string;
+  basePath: string;
+}
+
+export default function CategoryMatrix({
+  data,
+  category,
+  categorySlug,
+  basePath,
+}: Props) {
+  const [timeline, setTimeline] = useState<TimelineSelection | null>(null);
+  const toolIds = Object.keys(data.tools);
+  const tools = data.tools;
+
+  function getEntryForCategory(
+    tool: ToolData,
+    feature: string
+  ): FeatureEntry | undefined {
+    switch (category) {
+      case "compression":
+        return tool.compression[feature];
+      case "logical_types":
+        return tool.logical_types[feature];
+      case "nested_types":
+        return tool.nested_types[feature];
+      case "advanced_features":
+        return tool.advanced_features[feature];
+      default:
+        return undefined;
+    }
+  }
+
+  return (
+    <div>
+      {timeline && (
+        <FeatureTimeline
+          feature={timeline.feature}
+          featureLabel={timeline.featureLabel}
+          toolIds={toolIds}
+          tools={tools}
+          getEntry={timeline.getEntry}
+          onClose={() => setTimeline(null)}
+        />
+      )}
+
+      {/* Tools overview */}
+      <div className="mb-8 overflow-x-auto rounded-lg border border-gray-800">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-gray-900">
+              <th className="px-3 py-2 text-left text-gray-300">Tool</th>
+              <th className="px-3 py-2 text-left text-gray-300">Language</th>
+              <th className="px-3 py-2 text-left text-gray-300">Latest</th>
+              <th className="px-3 py-2 text-left text-gray-300">
+                Versions Tested
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {toolIds.map((tid, i) => (
+              <tr
+                key={tid}
+                className={i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"}
+              >
+                <td className="px-3 py-2 font-semibold text-white">
+                  {tools[tid].display_name}
+                </td>
+                <td className="px-3 py-2 text-gray-400">
+                  {tools[tid].language}
+                </td>
+                <td className="px-3 py-2 font-mono text-green-400">
+                  {tools[tid].latest_version}
+                </td>
+                <td className="px-3 py-2 font-mono text-gray-500 text-xs">
+                  {tools[tid].tested_versions.join(", ")}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <Legend />
+
+      {category === "encoding" ? (
+        <EncodingSection
+          data={data}
+          tools={tools}
+          toolIds={toolIds}
+          basePath={basePath}
+          onTimelineClick={setTimeline}
+        />
+      ) : (
+        <NonEncodingTable
+          features={
+            category === "compression"
+              ? data.categories.compression
+              : category === "logical_types"
+                ? data.categories.logical_types
+                : category === "nested_types"
+                  ? data.categories.nested_types
+                  : data.categories.advanced_features
+          }
+          tools={tools}
+          toolIds={toolIds}
+          getEntry={getEntryForCategory}
+          categorySlug={categorySlug}
+          basePath={basePath}
+          onTimelineClick={setTimeline}
+        />
+      )}
+    </div>
+  );
+}
