@@ -32,7 +32,7 @@ export default function RootLayout({
               </h1>
             </Link>
             <div className="flex-1 max-w-md">
-              <SearchBar items={searchItems} basePath={basePath} />
+              <SearchBar items={searchItems} />
             </div>
           </div>
         </header>

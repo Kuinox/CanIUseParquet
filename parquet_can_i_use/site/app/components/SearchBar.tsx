@@ -6,7 +6,6 @@ import { SearchItem } from "../lib/data";
 
 interface Props {
   items: SearchItem[];
-  basePath?: string;
 }
 
 export default function SearchBar({ items }: Props) {
