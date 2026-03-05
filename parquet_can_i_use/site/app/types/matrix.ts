@@ -1,9 +1,17 @@
+export interface ApacheRef {
+  write: boolean;
+  read: boolean;
+  note?: string;
+}
+
 export interface FeatureEntry {
   write: boolean;
   read: boolean;
   write_since?: string | null;
   read_since?: string | null;
   not_applicable?: boolean;
+  /** Apache official implementation status reference (from parquet.apache.org/docs/file-format/implementationstatus/) */
+  apache_ref?: ApacheRef;
 }
 
 export interface ToolData {

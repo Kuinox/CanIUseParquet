@@ -1,0 +1,206 @@
+{
+  "_comment": "Reference data from the Apache Parquet official implementation status page: https://parquet.apache.org/docs/file-format/implementationstatus/ (source: https://github.com/apache/parquet-site/tree/production/data/implementations). Used to highlight discrepancies between our automated test results and the Apache project's own claims. Only includes tools that overlap between our matrix and the Apache page.",
+  "_tool_mapping": {
+    "parquet-java": "parquet-java",
+    "parquet-rs": "arrow-rs",
+    "duckdb": "duckdb",
+    "polars": "polars"
+  },
+  "parquet-java": {
+    "_apache_engine_id": "parquet-java",
+    "compression": {
+      "NONE":    { "write": true,  "read": true  },
+      "BROTLI":  { "write": true,  "read": true  },
+      "GZIP":    { "write": true,  "read": true  },
+      "LZ4":     { "write": false, "read": false, "_note": "Apache marks LZ4 (deprecated codec) as unsupported; parquet-java supports LZ4_RAW instead" },
+      "LZ4_RAW": { "write": true,  "read": true  },
+      "LZO":     { "write": false, "read": false },
+      "SNAPPY":  { "write": true,  "read": true  },
+      "ZSTD":    { "write": true,  "read": true  }
+    },
+    "encoding": {
+      "PLAIN":                   { "write": true,  "read": true  },
+      "PLAIN_DICTIONARY":        { "write": true,  "read": true  },
+      "RLE_DICTIONARY":          { "write": true,  "read": true  },
+      "RLE":                     { "write": true,  "read": true  },
+      "BIT_PACKED":              { "write": true,  "read": true  },
+      "DELTA_BINARY_PACKED":     { "write": true,  "read": true  },
+      "DELTA_LENGTH_BYTE_ARRAY": { "write": true,  "read": true  },
+      "DELTA_BYTE_ARRAY":        { "write": true,  "read": true  },
+      "BYTE_STREAM_SPLIT":       { "write": true,  "read": true  }
+    },
+    "logical_types": {
+      "STRING":           { "write": true,  "read": true  },
+      "ENUM":             { "write": true,  "read": true  },
+      "UUID":             { "write": true,  "read": true  },
+      "DECIMAL":          { "write": true,  "read": true  },
+      "FLOAT16":          { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" },
+      "DATE":             { "write": true,  "read": true  },
+      "TIME_MILLIS":      { "write": true,  "read": true  },
+      "TIME_MICROS":      { "write": true,  "read": true  },
+      "TIME_NANOS":       { "write": true,  "read": true  },
+      "TIMESTAMP_MILLIS": { "write": true,  "read": true  },
+      "TIMESTAMP_MICROS": { "write": true,  "read": true  },
+      "TIMESTAMP_NANOS":  { "write": true,  "read": true  },
+      "INT96":            { "write": true,  "read": true,  "_note": "Apache tracks this as a physical type (physical-int96: full)" },
+      "INTERVAL":         { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" },
+      "JSON":             { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" },
+      "BSON":             { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER":      { "write": true,  "read": true  },
+      "STATISTICS":        { "write": true,  "read": true  },
+      "PAGE_INDEX":        { "write": true,  "read": true  },
+      "COLUMN_ENCRYPTION": { "write": true,  "read": true  },
+      "DATA_PAGE_V2":      { "write": true,  "read": true  }
+    }
+  },
+  "parquet-rs": {
+    "_apache_engine_id": "arrow-rs",
+    "_note": "Our 'parquet-rs' maps to Apache's 'arrow-rs' (apache/arrow-rs crate)",
+    "compression": {
+      "NONE":    { "write": true,  "read": true  },
+      "BROTLI":  { "write": true,  "read": true  },
+      "GZIP":    { "write": true,  "read": true  },
+      "LZ4":     { "write": true,  "read": true,  "_note": "Apache marks LZ4 (deprecated) as supported in arrow-rs (compression-lz4-deprecated: full)" },
+      "LZ4_RAW": { "write": true,  "read": true  },
+      "LZO":     { "write": false, "read": false },
+      "SNAPPY":  { "write": true,  "read": true  },
+      "ZSTD":    { "write": true,  "read": true  }
+    },
+    "encoding": {
+      "PLAIN":                   { "write": true,  "read": true  },
+      "PLAIN_DICTIONARY":        { "write": true,  "read": true  },
+      "RLE_DICTIONARY":          { "write": true,  "read": true  },
+      "RLE":                     { "write": true,  "read": true  },
+      "BIT_PACKED":              { "write": false, "read": false, "_note": "Partial read support for level data with bitwidth 0 only" },
+      "DELTA_BINARY_PACKED":     { "write": true,  "read": true  },
+      "DELTA_LENGTH_BYTE_ARRAY": { "write": true,  "read": true  },
+      "DELTA_BYTE_ARRAY":        { "write": true,  "read": true  },
+      "BYTE_STREAM_SPLIT":       { "write": true,  "read": true  }
+    },
+    "logical_types": {
+      "STRING":           { "write": true,  "read": true  },
+      "ENUM":             { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" },
+      "UUID":             { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" },
+      "DECIMAL":          { "write": true,  "read": true  },
+      "FLOAT16":          { "write": true,  "read": true  },
+      "DATE":             { "write": true,  "read": true  },
+      "TIME_MILLIS":      { "write": true,  "read": true  },
+      "TIME_MICROS":      { "write": true,  "read": true  },
+      "TIME_NANOS":       { "write": true,  "read": true  },
+      "TIMESTAMP_MILLIS": { "write": true,  "read": true  },
+      "TIMESTAMP_MICROS": { "write": true,  "read": true  },
+      "TIMESTAMP_NANOS":  { "write": true,  "read": true  },
+      "INT96":            { "write": true,  "read": true,  "_note": "Apache tracks this as a physical type (physical-int96: full)" },
+      "INTERVAL":         { "write": true,  "read": true  },
+      "JSON":             { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" },
+      "BSON":             { "write": true,  "read": true,  "_note": "Only supported to use its annotated physical type" }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER":      { "write": true,  "read": true  },
+      "STATISTICS":        { "write": true,  "read": true  },
+      "PAGE_INDEX":        { "write": true,  "read": true  },
+      "COLUMN_ENCRYPTION": { "write": true,  "read": true,  "_note": "Supported since arrow-rs 54.3.0 (read) / 55.0.0 (write)" },
+      "DATA_PAGE_V2":      { "write": true,  "read": true  }
+    }
+  },
+  "duckdb": {
+    "_apache_engine_id": "duckdb",
+    "compression": {
+      "NONE":    { "write": true,  "read": true  },
+      "BROTLI":  { "write": true,  "read": true  },
+      "GZIP":    { "write": true,  "read": true  },
+      "LZ4":     { "write": false, "read": false, "_note": "Apache marks LZ4 (deprecated codec) as unsupported in DuckDB" },
+      "LZ4_RAW": { "write": true,  "read": true  },
+      "LZO":     { "write": false, "read": false },
+      "SNAPPY":  { "write": true,  "read": true  },
+      "ZSTD":    { "write": true,  "read": true  }
+    },
+    "encoding": {
+      "PLAIN":                   { "write": true,  "read": true  },
+      "PLAIN_DICTIONARY":        { "write": false, "read": true,  "_note": "Apache marks PLAIN_DICTIONARY as read-only in DuckDB" },
+      "RLE_DICTIONARY":          { "write": true,  "read": true  },
+      "RLE":                     { "write": true,  "read": true  },
+      "BIT_PACKED":              { "write": false, "read": false },
+      "DELTA_BINARY_PACKED":     { "write": true,  "read": true,  "_note": "Supported since DuckDB 1.2.0" },
+      "DELTA_LENGTH_BYTE_ARRAY": { "write": true,  "read": true  },
+      "DELTA_BYTE_ARRAY":        { "write": true,  "read": true  },
+      "BYTE_STREAM_SPLIT":       { "write": true,  "read": true  }
+    },
+    "logical_types": {
+      "STRING":           { "write": true,  "read": true  },
+      "ENUM":             { "write": true,  "read": true  },
+      "UUID":             { "write": true,  "read": true  },
+      "DECIMAL":          { "write": true,  "read": true  },
+      "FLOAT16":          { "write": true,  "read": true,  "_note": "Supported since DuckDB 1.3.0" },
+      "DATE":             { "write": true,  "read": true  },
+      "TIME_MILLIS":      { "write": true,  "read": true  },
+      "TIME_MICROS":      { "write": true,  "read": true  },
+      "TIME_NANOS":       { "write": true,  "read": true  },
+      "TIMESTAMP_MILLIS": { "write": true,  "read": true  },
+      "TIMESTAMP_MICROS": { "write": true,  "read": true  },
+      "TIMESTAMP_NANOS":  { "write": true,  "read": true  },
+      "INT96":            { "write": false, "read": true,  "_note": "Apache tracks this as a physical type (physical-int96: read)" },
+      "INTERVAL":         { "write": true,  "read": true  },
+      "JSON":             { "write": true,  "read": true  },
+      "BSON":             { "write": false, "read": false }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER":      { "write": true,  "read": true  },
+      "STATISTICS":        { "write": true,  "read": true  },
+      "PAGE_INDEX":        { "write": false, "read": true,  "_note": "Apache marks page index as read-only in DuckDB" },
+      "COLUMN_ENCRYPTION": { "write": true,  "read": true,  "_note": "Partial support per Apache" },
+      "DATA_PAGE_V2":      { "write": true,  "read": true  }
+    }
+  },
+  "polars": {
+    "_apache_engine_id": "polars",
+    "compression": {
+      "NONE":    { "write": true,  "read": true  },
+      "BROTLI":  { "write": true,  "read": true  },
+      "GZIP":    { "write": true,  "read": true  },
+      "LZ4":     { "write": false, "read": false, "_note": "Apache marks LZ4 (deprecated codec) as unsupported in Polars" },
+      "LZ4_RAW": { "write": true,  "read": true  },
+      "LZO":     { "write": false, "read": true,  "_note": "Apache marks LZO as read-only in Polars" },
+      "SNAPPY":  { "write": true,  "read": true  },
+      "ZSTD":    { "write": true,  "read": true  }
+    },
+    "encoding": {
+      "PLAIN":                   { "write": true,  "read": true  },
+      "PLAIN_DICTIONARY":        { "write": false, "read": true,  "_note": "Apache marks PLAIN_DICTIONARY as read-only in Polars" },
+      "RLE_DICTIONARY":          { "write": true,  "read": true  },
+      "RLE":                     { "write": false, "read": true,  "_note": "Apache marks RLE as read-only in Polars" },
+      "BIT_PACKED":              { "write": false, "read": false },
+      "DELTA_BINARY_PACKED":     { "write": false, "read": true,  "_note": "Apache marks DELTA_BINARY_PACKED as read-only in Polars" },
+      "DELTA_LENGTH_BYTE_ARRAY": { "write": false, "read": true,  "_note": "Apache marks DELTA_LENGTH_BYTE_ARRAY as read-only in Polars" },
+      "DELTA_BYTE_ARRAY":        { "write": false, "read": true,  "_note": "Apache marks DELTA_BYTE_ARRAY as read-only in Polars" },
+      "BYTE_STREAM_SPLIT":       { "write": false, "read": true,  "_note": "Apache marks BYTE_STREAM_SPLIT as read-only in Polars" }
+    },
+    "logical_types": {
+      "STRING":           { "write": true,  "read": true  },
+      "ENUM":             { "write": false, "read": true,  "_note": "Apache marks ENUM as read-only in Polars" },
+      "UUID":             { "write": false, "read": true,  "_note": "Apache marks UUID as read-only in Polars" },
+      "DECIMAL":          { "write": true,  "read": true  },
+      "FLOAT16":          { "write": true,  "read": true  },
+      "DATE":             { "write": true,  "read": true  },
+      "TIME_MILLIS":      { "write": false, "read": true,  "_note": "Apache maps TIME_MILLIS (INT32) as read-only in Polars" },
+      "TIME_MICROS":      { "write": true,  "read": true  },
+      "TIME_NANOS":       { "write": true,  "read": true  },
+      "TIMESTAMP_MILLIS": { "write": true,  "read": true  },
+      "TIMESTAMP_MICROS": { "write": true,  "read": true  },
+      "TIMESTAMP_NANOS":  { "write": true,  "read": true  },
+      "INT96":            { "write": false, "read": true,  "_note": "Apache tracks this as a physical type (physical-int96: read)" },
+      "INTERVAL":         { "write": false, "read": true,  "_note": "Apache marks INTERVAL as read-only in Polars" },
+      "JSON":             { "write": false, "read": false, "_note": "Apache marks JSON as unsupported in Polars" },
+      "BSON":             { "write": false, "read": false, "_note": "Apache marks BSON as unsupported in Polars" }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER":      { "write": false, "read": false },
+      "STATISTICS":        { "write": true,  "read": true  },
+      "PAGE_INDEX":        { "write": false, "read": true,  "_note": "Apache marks page index as read-only in Polars" },
+      "COLUMN_ENCRYPTION": { "write": false, "read": false },
+      "DATA_PAGE_V2":      { "write": false, "read": true,  "_note": "Apache marks Data Page V2 as read-only in Polars" }
+    }
+  }
+}

@@ -23,6 +23,7 @@ RESULTS_DIR = SCRIPT_DIR / "results"
 OUTPUT_MD = SCRIPT_DIR.parent / "parquet_can_i_use.md"
 OUTPUT_JSON = SCRIPT_DIR / "site" / "public" / "data" / "matrix.json"
 VERSIONS_FILE = SCRIPT_DIR / "versions.json"
+APACHE_REFERENCE_FILE = SCRIPT_DIR / "apache_reference.json"
 
 # Ordered categories and features
 COMPRESSION_CODECS = ["NONE", "SNAPPY", "GZIP", "BROTLI", "LZO", "LZ4", "LZ4_RAW", "ZSTD"]
@@ -246,9 +247,31 @@ def load_version_dates() -> dict:
     return {}
 
 
+def load_apache_reference() -> dict:
+    """Load the Apache official implementation status reference data."""
+    if APACHE_REFERENCE_FILE.exists():
+        with open(APACHE_REFERENCE_FILE) as f:
+            data = json.load(f)
+        # Strip comment/metadata keys (prefixed with _)
+        return {k: v for k, v in data.items() if not k.startswith("_")}
+    return {}
+
+
+def _make_apache_ref(ref_entry):
+    """Convert a reference entry dict into the apache_ref payload for a FeatureEntry."""
+    if ref_entry is None:
+        return None
+    result = {"write": bool(ref_entry.get("write", False)), "read": bool(ref_entry.get("read", False))}
+    note = ref_entry.get("_note")
+    if note:
+        result["note"] = note
+    return result
+
+
 def build_matrix_data(multiversion_results):
     """Build the complete matrix data structure for the site."""
     version_dates = load_version_dates()
+    apache_reference = load_apache_reference()
 
     matrix = {
         "tools": {},
@@ -283,6 +306,9 @@ def build_matrix_data(multiversion_results):
             "advanced_features": {},
         }
 
+        # Look up per-tool Apache reference data (may be absent for tools not in the reference)
+        tool_apache_ref = apache_reference.get(tool_id, {})
+
         # Compression
         for codec in COMPRESSION_CODECS:
             entry = latest.get("compression", {}).get(codec)
@@ -290,17 +316,24 @@ def build_matrix_data(multiversion_results):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "compression", codec, access="write")
             read_since = find_first_version(version_results, "compression", codec, access="read")
-            tool_data["compression"][codec] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            apache_ref = _make_apache_ref(tool_apache_ref.get("compression", {}).get(codec))
+            if apache_ref is not None:
+                cell["apache_ref"] = apache_ref
+            tool_data["compression"][codec] = cell
 
         # Encoding x Type
         for enc in ENCODINGS:
             tool_data["encoding"][enc] = {}
             enc_data = latest.get("encoding", {}).get(enc, {})
+            # Apache tracks encoding support at the encoding level (not per physical type).
+            # Apply the same encoding-level reference to all spec-valid physical types.
+            enc_apache_ref = _make_apache_ref(tool_apache_ref.get("encoding", {}).get(enc))
             for ptype in ENCODING_TYPES:
                 if isinstance(enc_data, dict) and ("write" in enc_data or "read" in enc_data):
                     # enc_data is itself a rw entry (whole encoding)
@@ -324,10 +357,13 @@ def build_matrix_data(multiversion_results):
                 }
                 # If neither supported and the spec doesn't define this combination,
                 # mark as not_applicable (shown as gray) instead of red.
-                if not is_supported:
-                    spec_valid = SPEC_VALID_ENCODING_TYPES.get(enc, set())
-                    if ptype not in spec_valid:
-                        cell["not_applicable"] = True
+                spec_valid = SPEC_VALID_ENCODING_TYPES.get(enc, set())
+                if not is_supported and ptype not in spec_valid:
+                    cell["not_applicable"] = True
+                # Only attach the Apache reference for spec-valid type combinations; for
+                # combinations the spec doesn't define the comparison is not meaningful.
+                elif enc_apache_ref is not None and ptype in spec_valid:
+                    cell["apache_ref"] = enc_apache_ref
                 tool_data["encoding"][enc][ptype] = cell
 
         # Logical Types
@@ -337,12 +373,16 @@ def build_matrix_data(multiversion_results):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "logical_types", lt, access="write")
             read_since = find_first_version(version_results, "logical_types", lt, access="read")
-            tool_data["logical_types"][lt] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            apache_ref = _make_apache_ref(tool_apache_ref.get("logical_types", {}).get(lt))
+            if apache_ref is not None:
+                cell["apache_ref"] = apache_ref
+            tool_data["logical_types"][lt] = cell
 
         # Nested Types
         for nt in NESTED_TYPES:
@@ -365,12 +405,16 @@ def build_matrix_data(multiversion_results):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "advanced_features", af, access="write")
             read_since = find_first_version(version_results, "advanced_features", af, access="read")
-            tool_data["advanced_features"][af] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            apache_ref = _make_apache_ref(tool_apache_ref.get("advanced_features", {}).get(af))
+            if apache_ref is not None:
+                cell["apache_ref"] = apache_ref
+            tool_data["advanced_features"][af] = cell
 
         matrix["tools"][tool_id] = tool_data
 

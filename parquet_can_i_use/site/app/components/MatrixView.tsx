@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MatrixData, FeatureEntry, ToolData } from "../types/matrix";
+import { MatrixData, FeatureEntry, ToolData, ApacheRef } from "../types/matrix";
 import FeatureTimeline from "./FeatureTimeline";
 
 function ReadWriteBadge({ supported, since, label }: { supported: boolean; since?: string | null; label: string }) {
@@ -38,6 +38,40 @@ function MergedBadge({ supported, since }: { supported: boolean; since?: string 
   );
 }
 
+function apacheRefLabel(ref: ApacheRef): string {
+  const w = ref.write ? "✅" : "❌";
+  const r = ref.read ? "✅" : "❌";
+  const base = ref.write === ref.read ? (ref.write ? "✅" : "❌") : `W:${w} R:${r}`;
+  return base + (ref.note ? ` (${ref.note})` : "");
+}
+
+function ApacheDiffBadge({ entry }: { entry: FeatureEntry }) {
+  const ref = entry.apache_ref;
+  if (!ref) return null;
+
+  const writeDiffers = entry.write !== ref.write;
+  const readDiffers = entry.read !== ref.read;
+  if (!writeDiffers && !readDiffers) return null;
+
+  const ourLabel = entry.write === entry.read
+    ? (entry.write ? "✅" : "❌")
+    : `W:${entry.write ? "✅" : "❌"} R:${entry.read ? "✅" : "❌"}`;
+
+  const tooltip =
+    `Differs from Apache docs (parquet.apache.org/docs/file-format/implementationstatus/) — ` +
+    `Our result: ${ourLabel} | Apache says: ${apacheRefLabel(ref)}`;
+
+  return (
+    <span
+      className="text-[9px] text-orange-400 cursor-help select-none ml-0.5"
+      title={tooltip}
+      aria-label="Differs from Apache implementation status page"
+    >
+      ≠apache
+    </span>
+  );
+}
+
 function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   if (!entry) {
     return (
@@ -58,8 +92,12 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   const bothSupported = entry.write && entry.read;
   const neitherSupported = !entry.write && !entry.read;
 
+  const ref = entry.apache_ref;
+  const hasDiff = ref && (entry.write !== ref.write || entry.read !== ref.read);
+
   let bgClass = "";
-  if (bothSupported) bgClass = "bg-green-950/30";
+  if (hasDiff) bgClass = "bg-orange-950/30";
+  else if (bothSupported) bgClass = "bg-green-950/30";
   else if (neitherSupported) bgClass = "bg-red-950/20";
   else bgClass = "bg-yellow-950/20";
 
@@ -76,6 +114,7 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
             <ReadWriteBadge supported={entry.read} since={entry.read_since} label="R" />
           </>
         )}
+        <ApacheDiffBadge entry={entry} />
       </div>
     </td>
   );
@@ -216,6 +255,19 @@ export default function MatrixView({ data }: { data: MatrixData }) {
         </span>
         <span>
           <span className="text-gray-600">➖</span> Not tested
+        </span>
+        <span>
+          <span className="text-orange-400 text-[9px]">≠apache</span>{" "}
+          Differs from{" "}
+          <a
+            href="https://parquet.apache.org/docs/file-format/implementationstatus/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-orange-400 hover:underline"
+          >
+            Apache implementation status
+          </a>{" "}
+          — may point to a bug in our tests (hover for details)
         </span>
         <span className="text-gray-500 text-xs italic">
           Click any feature row to see the version timeline across libraries
