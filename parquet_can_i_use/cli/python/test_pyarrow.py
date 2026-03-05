@@ -113,15 +113,15 @@ def main():
     results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"] = {}
     for ptype in encoding_types:
         path_ext = os.path.join(tmpdir, f"enc_BYTE_STREAM_SPLIT_EXTENDED_{ptype}.parquet")
-        def write_bss_ext(p=path_ext, pt=ptype):
+        def write_byte_stream_split_extended(p=path_ext, pt=ptype):
             t = make_typed_table(pt)
             pq.write_table(t, p, use_dictionary=False, column_encoding="BYTE_STREAM_SPLIT")
             actual = get_column_encodings(p)
             if "BYTE_STREAM_SPLIT" not in actual:
                 raise ValueError(f"Expected BYTE_STREAM_SPLIT in encodings, got {actual}")
-        def read_bss_ext(p=path_ext):
+        def read_byte_stream_split_extended(p=path_ext):
             pq.read_table(p)
-        results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"][ptype] = test_rw(write_bss_ext, read_bss_ext)
+        results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"][ptype] = test_rw(write_byte_stream_split_extended, read_byte_stream_split_extended)
 
     # --- Logical Types ---
     import datetime
@@ -148,19 +148,10 @@ def main():
     # UNKNOWN logical type (always-null column, Parquet NULL type)
     logical_tests["UNKNOWN"] = lambda: pa.table({"c": pa.array([None, None], type=pa.null())})
 
-    # VARIANT logical type (Parquet format 2.11.0, Arrow 19+)
+    # VARIANT logical type (Parquet format 2.11.0)
+    # Not yet supported in PyArrow 23. Future versions will need an explicit VARIANT type API.
     def _make_variant_table():
-        # Arrow 19+ supports writing VARIANT via large_binary with variant extension type.
-        # Earlier versions will raise AttributeError / TypeError and fail gracefully.
-        variant_type = pa.large_binary()
-        field = pa.field("c", variant_type, metadata={b"parquet.field.id": b"0"})
-        schema = pa.schema([field])
-        arr = pa.array([b'{"x":1}', b'{"y":2}'], type=variant_type)
-        # Use ParquetSchema with variant annotation if available (Arrow 19+)
-        if not hasattr(pq, 'VARIANT_ANNOTATION_KEY'):
-            # Check if ArrowToParquet can emit VARIANT logical type annotation
-            from pyarrow._parquet import ParquetSchema  # noqa
-        raise NotImplementedError("VARIANT logical type annotation not available in this PyArrow version")
+        raise NotImplementedError("VARIANT logical type not yet supported in this PyArrow version")
     logical_tests["VARIANT"] = _make_variant_table
 
     # GEOMETRY logical type (Parquet format 2.11.0)
