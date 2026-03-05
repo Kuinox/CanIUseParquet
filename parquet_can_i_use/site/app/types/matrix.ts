@@ -11,6 +11,8 @@ export interface ToolData {
   language: string;
   latest_version: string;
   tested_versions: string[];
+  /** Map from version string to ISO date string (YYYY-MM-DD) */
+  version_dates: Record<string, string>;
   compression: Record<string, FeatureEntry>;
   encoding: Record<string, Record<string, FeatureEntry>>;
   logical_types: Record<string, FeatureEntry>;
