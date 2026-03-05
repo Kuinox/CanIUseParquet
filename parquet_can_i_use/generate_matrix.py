@@ -246,9 +246,23 @@ def load_version_dates() -> dict:
     return {}
 
 
+def load_all_versions() -> dict:
+    """Load all versions from versions.json (ordered oldest to newest) per tool."""
+    if VERSIONS_FILE.exists():
+        with open(VERSIONS_FILE) as f:
+            config = json.load(f)
+        return {
+            tool_id: tool_cfg.get("versions", [])
+            for tool_id, tool_cfg in config.items()
+            if not tool_id.startswith("_")
+        }
+    return {}
+
+
 def build_matrix_data(multiversion_results):
     """Build the complete matrix data structure for the site."""
     version_dates = load_version_dates()
+    all_versions_map = load_all_versions()
 
     matrix = {
         "tools": {},
@@ -275,6 +289,7 @@ def build_matrix_data(multiversion_results):
             "language": TOOL_LANGUAGES.get(tool_id, "?"),
             "latest_version": latest.get("version", "?"),
             "tested_versions": tested_versions,
+            "all_versions": all_versions_map.get(tool_id, []),
             "version_dates": version_dates.get(tool_id, {}),
             "compression": {},
             "encoding": {},
