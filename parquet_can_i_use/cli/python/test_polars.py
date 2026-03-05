@@ -39,24 +39,33 @@ def main():
     tmpdir = tempfile.mkdtemp()
 
     # --- Compression ---
+    # Polars' "lz4" codec string writes LZ4_RAW format internally (verified via raw Parquet
+    # footer byte analysis — Thrift codec enum 7 / ZigZag 0x0e appears in file).
+    # The string "lz4_raw" is not accepted by Polars (raises ValueError).
+    # So our codec map is:
+    #   LZ4     → None (no Polars codec produces the deprecated LZ4 format)
+    #   LZ4_RAW → "lz4" (Polars' only LZ4 codec, produces LZ4_RAW)
     codecs = {
-        "NONE": "uncompressed",
-        "SNAPPY": "snappy",
-        "GZIP": "gzip",
-        "BROTLI": "brotli",
-        "LZO": "lzo",
-        "LZ4": "lz4",
-        "LZ4_RAW": "lz4_raw",
-        "ZSTD": "zstd",
+        "NONE":    "uncompressed",
+        "SNAPPY":  "snappy",
+        "GZIP":    "gzip",
+        "BROTLI":  "brotli",
+        "LZO":     "lzo",
+        "LZ4":     None,    # deprecated LZ4 not supported; Polars has no codec for it
+        "LZ4_RAW": "lz4",   # Polars' "lz4" produces LZ4_RAW format
+        "ZSTD":    "zstd",
     }
+    df = pl.DataFrame({"col": [1, 2, 3]})
     for codec_name, codec_val in codecs.items():
         path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
-        df = pl.DataFrame({"col": [1, 2, 3]})
-        def write_codec(c=codec_val, p=path, d=df):
-            d.write_parquet(p, compression=c)
-        def read_codec(p=path):
-            pl.read_parquet(p)
-        results["compression"][codec_name] = test_rw(write_codec, read_codec)
+        if codec_val is None:
+            results["compression"][codec_name] = {"write": False, "read": False}
+        else:
+            def write_codec(c=codec_val, p=path, d=df):
+                d.write_parquet(p, compression=c)
+            def read_codec(p=path):
+                pl.read_parquet(p)
+            results["compression"][codec_name] = test_rw(write_codec, read_codec)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
@@ -76,31 +85,102 @@ def main():
             return pl.DataFrame({"col": pl.Series([b"hello", b"world", b"test"])})
         raise ValueError(f"Unknown type: {ptype}")
 
-    enc_tests = {
-        "PLAIN": True,
-        "PLAIN_DICTIONARY": True,
-        "RLE_DICTIONARY": True,
-        "RLE": True,
-        "BIT_PACKED": False,
-        "DELTA_BINARY_PACKED": True,
-        "DELTA_LENGTH_BYTE_ARRAY": True,
-        "DELTA_BYTE_ARRAY": True,
-        "BYTE_STREAM_SPLIT": True,
-        "BYTE_STREAM_SPLIT_EXTENDED": True,
+    # Polars does not expose an API to force a specific encoding when writing.
+    # For write tests: we write a Polars file and verify the encoding appears in the
+    # file metadata (requires pyarrow for verification; otherwise write=false for
+    # unverifiable encodings).
+    # For read tests: we write a file with the target encoding using pyarrow and
+    # attempt to read it back with Polars.
+    try:
+        import pyarrow as pa
+        import pyarrow.parquet as _pq
+        _have_pyarrow = True
+    except ImportError:
+        _have_pyarrow = False
+
+    def get_polars_file_encodings(path):
+        """Return the set of encodings in the first column of a Polars-written file."""
+        if not _have_pyarrow:
+            return set()
+        meta = _pq.read_metadata(path)
+        return set(meta.row_group(0).column(0).encodings)
+
+    # Parquet encoding name → pyarrow column_encoding string
+    _PYARROW_ENCODING_MAP = {
+        "PLAIN":                    "PLAIN",
+        "PLAIN_DICTIONARY":         "PLAIN_DICTIONARY",
+        "RLE_DICTIONARY":           "RLE_DICTIONARY",
+        "RLE":                      "RLE",
+        "DELTA_BINARY_PACKED":      "DELTA_BINARY_PACKED",
+        "DELTA_LENGTH_BYTE_ARRAY":  "DELTA_LENGTH_BYTE_ARRAY",
+        "DELTA_BYTE_ARRAY":         "DELTA_BYTE_ARRAY",
+        "BYTE_STREAM_SPLIT":        "BYTE_STREAM_SPLIT",
+        "BYTE_STREAM_SPLIT_EXTENDED": "BYTE_STREAM_SPLIT",  # same PA api
     }
-    for enc_name, supported in enc_tests.items():
+
+    def make_pa_typed_table(ptype):
+        if not _have_pyarrow:
+            return None
+        if ptype == "INT32":
+            return pa.table({"col": pa.array([1, 2, 3], type=pa.int32())})
+        elif ptype == "INT64":
+            return pa.table({"col": pa.array([1, 2, 3], type=pa.int64())})
+        elif ptype == "FLOAT":
+            return pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float32())})
+        elif ptype == "DOUBLE":
+            return pa.table({"col": pa.array([1.0, 2.0, 3.0], type=pa.float64())})
+        elif ptype == "BOOLEAN":
+            return pa.table({"col": pa.array([True, False, True])})
+        elif ptype == "BYTE_ARRAY":
+            return pa.table({"col": pa.array([b"a", b"b", b"c"])})
+        return None
+
+    encoding_names = [
+        "PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+        "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+        "BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED",
+    ]
+    for enc_name in encoding_names:
         results["encoding"][enc_name] = {}
         for ptype in encoding_types:
-            path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}.parquet")
-            def write_enc(p=path, s=supported, pt=ptype):
-                if not s:
-                    raise NotImplementedError("Not supported")
+            write_path = os.path.join(tmpdir, f"enc_write_{enc_name}_{ptype}.parquet")
+            read_path  = os.path.join(tmpdir, f"enc_read_{enc_name}_{ptype}.parquet")
+
+            def write_enc(p=write_path, en=enc_name, pt=ptype):
                 df = make_typed_df(pt)
                 df.write_parquet(p)
-            def read_enc(p=path):
-                pl.read_parquet(p)
-            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
+                # Verify the encoding actually appears in the written file.
+                actual = get_polars_file_encodings(p)
+                if not actual:
+                    # No encodings detected (pyarrow unavailable or file is empty);
+                    # cannot verify, so conservatively mark as not supported.
+                    raise NotImplementedError("Could not read file encodings for verification")
+                if en not in actual:
+                    raise ValueError(
+                        f"Polars did not write {en} encoding; actual encodings: {actual}"
+                    )
 
+            def read_enc(rp=read_path, en=enc_name, pt=ptype):
+                # Write a file with the target encoding via pyarrow, then read with Polars.
+                if not _have_pyarrow:
+                    raise NotImplementedError("Cannot test encoding read without pyarrow")
+                pa_enc = _PYARROW_ENCODING_MAP.get(en)
+                if pa_enc is None:
+                    raise NotImplementedError(f"No pyarrow encoding mapping for {en}")
+                t = make_pa_typed_table(pt)
+                if t is None:
+                    raise ValueError(f"Could not build pyarrow table for {pt}")
+                try:
+                    _pq.write_table(
+                        t, rp, use_dictionary=(pa_enc in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")),
+                        column_encoding=None if pa_enc in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")
+                                        else pa_enc,
+                    )
+                except Exception:
+                    raise
+                pl.read_parquet(rp)
+
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
     # --- Logical Types ---
     import datetime
     from decimal import Decimal

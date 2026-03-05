@@ -23,7 +23,7 @@
       "read": false
     },
     "LZ4": {
-      "write": true,
+      "write": false,
       "read": true
     },
     "LZ4_RAW": {
@@ -64,19 +64,19 @@
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "INT64": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "FLOAT": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "DOUBLE": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "BOOLEAN": {
@@ -84,25 +84,25 @@
         "read": true
       },
       "BYTE_ARRAY": {
-        "write": false,
+        "write": true,
         "read": true
       }
     },
     "RLE_DICTIONARY": {
       "INT32": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "INT64": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "FLOAT": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "DOUBLE": {
-        "write": false,
+        "write": true,
         "read": true
       },
       "BOOLEAN": {
@@ -110,7 +110,7 @@
         "read": true
       },
       "BYTE_ARRAY": {
-        "write": false,
+        "write": true,
         "read": true
       }
     },
