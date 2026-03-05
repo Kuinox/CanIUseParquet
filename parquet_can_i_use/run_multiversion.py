@@ -107,15 +107,16 @@ def _set_java_version(cli_dir, version):
     pom.write_text(content)
 
 
-def _set_dotnet_version(cli_dir, version):
-    """Set the Parquet.Net package version in the .csproj file."""
+def _set_dotnet_version(cli_dir, version, package_name="Parquet.Net"):
+    """Set the dotnet package version in the .csproj file."""
     csproj_files = list(cli_dir.glob("*.csproj"))
     if not csproj_files:
         raise FileNotFoundError(f"No .csproj file found in {cli_dir}")
     csproj = csproj_files[0]
     content = csproj.read_text()
+    escaped_name = re.escape(package_name)
     content = re.sub(
-        r'(<PackageReference Include="Parquet\.Net" Version=")[^"]*(")',
+        rf'(<PackageReference Include="{escaped_name}" Version=")[^"]*(")',
         rf'\g<1>{version}\2',
         content,
     )
@@ -158,7 +159,7 @@ def run_compiled_version(tool_id, tool_config, version):
             )
             run_cmd = ["java", "-jar", str(cli_dir / "target" / "test-parquet-java-1.0-SNAPSHOT.jar")]
         elif tool_type == "dotnet":
-            _set_dotnet_version(cli_dir, version)
+            _set_dotnet_version(cli_dir, version, tool_config.get("dotnet_package", "Parquet.Net"))
             subprocess.run(
                 ["dotnet", "build", "-c", "Release", "-v", "q"], cwd=str(cli_dir),
                 capture_output=True, text=True, check=True, timeout=300,

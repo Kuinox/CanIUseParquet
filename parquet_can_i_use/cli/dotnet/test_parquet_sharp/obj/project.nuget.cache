@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "HNTtEMMLsf4=",
+  "success": true,
+  "projectFilePath": "/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/test_parquet_sharp.csproj",
+  "expectedPackageFiles": [
+    "/home/runner/.nuget/packages/apache.arrow/13.0.0/apache.arrow.13.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/parquetsharp/21.0.0/parquetsharp.21.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.io.pipelines/9.0.0/system.io.pipelines.9.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.text.encodings.web/9.0.0/system.text.encodings.web.9.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/system.text.json/9.0.0/system.text.json.9.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.netcore.app.ref/8.0.23/microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.23/microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.23/microsoft.netcore.app.host.linux-x64.8.0.23.nupkg.sha512"
+  ],
+  "logs": []
+}
