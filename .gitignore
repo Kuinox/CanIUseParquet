@@ -10,6 +10,13 @@ __pycache__/
 *.pyc
 .venvs/
 
+# Go compiled binaries
+parquet_can_i_use/cli/go/test_parquet_go/test_parquet_go
+parquet_can_i_use/cli/go/test_arrow_go/test_arrow_go
+
+# Rust compiled output
+parquet_can_i_use/cli/rust/test_parquet_rs/target/
+
 # .NET build artifacts
 parquet_can_i_use/cli/dotnet/*/bin/
 parquet_can_i_use/cli/dotnet/*/obj/
