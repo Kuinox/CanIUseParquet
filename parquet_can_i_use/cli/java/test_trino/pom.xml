@@ -2,19 +2,47 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>parquet.test</groupId>
-    <artifactId>test-parquet-java</artifactId>
+    <groupId>trino.test</groupId>
+    <artifactId>test-trino</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <trino.version>474</trino.version>
         <parquet.version>1.15.2</parquet.version>
         <hadoop.version>3.3.6</hadoop.version>
     </properties>
 
     <dependencies>
+        <!-- Trino parquet library (used only to surface the Trino version at build time) -->
+        <dependency>
+            <groupId>io.trino</groupId>
+            <artifactId>trino-parquet</artifactId>
+            <version>${trino.version}</version>
+            <!-- exclude the bundled parquet artifacts so parquet-avro below wins;
+                 also exclude conflicting SLF4J/logging transitive deps -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.parquet</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-reload4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.reload4j</groupId>
+                    <artifactId>reload4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Apache Parquet / Avro for actual write + read tests -->
         <dependency>
             <groupId>org.apache.parquet</groupId>
             <artifactId>parquet-avro</artifactId>
@@ -59,6 +87,13 @@
     </dependencies>
 
     <build>
+        <!-- Filter src/main/resources so ${trino.version} is substituted -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -67,7 +102,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>parquet.test.TestParquetJava</mainClass>
+                            <mainClass>trino.test.TestTrino</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -82,6 +117,18 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

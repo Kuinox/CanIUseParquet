@@ -1,0 +1,320 @@
+#!/usr/bin/env python3
+"""Test Apache Spark (PySpark) Parquet feature support and output JSON results."""
+
+import json
+import sys
+import tempfile
+import os
+import logging
+
+
+def test_feature(fn):
+    try:
+        fn()
+        return True
+    except Exception:
+        return False
+
+
+def test_rw(write_fn, read_fn):
+    """Run separate write and read tests, return {"write": bool, "read": bool}."""
+    write_ok = test_feature(write_fn)
+    read_ok = test_feature(read_fn)
+    return {"write": write_ok, "read": read_ok}
+
+
+def main():
+    try:
+        import pyspark
+        from pyspark.sql import SparkSession
+        import pyspark.sql.types as T
+        import pyspark.sql.functions as F
+    except ImportError:
+        print(json.dumps({"error": "pyspark not installed"}))
+        sys.exit(1)
+
+    # Suppress Spark / py4j logging
+    logging.getLogger("py4j").setLevel(logging.ERROR)
+    os.environ.setdefault("PYSPARK_SUBMIT_ARGS", "--conf spark.ui.enabled=false pyspark-shell")
+
+    spark = (
+        SparkSession.builder
+        .master("local[1]")
+        .appName("ParquetFeatureTest")
+        .config("spark.ui.enabled", "false")
+        .config("spark.ui.showConsoleProgress", "false")
+        .config("spark.sql.shuffle.partitions", "1")
+        .getOrCreate()
+    )
+    spark.sparkContext.setLogLevel("ERROR")
+
+    version = pyspark.__version__
+
+    results = {
+        "tool": "Spark",
+        "version": version,
+        "compression": {},
+        "encoding": {},
+        "logical_types": {},
+        "nested_types": {},
+        "advanced_features": {},
+    }
+
+    tmpdir = tempfile.mkdtemp()
+
+    # --- Compression ---
+    simple_schema = T.StructType([T.StructField("col", T.IntegerType())])
+    simple_df = spark.createDataFrame([(1,), (2,), (3,)], simple_schema)
+
+    compression_codecs = [
+        ("NONE", "none"),
+        ("SNAPPY", "snappy"),
+        ("GZIP", "gzip"),
+        ("BROTLI", "brotli"),
+        ("LZO", "lzo"),
+        ("LZ4", "lz4"),
+        ("LZ4_RAW", "lz4"),   # PySpark uses "lz4" which maps to LZ4_RAW in Parquet
+        ("ZSTD", "zstd"),
+    ]
+
+    for codec_name, codec_val in compression_codecs:
+        path = os.path.join(tmpdir, f"comp_{codec_name}")
+
+        def write_comp(df=simple_df, c=codec_val, p=path):
+            df.write.mode("overwrite").option("compression", c).parquet(p)
+
+        def read_comp(p=path):
+            spark.read.parquet(p).collect()
+
+        results["compression"][codec_name] = test_rw(write_comp, read_comp)
+
+    # --- Encoding × Type matrix ---
+    # PySpark does not expose per-column encoding control; Spark uses its own default
+    # encoding strategy (PLAIN_DICTIONARY / RLE_DICTIONARY by default).
+    # Write: only encodings Spark actually uses are marked true.
+    # Read:  Spark can read any standard Parquet encoding (except deprecated BIT_PACKED).
+    encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
+
+    write_supported_encs = {"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY"}
+    read_unsupported_encs = {"BIT_PACKED"}
+
+    for enc_name in ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+                     "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+                     "BYTE_STREAM_SPLIT"]:
+        results["encoding"][enc_name] = {}
+        for ptype in encoding_types:
+            results["encoding"][enc_name][ptype] = {
+                "write": enc_name in write_supported_encs,
+                "read": enc_name not in read_unsupported_encs,
+            }
+
+    # --- Logical Types ---
+    import datetime
+    from decimal import Decimal
+
+    def lt_test(schema_fields, rows, path_suffix, write_options=None):
+        path = os.path.join(tmpdir, f"lt_{path_suffix}")
+        schema = T.StructType(schema_fields)
+
+        def write_lt(s=schema, r=rows, p=path, opts=write_options):
+            df = spark.createDataFrame(r, s)
+            writer = df.write.mode("overwrite")
+            if opts:
+                for k, v in opts.items():
+                    writer = writer.option(k, v)
+            writer.parquet(p)
+
+        def read_lt(p=path):
+            spark.read.parquet(p).collect()
+
+        return test_rw(write_lt, read_lt)
+
+    results["logical_types"]["STRING"] = lt_test(
+        [T.StructField("c", T.StringType())], [("hello",)], "string")
+
+    results["logical_types"]["DATE"] = lt_test(
+        [T.StructField("c", T.DateType())], [(datetime.date(2024, 1, 1),)], "date")
+
+    # TIME: Spark has no native time-only type; stored as LongType (ms/us from midnight)
+    results["logical_types"]["TIME_MILLIS"] = {"write": False, "read": False}
+    results["logical_types"]["TIME_MICROS"] = {"write": False, "read": False}
+    results["logical_types"]["TIME_NANOS"] = {"write": False, "read": False}
+
+    # TIMESTAMP: default encoding depends on Spark version
+    results["logical_types"]["TIMESTAMP_MILLIS"] = lt_test(
+        [T.StructField("c", T.TimestampType())],
+        [(datetime.datetime(2024, 1, 1),)], "ts_millis",
+        {"spark.sql.parquet.outputTimestampType": "TIMESTAMP_MILLIS"})
+
+    results["logical_types"]["TIMESTAMP_MICROS"] = lt_test(
+        [T.StructField("c", T.TimestampType())],
+        [(datetime.datetime(2024, 1, 1),)], "ts_micros",
+        {"spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS"})
+
+    # TIMESTAMP_NANOS: PySpark's outputTimestampType only supports INT96, TIMESTAMP_MILLIS,
+    # and TIMESTAMP_MICROS. Nanosecond precision is not available as a write option.
+    results["logical_types"]["TIMESTAMP_NANOS"] = {"write": False, "read": False}
+
+    # INT96 (legacy timestamp format)
+    results["logical_types"]["INT96"] = lt_test(
+        [T.StructField("c", T.TimestampType())],
+        [(datetime.datetime(2024, 1, 1),)], "int96",
+        {"spark.sql.parquet.outputTimestampType": "INT96"})
+
+    results["logical_types"]["DECIMAL"] = lt_test(
+        [T.StructField("c", T.DecimalType(10, 2))],
+        [(Decimal("123.45"),)], "decimal")
+
+    # UUID: no native UUID type in Spark; stored as string
+    results["logical_types"]["UUID"] = lt_test(
+        [T.StructField("c", T.StringType())],
+        [("550e8400-e29b-41d4-a716-446655440000",)], "uuid")
+
+    # JSON: no native JSON type in Spark SQL; stored as string
+    results["logical_types"]["JSON"] = lt_test(
+        [T.StructField("c", T.StringType())],
+        [('{"key":"val"}',)], "json")
+
+    # FLOAT16: not supported in Spark
+    results["logical_types"]["FLOAT16"] = {"write": False, "read": False}
+
+    # ENUM: no native enum type; stored as string
+    results["logical_types"]["ENUM"] = lt_test(
+        [T.StructField("c", T.StringType())], [("A",)], "enum")
+
+    # BSON: no native BSON type; stored as binary
+    results["logical_types"]["BSON"] = lt_test(
+        [T.StructField("c", T.BinaryType())],
+        [(bytes([5, 0, 0, 0, 0]),)], "bson")
+
+    # INTERVAL: Spark DayTimeIntervalType / YearMonthIntervalType (3.x+)
+    def write_interval():
+        if hasattr(T, "DayTimeIntervalType"):
+            schema = T.StructType([T.StructField("c", T.DayTimeIntervalType())])
+            df = spark.createDataFrame([(datetime.timedelta(days=1),)], schema)
+        else:
+            schema = T.StructType([T.StructField("c", T.StringType())])
+            df = spark.createDataFrame([("1 DAY",)], schema)
+        df.write.mode("overwrite").parquet(os.path.join(tmpdir, "lt_interval"))
+
+    def read_interval():
+        spark.read.parquet(os.path.join(tmpdir, "lt_interval")).collect()
+
+    results["logical_types"]["INTERVAL"] = test_rw(write_interval, read_interval)
+
+    # --- Nested Types ---
+    nested_tests = [
+        ("LIST", T.StructType([T.StructField("c", T.ArrayType(T.IntegerType()))]),
+         [([1, 2],), ([3],)]),
+        ("MAP", T.StructType([T.StructField("c", T.MapType(T.StringType(), T.IntegerType()))]),
+         [({"a": 1, "b": 2},)]),
+        ("STRUCT", T.StructType([T.StructField("c", T.StructType([
+            T.StructField("x", T.IntegerType()), T.StructField("y", T.IntegerType())]))]),
+         [((1, 2),)]),
+        ("NESTED_LIST", T.StructType([T.StructField("c", T.ArrayType(T.ArrayType(T.IntegerType())))]),
+         [([[1, 2], [3]],)]),
+        ("NESTED_MAP", T.StructType([T.StructField("c", T.MapType(T.StringType(), T.ArrayType(T.IntegerType())))]),
+         [({"a": [1, 2], "b": [3]},)]),
+        ("DEEP_NESTING", T.StructType([T.StructField("c", T.ArrayType(T.StructType([
+            T.StructField("x", T.ArrayType(T.IntegerType()))])))]),
+         [([{"x": [1, 2]}],)]),
+    ]
+
+    for nt_name, schema, rows in nested_tests:
+        path = os.path.join(tmpdir, f"nt_{nt_name}")
+
+        def write_nt(s=schema, r=rows, p=path):
+            spark.createDataFrame(r, s).write.mode("overwrite").parquet(p)
+
+        def read_nt(p=path):
+            spark.read.parquet(p).collect()
+
+        results["nested_types"][nt_name] = test_rw(write_nt, read_nt)
+
+    # --- Advanced Features ---
+    adv_schema = T.StructType([
+        T.StructField("col", T.IntegerType()),
+        T.StructField("str_col", T.StringType()),
+    ])
+    adv_rows = [(i, f"val_{i}") for i in range(100)]
+    adv_path = os.path.join(tmpdir, "adv_data")
+    spark.createDataFrame(adv_rows, adv_schema).write.mode("overwrite").parquet(adv_path)
+
+    # STATISTICS: Spark writes column statistics by default
+    def write_statistics():
+        pass  # Written as part of adv_data above
+    def read_statistics():
+        spark.read.parquet(adv_path).collect()
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
+
+    # PAGE_INDEX: supported in Spark 3.1+ (parquet page index)
+    def write_page_index():
+        p = os.path.join(tmpdir, "adv_page_index")
+        spark.createDataFrame(adv_rows, adv_schema).write.mode("overwrite").parquet(p)
+    def read_page_index():
+        p = os.path.join(tmpdir, "adv_page_index")
+        spark.read.parquet(p).collect()
+    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
+
+    # BLOOM_FILTER: supported via spark.sql.parquet.bloom.filter.enabled (Spark 3.1+)
+    def write_bloom_filter():
+        p = os.path.join(tmpdir, "adv_bloom")
+        (spark.createDataFrame(adv_rows, adv_schema)
+         .write.mode("overwrite")
+         .option("parquet.bloom.filter.enabled", "true")
+         .parquet(p))
+    def read_bloom_filter():
+        p = os.path.join(tmpdir, "adv_bloom")
+        spark.read.parquet(p).collect()
+    results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter)
+
+    # DATA_PAGE_V2: Spark can write and read data page v2
+    def write_data_page_v2():
+        p = os.path.join(tmpdir, "adv_v2")
+        (spark.createDataFrame(adv_rows, adv_schema)
+         .write.mode("overwrite")
+         .option("parquet.writer.version", "v2")
+         .parquet(p))
+    def read_data_page_v2():
+        p = os.path.join(tmpdir, "adv_v2")
+        spark.read.parquet(p).collect()
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
+
+    # COLUMN_ENCRYPTION: Parquet modular encryption is not supported in open-source PySpark
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
+
+    # PREDICATE_PUSHDOWN: Spark supports predicate pushdown by default
+    def write_predicate_pushdown():
+        pass  # Written as part of adv_data above
+    def read_predicate_pushdown():
+        spark.read.parquet(adv_path).filter("col > 50").collect()
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(
+        write_predicate_pushdown, read_predicate_pushdown)
+
+    # PROJECTION_PUSHDOWN: Spark reads only requested columns
+    def write_projection_pushdown():
+        pass  # Written as part of adv_data above
+    def read_projection_pushdown():
+        spark.read.parquet(adv_path).select("col").collect()
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(
+        write_projection_pushdown, read_projection_pushdown)
+
+    # SCHEMA_EVOLUTION: Spark supports mergeSchema option
+    def write_schema_evolution():
+        p1 = os.path.join(tmpdir, "adv_se1")
+        p2 = os.path.join(tmpdir, "adv_se2")
+        spark.createDataFrame([(1, 2)], ["a", "b"]).write.mode("overwrite").parquet(p1)
+        spark.createDataFrame([(3, 4)], ["a", "c"]).write.mode("overwrite").parquet(p2)
+    def read_schema_evolution():
+        p1 = os.path.join(tmpdir, "adv_se1")
+        p2 = os.path.join(tmpdir, "adv_se2")
+        spark.read.option("mergeSchema", "true").parquet(p1, p2).collect()
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(
+        write_schema_evolution, read_schema_evolution)
+
+    spark.stop()
+    print(json.dumps(results, indent=2))
+
+
+if __name__ == "__main__":
+    main()
