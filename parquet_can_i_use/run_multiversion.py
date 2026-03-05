@@ -150,19 +150,26 @@ def run_compiled_version(tool_id, tool_config, version):
             )
             run_cmd = [str(cli_dir / "target" / "release" / "test_parquet_rs")]
         elif tool_type == "go":
-            subprocess.run(
-                ["go", "get", f"github.com/parquet-go/parquet-go@v{version}"],
-                cwd=str(cli_dir), capture_output=True, text=True, check=True, timeout=120,
-            )
+            if tool_id == "arrow-go":
+                subprocess.run(
+                    ["go", "get", f"github.com/apache/arrow-go/v18@v{version}"],
+                    cwd=str(cli_dir), capture_output=True, text=True, check=True, timeout=120,
+                )
+            else:
+                subprocess.run(
+                    ["go", "get", f"github.com/parquet-go/parquet-go@v{version}"],
+                    cwd=str(cli_dir), capture_output=True, text=True, check=True, timeout=120,
+                )
             subprocess.run(
                 ["go", "mod", "tidy"],
                 cwd=str(cli_dir), capture_output=True, text=True, check=True, timeout=120,
             )
+            bin_name = "test_arrow_go" if tool_id == "arrow-go" else "test_parquet_go"
             subprocess.run(
-                ["go", "build", "-o", "test_parquet_go"], cwd=str(cli_dir),
+                ["go", "build", "-o", bin_name], cwd=str(cli_dir),
                 capture_output=True, text=True, check=True, timeout=300,
             )
-            run_cmd = [str(cli_dir / "test_parquet_go")]
+            run_cmd = [str(cli_dir / bin_name)]
         elif tool_type == "java":
             _set_java_version(cli_dir, version)
             subprocess.run(
@@ -184,6 +191,20 @@ def run_compiled_version(tool_id, tool_config, version):
                 capture_output=True, text=True, check=True, timeout=300,
             )
             run_cmd = ["dotnet", "run", "--project", str(cli_dir), "-c", "Release", "--no-build"]
+        elif tool_type == "javascript":
+            # Update package.json version and reinstall
+            pkg_file = cli_dir / "package.json"
+            pkg = json.loads(pkg_file.read_text())
+            for dep_name in list(pkg.get("dependencies", {})):
+                if dep_name == "hyparquet":
+                    pkg["dependencies"][dep_name] = version
+                    break
+            pkg_file.write_text(json.dumps(pkg, indent=2))
+            subprocess.run(
+                ["npm", "install", "--prefer-offline"], cwd=str(cli_dir),
+                capture_output=True, text=True, check=True, timeout=300,
+            )
+            run_cmd = ["node", str(cli_dir / "index.js")]
         else:
             print("UNKNOWN TYPE")
             return None
@@ -213,9 +234,10 @@ def run_compiled_tool(tool_id, tool_config):
                          capture_output=True, text=True, check=True, timeout=300)
             run_cmd = [str(cli_dir / "target" / "release" / "test_parquet_rs")]
         elif tool_type == "go":
-            subprocess.run(["go", "build", "-o", "test_parquet_go"], cwd=str(cli_dir),
+            bin_name = "test_arrow_go" if tool_id == "arrow-go" else "test_parquet_go"
+            subprocess.run(["go", "build", "-o", bin_name], cwd=str(cli_dir),
                          capture_output=True, text=True, check=True, timeout=300)
-            run_cmd = [str(cli_dir / "test_parquet_go")]
+            run_cmd = [str(cli_dir / bin_name)]
         elif tool_type == "java":
             subprocess.run(["mvn", "-q", "package", "-DskipTests"], cwd=str(cli_dir),
                          capture_output=True, text=True, check=True, timeout=300)
@@ -228,6 +250,10 @@ def run_compiled_tool(tool_id, tool_config):
             subprocess.run(["dotnet", "build", "-c", "Release", "-v", "q"], cwd=str(cli_dir),
                          capture_output=True, text=True, check=True, timeout=300)
             run_cmd = ["dotnet", "run", "--project", str(cli_dir), "-c", "Release", "--no-build"]
+        elif tool_type == "javascript":
+            subprocess.run(["npm", "install", "--prefer-offline"], cwd=str(cli_dir),
+                         capture_output=True, text=True, check=True, timeout=300)
+            run_cmd = ["node", str(cli_dir / "index.js")]
         else:
             print("UNKNOWN TYPE")
             return None
@@ -332,7 +358,7 @@ def main():
     for tool_id, config in tools.items():
         tool_type = config.get("type", "python")
 
-        if tool_type != "python" and tool_type not in ("rust", "go", "java", "dotnet", "trino"):
+        if tool_type != "python" and tool_type not in ("rust", "go", "java", "dotnet", "trino", "javascript"):
             # Infer type from presence of install key
             if "install" in config:
                 tool_type = "python"

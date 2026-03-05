@@ -23,7 +23,7 @@
       "read": false
     },
     "LZ4": {
-      "write": true,
+      "write": false,
       "read": true
     },
     "LZ4_RAW": {
@@ -64,210 +64,236 @@
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "INT64": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "FLOAT": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "DOUBLE": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       }
     },
     "RLE_DICTIONARY": {
       "INT32": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "INT64": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "FLOAT": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "DOUBLE": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       }
     },
     "RLE": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "BIT_PACKED": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "DELTA_BINARY_PACKED": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
       }
     },
     "BYTE_STREAM_SPLIT": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": true
+      }
+    },
+    "BYTE_STREAM_SPLIT_EXTENDED": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
       }
     }
   },
@@ -335,6 +361,22 @@
     "INTERVAL": {
       "write": true,
       "read": true
+    },
+    "UNKNOWN": {
+      "write": false,
+      "read": false
+    },
+    "VARIANT": {
+      "write": false,
+      "read": false
+    },
+    "GEOMETRY": {
+      "write": false,
+      "read": false
+    },
+    "GEOGRAPHY": {
+      "write": false,
+      "read": false
     }
   },
   "nested_types": {
@@ -395,6 +437,14 @@
     "SCHEMA_EVOLUTION": {
       "write": true,
       "read": true
+    },
+    "SIZE_STATISTICS": {
+      "write": true,
+      "read": true
+    },
+    "PAGE_CRC32": {
+      "write": false,
+      "read": false
     }
   }
 }
