@@ -107,6 +107,18 @@ def _set_java_version(cli_dir, version):
     pom.write_text(content)
 
 
+def _set_trino_version(cli_dir, version):
+    """Set the trino version property in pom.xml."""
+    pom = cli_dir / "pom.xml"
+    content = pom.read_text()
+    content = re.sub(
+        r'<trino\.version>[^<]*</trino\.version>',
+        f'<trino.version>{version}</trino.version>',
+        content,
+    )
+    pom.write_text(content)
+
+
 def _set_dotnet_version(cli_dir, version, package_name="Parquet.Net"):
     """Set the dotnet package version in the .csproj file."""
     csproj_files = list(cli_dir.glob("*.csproj"))
@@ -158,6 +170,13 @@ def run_compiled_version(tool_id, tool_config, version):
                 capture_output=True, text=True, check=True, timeout=300,
             )
             run_cmd = ["java", "-jar", str(cli_dir / "target" / "test-parquet-java-1.0-SNAPSHOT.jar")]
+        elif tool_type == "trino":
+            _set_trino_version(cli_dir, version)
+            subprocess.run(
+                ["mvn", "-q", "package", "-DskipTests"], cwd=str(cli_dir),
+                capture_output=True, text=True, check=True, timeout=600,
+            )
+            run_cmd = ["java", "-jar", str(cli_dir / "target" / "test-trino-1.0-SNAPSHOT.jar")]
         elif tool_type == "dotnet":
             _set_dotnet_version(cli_dir, version, tool_config.get("dotnet_package", "Parquet.Net"))
             subprocess.run(
@@ -180,7 +199,7 @@ def run_compiled_version(tool_id, tool_config, version):
 
 
 def run_compiled_tool(tool_id, tool_config):
-    """Run a compiled language CLI (Rust/Go/Java/.NET) for the current version only."""
+    """Run a compiled language CLI (Rust/Go/Java/.NET/Trino) for the current version only."""
     cli_dir = SCRIPT_DIR / tool_config["cli_dir"]
     version = tool_config["versions"][-1]  # Latest version
     print(f"  [{tool_id}] Testing v{version}...", end=" ", flush=True)
@@ -201,6 +220,10 @@ def run_compiled_tool(tool_id, tool_config):
             subprocess.run(["mvn", "-q", "package", "-DskipTests"], cwd=str(cli_dir),
                          capture_output=True, text=True, check=True, timeout=300)
             run_cmd = ["java", "-jar", str(cli_dir / "target" / "test-parquet-java-1.0-SNAPSHOT.jar")]
+        elif tool_type == "trino":
+            subprocess.run(["mvn", "-q", "package", "-DskipTests"], cwd=str(cli_dir),
+                         capture_output=True, text=True, check=True, timeout=600)
+            run_cmd = ["java", "-jar", str(cli_dir / "target" / "test-trino-1.0-SNAPSHOT.jar")]
         elif tool_type == "dotnet":
             subprocess.run(["dotnet", "build", "-c", "Release", "-v", "q"], cwd=str(cli_dir),
                          capture_output=True, text=True, check=True, timeout=300)
@@ -309,7 +332,7 @@ def main():
     for tool_id, config in tools.items():
         tool_type = config.get("type", "python")
 
-        if tool_type != "python" and tool_type not in ("rust", "go", "java", "dotnet"):
+        if tool_type != "python" and tool_type not in ("rust", "go", "java", "dotnet", "trino"):
             # Infer type from presence of install key
             if "install" in config:
                 tool_type = "python"

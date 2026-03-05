@@ -66,5 +66,18 @@
     "type": "dotnet",
     "dotnet_package": "ParquetSharp",
     "cli_dir": "cli/dotnet/test_parquet_sharp"
+  },
+  "spark": {
+    "versions": [
+      "3.0.0", "3.1.0", "3.2.0", "3.3.0", "3.4.0", "3.5.0", "4.0.0"
+    ],
+    "install": "pip install pyspark=={version}",
+    "cli": "cli/python/test_spark.py",
+    "extra_deps": []
+  },
+  "trino": {
+    "versions": ["400", "420", "440", "460", "474"],
+    "type": "trino",
+    "cli_dir": "cli/java/test_trino"
   }
 }
