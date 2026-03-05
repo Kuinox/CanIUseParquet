@@ -53,7 +53,7 @@ function buildBlocks(
   globalStartMs: number,
   globalEndMs: number,
 ): VersionBlock[] {
-  const versions = tool.tested_versions;
+  const versions = tool.all_versions ?? tool.tested_versions;
   const dates = tool.version_dates ?? {};
   const totalMs = globalEndMs - globalStartMs;
 
