@@ -44,6 +44,8 @@ TOOL_DISPLAY_NAMES = {
     "parquet-go": "parquet-go",
     "parquet-java": "parquet-java",
     "parquet-dotnet": "parquet-dotnet",
+    "spark": "Apache Spark",
+    "trino": "Trino",
 }
 
 TOOL_LANGUAGES = {
@@ -55,10 +57,13 @@ TOOL_LANGUAGES = {
     "parquet-go": "Go",
     "parquet-java": "Java",
     "parquet-dotnet": "C# / .NET",
+    "spark": "Java / Python",
+    "trino": "Java",
 }
 
 TOOL_ORDER = ["pyarrow", "fastparquet", "polars", "duckdb",
-              "parquet-rs", "parquet-go", "parquet-java", "parquet-dotnet"]
+              "parquet-rs", "parquet-go", "parquet-java", "parquet-dotnet",
+              "spark", "trino"]
 
 # Encoding × Type combinations that are valid per the Apache Parquet format spec.
 # Combinations not listed here are not defined by the spec; if a library cannot
@@ -113,6 +118,15 @@ TOOLS = {
         "build": ["dotnet", "build", "-c", "Release", "-v", "q"],
         "build_cwd": str(CLI_DIR / "dotnet" / "test_parquet_dotnet"),
         "run": ["dotnet", "run", "--project", str(CLI_DIR / "dotnet" / "test_parquet_dotnet"), "-c", "Release", "--no-build"],
+    },
+    "spark": {
+        "build": None,
+        "run": [sys.executable, str(CLI_DIR / "python" / "test_spark.py")],
+    },
+    "trino": {
+        "build": ["mvn", "-q", "package", "-DskipTests"],
+        "build_cwd": str(CLI_DIR / "java" / "test_trino"),
+        "run": ["java", "-jar", str(CLI_DIR / "java" / "test_trino" / "target" / "test-trino-1.0-SNAPSHOT.jar")],
     },
 }
 
