@@ -3,6 +3,8 @@ cli/rust/test_parquet_rs/target/
 cli/go/test_parquet_go/test_parquet_go
 cli/java/test_parquet_java/target/
 cli/java/test_parquet_java/dependency-reduced-pom.xml
+cli/java/test_trino/target/
+cli/java/test_trino/dependency-reduced-pom.xml
 cli/dotnet/test_parquet_dotnet/bin/
 cli/dotnet/test_parquet_dotnet/obj/
 
