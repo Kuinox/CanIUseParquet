@@ -163,8 +163,103 @@ jobs:
           path: parquet_can_i_use/results/
           if-no-files-found: warn
 
+  test-arrow-go:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Run bisect tests for arrow-go
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only arrow-go
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-arrow-go
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-hyparquet:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run bisect tests for hyparquet
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only hyparquet
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-hyparquet
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-parquet-sharp:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Run bisect tests for parquet-sharp
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only parquet-sharp
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-parquet-sharp
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-spark:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Run bisect tests for spark
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only spark
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-spark
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
+  test-trino:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Run bisect tests for trino
+        run: |
+          cd parquet_can_i_use
+          python run_multiversion.py --bisect --only trino
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-trino
+          path: parquet_can_i_use/results/
+          if-no-files-found: warn
+
   build-site:
-    needs: [test-pyarrow, test-fastparquet, test-polars, test-duckdb, test-rust, test-go, test-java, test-dotnet]
+    needs: [test-pyarrow, test-fastparquet, test-polars, test-duckdb, test-rust, test-go, test-java, test-dotnet, test-arrow-go, test-hyparquet, test-parquet-sharp, test-spark, test-trino]
     if: always()
     runs-on: ubuntu-latest
     steps:

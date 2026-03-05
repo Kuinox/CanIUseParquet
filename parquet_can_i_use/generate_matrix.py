@@ -22,6 +22,7 @@ CLI_DIR = SCRIPT_DIR / "cli"
 RESULTS_DIR = SCRIPT_DIR / "results"
 OUTPUT_MD = SCRIPT_DIR.parent / "parquet_can_i_use.md"
 OUTPUT_JSON = SCRIPT_DIR / "site" / "public" / "data" / "matrix.json"
+VERSIONS_FILE = SCRIPT_DIR / "versions.json"
 
 # Ordered categories and features
 COMPRESSION_CODECS = ["NONE", "SNAPPY", "GZIP", "BROTLI", "LZO", "LZ4", "LZ4_RAW", "ZSTD"]
@@ -49,6 +50,7 @@ TOOL_DISPLAY_NAMES = {
     "parquet-java": "parquet-java",
     "parquet-dotnet": "parquet-dotnet",
     "hyparquet": "hyparquet",
+    "parquet-sharp": "ParquetSharp",
     "spark": "Apache Spark",
     "trino": "Trino",
 }
@@ -64,13 +66,14 @@ TOOL_LANGUAGES = {
     "parquet-java": "Java",
     "parquet-dotnet": "C# / .NET",
     "hyparquet": "JavaScript",
+    "parquet-sharp": "C# / .NET",
     "spark": "Java / Python",
     "trino": "Java",
 }
 
 TOOL_ORDER = ["pyarrow", "fastparquet", "polars", "duckdb",
               "parquet-rs", "parquet-go", "arrow-go", "parquet-java", "parquet-dotnet",
-              "hyparquet", "spark", "trino"]
+              "hyparquet", "parquet-sharp", "spark", "trino"]
 
 # Encoding × Type combinations that are valid per the Apache Parquet format spec.
 # Combinations not listed here are not defined by the spec; if a library cannot
@@ -138,6 +141,11 @@ TOOLS = {
         "build": ["npm", "install", "--prefer-offline"],
         "build_cwd": str(CLI_DIR / "javascript" / "test_hyparquet"),
         "run": ["node", str(CLI_DIR / "javascript" / "test_hyparquet" / "index.js")],
+    },
+    "parquet-sharp": {
+        "build": ["dotnet", "build", "-c", "Release", "-v", "q"],
+        "build_cwd": str(CLI_DIR / "dotnet" / "test_parquet_sharp"),
+        "run": ["dotnet", "run", "--project", str(CLI_DIR / "dotnet" / "test_parquet_sharp"), "-c", "Release", "--no-build"],
     },
     "spark": {
         "build": None,
@@ -245,8 +253,23 @@ def load_multiversion_results():
     return results
 
 
+def load_version_dates() -> dict:
+    """Load version release dates from versions.json (version_dates field per tool)."""
+    if VERSIONS_FILE.exists():
+        with open(VERSIONS_FILE) as f:
+            config = json.load(f)
+        return {
+            tool_id: tool_cfg.get("version_dates", {})
+            for tool_id, tool_cfg in config.items()
+            if not tool_id.startswith("_")
+        }
+    return {}
+
+
 def build_matrix_data(multiversion_results):
     """Build the complete matrix data structure for the site."""
+    version_dates = load_version_dates()
+
     matrix = {
         "tools": {},
         "categories": {
@@ -272,6 +295,7 @@ def build_matrix_data(multiversion_results):
             "language": TOOL_LANGUAGES.get(tool_id, "?"),
             "latest_version": latest.get("version", "?"),
             "tested_versions": tested_versions,
+            "version_dates": version_dates.get(tool_id, {}),
             "compression": {},
             "encoding": {},
             "logical_types": {},
