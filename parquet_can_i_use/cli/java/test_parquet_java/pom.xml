@@ -10,7 +10,7 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <parquet.version>1.15.0</parquet.version>
+        <parquet.version>1.15.2</parquet.version>
         <hadoop.version>3.3.6</hadoop.version>
     </properties>
 
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.lz4</groupId>
             <artifactId>lz4-java</artifactId>
-            <version>1.8.0</version>
+            <version>1.8.1</version>
         </dependency>
     </dependencies>
 
