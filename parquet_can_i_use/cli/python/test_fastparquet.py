@@ -108,7 +108,7 @@ def main():
     import datetime
 
     lt_tests = {}
-    lt_tests["STRING"] = lambda: pd.DataFrame({"c": pd.array(["hello"], dtype=pd.StringDtype("python"))})
+    lt_tests["STRING"] = lambda: pd.DataFrame({"c": ["hello"]})
     lt_tests["DATE"] = lambda: pd.DataFrame({"c": pd.array([datetime.date(2024, 1, 1)], dtype="object")})
     lt_tests["TIME_MILLIS"] = lambda: pd.DataFrame({"c": pd.array([datetime.time(12, 0, 0)], dtype="object")})
     lt_tests["TIME_MICROS"] = lambda: pd.DataFrame({"c": pd.array([datetime.time(12, 0, 0)], dtype="object")})
@@ -118,8 +118,8 @@ def main():
     lt_tests["TIMESTAMP_NANOS"] = lambda: pd.DataFrame({"c": pd.to_datetime(["2024-01-01"])})
     lt_tests["INT96"] = lambda: pd.DataFrame({"c": pd.to_datetime(["2024-01-01"])})
     lt_tests["DECIMAL"] = lambda: pd.DataFrame({"c": [123.45]})
-    lt_tests["UUID"] = lambda: pd.DataFrame({"c": pd.array(["550e8400-e29b-41d4-a716-446655440000"], dtype=pd.StringDtype("python"))})
-    lt_tests["JSON"] = lambda: pd.DataFrame({"c": pd.array(['{"key":"val"}'], dtype=pd.StringDtype("python"))})
+    lt_tests["UUID"] = lambda: pd.DataFrame({"c": ["550e8400-e29b-41d4-a716-446655440000"]})
+    lt_tests["JSON"] = lambda: pd.DataFrame({"c": ['{"key":"val"}']})
     lt_tests["FLOAT16"] = lambda: pd.DataFrame({"c": np.array([1.0], dtype=np.float16)})
     lt_tests["ENUM"] = lambda: pd.DataFrame({"c": pd.Categorical(["A", "B", "A"])})
     lt_tests["BSON"] = lambda: pd.DataFrame({"c": pd.array([b'\x05\x00\x00\x00\x00'], dtype="object")})
@@ -166,7 +166,7 @@ def main():
         results["nested_types"][type_name] = test_rw(write_nt, read_nt)
 
     # --- Advanced Features ---
-    df = pd.DataFrame({"col": range(1000), "str_col": pd.array([f"val_{i}" for i in range(1000)], dtype=pd.StringDtype("python"))})
+    df = pd.DataFrame({"col": range(1000), "str_col": [f"val_{i}" for i in range(1000)]})
 
     def write_statistics():
         p = os.path.join(tmpdir, "adv_stats.parquet")
