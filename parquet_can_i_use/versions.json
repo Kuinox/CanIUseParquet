@@ -1389,6 +1389,13 @@
     "type": "go",
     "cli_dir": "cli/go/test_parquet_go"
   },
+  "arrow-go": {
+    "versions": [
+      "18.3.0"
+    ],
+    "type": "go",
+    "cli_dir": "cli/go/test_arrow_go"
+  },
   "parquet-java": {
     "versions": [
       "1.7.0",
@@ -1813,6 +1820,13 @@
     "type": "dotnet",
     "dotnet_package": "ParquetSharp",
     "cli_dir": "cli/dotnet/test_parquet_sharp"
+  },
+  "hyparquet": {
+    "versions": [
+      "1.0.0"
+    ],
+    "type": "javascript",
+    "cli_dir": "cli/javascript/test_hyparquet"
   },
   "spark": {
     "versions": [

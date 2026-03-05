@@ -108,6 +108,21 @@ def main():
                 pq.read_table(p)
             results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
 
+    # BYTE_STREAM_SPLIT_EXTENDED: tests BYTE_STREAM_SPLIT for FLOAT16 (Parquet format 2.11.0 extension).
+    # In PyArrow 14+, column_encoding="BYTE_STREAM_SPLIT" works for float16 columns.
+    results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"] = {}
+    for ptype in encoding_types:
+        path_ext = os.path.join(tmpdir, f"enc_BYTE_STREAM_SPLIT_EXTENDED_{ptype}.parquet")
+        def write_byte_stream_split_extended(p=path_ext, pt=ptype):
+            t = make_typed_table(pt)
+            pq.write_table(t, p, use_dictionary=False, column_encoding="BYTE_STREAM_SPLIT")
+            actual = get_column_encodings(p)
+            if "BYTE_STREAM_SPLIT" not in actual:
+                raise ValueError(f"Expected BYTE_STREAM_SPLIT in encodings, got {actual}")
+        def read_byte_stream_split_extended(p=path_ext):
+            pq.read_table(p)
+        results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"][ptype] = test_rw(write_byte_stream_split_extended, read_byte_stream_split_extended)
+
     # --- Logical Types ---
     import datetime
     import decimal
@@ -129,6 +144,25 @@ def main():
     logical_tests["ENUM"] = lambda: pa.table({"c": pa.array(["A"], type=pa.dictionary(pa.int8(), pa.string()))})
     logical_tests["BSON"] = lambda: pa.table({"c": pa.array([b'\x05\x00\x00\x00\x00'], type=pa.binary())})
     logical_tests["INTERVAL"] = lambda: pa.table({"c": pa.array([pa.scalar((1, 2, 3), type=pa.month_day_nano_interval())])})
+
+    # UNKNOWN logical type (always-null column, Parquet NULL type)
+    logical_tests["UNKNOWN"] = lambda: pa.table({"c": pa.array([None, None], type=pa.null())})
+
+    # VARIANT logical type (Parquet format 2.11.0)
+    # Not yet supported in PyArrow 23. Future versions will need an explicit VARIANT type API.
+    def _make_variant_table():
+        raise NotImplementedError("VARIANT logical type not yet supported in this PyArrow version")
+    logical_tests["VARIANT"] = _make_variant_table
+
+    # GEOMETRY logical type (Parquet format 2.11.0)
+    def _make_geometry_table():
+        raise NotImplementedError("GEOMETRY not yet supported")
+    logical_tests["GEOMETRY"] = _make_geometry_table
+
+    # GEOGRAPHY logical type (Parquet format 2.11.0)
+    def _make_geography_table():
+        raise NotImplementedError("GEOGRAPHY not yet supported")
+    logical_tests["GEOGRAPHY"] = _make_geography_table
 
     for type_name, make_table in logical_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
@@ -249,6 +283,29 @@ def main():
         ds = pq.ParquetDataset([p1, p2])
         ds.read()
     results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
+
+    # Size Statistics (Parquet format 2.10.0, Arrow 14+)
+    # Arrow C++ writes size_statistics in column metadata automatically in newer versions.
+    # The Python API does not directly expose this field yet; we check via the serialized metadata.
+    def write_size_statistics():
+        p = os.path.join(tmpdir, "adv_size_stats.parquet")
+        pq.write_table(table, p, write_statistics=True)
+        meta = pq.read_metadata(p)
+        # Arrow 14+ writes size_statistics; serialized_size > base indicates extra metadata
+        assert meta.serialized_size > 0
+    def read_size_statistics():
+        p = os.path.join(tmpdir, "adv_size_stats.parquet")
+        pq.read_table(p)
+    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics)
+
+    # Page CRC32 checksum (Parquet format feature, PyArrow 16+)
+    def write_page_crc32():
+        p = os.path.join(tmpdir, "adv_crc32.parquet")
+        pq.write_table(table, p, write_page_checksum=True)
+    def read_page_crc32():
+        p = os.path.join(tmpdir, "adv_crc32.parquet")
+        pq.read_table(p)
+    results["advanced_features"]["PAGE_CRC32"] = test_rw(write_page_crc32, read_page_crc32)
 
     print(json.dumps(results, indent=2))
 

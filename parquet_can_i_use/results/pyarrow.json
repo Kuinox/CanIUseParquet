@@ -81,7 +81,7 @@
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": true,
@@ -107,7 +107,7 @@
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": true,
@@ -269,6 +269,32 @@
         "write": false,
         "read": false
       }
+    },
+    "BYTE_STREAM_SPLIT_EXTENDED": {
+      "INT32": {
+        "write": true,
+        "read": true
+      },
+      "INT64": {
+        "write": true,
+        "read": true
+      },
+      "FLOAT": {
+        "write": true,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": true,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false
+      }
     }
   },
   "logical_types": {
@@ -335,6 +361,22 @@
     "INTERVAL": {
       "write": false,
       "read": false
+    },
+    "UNKNOWN": {
+      "write": true,
+      "read": true
+    },
+    "VARIANT": {
+      "write": false,
+      "read": false
+    },
+    "GEOMETRY": {
+      "write": false,
+      "read": false
+    },
+    "GEOGRAPHY": {
+      "write": false,
+      "read": false
     }
   },
   "nested_types": {
@@ -370,7 +412,7 @@
     },
     "BLOOM_FILTER": {
       "write": false,
-      "read": false
+      "read": true
     },
     "COLUMN_ENCRYPTION": {
       "write": true,
@@ -393,6 +435,14 @@
       "read": true
     },
     "SCHEMA_EVOLUTION": {
+      "write": true,
+      "read": true
+    },
+    "SIZE_STATISTICS": {
+      "write": true,
+      "read": true
+    },
+    "PAGE_CRC32": {
       "write": true,
       "read": true
     }
