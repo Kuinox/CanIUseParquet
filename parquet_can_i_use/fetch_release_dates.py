@@ -304,23 +304,10 @@ def fetch_all(versions_config: dict) -> dict[str, dict[str, str]]:
         _fetch("parquet-go",
                lambda v: fetch_go_module_dates("github.com/parquet-go/parquet-go", v))
 
-    # Trino: GitHub API is often rate-limited in CI; use hardcoded dates
-    # (Trino release dates are stable public information)
+    # Trino: fetch from Maven Central (trino-jdbc artifact)
     if "trino" in versions_config:
-        print(f"  Fetching dates for trino...")
-        trino_dates = {
-            "351": "2021-03-15", "363": "2021-07-01", "380": "2021-11-08",
-            "390": "2022-02-07", "400": "2022-11-07", "405": "2023-01-10",
-            "410": "2023-02-13", "420": "2023-03-27", "430": "2023-06-12",
-            "440": "2023-09-04", "450": "2023-11-06", "460": "2024-02-19",
-            "465": "2024-03-25", "470": "2024-05-06", "474": "2024-06-10",
-            "480": "2024-08-05",
-        }
-        versions = versions_config["trino"]["versions"]
-        result["trino"] = {v: trino_dates[v] for v in versions if v in trino_dates}
-        missing = [v for v in versions if v not in trino_dates]
-        if missing:
-            print(f"    Missing dates for: {missing}")
+        _fetch("trino",
+               lambda v: fetch_maven_dates("io.trino", "trino-jdbc", v))
 
     return result
 
