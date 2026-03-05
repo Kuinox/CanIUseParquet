@@ -7,6 +7,39 @@
       "tested_versions": [
         "23.0.1"
       ],
+      "version_dates": {
+        "0.10.0": "2018-08-06",
+        "0.11.0": "2018-10-08",
+        "0.12.0": "2019-01-20",
+        "0.13.0": "2019-03-31",
+        "0.14.0": "2019-07-04",
+        "0.15.0": "2019-10-05",
+        "0.16.0": "2020-02-07",
+        "0.17.1": "2020-05-18",
+        "1.0.0": "2020-07-24",
+        "10.0.0": "2022-10-27",
+        "11.0.0": "2023-01-27",
+        "12.0.0": "2023-05-02",
+        "13.0.0": "2023-08-23",
+        "14.0.0": "2023-11-01",
+        "15.0.0": "2024-01-21",
+        "16.0.0": "2024-04-20",
+        "17.0.0": "2024-07-16",
+        "18.0.0": "2024-10-28",
+        "19.0.0": "2025-01-16",
+        "2.0.0": "2020-10-19",
+        "20.0.0": "2025-04-27",
+        "21.0.0": "2025-07-18",
+        "22.0.0": "2025-10-24",
+        "23.0.1": "2026-02-16",
+        "3.0.0": "2021-01-26",
+        "4.0.0": "2021-04-26",
+        "5.0.0": "2021-07-28",
+        "6.0.0": "2021-10-26",
+        "7.0.0": "2022-02-03",
+        "8.0.0": "2022-05-06",
+        "9.0.0": "2022-08-03"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -620,6 +653,25 @@
       "tested_versions": [
         "2025.12.0"
       ],
+      "version_dates": {
+        "0.3.0": "2019-03-30",
+        "0.5.0": "2020-12-29",
+        "0.6.0": "2021-05-06",
+        "0.7.0": "2021-07-16",
+        "0.8.0": "2022-01-26",
+        "2022.11.0": "2022-11-17",
+        "2022.12.0": "2022-12-05",
+        "2023.1.0": "2023-01-19",
+        "2023.10.0": "2023-10-25",
+        "2023.2.0": "2023-02-08",
+        "2023.4.0": "2023-04-27",
+        "2023.7.0": "2023-07-01",
+        "2023.8.0": "2023-08-30",
+        "2024.11.0": "2024-11-12",
+        "2024.2.0": "2024-02-08",
+        "2024.5.0": "2024-05-21",
+        "2025.12.0": "2025-12-18"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -1232,6 +1284,31 @@
       "tested_versions": [
         "1.38.1"
       ],
+      "version_dates": {
+        "0.10.0": "2021-10-08",
+        "0.13.0": "2022-02-11",
+        "0.14.0": "2022-08-09",
+        "0.15.0": "2022-11-25",
+        "0.16.1": "2023-01-29",
+        "0.17.0": "2023-04-07",
+        "0.18.0": "2023-05-29",
+        "0.19.0": "2023-08-30",
+        "0.20.0": "2023-12-16",
+        "1.0.0": "2024-07-01",
+        "1.12.0": "2024-10-27",
+        "1.15.0": "2024-11-25",
+        "1.18.0": "2024-12-24",
+        "1.21.0": "2025-01-24",
+        "1.24.0": "2025-03-02",
+        "1.27.0": "2025-04-09",
+        "1.3.0": "2024-07-28",
+        "1.30.0": "2025-05-21",
+        "1.33.0": "2025-09-01",
+        "1.36.0": "2025-12-08",
+        "1.38.1": "2026-02-06",
+        "1.6.0": "2024-08-28",
+        "1.9.0": "2024-10-01"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -1826,6 +1903,21 @@
       "tested_versions": [
         "1.4.4"
       ],
+      "version_dates": {
+        "0.10.0": "2024-02-13",
+        "0.3.0": "2021-10-06",
+        "0.4.0": "2022-06-20",
+        "0.5.0": "2022-09-05",
+        "0.6.0": "2022-11-14",
+        "0.7.0": "2023-02-13",
+        "0.8.0": "2023-05-17",
+        "0.9.0": "2023-09-26",
+        "1.0.0": "2024-06-03",
+        "1.1.0": "2024-09-09",
+        "1.2.0": "2025-02-05",
+        "1.3.0": "2025-05-21",
+        "1.4.4": "2026-01-26"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -2439,6 +2531,12 @@
       "tested_versions": [
         "55.2.0"
       ],
+      "version_dates": {
+        "52.0.0": "2024-06-06",
+        "53.0.0": "2024-09-03",
+        "54.0.0": "2024-12-23",
+        "55.2.0": "2025-06-26"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -3052,6 +3150,12 @@
       "tested_versions": [
         "0.24.0"
       ],
+      "version_dates": {
+        "0.19.0": "2023-10-23",
+        "0.20.0": "2023-12-05",
+        "0.22.0": "2024-05-30",
+        "0.24.0": "2024-11-07"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -3648,6 +3752,12 @@
       "tested_versions": [
         "parquet-mr version 1.15.0 (build 4665401d36e468c988322f78621da7c2d1c22ede)"
       ],
+      "version_dates": {
+        "1.12.0": "2021-03-17",
+        "1.13.0": "2023-04-02",
+        "1.14.0": "2024-05-03",
+        "1.15.0": "2024-11-28"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -4236,6 +4346,11 @@
       "tested_versions": [
         "5.0.0.0"
       ],
+      "version_dates": {
+        "4.23.0": "2024-01-18",
+        "5.0.0": "2024-10-03",
+        "5.5.0": "2026-02-01"
+      },
       "compression": {
         "NONE": {
           "write": true,
@@ -4327,28 +4442,28 @@
         },
         "PLAIN_DICTIONARY": {
           "INT32": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
+            "write": true,
+            "write_since": "5.0.0.0",
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "INT64": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
+            "write": true,
+            "write_since": "5.0.0.0",
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "FLOAT": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
+            "write": true,
+            "write_since": "5.0.0.0",
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "DOUBLE": {
-            "write": false,
-            "write_since": null,
-            "read": false,
-            "read_since": null
+            "write": true,
+            "write_since": "5.0.0.0",
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "BOOLEAN": {
             "write": false,
@@ -4367,26 +4482,26 @@
           "INT32": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "INT64": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "FLOAT": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "DOUBLE": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "BOOLEAN": {
             "write": false,
@@ -4397,8 +4512,8 @@
           "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           }
         },
         "RLE": {
@@ -4564,8 +4679,8 @@
           "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           }
         },
         "DELTA_BYTE_ARRAY": {
@@ -4607,8 +4722,8 @@
           "BYTE_ARRAY": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           }
         },
         "BYTE_STREAM_SPLIT": {
@@ -4627,14 +4742,14 @@
           "FLOAT": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "DOUBLE": {
             "write": false,
             "write_since": null,
-            "read": false,
-            "read_since": null
+            "read": true,
+            "read_since": "5.0.0.0"
           },
           "BOOLEAN": {
             "write": false,
@@ -4916,7 +5031,9 @@
       "parquet-rs",
       "parquet-go",
       "parquet-java",
-      "parquet-dotnet"
+      "parquet-dotnet",
+      "spark",
+      "trino"
     ],
     "available_tools": [
       "pyarrow",
@@ -4928,6 +5045,9 @@
       "parquet-java",
       "parquet-dotnet"
     ],
-    "missing_tools": []
+    "missing_tools": [
+      "spark",
+      "trino"
+    ]
   }
 }

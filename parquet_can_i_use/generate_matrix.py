@@ -22,6 +22,7 @@ CLI_DIR = SCRIPT_DIR / "cli"
 RESULTS_DIR = SCRIPT_DIR / "results"
 OUTPUT_MD = SCRIPT_DIR.parent / "parquet_can_i_use.md"
 OUTPUT_JSON = SCRIPT_DIR / "site" / "public" / "data" / "matrix.json"
+RELEASE_DATES_FILE = SCRIPT_DIR / "release_dates.json"
 
 # Ordered categories and features
 COMPRESSION_CODECS = ["NONE", "SNAPPY", "GZIP", "BROTLI", "LZO", "LZ4", "LZ4_RAW", "ZSTD"]
@@ -225,8 +226,18 @@ def load_multiversion_results():
     return results
 
 
+def load_release_dates() -> dict:
+    """Load release dates from release_dates.json if it exists."""
+    if RELEASE_DATES_FILE.exists():
+        with open(RELEASE_DATES_FILE) as f:
+            return json.load(f)
+    return {}
+
+
 def build_matrix_data(multiversion_results):
     """Build the complete matrix data structure for the site."""
+    release_dates = load_release_dates()
+
     matrix = {
         "tools": {},
         "categories": {
@@ -252,6 +263,7 @@ def build_matrix_data(multiversion_results):
             "language": TOOL_LANGUAGES.get(tool_id, "?"),
             "latest_version": latest.get("version", "?"),
             "tested_versions": tested_versions,
+            "version_dates": release_dates.get(tool_id, {}),
             "compression": {},
             "encoding": {},
             "logical_types": {},
