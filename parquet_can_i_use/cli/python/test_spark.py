@@ -151,10 +151,9 @@ def main():
         [(datetime.datetime(2024, 1, 1),)], "ts_micros",
         {"spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS"})
 
-    results["logical_types"]["TIMESTAMP_NANOS"] = lt_test(
-        [T.StructField("c", T.TimestampNTZType() if hasattr(T, "TimestampNTZType") else T.TimestampType())],
-        [(datetime.datetime(2024, 1, 1),)], "ts_nanos",
-        {"spark.sql.parquet.outputTimestampType": "TIMESTAMP_MICROS"})
+    # TIMESTAMP_NANOS: PySpark's outputTimestampType only supports INT96, TIMESTAMP_MILLIS,
+    # and TIMESTAMP_MICROS. Nanosecond precision is not available as a write option.
+    results["logical_types"]["TIMESTAMP_NANOS"] = {"write": False, "read": False}
 
     # INT96 (legacy timestamp format)
     results["logical_types"]["INT96"] = lt_test(

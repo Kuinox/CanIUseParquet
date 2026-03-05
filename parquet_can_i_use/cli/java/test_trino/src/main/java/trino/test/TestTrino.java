@@ -225,7 +225,13 @@ public class TestTrino {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(gson.toJson(results));
 
-        // Cleanup
-        new File(tmpDir).delete();
+        // Recursive cleanup of temp directory
+        try {
+            java.nio.file.Files.walk(java.nio.file.Path.of(tmpDir))
+                .sorted(java.util.Comparator.reverseOrder())
+                .map(java.nio.file.Path::toFile)
+                .forEach(File::delete);
+        } catch (Exception ignored) {
+        }
     }
 }
