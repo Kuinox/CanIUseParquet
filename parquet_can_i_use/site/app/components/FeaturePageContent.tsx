@@ -39,7 +39,6 @@ interface Props {
     tools: Record<string, ToolData>;
     categories: MatrixData["categories"];
   };
-  basePath: string;
 }
 
 function getEntryForTool(

@@ -11,7 +11,6 @@ import {
 export default async function Home() {
   const data = getMatrixData();
   const missingTools = data.build_metadata?.missing_tools ?? [];
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const toolIds = Object.keys(data.tools);
   const categories = Object.keys(CATEGORY_TO_SLUG) as InternalCategory[];
 
@@ -53,7 +52,7 @@ export default async function Home() {
               return (
                 <Link
                   key={cat}
-                  href={`${basePath}/${slug}`}
+                  href={`/${slug}`}
                   className="group block bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-green-700 hover:bg-gray-900/80 transition-all"
                 >
                   <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-green-400 transition-colors">

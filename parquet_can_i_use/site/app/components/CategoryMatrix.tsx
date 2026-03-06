@@ -129,7 +129,6 @@ function NonEncodingTable({
   toolIds,
   getEntry,
   categorySlug,
-  basePath,
   onTimelineClick,
 }: {
   features: string[];
@@ -137,7 +136,6 @@ function NonEncodingTable({
   toolIds: string[];
   getEntry: (tool: ToolData, feature: string) => FeatureEntry | undefined;
   categorySlug: string;
-  basePath: string;
   onTimelineClick: (sel: TimelineSelection) => void;
 }) {
   return (
@@ -172,7 +170,7 @@ function NonEncodingTable({
               <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
                 <div className="flex items-center gap-2">
                   <Link
-                    href={`${basePath}/${categorySlug}/${featureToSlug(feature)}`}
+                    href={`/${categorySlug}/${featureToSlug(feature)}`}
                     className="hover:text-green-400 transition-colors"
                   >
                     {feature}
@@ -212,13 +210,11 @@ function EncodingSection({
   data,
   tools,
   toolIds,
-  basePath,
   onTimelineClick,
 }: {
   data: MatrixData;
   tools: Record<string, ToolData>;
   toolIds: string[];
-  basePath: string;
   onTimelineClick: (sel: TimelineSelection) => void;
 }) {
   const [activeEncoding, setActiveEncoding] = useState<string>(
@@ -253,7 +249,7 @@ function EncodingSection({
             <span className="font-mono text-gray-200">{activeEncoding}</span>
           </span>
           <Link
-            href={`${basePath}/encoding/${featureToSlug(activeEncoding)}`}
+            href={`/encoding/${featureToSlug(activeEncoding)}`}
             className="text-xs text-green-400 hover:underline"
           >
             View {activeEncoding} feature page →
@@ -364,14 +360,12 @@ interface Props {
   data: MatrixData;
   category: InternalCategory;
   categorySlug: string;
-  basePath: string;
 }
 
 export default function CategoryMatrix({
   data,
   category,
   categorySlug,
-  basePath,
 }: Props) {
   const [timeline, setTimeline] = useState<TimelineSelection | null>(null);
   const toolIds = Object.keys(data.tools);
@@ -452,7 +446,6 @@ export default function CategoryMatrix({
           data={data}
           tools={tools}
           toolIds={toolIds}
-          basePath={basePath}
           onTimelineClick={setTimeline}
         />
       ) : (
@@ -470,7 +463,6 @@ export default function CategoryMatrix({
           toolIds={toolIds}
           getEntry={getEntryForCategory}
           categorySlug={categorySlug}
-          basePath={basePath}
           onTimelineClick={setTimeline}
         />
       )}
