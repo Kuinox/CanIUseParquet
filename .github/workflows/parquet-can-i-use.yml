@@ -14,6 +14,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: "pages"
@@ -295,6 +296,21 @@ jobs:
         run: |
           npm ci
           npm run build
+
+      - name: Delete existing github-pages artifact (if re-run)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          artifact_ids=$(gh api repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts \
+            --jq '.artifacts[] | select(.name == "github-pages") | .id')
+          if [ -z "$artifact_ids" ]; then
+            echo "No existing github-pages artifact found."
+          else
+            echo "$artifact_ids" | while read artifact_id; do
+              echo "Deleting github-pages artifact $artifact_id from previous attempt..."
+              gh api -X DELETE repos/${{ github.repository }}/actions/artifacts/$artifact_id
+            done
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
