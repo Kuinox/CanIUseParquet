@@ -48,7 +48,6 @@ export default async function FeaturePage({ params }: Props) {
   if (!internalCategory) notFound();
 
   const data = getMatrixData();
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const categoryLabel = CATEGORY_LABELS[internalCategory];
 
   const features = getCategoryFeatures(data, internalCategory);
@@ -67,14 +66,14 @@ export default async function FeaturePage({ params }: Props) {
       <div className="max-w-[1600px] mx-auto px-4 py-6">
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
           <Link
-            href={`${basePath}/`}
+            href="/"
             className="hover:text-green-400 transition-colors"
           >
             Home
           </Link>
           <span>›</span>
           <Link
-            href={`${basePath}/${categorySlug}`}
+            href={`/${categorySlug}`}
             className="hover:text-green-400 transition-colors"
           >
             {categoryLabel}
@@ -85,7 +84,7 @@ export default async function FeaturePage({ params }: Props) {
 
         <div className="flex items-center gap-4 mb-6">
           <Link
-            href={`${basePath}/${categorySlug}`}
+            href={`/${categorySlug}`}
             className="text-sm text-gray-400 hover:text-green-400 transition-colors flex items-center gap-1"
           >
             ← Back to {categoryLabel}
@@ -102,7 +101,6 @@ export default async function FeaturePage({ params }: Props) {
           category={internalCategory}
           toolIds={toolIds}
           data={serializedData}
-          basePath={basePath}
         />
       </div>
     </main>
