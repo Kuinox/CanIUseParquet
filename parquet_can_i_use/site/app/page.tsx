@@ -109,7 +109,15 @@ export default async function Home() {
                       {data.tools[tid].latest_version}
                     </td>
                     <td className="px-4 py-3 font-mono text-gray-500 text-xs">
-                      {data.tools[tid].tested_versions.join(", ")}
+                      {(() => {
+                        const allVers = data.tools[tid].all_versions;
+                        if (allVers && allVers.length > 0) {
+                          const count = allVers.length;
+                          const plural = count === 1 ? "version" : "versions";
+                          return `${count} ${plural} (${allVers[0]} \u2013 ${allVers[count - 1]})`;
+                        }
+                        return data.tools[tid].tested_versions.join(", ");
+                      })()}
                     </td>
                   </tr>
                 ))}
