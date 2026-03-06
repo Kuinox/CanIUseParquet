@@ -38,6 +38,13 @@ function MergedBadge({ supported, since }: { supported: boolean; since?: string 
   );
 }
 
+function apacheRefLabel(write: boolean, read: boolean): string {
+  if (write && read) return "W+R";
+  if (write) return "W only";
+  if (read) return "R only";
+  return "none";
+}
+
 function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   if (!entry) {
     return (
@@ -58,15 +65,33 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   const bothSupported = entry.write && entry.read;
   const neitherSupported = !entry.write && !entry.read;
 
+  // Check if our result disagrees with Apache's reference
+  const ref = entry.apache_ref;
+  const disagrees = ref !== undefined && (ref.write !== entry.write || ref.read !== entry.read);
+
   let bgClass = "";
-  if (bothSupported) bgClass = "bg-green-950/30";
-  else if (neitherSupported) bgClass = "bg-red-950/20";
-  else bgClass = "bg-yellow-950/20";
+  if (disagrees) {
+    bgClass = "bg-orange-950/40";
+  } else if (bothSupported) {
+    bgClass = "bg-green-950/30";
+  } else if (neitherSupported) {
+    bgClass = "bg-red-950/20";
+  } else {
+    bgClass = "bg-yellow-950/20";
+  }
 
   const canMerge = entry.write === entry.read && entry.write_since === entry.read_since;
 
+  const tooltipParts: string[] = [];
+  tooltipParts.push(`Ours: W=${entry.write ? "✓" : "✗"} R=${entry.read ? "✓" : "✗"}`);
+  if (ref) {
+    tooltipParts.push(`Apache: ${apacheRefLabel(ref.write, ref.read)}`);
+    if (ref.note) tooltipParts.push(`(${ref.note})`);
+  }
+  const tooltip = tooltipParts.join(" | ");
+
   return (
-    <td className={`px-3 py-2 text-center ${bgClass}`}>
+    <td className={`px-3 py-2 text-center ${bgClass}`} title={tooltip}>
       <div className="flex flex-col items-center gap-0.5">
         {canMerge ? (
           <MergedBadge supported={entry.write} since={entry.write_since} />
@@ -75,6 +100,14 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
             <ReadWriteBadge supported={entry.write} since={entry.write_since} label="W" />
             <ReadWriteBadge supported={entry.read} since={entry.read_since} label="R" />
           </>
+        )}
+        {disagrees && (
+          <span
+            className="text-[9px] text-orange-400 font-semibold mt-0.5"
+            title={tooltip}
+          >
+            ≠apache
+          </span>
         )}
       </div>
     </td>
@@ -216,6 +249,19 @@ export default function MatrixView({ data }: { data: MatrixData }) {
         </span>
         <span>
           <span className="text-gray-600">➖</span> Not tested
+        </span>
+        <span>
+          <span className="bg-orange-950/40 px-1 rounded text-[9px] text-orange-400 font-semibold">≠apache</span>{" "}
+          Disagrees with{" "}
+          <a
+            href="https://parquet.apache.org/docs/file-format/implementationstatus/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-orange-400 hover:text-orange-300 underline"
+          >
+            Apache reference
+          </a>{" "}
+          — possible test bug
         </span>
         <span className="text-gray-500 text-xs italic">
           Click any feature row to see the version timeline across libraries

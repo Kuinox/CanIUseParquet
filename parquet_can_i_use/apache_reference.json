@@ -1,0 +1,749 @@
+{
+  "parquet-rs": {
+    "compression": {
+      "NONE": {
+        "write": true,
+        "read": true
+      },
+      "SNAPPY": {
+        "write": true,
+        "read": true
+      },
+      "GZIP": {
+        "write": true,
+        "read": true
+      },
+      "BROTLI": {
+        "write": true,
+        "read": true
+      },
+      "LZO": {
+        "write": false,
+        "read": false
+      },
+      "LZ4": {
+        "write": true,
+        "read": true
+      },
+      "LZ4_RAW": {
+        "write": true,
+        "read": true
+      },
+      "ZSTD": {
+        "write": true,
+        "read": true
+      }
+    },
+    "logical_types": {
+      "STRING": {
+        "write": true,
+        "read": true
+      },
+      "DATE": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MILLIS": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "TIMESTAMP_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "DECIMAL": {
+        "write": true,
+        "read": true
+      },
+      "FLOAT16": {
+        "write": true,
+        "read": true
+      },
+      "UUID": {
+        "write": true,
+        "read": true
+      },
+      "JSON": {
+        "write": true,
+        "read": true
+      },
+      "BSON": {
+        "write": true,
+        "read": true
+      },
+      "ENUM": {
+        "write": true,
+        "read": true
+      },
+      "INTERVAL": {
+        "write": true,
+        "read": true
+      },
+      "VARIANT": {
+        "write": true,
+        "read": true,
+        "note": "since v56.0.0"
+      },
+      "GEOMETRY": {
+        "write": true,
+        "read": true,
+        "note": "since v57.0.0"
+      },
+      "GEOGRAPHY": {
+        "write": true,
+        "read": true,
+        "note": "since v57.0.0"
+      },
+      "UNKNOWN": {
+        "write": true,
+        "read": true
+      }
+    },
+    "nested_types": {
+      "LIST": {
+        "write": true,
+        "read": true
+      },
+      "MAP": {
+        "write": true,
+        "read": true
+      }
+    },
+    "encoding": {
+      "PLAIN": {
+        "write": true,
+        "read": true
+      },
+      "PLAIN_DICTIONARY": {
+        "write": true,
+        "read": true
+      },
+      "RLE_DICTIONARY": {
+        "write": true,
+        "read": true
+      },
+      "RLE": {
+        "write": true,
+        "read": true
+      },
+      "BIT_PACKED": {
+        "write": false,
+        "read": false
+      },
+      "DELTA_BINARY_PACKED": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_LENGTH_BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT_EXTENDED": {
+        "write": true,
+        "read": true
+      }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER": {
+        "write": true,
+        "read": true
+      },
+      "PAGE_INDEX": {
+        "write": true,
+        "read": true
+      },
+      "DATA_PAGE_V2": {
+        "write": true,
+        "read": true
+      },
+      "STATISTICS": {
+        "write": true,
+        "read": true
+      },
+      "COLUMN_ENCRYPTION": {
+        "write": true,
+        "read": true,
+        "note": "since v54.3.0 read / v55.0.0 write"
+      },
+      "SIZE_STATISTICS": {
+        "write": true,
+        "read": true
+      },
+      "PAGE_CRC32": {
+        "write": true,
+        "read": true
+      }
+    }
+  },
+  "polars": {
+    "compression": {
+      "NONE": {
+        "write": true,
+        "read": true
+      },
+      "SNAPPY": {
+        "write": true,
+        "read": true
+      },
+      "GZIP": {
+        "write": true,
+        "read": true
+      },
+      "BROTLI": {
+        "write": true,
+        "read": true
+      },
+      "LZO": {
+        "write": false,
+        "read": true
+      },
+      "LZ4": {
+        "write": false,
+        "read": false
+      },
+      "LZ4_RAW": {
+        "write": true,
+        "read": true
+      },
+      "ZSTD": {
+        "write": true,
+        "read": true
+      }
+    },
+    "logical_types": {
+      "STRING": {
+        "write": true,
+        "read": true
+      },
+      "DATE": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MILLIS": {
+        "write": false,
+        "read": true
+      },
+      "TIME_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "TIMESTAMP_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "DECIMAL": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT16": {
+        "write": true,
+        "read": true
+      },
+      "UUID": {
+        "write": false,
+        "read": true
+      },
+      "JSON": {
+        "write": false,
+        "read": false
+      },
+      "BSON": {
+        "write": false,
+        "read": false
+      },
+      "ENUM": {
+        "write": false,
+        "read": true
+      },
+      "INTERVAL": {
+        "write": false,
+        "read": true
+      },
+      "VARIANT": {
+        "write": false,
+        "read": false
+      },
+      "GEOMETRY": {
+        "write": false,
+        "read": true
+      },
+      "GEOGRAPHY": {
+        "write": false,
+        "read": true
+      },
+      "UNKNOWN": {
+        "write": true,
+        "read": true
+      }
+    },
+    "nested_types": {
+      "LIST": {
+        "write": true,
+        "read": true
+      },
+      "MAP": {
+        "write": false,
+        "read": true
+      }
+    },
+    "encoding": {
+      "PLAIN": {
+        "write": true,
+        "read": true
+      },
+      "PLAIN_DICTIONARY": {
+        "write": false,
+        "read": true
+      },
+      "RLE_DICTIONARY": {
+        "write": true,
+        "read": true
+      },
+      "RLE": {
+        "write": false,
+        "read": true
+      },
+      "BIT_PACKED": {
+        "write": false,
+        "read": false
+      },
+      "DELTA_BINARY_PACKED": {
+        "write": false,
+        "read": true
+      },
+      "DELTA_LENGTH_BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      },
+      "DELTA_BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT_EXTENDED": {
+        "write": false,
+        "read": false
+      }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER": {
+        "write": false,
+        "read": false
+      },
+      "PAGE_INDEX": {
+        "write": false,
+        "read": true
+      },
+      "DATA_PAGE_V2": {
+        "write": false,
+        "read": true
+      },
+      "STATISTICS": {
+        "write": true,
+        "read": true
+      },
+      "COLUMN_ENCRYPTION": {
+        "write": false,
+        "read": false
+      },
+      "SIZE_STATISTICS": {
+        "write": false,
+        "read": true
+      },
+      "PAGE_CRC32": {
+        "write": false,
+        "read": true
+      }
+    }
+  },
+  "duckdb": {
+    "compression": {
+      "NONE": {
+        "write": true,
+        "read": true
+      },
+      "SNAPPY": {
+        "write": true,
+        "read": true
+      },
+      "GZIP": {
+        "write": true,
+        "read": true
+      },
+      "BROTLI": {
+        "write": true,
+        "read": true
+      },
+      "LZO": {
+        "write": false,
+        "read": false
+      },
+      "LZ4": {
+        "write": false,
+        "read": false
+      },
+      "LZ4_RAW": {
+        "write": true,
+        "read": true
+      },
+      "ZSTD": {
+        "write": true,
+        "read": true
+      }
+    },
+    "logical_types": {
+      "STRING": {
+        "write": true,
+        "read": true
+      },
+      "DATE": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MILLIS": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "TIMESTAMP_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "DECIMAL": {
+        "write": true,
+        "read": true
+      },
+      "FLOAT16": {
+        "write": true,
+        "read": true,
+        "note": "since v1.3.0"
+      },
+      "UUID": {
+        "write": true,
+        "read": true
+      },
+      "JSON": {
+        "write": true,
+        "read": true
+      },
+      "BSON": {
+        "write": false,
+        "read": false
+      },
+      "ENUM": {
+        "write": true,
+        "read": true
+      },
+      "INTERVAL": {
+        "write": true,
+        "read": true
+      },
+      "VARIANT": {
+        "write": true,
+        "read": true,
+        "note": "since v1.4.0"
+      },
+      "GEOMETRY": {
+        "write": true,
+        "read": true,
+        "note": "since v1.4.0; requires spatial extension"
+      },
+      "GEOGRAPHY": {
+        "write": true,
+        "read": true,
+        "note": "since v1.4.0; requires spatial extension"
+      },
+      "UNKNOWN": {
+        "write": true,
+        "read": true
+      }
+    },
+    "nested_types": {
+      "LIST": {
+        "write": true,
+        "read": true
+      },
+      "MAP": {
+        "write": true,
+        "read": true
+      }
+    },
+    "encoding": {
+      "PLAIN": {
+        "write": true,
+        "read": true
+      },
+      "PLAIN_DICTIONARY": {
+        "write": false,
+        "read": true
+      },
+      "RLE_DICTIONARY": {
+        "write": true,
+        "read": true
+      },
+      "RLE": {
+        "write": true,
+        "read": true
+      },
+      "BIT_PACKED": {
+        "write": false,
+        "read": false
+      },
+      "DELTA_BINARY_PACKED": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_LENGTH_BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT_EXTENDED": {
+        "write": true,
+        "read": true
+      }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER": {
+        "write": true,
+        "read": true
+      },
+      "PAGE_INDEX": {
+        "write": false,
+        "read": true
+      },
+      "DATA_PAGE_V2": {
+        "write": true,
+        "read": true
+      },
+      "STATISTICS": {
+        "write": true,
+        "read": true
+      },
+      "COLUMN_ENCRYPTION": {
+        "write": true,
+        "read": true
+      },
+      "SIZE_STATISTICS": {
+        "write": false,
+        "read": true
+      },
+      "PAGE_CRC32": {
+        "write": false,
+        "read": true
+      }
+    }
+  },
+  "parquet-java": {
+    "compression": {
+      "NONE": {
+        "write": true,
+        "read": true
+      },
+      "SNAPPY": {
+        "write": true,
+        "read": true
+      },
+      "GZIP": {
+        "write": true,
+        "read": true
+      },
+      "BROTLI": {
+        "write": true,
+        "read": true
+      },
+      "LZO": {
+        "write": false,
+        "read": false
+      },
+      "LZ4": {
+        "write": false,
+        "read": false
+      },
+      "LZ4_RAW": {
+        "write": true,
+        "read": true
+      },
+      "ZSTD": {
+        "write": true,
+        "read": true
+      }
+    },
+    "logical_types": {
+      "STRING": {
+        "write": true,
+        "read": true
+      },
+      "DATE": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MILLIS": {
+        "write": true,
+        "read": true
+      },
+      "TIME_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "TIMESTAMP_MICROS": {
+        "write": true,
+        "read": true
+      },
+      "DECIMAL": {
+        "write": true,
+        "read": true
+      },
+      "FLOAT16": {
+        "write": true,
+        "read": true
+      },
+      "UUID": {
+        "write": true,
+        "read": true
+      },
+      "JSON": {
+        "write": true,
+        "read": true
+      },
+      "BSON": {
+        "write": true,
+        "read": true
+      },
+      "ENUM": {
+        "write": true,
+        "read": true
+      },
+      "INTERVAL": {
+        "write": true,
+        "read": true
+      },
+      "VARIANT": {
+        "write": true,
+        "read": true,
+        "note": "since v1.16.0"
+      },
+      "GEOMETRY": {
+        "write": true,
+        "read": true,
+        "note": "since v1.16.0"
+      },
+      "GEOGRAPHY": {
+        "write": true,
+        "read": true,
+        "note": "since v1.16.0"
+      },
+      "UNKNOWN": {
+        "write": true,
+        "read": true
+      }
+    },
+    "nested_types": {
+      "LIST": {
+        "write": true,
+        "read": true
+      },
+      "MAP": {
+        "write": true,
+        "read": true
+      }
+    },
+    "encoding": {
+      "PLAIN": {
+        "write": true,
+        "read": true
+      },
+      "PLAIN_DICTIONARY": {
+        "write": true,
+        "read": true
+      },
+      "RLE_DICTIONARY": {
+        "write": true,
+        "read": true
+      },
+      "RLE": {
+        "write": true,
+        "read": true
+      },
+      "BIT_PACKED": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_BINARY_PACKED": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_LENGTH_BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
+      "DELTA_BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT": {
+        "write": true,
+        "read": true
+      },
+      "BYTE_STREAM_SPLIT_EXTENDED": {
+        "write": true,
+        "read": true
+      }
+    },
+    "advanced_features": {
+      "BLOOM_FILTER": {
+        "write": true,
+        "read": true
+      },
+      "PAGE_INDEX": {
+        "write": true,
+        "read": true
+      },
+      "DATA_PAGE_V2": {
+        "write": true,
+        "read": true
+      },
+      "STATISTICS": {
+        "write": true,
+        "read": true
+      },
+      "COLUMN_ENCRYPTION": {
+        "write": true,
+        "read": true
+      },
+      "SIZE_STATISTICS": {
+        "write": true,
+        "read": true
+      },
+      "PAGE_CRC32": {
+        "write": true,
+        "read": true
+      }
+    }
+  }
+}
