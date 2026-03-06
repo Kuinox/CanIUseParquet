@@ -479,7 +479,13 @@ def generate_markdown(matrix_data):
     lines.append("|---|---|---|---|")
     for tid in tool_ids:
         t = tools[tid]
-        versions_str = ", ".join(t.get("tested_versions", []))
+        all_versions = t.get("all_versions", [])
+        if all_versions:
+            count = len(all_versions)
+            plural = "version" if count == 1 else "versions"
+            versions_str = f"{count} {plural} ({all_versions[0]} \u2013 {all_versions[-1]})"
+        else:
+            versions_str = ", ".join(t.get("tested_versions", []))
         lines.append(f"| {t['display_name']} | {t['latest_version']} | {versions_str} | {t['language']} |")
     lines.append("")
     lines.append("---")
