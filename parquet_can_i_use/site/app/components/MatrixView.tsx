@@ -189,39 +189,6 @@ export default function MatrixView({ data }: { data: MatrixData }) {
         />
       )}
 
-      {/* Legend */}
-      <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-400">
-        <span>
-          <span className="text-[10px]"><span className="text-green-400">✅</span></span>{" "}
-          Both read &amp; write supported (same version)
-        </span>
-        <span>
-          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-green-400">✅</span> <span className="text-gray-500">R:</span><span className="text-green-400">✅</span></span>{" "}
-          Both read &amp; write supported (different versions)
-        </span>
-        <span>
-          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-green-400">✅</span> <span className="text-gray-500">R:</span><span className="text-red-400">❌</span></span>{" "}
-          Write only
-        </span>
-        <span>
-          <span className="text-[10px]"><span className="text-gray-500">W:</span><span className="text-red-400">❌</span> <span className="text-gray-500">R:</span><span className="text-green-400">✅</span></span>{" "}
-          Read only
-        </span>
-        <span>
-          <span className="text-[10px]"><span className="text-red-400">❌</span></span>{" "}
-          Not supported
-        </span>
-        <span>
-          <span className="text-gray-500">—</span> Not applicable per Parquet spec
-        </span>
-        <span>
-          <span className="text-gray-600">➖</span> Not tested
-        </span>
-        <span className="text-gray-500 text-xs italic">
-          Click any feature row to see the version timeline across libraries
-        </span>
-      </div>
-
       {/* Tools overview */}
       <div className="mb-8 overflow-x-auto rounded-lg border border-gray-800">
         <table className="w-full text-sm">
