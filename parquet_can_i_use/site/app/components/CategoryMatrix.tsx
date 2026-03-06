@@ -318,42 +318,6 @@ function EncodingSection({
   );
 }
 
-// ─── Legend ───────────────────────────────────────────────────────────────────
-
-function Legend() {
-  return (
-    <div className="mb-6 flex flex-wrap gap-4 text-sm text-gray-400">
-      <span>
-        <span className="text-[10px]">
-          <span className="text-green-400">✅</span>
-        </span>{" "}
-        Both read &amp; write (same version)
-      </span>
-      <span>
-        <span className="text-[10px]">
-          <span className="text-gray-500">W:</span>
-          <span className="text-green-400">✅</span>{" "}
-          <span className="text-gray-500">R:</span>
-          <span className="text-green-400">✅</span>
-        </span>{" "}
-        Both (different versions)
-      </span>
-      <span>
-        <span className="text-[10px]">
-          <span className="text-red-400">❌</span>
-        </span>{" "}
-        Not supported
-      </span>
-      <span>
-        <span className="text-gray-500">—</span> Not applicable
-      </span>
-      <span>
-        <span className="text-gray-600">➖</span> Not tested
-      </span>
-    </div>
-  );
-}
-
 // ─── Main component ───────────────────────────────────────────────────────────
 
 interface Props {
@@ -438,8 +402,6 @@ export default function CategoryMatrix({
           </tbody>
         </table>
       </div>
-
-      <Legend />
 
       {category === "encoding" ? (
         <EncodingSection
