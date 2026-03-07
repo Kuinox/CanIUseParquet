@@ -155,7 +155,6 @@ export interface SearchItem {
 
 export function buildSearchIndex(
   data: MatrixData,
-  basePath: string = ""
 ): SearchItem[] {
   const items: SearchItem[] = [];
   for (const [cat, slug] of Object.entries(CATEGORY_TO_SLUG) as [
@@ -171,7 +170,7 @@ export function buildSearchIndex(
         categorySlug: slug,
         categoryLabel: CATEGORY_LABELS[cat],
         featureSlug,
-        href: `${basePath}/${slug}/${featureSlug}`,
+        href: `/${slug}/${featureSlug}`,
       });
     }
   }
