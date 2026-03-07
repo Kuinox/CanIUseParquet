@@ -366,43 +366,6 @@ export default function CategoryMatrix({
         />
       )}
 
-      {/* Tools overview */}
-      <div className="mb-8 overflow-x-auto rounded-lg border border-gray-800">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-900">
-              <th className="px-3 py-2 text-left text-gray-300">Tool</th>
-              <th className="px-3 py-2 text-left text-gray-300">Language</th>
-              <th className="px-3 py-2 text-left text-gray-300">Latest</th>
-              <th className="px-3 py-2 text-left text-gray-300">
-                Versions Tested
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {toolIds.map((tid, i) => (
-              <tr
-                key={tid}
-                className={i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"}
-              >
-                <td className="px-3 py-2 font-semibold text-white">
-                  {tools[tid].display_name}
-                </td>
-                <td className="px-3 py-2 text-gray-400">
-                  {tools[tid].language}
-                </td>
-                <td className="px-3 py-2 font-mono text-green-400">
-                  {tools[tid].latest_version}
-                </td>
-                <td className="px-3 py-2 font-mono text-gray-500 text-xs">
-                  {tools[tid].tested_versions.join(", ")}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
       {category === "encoding" ? (
         <EncodingSection
           data={data}
