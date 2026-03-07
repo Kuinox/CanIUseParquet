@@ -989,7 +989,7 @@
     },
     "install": "pip install polars=={version}",
     "cli": "cli/python/test_polars.py",
-    "extra_deps": ["fastparquet", "python-lzo", "pandas", "numpy"]
+    "extra_deps": []
   },
   "duckdb": {
     "versions": [

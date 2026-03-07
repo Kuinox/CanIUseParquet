@@ -67,8 +67,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install LZO library
-        run: sudo apt-get install -y liblzo2-dev
       - name: Run bisect tests for polars
         run: |
           cd parquet_can_i_use

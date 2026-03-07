@@ -2,9 +2,10 @@
 """Test DuckDB's Parquet feature support and output JSON results."""
 
 import json
+import os
 import sys
 import tempfile
-import os
+from pathlib import Path
 
 def test_feature(name, fn):
     try:
@@ -37,6 +38,7 @@ def main():
     }
 
     tmpdir = tempfile.mkdtemp()
+    FIXTURES_DIR = Path(__file__).parent.parent.parent / "fixtures"
     con = duckdb.connect()
 
     # --- Compression ---
@@ -66,10 +68,12 @@ def main():
     }
 
     for codec_name, codec_val in codecs.items():
-        path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+        write_path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+        fixture_path = FIXTURES_DIR / "compression" / f"comp_{codec_name}.parquet"
+        read_path = str(fixture_path) if fixture_path.exists() else write_path
         expected = expected_parquet_compression[codec_name]
 
-        def write_codec(c=codec_val, p=path, exp=expected, cn=codec_name):
+        def write_codec(c=codec_val, p=write_path, exp=expected, cn=codec_name):
             con.execute(f"COPY (SELECT 1 AS col, 2 AS col2) TO '{p}' (FORMAT PARQUET, CODEC '{c}')")
             # Verify the file actually uses the expected compression codec.
             # This catches cases where DuckDB silently substitutes a different codec
@@ -84,7 +88,7 @@ def main():
                     f"but parquet_metadata shows '{actual}'"
                 )
 
-        def read_codec(p=path):
+        def read_codec(p=read_path):
             con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
 
         results["compression"][codec_name] = test_rw(write_codec, read_codec)

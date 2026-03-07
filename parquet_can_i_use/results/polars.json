@@ -20,11 +20,11 @@
     },
     "LZO": {
       "write": false,
-      "read": true
+      "read": false
     },
     "LZ4": {
       "write": false,
-      "read": false
+      "read": true
     },
     "LZ4_RAW": {
       "write": true,
