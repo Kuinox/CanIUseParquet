@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { ToolData, FeatureEntry } from "../types/matrix";
 
 // ─── Semver helpers ─────────────────────────────────────────────────────────
@@ -120,10 +119,6 @@ interface Props {
   toolIds: string[];
   tools: Record<string, ToolData>;
   getEntry: (tool: ToolData) => FeatureEntry | undefined;
-  /** Required when `inline` is false/undefined. */
-  onClose?: () => void;
-  /** When true, renders inline instead of as a modal popup. */
-  inline?: boolean;
 }
 
 const CHART_HEIGHT_PX = 600;
@@ -133,17 +128,7 @@ export default function FeatureTimeline({
   toolIds,
   tools,
   getEntry,
-  onClose,
-  inline,
 }: Props) {
-  // Close on Escape key (only relevant in popup mode)
-  useEffect(() => {
-    if (inline) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose?.(); };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose, inline]);
-
   // Determine the global time range across all tools that have dates
   let globalStartMs = Infinity;
   for (const tid of toolIds) {
@@ -174,7 +159,7 @@ export default function FeatureTimeline({
   }
 
   const content = (
-    <div className="bg-gray-950 border border-gray-700 rounded-xl shadow-2xl w-full max-w-6xl">
+    <div className="bg-gray-950 border border-gray-700 rounded-xl shadow-2xl w-full">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
         <div>
@@ -186,15 +171,6 @@ export default function FeatureTimeline({
             Block height reflects how long each version was the latest release. Older versions at bottom, newer at top.
           </p>
         </div>
-        {!inline && (
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-white transition-colors text-2xl leading-none px-2"
-            aria-label="Close"
-          >
-            ×
-          </button>
-        )}
       </div>
 
       {/* Legend */}
@@ -315,13 +291,5 @@ export default function FeatureTimeline({
     </div>
   );
 
-  if (inline) {
-    return content;
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 overflow-auto py-8 px-4">
-      {content}
-    </div>
-  );
+  return content;
 }

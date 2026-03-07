@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { MatrixData, FeatureEntry, ToolData } from "../types/matrix";
 import { InternalCategory, featureToSlug } from "../lib/data";
-import FeatureTimeline from "./FeatureTimeline";
 
 // ─── Shared cell components ───────────────────────────────────────────────────
 
@@ -113,14 +112,6 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   );
 }
 
-// ─── Timeline selection state ─────────────────────────────────────────────────
-
-interface TimelineSelection {
-  featureLabel: string;
-  feature: string;
-  getEntry: (tool: ToolData) => FeatureEntry | undefined;
-}
-
 // ─── Non-encoding feature table ───────────────────────────────────────────────
 
 function NonEncodingTable({
@@ -129,14 +120,12 @@ function NonEncodingTable({
   toolIds,
   getEntry,
   categorySlug,
-  onTimelineClick,
 }: {
   features: string[];
   tools: Record<string, ToolData>;
   toolIds: string[];
   getEntry: (tool: ToolData, feature: string) => FeatureEntry | undefined;
   categorySlug: string;
-  onTimelineClick: (sel: TimelineSelection) => void;
 }) {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-800">
@@ -168,27 +157,12 @@ function NonEncodingTable({
               } hover:bg-blue-950/30 transition-colors`}
             >
               <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
-                <div className="flex items-center gap-2">
-                  <Link
-                    href={`/${categorySlug}/${featureToSlug(feature)}`}
-                    className="hover:text-green-400 transition-colors"
-                  >
-                    {feature}
-                  </Link>
-                  <button
-                    onClick={() =>
-                      onTimelineClick({
-                        feature,
-                        featureLabel: feature,
-                        getEntry: (tool) => getEntry(tool, feature),
-                      })
-                    }
-                    className="opacity-0 group-hover:opacity-60 text-blue-400 text-[9px]"
-                    aria-label="View timeline"
-                  >
-                    ▶ timeline
-                  </button>
-                </div>
+                <Link
+                  href={`/${categorySlug}/${featureToSlug(feature)}`}
+                  className="hover:text-green-400 transition-colors"
+                >
+                  {feature}
+                </Link>
               </td>
               {toolIds.map((tid) => (
                 <FeatureCell
@@ -210,12 +184,10 @@ function EncodingSection({
   data,
   tools,
   toolIds,
-  onTimelineClick,
 }: {
   data: MatrixData;
   tools: Record<string, ToolData>;
   toolIds: string[];
-  onTimelineClick: (sel: TimelineSelection) => void;
 }) {
   const [activeEncoding, setActiveEncoding] = useState<string>(
     data.categories.encoding[0]
@@ -280,28 +252,12 @@ function EncodingSection({
             {data.categories.encoding_types.map((dataType, i) => (
               <tr
                 key={dataType}
-                className={`group ${
+                className={`${
                   i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"
-                } hover:bg-blue-950/30 transition-colors`}
+                }`}
               >
                 <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <span>{dataType}</span>
-                    <button
-                      onClick={() =>
-                        onTimelineClick({
-                          feature: dataType,
-                          featureLabel: `${activeEncoding} × ${dataType}`,
-                          getEntry: (tool) =>
-                            tool.encoding[activeEncoding]?.[dataType],
-                        })
-                      }
-                      className="opacity-0 group-hover:opacity-60 text-blue-400 text-[9px]"
-                      aria-label="View timeline"
-                    >
-                      ▶ timeline
-                    </button>
-                  </div>
+                  {dataType}
                 </td>
                 {toolIds.map((tid) => (
                   <FeatureCell
@@ -331,7 +287,6 @@ export default function CategoryMatrix({
   category,
   categorySlug,
 }: Props) {
-  const [timeline, setTimeline] = useState<TimelineSelection | null>(null);
   const toolIds = Object.keys(data.tools);
   const tools = data.tools;
 
@@ -355,23 +310,11 @@ export default function CategoryMatrix({
 
   return (
     <div>
-      {timeline && (
-        <FeatureTimeline
-          feature={timeline.feature}
-          featureLabel={timeline.featureLabel}
-          toolIds={toolIds}
-          tools={tools}
-          getEntry={timeline.getEntry}
-          onClose={() => setTimeline(null)}
-        />
-      )}
-
       {category === "encoding" ? (
         <EncodingSection
           data={data}
           tools={tools}
           toolIds={toolIds}
-          onTimelineClick={setTimeline}
         />
       ) : (
         <NonEncodingTable
@@ -388,7 +331,6 @@ export default function CategoryMatrix({
           toolIds={toolIds}
           getEntry={getEntryForCategory}
           categorySlug={categorySlug}
-          onTimelineClick={setTimeline}
         />
       )}
     </div>
