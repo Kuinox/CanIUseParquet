@@ -7,6 +7,7 @@ import {
   featureToSlug,
   slugToFeature,
   getCategoryFeatures,
+  getFeatureSpecLink,
   InternalCategory,
 } from "../../lib/data";
 import FeaturePageContent from "../../components/FeaturePageContent";
@@ -56,6 +57,7 @@ export default async function FeaturePage({ params }: Props) {
 
   const toolIds = Object.keys(data.tools);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const specLink = getFeatureSpecLink(internalCategory, feature);
 
   const serializedData = {
     tools: data.tools,
@@ -95,7 +97,18 @@ export default async function FeaturePage({ params }: Props) {
         <h1 className="text-3xl font-bold text-white mb-2 font-mono">
           {feature}
         </h1>
-        <p className="text-gray-400 mb-8 text-sm">{categoryLabel}</p>
+        <p className="text-gray-400 mb-8 text-sm flex items-center gap-3">
+          <span>{categoryLabel}</span>
+          <a
+            href={specLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View Parquet specification"
+            className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors"
+          >
+            📄 Parquet Spec ↗
+          </a>
+        </p>
 
         <FeaturePageContent
           feature={feature}
