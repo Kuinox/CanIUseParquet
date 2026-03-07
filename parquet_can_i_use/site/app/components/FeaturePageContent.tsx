@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ToolData, FeatureEntry, MatrixData } from "../types/matrix";
 import { InternalCategory } from "../lib/data";
 import FeatureTimeline from "./FeatureTimeline";
@@ -72,23 +71,8 @@ function EncodingFeatureContent({
   tools: Record<string, ToolData>;
   categories: MatrixData["categories"];
 }) {
-  const [timeline, setTimeline] = useState<{
-    dataType: string;
-    getEntry: (tool: ToolData) => FeatureEntry | undefined;
-  } | null>(null);
-
   return (
     <div>
-      {timeline && (
-        <FeatureTimeline
-          feature={timeline.dataType}
-          featureLabel={`${feature} × ${timeline.dataType}`}
-          toolIds={toolIds}
-          tools={tools}
-          getEntry={timeline.getEntry}
-          onClose={() => setTimeline(null)}
-        />
-      )}
       <h2 className="text-xl font-semibold text-white mb-4">
         Data Type Support
       </h2>
@@ -117,27 +101,12 @@ function EncodingFeatureContent({
               return (
                 <tr
                   key={dataType}
-                  className={`group ${
+                  className={`${
                     i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"
-                  } hover:bg-blue-950/30 transition-colors`}
+                  }`}
                 >
                   <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
-                    <div className="flex items-center gap-2">
-                      <span>{dataType}</span>
-                      <button
-                        onClick={() =>
-                          setTimeline({
-                            dataType,
-                            getEntry: (tool) =>
-                              tool.encoding[feature]?.[dataType],
-                          })
-                        }
-                        className="opacity-0 group-hover:opacity-60 text-blue-400 text-[9px]"
-                        aria-label="View timeline"
-                      >
-                        ▶ timeline
-                      </button>
-                    </div>
+                    {dataType}
                   </td>
                   {toolIds.map((tid) => {
                     const entry = tools[tid].encoding[feature]?.[dataType];
@@ -239,12 +208,9 @@ function NonEncodingContent({
 }) {
   return (
     <FeatureTimeline
-      feature={feature}
-      featureLabel={feature}
       toolIds={toolIds}
       tools={tools}
       getEntry={(tool) => getEntryForTool(tool, category, feature)}
-      inline
     />
   );
 }

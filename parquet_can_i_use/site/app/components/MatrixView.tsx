@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { MatrixData, FeatureEntry, ToolData } from "../types/matrix";
-import FeatureTimeline from "./FeatureTimeline";
+import { CATEGORY_TO_SLUG, featureToSlug } from "../lib/data";
 
 function ReadWriteBadge({ supported, since, label }: { supported: boolean; since?: string | null; label: string }) {
   if (supported) {
@@ -81,26 +82,20 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   );
 }
 
-interface TimelineSelection {
-  featureLabel: string;
-  feature: string;
-  getEntry: (tool: ToolData) => FeatureEntry | undefined;
-}
-
 function FeatureTable({
   title,
   features,
   tools,
   toolIds,
   getEntry,
-  onFeatureClick,
+  featureHref,
 }: {
   title: string;
   features: string[];
   tools: Record<string, ToolData>;
   toolIds: string[];
   getEntry: (tool: ToolData, feature: string) => FeatureEntry | undefined;
-  onFeatureClick: (feature: string, getEntryForTool: (tool: ToolData) => FeatureEntry | undefined) => void;
+  featureHref?: (feature: string) => string;
 }) {
   return (
     <div className="mb-8">
@@ -126,15 +121,16 @@ function FeatureTable({
             {features.map((feature, i) => (
               <tr
                 key={feature}
-                className={`cursor-pointer group ${i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"} hover:bg-blue-950/30 transition-colors`}
-                onClick={() => onFeatureClick(feature, (tool) => getEntry(tool, feature))}
-                title="Click to view timeline across libraries"
+                className={`${i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"} hover:bg-blue-950/30 transition-colors`}
               >
-                <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 group-hover:text-blue-300 text-gray-300 transition-colors">
-                  <span className="flex items-center gap-1.5">
-                    {feature}
-                    <span className="opacity-0 group-hover:opacity-60 text-blue-400 text-[9px]" aria-hidden>▶ timeline</span>
-                  </span>
+                <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
+                  {featureHref ? (
+                    <Link href={featureHref(feature)} className="hover:text-green-400 transition-colors">
+                      {feature}
+                    </Link>
+                  ) : (
+                    feature
+                  )}
                 </td>
                 {toolIds.map((tid) => (
                   <FeatureCell key={tid} entry={getEntry(tools[tid], feature)} />
@@ -161,34 +157,17 @@ const CATEGORY_LABELS: Record<Category, string> = {
 export default function MatrixView({ data }: { data: MatrixData }) {
   const [activeCategory, setActiveCategory] = useState<Category>("compression");
   const [activeEncoding, setActiveEncoding] = useState<string>(data.categories.encoding[0]);
-  const [timeline, setTimeline] = useState<TimelineSelection | null>(null);
 
   const toolIds = Object.keys(data.tools);
   const tools = data.tools;
   const categories = Object.keys(CATEGORY_LABELS) as Category[];
 
-  function openTimeline(
-    feature: string,
-    featureLabel: string,
-    getEntryForTool: (tool: ToolData) => FeatureEntry | undefined,
-  ) {
-    setTimeline({ feature, featureLabel, getEntry: getEntryForTool });
+  function featurePageHref(cat: Category, feature: string): string {
+    return `/${CATEGORY_TO_SLUG[cat]}/${featureToSlug(feature)}`;
   }
 
   return (
     <div>
-      {/* Timeline overlay */}
-      {timeline && (
-        <FeatureTimeline
-          feature={timeline.feature}
-          featureLabel={timeline.featureLabel}
-          toolIds={toolIds}
-          tools={tools}
-          getEntry={timeline.getEntry}
-          onClose={() => setTimeline(null)}
-        />
-      )}
-
       {/* Category tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
         {categories.map((cat) => (
@@ -214,9 +193,7 @@ export default function MatrixView({ data }: { data: MatrixData }) {
           tools={tools}
           toolIds={toolIds}
           getEntry={(tool, feature) => tool.compression[feature]}
-          onFeatureClick={(feature, getEntryForTool) =>
-            openTimeline(feature, feature, getEntryForTool)
-          }
+          featureHref={(f) => featurePageHref("compression", f)}
         />
       )}
 
@@ -250,9 +227,6 @@ export default function MatrixView({ data }: { data: MatrixData }) {
             tools={tools}
             toolIds={toolIds}
             getEntry={(tool, feature) => tool.encoding[activeEncoding]?.[feature]}
-            onFeatureClick={(feature, getEntryForTool) =>
-              openTimeline(feature, `${activeEncoding} × ${feature}`, getEntryForTool)
-            }
           />
         </div>
       )}
@@ -264,9 +238,7 @@ export default function MatrixView({ data }: { data: MatrixData }) {
           tools={tools}
           toolIds={toolIds}
           getEntry={(tool, feature) => tool.logical_types[feature]}
-          onFeatureClick={(feature, getEntryForTool) =>
-            openTimeline(feature, feature, getEntryForTool)
-          }
+          featureHref={(f) => featurePageHref("logical_types", f)}
         />
       )}
 
@@ -277,9 +249,7 @@ export default function MatrixView({ data }: { data: MatrixData }) {
           tools={tools}
           toolIds={toolIds}
           getEntry={(tool, feature) => tool.nested_types[feature]}
-          onFeatureClick={(feature, getEntryForTool) =>
-            openTimeline(feature, feature, getEntryForTool)
-          }
+          featureHref={(f) => featurePageHref("nested_types", f)}
         />
       )}
 
@@ -290,9 +260,7 @@ export default function MatrixView({ data }: { data: MatrixData }) {
           tools={tools}
           toolIds={toolIds}
           getEntry={(tool, feature) => tool.advanced_features[feature]}
-          onFeatureClick={(feature, getEntryForTool) =>
-            openTimeline(feature, feature, getEntryForTool)
-          }
+          featureHref={(f) => featurePageHref("advanced_features", f)}
         />
       )}
     </div>
