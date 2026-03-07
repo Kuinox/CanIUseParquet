@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -34,13 +35,57 @@ func testRW(writeFn func() error, readFn func() error) RWResult {
 	}
 }
 
-func makeInt32Record() arrow.Record {
-	schema := arrow.NewSchema([]arrow.Field{
-		{Name: "col", Type: arrow.PrimitiveTypes.Int32, Nullable: false},
-	}, nil)
-	bldr := array.NewInt32Builder(memory.DefaultAllocator)
+func makeTypedRecord(ptype string) arrow.Record {
+	alloc := memory.DefaultAllocator
+	switch ptype {
+	case "INT32":
+		schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.PrimitiveTypes.Int32, Nullable: false}}, nil)
+		bldr := array.NewInt32Builder(alloc)
+		bldr.AppendValues([]int32{1, 2, 3}, nil)
+		arr := bldr.NewArray()
+		return array.NewRecord(schema, []arrow.Array{arr}, 3)
+	case "INT64":
+		schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.PrimitiveTypes.Int64, Nullable: false}}, nil)
+		bldr := array.NewInt64Builder(alloc)
+		bldr.AppendValues([]int64{1, 2, 3}, nil)
+		arr := bldr.NewArray()
+		return array.NewRecord(schema, []arrow.Array{arr}, 3)
+	case "FLOAT":
+		schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.PrimitiveTypes.Float32, Nullable: false}}, nil)
+		bldr := array.NewFloat32Builder(alloc)
+		bldr.AppendValues([]float32{1.0, 2.0, 3.0}, nil)
+		arr := bldr.NewArray()
+		return array.NewRecord(schema, []arrow.Array{arr}, 3)
+	case "DOUBLE":
+		schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.PrimitiveTypes.Float64, Nullable: false}}, nil)
+		bldr := array.NewFloat64Builder(alloc)
+		bldr.AppendValues([]float64{1.0, 2.0, 3.0}, nil)
+		arr := bldr.NewArray()
+		return array.NewRecord(schema, []arrow.Array{arr}, 3)
+	case "BOOLEAN":
+		schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.FixedWidthTypes.Boolean, Nullable: false}}, nil)
+		bldr := array.NewBooleanBuilder(alloc)
+		bldr.AppendValues([]bool{true, false, true}, nil)
+		arr := bldr.NewArray()
+		return array.NewRecord(schema, []arrow.Array{arr}, 3)
+	case "BYTE_ARRAY":
+		schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.BinaryTypes.Binary, Nullable: false}}, nil)
+		bldr := array.NewBinaryBuilder(alloc, arrow.BinaryTypes.Binary)
+		bldr.AppendValues([][]byte{[]byte("hello"), []byte("world"), []byte("test")}, nil)
+		arr := bldr.NewArray()
+		return array.NewRecord(schema, []arrow.Array{arr}, 3)
+	}
+	// fallback: INT32
+	schema := arrow.NewSchema([]arrow.Field{{Name: "col", Type: arrow.PrimitiveTypes.Int32, Nullable: false}}, nil)
+	bldr := array.NewInt32Builder(alloc)
 	bldr.AppendValues([]int32{1, 2, 3}, nil)
-	return array.NewRecord(schema, []arrow.Array{bldr.NewArray()}, 3)
+	arr := bldr.NewArray()
+	return array.NewRecord(schema, []arrow.Array{arr}, 3)
+}
+
+// makeInt32Record is kept for compression tests
+func makeInt32Record() arrow.Record {
+	return makeTypedRecord("INT32")
 }
 
 func writeArrowParquet(tmpdir string, name string, rec arrow.Record, props *parquet.WriterProperties) error {
@@ -76,12 +121,45 @@ func readArrowParquet(tmpdir string, name string) error {
 	if err != nil {
 		return err
 	}
-	tbl, err := arrowReader.ReadTable(nil)
+	// Use context.Background() — passing nil panics in arrow-go.
+	tbl, err := arrowReader.ReadTable(context.Background())
 	if err != nil {
 		return err
 	}
 	tbl.Release()
 	return nil
+}
+
+// makeEncodingProps returns WriterProperties for the given encoding name.
+// Dictionary encodings use WithDictionaryDefault(true); all others use
+// WithEncoding(enc) with dictionary disabled.
+func makeEncodingProps(encName string) *parquet.WriterProperties {
+	switch encName {
+	case "PLAIN_DICTIONARY":
+		return parquet.NewWriterProperties(parquet.WithDictionaryDefault(true))
+	case "RLE_DICTIONARY":
+		return parquet.NewWriterProperties(parquet.WithDictionaryDefault(true))
+	case "BIT_PACKED":
+		// Deprecated; not implemented in arrow-go — signal unsupported.
+		return nil
+	default:
+		enc, ok := map[string]parquet.Encoding{
+			"PLAIN":                    parquet.Encodings.Plain,
+			"RLE":                      parquet.Encodings.RLE,
+			"DELTA_BINARY_PACKED":      parquet.Encodings.DeltaBinaryPacked,
+			"DELTA_LENGTH_BYTE_ARRAY":  parquet.Encodings.DeltaLengthByteArray,
+			"DELTA_BYTE_ARRAY":         parquet.Encodings.DeltaByteArray,
+			"BYTE_STREAM_SPLIT":        parquet.Encodings.ByteStreamSplit,
+			"BYTE_STREAM_SPLIT_EXTENDED": parquet.Encodings.ByteStreamSplit,
+		}[encName]
+		if !ok {
+			return nil
+		}
+		return parquet.NewWriterProperties(
+			parquet.WithEncoding(enc),
+			parquet.WithDictionaryDefault(false),
+		)
+	}
 }
 
 func main() {
@@ -103,11 +181,11 @@ func main() {
 	compression := map[string]interface{}{}
 
 	compCodecs := map[string]compress.Compression{
-		"NONE":   compress.Codecs.Uncompressed,
-		"SNAPPY": compress.Codecs.Snappy,
-		"GZIP":   compress.Codecs.Gzip,
-		"ZSTD":   compress.Codecs.Zstd,
-		"BROTLI": compress.Codecs.Brotli,
+		"NONE":    compress.Codecs.Uncompressed,
+		"SNAPPY":  compress.Codecs.Snappy,
+		"GZIP":    compress.Codecs.Gzip,
+		"ZSTD":    compress.Codecs.Zstd,
+		"BROTLI":  compress.Codecs.Brotli,
 		"LZ4_RAW": compress.Codecs.Lz4Raw,
 	}
 
@@ -126,39 +204,38 @@ func main() {
 	results["compression"] = compression
 
 	// --- Encoding × Type matrix ---
-	// arrow-go supports all standard encodings via WriterProperties
-	encSupport := map[string]bool{
-		"PLAIN":                    true,
-		"PLAIN_DICTIONARY":        true,
-		"RLE_DICTIONARY":          true,
-		"RLE":                     true,
-		"BIT_PACKED":              false,
-		"DELTA_BINARY_PACKED":     true,
-		"DELTA_LENGTH_BYTE_ARRAY": true,
-		"DELTA_BYTE_ARRAY":        true,
-		"BYTE_STREAM_SPLIT":       true,
-		"BYTE_STREAM_SPLIT_EXTENDED": true,
+	// For each encoding+type combination we create a typed Arrow record, attempt to
+	// write it with WriterProperties that request the specific encoding, then read it
+	// back.  Unsupported combinations (e.g. DELTA_BINARY_PACKED for FLOAT) return
+	// errors from arrow-go and are reported as false.
+	encNames := []string{
+		"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+		"DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+		"BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED",
 	}
 	typeNames := []string{"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"}
 	encoding := map[string]interface{}{}
-	for encName, supported := range encSupport {
+	for _, encName := range encNames {
 		typeResults := map[string]interface{}{}
 		for _, typeName := range typeNames {
 			eName := encName
 			tName := typeName
-			if supported {
-				typeResults[typeName] = testRW(
-					func() error {
-						return writeArrowParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName), rec,
-							parquet.NewWriterProperties())
-					},
-					func() error {
-						return readArrowParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName))
-					},
-				)
-			} else {
+			props := makeEncodingProps(eName)
+			if props == nil {
+				// BIT_PACKED or unknown encoding — not supported
 				typeResults[typeName] = RWResult{Write: false, Read: false}
+				continue
 			}
+			typeResults[typeName] = testRW(
+				func() error {
+					r := makeTypedRecord(tName)
+					defer r.Release()
+					return writeArrowParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName), r, props)
+				},
+				func() error {
+					return readArrowParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName))
+				},
+			)
 		}
 		encoding[encName] = typeResults
 	}

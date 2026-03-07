@@ -44,11 +44,11 @@
   "compression": {
     "BROTLI": {
       "write": true,
-      "read": false
+      "read": true
     },
     "GZIP": {
       "write": true,
-      "read": false
+      "read": true
     },
     "LZ4": {
       "write": false,
@@ -56,7 +56,7 @@
     },
     "LZ4_RAW": {
       "write": true,
-      "read": false
+      "read": true
     },
     "LZO": {
       "write": false,
@@ -64,15 +64,15 @@
     },
     "NONE": {
       "write": true,
-      "read": false
+      "read": true
     },
     "SNAPPY": {
       "write": true,
-      "read": false
+      "read": true
     },
     "ZSTD": {
       "write": true,
-      "read": false
+      "read": true
     }
   },
   "encoding": {
@@ -104,236 +104,236 @@
     },
     "BYTE_STREAM_SPLIT": {
       "BOOLEAN": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "BYTE_ARRAY": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "DOUBLE": {
         "write": true,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT32": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": true,
-        "read": false
+        "read": true
       }
     },
     "BYTE_STREAM_SPLIT_EXTENDED": {
       "BOOLEAN": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "BYTE_ARRAY": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "DOUBLE": {
         "write": true,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT32": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": true,
-        "read": false
+        "read": true
       }
     },
     "DELTA_BINARY_PACKED": {
       "BOOLEAN": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "BYTE_ARRAY": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "DOUBLE": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "FLOAT": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT32": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": true,
-        "read": false
+        "read": true
       }
     },
     "DELTA_BYTE_ARRAY": {
       "BOOLEAN": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "FLOAT": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT32": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT64": {
-        "write": true,
+        "write": false,
         "read": false
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "BOOLEAN": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "FLOAT": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT32": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT64": {
-        "write": true,
+        "write": false,
         "read": false
       }
     },
     "PLAIN": {
       "BOOLEAN": {
         "write": true,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": true,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT32": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": true,
-        "read": false
+        "read": true
       }
     },
     "PLAIN_DICTIONARY": {
       "BOOLEAN": {
         "write": true,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": true,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT32": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": true,
-        "read": false
+        "read": true
       }
     },
     "RLE": {
       "BOOLEAN": {
         "write": true,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "DOUBLE": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "FLOAT": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT32": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT64": {
-        "write": true,
+        "write": false,
         "read": false
       }
     },
     "RLE_DICTIONARY": {
       "BOOLEAN": {
         "write": true,
-        "read": false
+        "read": true
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": false
+        "read": true
       },
       "DOUBLE": {
         "write": true,
-        "read": false
+        "read": true
       },
       "FLOAT": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT32": {
         "write": true,
-        "read": false
+        "read": true
       },
       "INT64": {
         "write": true,
-        "read": false
+        "read": true
       }
     }
   },
