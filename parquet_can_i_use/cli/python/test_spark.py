@@ -2,10 +2,11 @@
 """Test Apache Spark (PySpark) Parquet feature support and output JSON results."""
 
 import json
+import logging
+import os
 import sys
 import tempfile
-import os
-import logging
+from pathlib import Path
 
 
 def test_feature(fn):
@@ -61,6 +62,7 @@ def main():
     }
 
     tmpdir = tempfile.mkdtemp()
+    FIXTURES_DIR = Path(__file__).parent.parent.parent / "fixtures"
 
     # --- Compression ---
     simple_schema = T.StructType([T.StructField("col", T.IntegerType())])
@@ -78,12 +80,14 @@ def main():
     ]
 
     for codec_name, codec_val in compression_codecs:
-        path = os.path.join(tmpdir, f"comp_{codec_name}")
+        write_path = os.path.join(tmpdir, f"comp_{codec_name}")
+        fixture_path = FIXTURES_DIR / "compression" / f"comp_{codec_name}.parquet"
+        read_path = str(fixture_path) if fixture_path.exists() else write_path
 
-        def write_comp(df=simple_df, c=codec_val, p=path):
+        def write_comp(df=simple_df, c=codec_val, p=write_path):
             df.write.mode("overwrite").option("compression", c).parquet(p)
 
-        def read_comp(p=path):
+        def read_comp(p=read_path):
             spark.read.parquet(p).collect()
 
         results["compression"][codec_name] = test_rw(write_comp, read_comp)

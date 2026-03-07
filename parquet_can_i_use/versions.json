@@ -230,7 +230,8 @@
     "cli": "cli/python/test_fastparquet.py",
     "extra_deps": [
       "pandas",
-      "numpy"
+      "numpy",
+      "python-lzo"
     ]
   },
   "polars": {

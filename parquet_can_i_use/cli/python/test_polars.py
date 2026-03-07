@@ -2,9 +2,10 @@
 """Test Polars' Parquet feature support and output JSON results."""
 
 import json
+import os
 import sys
 import tempfile
-import os
+from pathlib import Path
 
 def test_feature(name, fn):
     try:
@@ -37,6 +38,7 @@ def main():
     }
 
     tmpdir = tempfile.mkdtemp()
+    FIXTURES_DIR = Path(__file__).parent.parent.parent / "fixtures"
 
     # --- Compression ---
     # Polars' "lz4" codec string writes LZ4_RAW format internally (verified via raw Parquet
@@ -45,25 +47,33 @@ def main():
     # So our codec map is:
     #   LZ4     → None (no Polars codec produces the deprecated LZ4 format)
     #   LZ4_RAW → "lz4" (Polars' only LZ4 codec, produces LZ4_RAW)
+    #   LZO     → None (Polars cannot write LZO; read is tested via fixture if available)
     codecs = {
         "NONE":    "uncompressed",
         "SNAPPY":  "snappy",
         "GZIP":    "gzip",
         "BROTLI":  "brotli",
-        "LZO":     "lzo",
+        "LZO":     None,    # Polars cannot write LZO; read tested via fixture
         "LZ4":     None,    # deprecated LZ4 not supported; Polars has no codec for it
         "LZ4_RAW": "lz4",   # Polars' "lz4" produces LZ4_RAW format
         "ZSTD":    "zstd",
     }
     df = pl.DataFrame({"col": [1, 2, 3]})
     for codec_name, codec_val in codecs.items():
-        path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+        fixture_path = FIXTURES_DIR / "compression" / f"comp_{codec_name}.parquet"
         if codec_val is None:
-            results["compression"][codec_name] = {"write": False, "read": False}
+            # Cannot write this codec; try reading from fixture to detect read-only support.
+            if fixture_path.exists():
+                read_ok = test_feature("read", lambda p=str(fixture_path): pl.read_parquet(p))
+            else:
+                read_ok = False
+            results["compression"][codec_name] = {"write": False, "read": read_ok}
         else:
-            def write_codec(c=codec_val, p=path, d=df):
+            write_path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+            read_path = str(fixture_path) if fixture_path.exists() else write_path
+            def write_codec(c=codec_val, p=write_path, d=df):
                 d.write_parquet(p, compression=c)
-            def read_codec(p=path):
+            def read_codec(p=read_path):
                 pl.read_parquet(p)
             results["compression"][codec_name] = test_rw(write_codec, read_codec)
 
