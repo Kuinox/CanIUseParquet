@@ -946,10 +946,10 @@
           "read_since": "2025.12.0"
         },
         "LZO": {
-          "write": false,
-          "write_since": null,
-          "read": false,
-          "read_since": null
+          "write": true,
+          "write_since": "2025.12.0",
+          "read": true,
+          "read_since": "2025.12.0"
         },
         "LZ4": {
           "write": true,
@@ -2397,8 +2397,8 @@
         "LZ4": {
           "write": false,
           "write_since": null,
-          "read": false,
-          "read_since": null
+          "read": true,
+          "read_since": "1.38.1"
         },
         "LZ4_RAW": {
           "write": true,

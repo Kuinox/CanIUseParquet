@@ -2,9 +2,10 @@
 """Test PyArrow's Parquet feature support and output JSON results."""
 
 import json
+import os
 import sys
 import tempfile
-import os
+from pathlib import Path
 
 def test_feature(name, fn):
     """Run a test function, return True/False."""
@@ -39,6 +40,7 @@ def main():
     }
 
     tmpdir = tempfile.mkdtemp()
+    FIXTURES_DIR = Path(__file__).parent.parent.parent / "fixtures"
 
     # --- Compression ---
     codec_map = {
@@ -52,11 +54,13 @@ def main():
         "ZSTD": "ZSTD",
     }
     for codec_name, codec_val in codec_map.items():
-        path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+        write_path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
+        fixture_path = FIXTURES_DIR / "compression" / f"comp_{codec_name}.parquet"
+        read_path = str(fixture_path) if fixture_path.exists() else write_path
         table = pa.table({"col": [1, 2, 3]})
-        def write_codec(c=codec_val, p=path, t=table):
+        def write_codec(c=codec_val, p=write_path, t=table):
             pq.write_table(t, p, compression=c)
-        def read_codec(p=path):
+        def read_codec(p=read_path):
             pq.read_table(p)
         results["compression"][codec_name] = test_rw(write_codec, read_codec)
 

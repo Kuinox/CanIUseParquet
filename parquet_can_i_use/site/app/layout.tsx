@@ -17,15 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const data = getMatrixData();
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const searchItems = buildSearchIndex(data, basePath);
+  const searchItems = buildSearchIndex(data);
 
   return (
     <html lang="en">
       <body className="bg-gray-950 text-gray-100 antialiased">
         <header className="border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-[1600px] mx-auto px-4 py-3 flex items-center gap-4">
-            <Link href={`${basePath}/`} className="flex-shrink-0">
+            <Link href="/" className="flex-shrink-0">
               <h1 className="text-xl font-bold">
                 <span className="text-green-400">Can I Use:</span>{" "}
                 <span className="text-white">Parquet</span>

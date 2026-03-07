@@ -20,6 +20,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
 RESULTS_DIR = SCRIPT_DIR / "results"
+FIXTURES_DIR = SCRIPT_DIR / "fixtures"
 VERSIONS_FILE = SCRIPT_DIR / "versions.json"
 
 
@@ -59,12 +60,15 @@ def run_python_version(tool_id, version, cli_path, extra_deps, install_template)
 
         subprocess.run(deps_cmd, capture_output=True, text=True, check=True, timeout=300)
 
-        # Run CLI
+        # Run CLI (pass fixtures directory so the script can test read-only support)
+        env = os.environ.copy()
+        env["PARQUET_FIXTURES_DIR"] = str(FIXTURES_DIR)
         result = subprocess.run(
             [python, str(cli_path)],
             capture_output=True,
             text=True,
             timeout=120,
+            env=env,
         )
 
         if result.returncode != 0:
@@ -222,7 +226,10 @@ def run_compiled_version(tool_id, tool_config, version):
             print("UNKNOWN TYPE")
             return None
 
-        result = subprocess.run(run_cmd, capture_output=True, text=True, check=True, timeout=120)
+        result = subprocess.run(
+            run_cmd, capture_output=True, text=True, check=True, timeout=120,
+            env={**os.environ, "PARQUET_FIXTURES_DIR": str(FIXTURES_DIR)},
+        )
         data = json.loads(result.stdout)
         print(f"OK")
         return data
@@ -274,7 +281,10 @@ def run_compiled_tool(tool_id, tool_config):
             return None
 
         # Run
-        result = subprocess.run(run_cmd, capture_output=True, text=True, check=True, timeout=120)
+        result = subprocess.run(
+            run_cmd, capture_output=True, text=True, check=True, timeout=120,
+            env={**os.environ, "PARQUET_FIXTURES_DIR": str(FIXTURES_DIR)},
+        )
         data = json.loads(result.stdout)
         print(f"OK (v{data.get('version', version)})")
         return data
