@@ -34,6 +34,9 @@ export default function RootLayout({
             <div className="flex-1 max-w-md">
               <SearchBar items={searchItems} />
             </div>
+            <div className="flex-shrink-0 text-xs text-yellow-400/80 bg-yellow-400/10 border border-yellow-400/20 rounded px-2 py-1">
+              ⚠️ AI-generated — information may be inaccurate
+            </div>
           </div>
         </header>
         {children}
