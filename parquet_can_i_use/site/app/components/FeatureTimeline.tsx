@@ -29,6 +29,8 @@ interface VersionBlock {
   date: string | null; // ISO YYYY-MM-DD, or null if unknown
   writeSupported: boolean;
   readSupported: boolean;
+  /** True if the test CLI itself failed for this version (infra error, not a feature gap). */
+  cliError: boolean;
   /** Fraction of the total timeline height (0–1). */
   heightFraction: number;
 }
@@ -42,6 +44,8 @@ interface MergedBlock {
   dateTo: string | null;
   writeSupported: boolean;
   readSupported: boolean;
+  /** True if all versions in this block had CLI errors (untested, not unsupported). */
+  cliError: boolean;
   /** Combined height fraction of all merged blocks. */
   heightFraction: number;
 }
@@ -67,6 +71,7 @@ function buildBlocks(
 ): VersionBlock[] {
   const versions = tool.all_versions ?? tool.tested_versions;
   const dates = tool.version_dates ?? {};
+  const cliErrors = new Set(tool.cli_error_versions ?? []);
   const totalMs = globalEndMs - globalStartMs;
 
   // Compute raw durations: time from this version's release to the next's release
@@ -89,12 +94,15 @@ function buildBlocks(
   const normalised = floored.map((f) => (flooredSum > 0 ? f / flooredSum : 1 / versions.length));
 
   return versions.map((ver, i) => {
+    const isCliError = cliErrors.has(ver);
     const writeOk =
+      !isCliError &&
       !entry?.not_applicable &&
       !!entry?.write &&
       !!entry?.write_since &&
       versionGte(ver, entry.write_since);
     const readOk =
+      !isCliError &&
       !entry?.not_applicable &&
       !!entry?.read &&
       !!entry?.read_since &&
@@ -105,6 +113,7 @@ function buildBlocks(
       date: dates[ver] ?? null,
       writeSupported: writeOk,
       readSupported: readOk,
+      cliError: isCliError,
       heightFraction: normalised[i],
     };
   });
@@ -125,6 +134,7 @@ function mergeBlocks(blocks: VersionBlock[]): MergedBlock[] {
     dateTo: blocks[0].date,
     writeSupported: blocks[0].writeSupported,
     readSupported: blocks[0].readSupported,
+    cliError: blocks[0].cliError,
     heightFraction: blocks[0].heightFraction,
   };
 
@@ -132,7 +142,8 @@ function mergeBlocks(blocks: VersionBlock[]): MergedBlock[] {
     const block = blocks[i];
     if (
       block.writeSupported === current.writeSupported &&
-      block.readSupported === current.readSupported
+      block.readSupported === current.readSupported &&
+      block.cliError === current.cliError
     ) {
       // Same status — extend the range
       current.versionTo = block.version;
@@ -147,6 +158,7 @@ function mergeBlocks(blocks: VersionBlock[]): MergedBlock[] {
         dateTo: block.date,
         writeSupported: block.writeSupported,
         readSupported: block.readSupported,
+        cliError: block.cliError,
         heightFraction: block.heightFraction,
       };
     }
@@ -156,6 +168,7 @@ function mergeBlocks(blocks: VersionBlock[]): MergedBlock[] {
 }
 
 function blockBg(block: MergedBlock): string {
+  if (block.cliError) return "bg-gray-700";
   if (block.writeSupported && block.readSupported) return "bg-green-700";
   if (block.writeSupported) return "bg-amber-600";
   if (block.readSupported) return "bg-yellow-500";
@@ -163,6 +176,7 @@ function blockBg(block: MergedBlock): string {
 }
 
 function blockLabel(block: MergedBlock): string {
+  if (block.cliError) return "?";
   if (block.writeSupported && block.readSupported) return "W+R";
   if (block.writeSupported) return "Write only";
   if (block.readSupported) return "Read only";
@@ -182,6 +196,7 @@ function dateRangeLabel(block: MergedBlock): string | null {
 }
 
 function tooltipStatusColor(block: MergedBlock): string {
+  if (block.cliError) return "text-gray-400";
   if (block.writeSupported && block.readSupported) return "text-green-400";
   if (block.writeSupported) return "text-amber-400";
   if (block.readSupported) return "text-yellow-400";
@@ -248,6 +263,9 @@ export default function FeatureTimeline({
         </span>
         <span className="flex items-center gap-1.5">
           <span className="inline-block w-3 h-3 rounded-sm bg-red-900" /> Not supported
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-gray-700" /> CLI error (untested)
         </span>
       </div>
 
@@ -332,9 +350,15 @@ export default function FeatureTimeline({
                           {dateRangeLabel(block) && (
                             <span className="text-gray-400">{dateRangeLabel(block)}</span>
                           )}
-                          <span className={tooltipStatusColor(block)}>
-                            {block.writeSupported ? "✓ Write" : "✗ Write"} · {block.readSupported ? "✓ Read" : "✗ Read"}
-                          </span>
+                          {block.cliError ? (
+                            <span className={tooltipStatusColor(block)}>
+                              CLI error — not tested
+                            </span>
+                          ) : (
+                            <span className={tooltipStatusColor(block)}>
+                              {block.writeSupported ? "✓ Write" : "✗ Write"} · {block.readSupported ? "✓ Read" : "✗ Read"}
+                            </span>
+                          )}
                         </div>
                       </div>
                     ))}

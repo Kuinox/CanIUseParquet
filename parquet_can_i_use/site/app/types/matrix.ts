@@ -13,6 +13,8 @@ export interface ToolData {
   tested_versions: string[];
   /** All versions from versions.json, ordered oldest to newest */
   all_versions?: string[];
+  /** Versions where the test CLI itself failed (infra error, not a feature gap) */
+  cli_error_versions?: string[];
   /** Map from version string to ISO date string (YYYY-MM-DD) */
   version_dates: Record<string, string>;
   compression: Record<string, FeatureEntry>;
