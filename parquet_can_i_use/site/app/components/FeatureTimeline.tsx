@@ -250,9 +250,7 @@ export default function FeatureTimeline({
           <span className="inline-block w-3 h-3 rounded-sm bg-red-900" /> Not supported
         </span>
       </div>
-      <p className="text-gray-500 text-xs mb-4">
-        Block height reflects how long each version range was the latest release. Older versions at bottom, newer at top.
-      </p>
+
 
       {/* Chart */}
       <div className="overflow-x-auto">
