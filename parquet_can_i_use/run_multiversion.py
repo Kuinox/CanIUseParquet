@@ -285,19 +285,32 @@ def run_compiled_tool(tool_id, tool_config):
 
 
 def flatten_features(data):
-    """Return a frozenset of all (category, feature, subfeature) tuples that are True."""
-    if not data:
+    """Return a frozenset of all (category, feature, subfeature) tuples that are supported.
+
+    Handles both the old boolean format (v is True) and the new write/read dict format
+    ({"write": bool, "read": bool}).  CLI error results are treated as having no features.
+    """
+    if not data or is_cli_error(data):
         return frozenset()
     supported = set()
     for cat in ("compression", "logical_types", "nested_types", "advanced_features"):
         for k, v in data.get(cat, {}).items():
             if v is True:
                 supported.add((cat, k, None))
+            elif isinstance(v, dict) and (v.get("write") or v.get("read")):
+                supported.add((cat, k, None))
     for enc, types in data.get("encoding", {}).items():
         if isinstance(types, dict):
-            for ptype, v in types.items():
-                if v is True:
-                    supported.add(("encoding", enc, ptype))
+            if "write" in types or "read" in types:
+                # types is itself a rw entry (whole encoding, no per-type breakdown)
+                if types.get("write") or types.get("read"):
+                    supported.add(("encoding", enc, None))
+            else:
+                for ptype, v in types.items():
+                    if v is True:
+                        supported.add(("encoding", enc, ptype))
+                    elif isinstance(v, dict) and (v.get("write") or v.get("read")):
+                        supported.add(("encoding", enc, ptype))
         elif types is True:
             supported.add(("encoding", enc, None))
     return frozenset(supported)
@@ -407,6 +420,7 @@ def main():
                 continue
 
             version_results = []
+            cli_error_versions = []
             for idx in indices:
                 data = tested[idx]
                 if data and not is_cli_error(data):
@@ -415,6 +429,13 @@ def main():
                     result_file = RESULTS_DIR / f"{tool_id}-{versions[idx]}.json"
                     with open(result_file, "w") as f:
                         json.dump(data, f, indent=2)
+                elif is_cli_error(data):
+                    cli_error_versions.append(versions[idx])
+
+            if cli_error_versions:
+                cli_error_file = RESULTS_DIR / f"{tool_id}-cli_errors.json"
+                with open(cli_error_file, "w") as f:
+                    json.dump({"cli_error_versions": cli_error_versions}, f, indent=2)
 
             all_results[tool_id] = version_results
         else:
@@ -444,6 +465,7 @@ def main():
                 continue
 
             version_results = []
+            cli_error_versions = []
             for idx in indices:
                 data = tested[idx]
                 if data and not is_cli_error(data):
@@ -452,6 +474,13 @@ def main():
                     result_file = RESULTS_DIR / f"{tool_id}-{versions[idx]}.json"
                     with open(result_file, "w") as f:
                         json.dump(data, f, indent=2)
+                elif is_cli_error(data):
+                    cli_error_versions.append(versions[idx])
+
+            if cli_error_versions:
+                cli_error_file = RESULTS_DIR / f"{tool_id}-cli_errors.json"
+                with open(cli_error_file, "w") as f:
+                    json.dump({"cli_error_versions": cli_error_versions}, f, indent=2)
 
             all_results[tool_id] = version_results
 

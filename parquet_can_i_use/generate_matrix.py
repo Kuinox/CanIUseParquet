@@ -237,11 +237,17 @@ def load_multiversion_results():
     results = {}
     for tool_id in TOOL_ORDER:
         tool_results = []
-        # Look for versioned result files, sorted by semantic version
+        # Look for versioned result files, sorted by semantic version.
+        # Exclude cli_errors summary files (they have a different schema).
         for f in sorted(RESULTS_DIR.glob(f"{tool_id}-*.json"),
                         key=lambda f: _version_sort_key(f, tool_id)):
+            if f.name == f"{tool_id}-cli_errors.json":
+                continue
             with open(f) as fh:
-                tool_results.append(json.load(fh))
+                data = json.load(fh)
+            if isinstance(data, dict) and data.get("cli_error"):
+                continue  # skip any stray cli_error files
+            tool_results.append(data)
         # Fall back to un-versioned result file
         if not tool_results:
             single = RESULTS_DIR / f"{tool_id}.json"
@@ -251,6 +257,20 @@ def load_multiversion_results():
         if tool_results:
             results[tool_id] = tool_results
     return results
+
+
+def load_cli_error_versions() -> dict:
+    """Load cli_error version lists from per-tool {tool_id}-cli_errors.json files."""
+    cli_errors = {}
+    for tool_id in TOOL_ORDER:
+        cli_error_file = RESULTS_DIR / f"{tool_id}-cli_errors.json"
+        if cli_error_file.exists():
+            with open(cli_error_file) as f:
+                data = json.load(f)
+            versions = data.get("cli_error_versions", [])
+            if versions:
+                cli_errors[tool_id] = versions
+    return cli_errors
 
 
 def load_version_dates() -> dict:
@@ -279,10 +299,12 @@ def load_all_versions() -> dict:
     return {}
 
 
-def build_matrix_data(multiversion_results):
+def build_matrix_data(multiversion_results, cli_error_versions=None):
     """Build the complete matrix data structure for the site."""
     version_dates = load_version_dates()
     all_versions_map = load_all_versions()
+    if cli_error_versions is None:
+        cli_error_versions = {}
 
     matrix = {
         "tools": {},
@@ -311,12 +333,14 @@ def build_matrix_data(multiversion_results):
             "tested_versions": tested_versions,
             "all_versions": all_versions_map.get(tool_id, []),
             "version_dates": version_dates.get(tool_id, {}),
+            "cli_error_versions": cli_error_versions.get(tool_id, []),
             "compression": {},
             "encoding": {},
             "logical_types": {},
             "nested_types": {},
             "advanced_features": {},
         }
+
 
         # Compression
         for codec in COMPRESSION_CODECS:
@@ -586,9 +610,11 @@ def main():
 
     if args.load_results:
         multiversion_results = load_multiversion_results()
+        cli_error_versions = load_cli_error_versions()
     else:
         tools_to_run = args.only if args.only else list(TOOLS.keys())
         multiversion_results = {}
+        cli_error_versions = {}
 
         print("Running Parquet feature tests...")
         print()
@@ -606,7 +632,7 @@ def main():
                     with open(single) as f:
                         multiversion_results[tool_id] = [json.load(f)]
 
-    matrix_data = build_matrix_data(multiversion_results)
+    matrix_data = build_matrix_data(multiversion_results, cli_error_versions)
 
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_JSON, "w") as f:
