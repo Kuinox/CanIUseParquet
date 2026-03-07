@@ -135,9 +135,10 @@ func readArrowParquet(tmpdir string, name string) error {
 // WithEncoding(enc) with dictionary disabled.
 func makeEncodingProps(encName string) *parquet.WriterProperties {
 	switch encName {
-	case "PLAIN_DICTIONARY":
-		return parquet.NewWriterProperties(parquet.WithDictionaryDefault(true))
-	case "RLE_DICTIONARY":
+	case "PLAIN_DICTIONARY", "RLE_DICTIONARY":
+		// Both dictionary variants are enabled the same way in arrow-go.
+		// The library writes PLAIN_DICTIONARY for Parquet format v1.0 and
+		// RLE_DICTIONARY for v2.0+; WithDictionaryDefault(true) covers both.
 		return parquet.NewWriterProperties(parquet.WithDictionaryDefault(true))
 	case "BIT_PACKED":
 		// Deprecated; not implemented in arrow-go — signal unsupported.

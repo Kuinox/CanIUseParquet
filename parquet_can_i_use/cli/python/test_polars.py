@@ -127,7 +127,8 @@ def main():
             if enc == 'RLE':
                 # RLE appears in ALL nullable columns because it encodes
                 # definition/repetition levels — it is NOT a data-page encoding here.
-                # Polars uses PLAIN (bit-packing) for BOOLEAN data, not RLE.
+                # Polars uses PLAIN encoding for BOOLEAN data (stored as 8 values per
+                # byte per the Parquet PLAIN spec for booleans), not RLE/hybrid-RLE.
                 pass
             elif enc == 'PLAIN':
                 if not uses_dictionary:
