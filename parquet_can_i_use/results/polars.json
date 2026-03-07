@@ -38,11 +38,11 @@
   "encoding": {
     "PLAIN": {
       "INT32": {
-        "write": true,
+        "write": false,
         "read": true
       },
       "INT64": {
-        "write": true,
+        "write": false,
         "read": true
       },
       "FLOAT": {
@@ -58,7 +58,7 @@
         "read": true
       },
       "BYTE_ARRAY": {
-        "write": true,
+        "write": false,
         "read": true
       }
     },
@@ -116,27 +116,27 @@
     },
     "RLE": {
       "INT32": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "INT64": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "FLOAT": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "DOUBLE": {
-        "write": true,
+        "write": false,
         "read": false
       },
       "BOOLEAN": {
-        "write": true,
+        "write": false,
         "read": true
       },
       "BYTE_ARRAY": {
-        "write": true,
+        "write": false,
         "read": false
       }
     },

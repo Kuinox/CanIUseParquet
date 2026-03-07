@@ -99,11 +99,50 @@ def main():
         _have_pyarrow = False
 
     def get_polars_file_encodings(path):
-        """Return the set of encodings in the first column of a Polars-written file."""
+        """Return the set of encodings used for DATA VALUES in the first column.
+
+        PyArrow's column.encodings reports ALL encodings: data pages, dictionary
+        pages, AND definition/repetition level pages.  Because Polars writes nullable
+        (OPTIONAL) columns, every column contains RLE-encoded definition levels, so
+        'RLE' appears in column.encodings for every single type.  Similarly, when
+        dictionary encoding is active (RLE_DICTIONARY), 'PLAIN' appears for the
+        dictionary page values, not for the actual data values.
+
+        This function filters out these artefacts so that only encodings attributable
+        to the data pages themselves are returned.
+        """
         if not _have_pyarrow:
             return set()
-        meta = _pq.read_metadata(path)
-        return set(meta.row_group(0).column(0).encodings)
+        try:
+            meta = _pq.read_metadata(path)
+            all_encs = set(meta.row_group(0).column(0).encodings)
+        except Exception:
+            return set()
+
+        # Detect if dictionary encoding is active
+        uses_dictionary = bool(all_encs & {'RLE_DICTIONARY', 'PLAIN_DICTIONARY'})
+
+        data_encs = set()
+        for enc in all_encs:
+            if enc == 'RLE':
+                # RLE appears in ALL nullable columns because it encodes
+                # definition/repetition levels — it is NOT a data-page encoding here.
+                # Polars uses PLAIN encoding for BOOLEAN data (stored as 8 values per
+                # byte per the Parquet PLAIN spec for booleans), not RLE/hybrid-RLE.
+                pass
+            elif enc == 'PLAIN':
+                if not uses_dictionary:
+                    # No dictionary in use → PLAIN is the actual data encoding.
+                    data_encs.add('PLAIN')
+                # else: PLAIN encodes the dictionary page values, not the data values.
+            elif enc == 'BIT_PACKED':
+                pass  # deprecated; not used for data pages in current implementations
+            else:
+                # RLE_DICTIONARY, PLAIN_DICTIONARY, DELTA_BINARY_PACKED,
+                # DELTA_LENGTH_BYTE_ARRAY, DELTA_BYTE_ARRAY, BYTE_STREAM_SPLIT …
+                # these only appear in data pages.
+                data_encs.add(enc)
+        return data_encs
 
     # Parquet encoding name → pyarrow column_encoding string
     _PYARROW_ENCODING_MAP = {

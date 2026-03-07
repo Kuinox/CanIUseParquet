@@ -83,7 +83,7 @@ SPEC_VALID_ENCODING_TYPES = {
     "PLAIN":                    {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
     "PLAIN_DICTIONARY":         {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
     "RLE_DICTIONARY":           {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
-    "RLE":                      {"BOOLEAN", "INT32", "INT64"},
+    "RLE":                      {"BOOLEAN"},
     "BIT_PACKED":               set(),  # deprecated; not for data pages
     "DELTA_BINARY_PACKED":      {"INT32", "INT64"},
     "DELTA_LENGTH_BYTE_ARRAY":  {"BYTE_ARRAY"},
