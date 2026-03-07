@@ -55,6 +55,7 @@ export default async function FeaturePage({ params }: Props) {
   if (!feature) notFound();
 
   const toolIds = Object.keys(data.tools);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   const serializedData = {
     tools: data.tools,
@@ -66,14 +67,14 @@ export default async function FeaturePage({ params }: Props) {
       <div className="max-w-[1600px] mx-auto px-4 py-6">
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
           <Link
-            href="/"
+            href={`${basePath}/`}
             className="hover:text-green-400 transition-colors"
           >
             Home
           </Link>
           <span>›</span>
           <Link
-            href={`/${categorySlug}`}
+            href={`${basePath}/${categorySlug}`}
             className="hover:text-green-400 transition-colors"
           >
             {categoryLabel}
@@ -84,7 +85,7 @@ export default async function FeaturePage({ params }: Props) {
 
         <div className="flex items-center gap-4 mb-6">
           <Link
-            href={`/${categorySlug}`}
+            href={`${basePath}/${categorySlug}`}
             className="text-sm text-gray-400 hover:text-green-400 transition-colors flex items-center gap-1"
           >
             ← Back to {categoryLabel}

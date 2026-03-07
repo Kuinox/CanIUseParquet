@@ -30,13 +30,14 @@ export default async function CategoryPage({ params }: Props) {
   const data = getMatrixData();
   const label = CATEGORY_LABELS[internalCategory];
   const description = CATEGORY_DESCRIPTIONS[internalCategory];
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   return (
     <main className="min-h-screen">
       <div className="max-w-[1600px] mx-auto px-4 py-6">
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
           <Link
-            href="/"
+            href={`${basePath}/`}
             className="hover:text-green-400 transition-colors"
           >
             Home
