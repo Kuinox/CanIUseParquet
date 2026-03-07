@@ -45,12 +45,13 @@ def main():
     # So our codec map is:
     #   LZ4     → None (no Polars codec produces the deprecated LZ4 format)
     #   LZ4_RAW → "lz4" (Polars' only LZ4 codec, produces LZ4_RAW)
+    #   LZO     → None for write (Polars cannot write LZO), read tested via fastparquet-written file
     codecs = {
         "NONE":    "uncompressed",
         "SNAPPY":  "snappy",
         "GZIP":    "gzip",
         "BROTLI":  "brotli",
-        "LZO":     "lzo",
+        "LZO":     None,    # Polars cannot write LZO; read is tested separately below
         "LZ4":     None,    # deprecated LZ4 not supported; Polars has no codec for it
         "LZ4_RAW": "lz4",   # Polars' "lz4" produces LZ4_RAW format
         "ZSTD":    "zstd",
@@ -66,6 +67,19 @@ def main():
             def read_codec(p=path):
                 pl.read_parquet(p)
             results["compression"][codec_name] = test_rw(write_codec, read_codec)
+
+    # Polars cannot write LZO, but it can read LZO-compressed Parquet files.
+    # Use fastparquet (with python-lzo) to write a test file, then verify Polars can read it.
+    lzo_path = os.path.join(tmpdir, "comp_LZO.parquet")
+    lzo_read_ok = False
+    try:
+        import fastparquet
+        import pandas as pd
+        fastparquet.write(lzo_path, pd.DataFrame({"col": [1, 2, 3]}), compression="LZO")
+        lzo_read_ok = test_feature("read", lambda p=lzo_path: pl.read_parquet(p))
+    except Exception:
+        pass
+    results["compression"]["LZO"]["read"] = lzo_read_ok
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]

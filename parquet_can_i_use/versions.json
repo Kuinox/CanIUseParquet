@@ -230,7 +230,8 @@
     "cli": "cli/python/test_fastparquet.py",
     "extra_deps": [
       "pandas",
-      "numpy"
+      "numpy",
+      "python-lzo"
     ]
   },
   "polars": {
@@ -988,7 +989,7 @@
     },
     "install": "pip install polars=={version}",
     "cli": "cli/python/test_polars.py",
-    "extra_deps": []
+    "extra_deps": ["fastparquet", "python-lzo", "pandas", "numpy"]
   },
   "duckdb": {
     "versions": [

@@ -20,7 +20,7 @@
     },
     "LZO": {
       "write": false,
-      "read": false
+      "read": true
     },
     "LZ4": {
       "write": false,

@@ -19,8 +19,8 @@
       "read": true
     },
     "LZO": {
-      "write": false,
-      "read": false
+      "write": true,
+      "read": true
     },
     "LZ4": {
       "write": true,
