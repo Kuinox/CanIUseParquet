@@ -3,18 +3,25 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/parquet-go/parquet-go"
+	pgbytestream "github.com/parquet-go/parquet-go/encoding/bytestreamsplit"
+	pgdelta "github.com/parquet-go/parquet-go/encoding/delta"
+	pgplain "github.com/parquet-go/parquet-go/encoding/plain"
+	pgrle "github.com/parquet-go/parquet-go/encoding/rle"
 	"github.com/parquet-go/parquet-go/compress/gzip"
 	"github.com/parquet-go/parquet-go/compress/snappy"
 	"github.com/parquet-go/parquet-go/compress/uncompressed"
 	"github.com/parquet-go/parquet-go/compress/zstd"
+
+	pgencoding "github.com/parquet-go/parquet-go/encoding"
 )
 
 type SimpleRow struct {
-	Col int32  `parquet:"col"`
+	Col int32 `parquet:"col"`
 }
 
 type StringRow struct {
@@ -36,9 +43,14 @@ type MapRow struct {
 	Col map[string]int32 `parquet:"col"`
 }
 
-func testFeature(fn func() error) bool {
-	err := fn()
-	return err == nil
+// testFeature runs fn() and returns true if it succeeds (no error, no panic).
+func testFeature(fn func() error) (ok bool) {
+	defer func() {
+		if r := recover(); r != nil {
+			ok = false
+		}
+	}()
+	return fn() == nil
 }
 
 type RWResult struct {
@@ -93,6 +105,97 @@ func writeReadParquet[T any](tmpdir string, name string, rows []T, opts ...parqu
 		return err
 	}
 	return readParquet[T](tmpdir, name)
+}
+
+// makeTypedNode returns a parquet.Node for the given physical type name.
+func makeTypedNode(ptype string) parquet.Node {
+	switch ptype {
+	case "INT32":
+		return parquet.Int(32)
+	case "INT64":
+		return parquet.Int(64)
+	case "FLOAT":
+		return parquet.Leaf(parquet.FloatType)
+	case "DOUBLE":
+		return parquet.Leaf(parquet.DoubleType)
+	case "BOOLEAN":
+		return parquet.Leaf(parquet.BooleanType)
+	case "BYTE_ARRAY":
+		return parquet.String()
+	}
+	return parquet.Int(32)
+}
+
+// sampleRows returns 3 sample rows for the given physical type.
+func sampleRows(ptype string) []parquet.Row {
+	out := make([]parquet.Row, 3)
+	for i := int32(0); i < 3; i++ {
+		switch ptype {
+		case "INT32":
+			out[i] = parquet.Row{parquet.ValueOf(int32(i + 1))}
+		case "INT64":
+			out[i] = parquet.Row{parquet.ValueOf(int64(i + 1))}
+		case "FLOAT":
+			out[i] = parquet.Row{parquet.FloatValue(float32(i + 1))}
+		case "DOUBLE":
+			out[i] = parquet.Row{parquet.DoubleValue(float64(i + 1))}
+		case "BOOLEAN":
+			out[i] = parquet.Row{parquet.BooleanValue(i%2 == 0)}
+		case "BYTE_ARRAY":
+			out[i] = parquet.Row{parquet.ValueOf([]byte{byte(i + 1)})}
+		default:
+			out[i] = parquet.Row{parquet.ValueOf(int32(i + 1))}
+		}
+	}
+	return out
+}
+
+// writeEncParquet writes a file using the low-level parquet.Writer with a
+// schema that has enc applied to the single column "col".
+func writeEncParquet(tmpdir, encName, typeName string, enc pgencoding.Encoding) error {
+	leaf := makeTypedNode(typeName)
+	node := parquet.Group{"col": parquet.Encoded(leaf, enc)}
+	schema := parquet.NewSchema("", node)
+
+	path := filepath.Join(tmpdir, fmt.Sprintf("enc_%s_%s.parquet", encName, typeName))
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	writer := parquet.NewWriter(f, schema)
+	rows := sampleRows(typeName)
+	if _, err := writer.WriteRows(rows); err != nil {
+		writer.Close()
+		f.Close()
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		f.Close()
+		return err
+	}
+	return f.Close()
+}
+
+// readEncParquet reads back a file written by writeEncParquet.
+func readEncParquet(tmpdir, encName, typeName string, enc pgencoding.Encoding) error {
+	leaf := makeTypedNode(typeName)
+	node := parquet.Group{"col": parquet.Encoded(leaf, enc)}
+	schema := parquet.NewSchema("", node)
+
+	path := filepath.Join(tmpdir, fmt.Sprintf("enc_%s_%s.parquet", encName, typeName))
+	rf, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer rf.Close()
+	reader := parquet.NewReader(rf, schema)
+	defer reader.Close()
+	buf := make([]parquet.Row, 3)
+	_, err = reader.ReadRows(buf)
+	if err != nil && err != io.EOF {
+		return err
+	}
+	return nil
 }
 
 func main() {
@@ -150,45 +253,51 @@ func main() {
 	results["compression"] = compression
 
 	// --- Encoding × Type matrix ---
-	// parquet-go doesn't allow per-column encoding control in high-level API
-	// but we test which encoding/type combos its writer handles
+	// For each encoding+type we use parquet-go's low-level schema Node API with
+	// parquet.Encoded(node, enc) to apply the specific encoding.  Combinations that
+	// are not supported by the library (e.g. DELTA_BINARY_PACKED on FLOAT) cause a
+	// panic inside parquet.Encoded; testFeature() recovers from that and returns false.
+	encNames := []string{
+		"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
+		"DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
+		"BYTE_STREAM_SPLIT",
+	}
 	typeNames := []string{"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"}
-	encNames := []string{"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
-		"DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY", "BYTE_STREAM_SPLIT"}
 
-	// parquet-go supports these encodings internally
-	goEncSupport := map[string]bool{
-		"PLAIN":                    true,
-		"PLAIN_DICTIONARY":        true,
-		"RLE_DICTIONARY":          true,
-		"RLE":                     true,
-		"BIT_PACKED":              false,
-		"DELTA_BINARY_PACKED":     true,
-		"DELTA_LENGTH_BYTE_ARRAY": true,
-		"DELTA_BYTE_ARRAY":        true,
-		"BYTE_STREAM_SPLIT":       false,
+	// Map encoding name → encoding object
+	encObjects := map[string]pgencoding.Encoding{
+		"PLAIN":                    &pgplain.Encoding{},
+		"PLAIN_DICTIONARY":         &parquet.PlainDictionary,
+		"RLE_DICTIONARY":           &parquet.RLEDictionary,
+		"RLE":                      &pgrle.Encoding{},
+		"BIT_PACKED":               nil, // deprecated, not implemented
+		"DELTA_BINARY_PACKED":      &pgdelta.BinaryPackedEncoding{},
+		"DELTA_LENGTH_BYTE_ARRAY":  &pgdelta.LengthByteArrayEncoding{},
+		"DELTA_BYTE_ARRAY":         &pgdelta.ByteArrayEncoding{},
+		"BYTE_STREAM_SPLIT":        &pgbytestream.Encoding{},
 	}
 
 	encoding := map[string]interface{}{}
 	for _, encName := range encNames {
 		typeResults := map[string]interface{}{}
+		enc := encObjects[encName]
 		for _, typeName := range typeNames {
-			supported := goEncSupport[encName]
-			if supported {
-				// Test write and read separately
-				eName := encName
-				tName := typeName
-				typeResults[typeName] = testRW(
-					func() error {
-						return writeParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName), rows)
-					},
-					func() error {
-						return readParquet[SimpleRow](tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName))
-					},
-				)
-			} else {
+			eName := encName
+			tName := typeName
+			e := enc
+			if e == nil {
+				// BIT_PACKED: deprecated / not implemented
 				typeResults[typeName] = RWResult{Write: false, Read: false}
+				continue
 			}
+			typeResults[typeName] = testRW(
+				func() error {
+					return writeEncParquet(tmpdir, eName, tName, e)
+				},
+				func() error {
+					return readEncParquet(tmpdir, eName, tName, e)
+				},
+			)
 		}
 		encoding[encName] = typeResults
 	}

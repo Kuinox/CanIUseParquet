@@ -31,14 +31,6 @@
     "STATISTICS": {
       "write": true,
       "read": true
-    },
-    "SIZE_STATISTICS": {
-      "write": false,
-      "read": false
-    },
-    "PAGE_CRC32": {
-      "write": false,
-      "read": false
     }
   },
   "compression": {
@@ -81,6 +73,10 @@
         "write": false,
         "read": false
       },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false
+      },
       "DOUBLE": {
         "write": false,
         "read": false
@@ -94,10 +90,6 @@
         "read": false
       },
       "INT64": {
-        "write": false,
-        "read": false
-      },
-      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
@@ -107,103 +99,103 @@
         "write": false,
         "read": false
       },
-      "DOUBLE": {
+      "BYTE_ARRAY": {
         "write": false,
         "read": false
       },
+      "DOUBLE": {
+        "write": true,
+        "read": true
+      },
       "FLOAT": {
-        "write": false,
-        "read": false
+        "write": true,
+        "read": true
       },
       "INT32": {
         "write": false,
         "read": false
       },
       "INT64": {
-        "write": false,
-        "read": false
-      },
-      "BYTE_ARRAY": {
         "write": false,
         "read": false
       }
     },
     "DELTA_BINARY_PACKED": {
       "BOOLEAN": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false
       },
       "DOUBLE": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "FLOAT": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "INT32": {
         "write": true,
         "read": true
       },
       "INT64": {
-        "write": true,
-        "read": true
-      },
-      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
     },
     "DELTA_BYTE_ARRAY": {
       "BOOLEAN": {
-        "write": true,
-        "read": true
-      },
-      "DOUBLE": {
-        "write": true,
-        "read": true
-      },
-      "FLOAT": {
-        "write": true,
-        "read": true
-      },
-      "INT32": {
-        "write": true,
-        "read": true
-      },
-      "INT64": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "BYTE_ARRAY": {
         "write": true,
         "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false
+      },
+      "INT32": {
+        "write": false,
+        "read": false
+      },
+      "INT64": {
+        "write": false,
+        "read": false
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "BOOLEAN": {
-        "write": true,
-        "read": true
-      },
-      "DOUBLE": {
-        "write": true,
-        "read": true
-      },
-      "FLOAT": {
-        "write": true,
-        "read": true
-      },
-      "INT32": {
-        "write": true,
-        "read": true
-      },
-      "INT64": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "BYTE_ARRAY": {
         "write": true,
         "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false
+      },
+      "INT32": {
+        "write": false,
+        "read": false
+      },
+      "INT64": {
+        "write": false,
+        "read": false
       }
     },
     "PLAIN": {
@@ -211,6 +203,10 @@
         "write": true,
         "read": true
       },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
       "DOUBLE": {
         "write": true,
         "read": true
@@ -224,10 +220,6 @@
         "read": true
       },
       "INT64": {
-        "write": true,
-        "read": true
-      },
-      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
@@ -235,6 +227,10 @@
     "PLAIN_DICTIONARY": {
       "BOOLEAN": {
         "write": true,
+        "read": false
+      },
+      "BYTE_ARRAY": {
+        "write": true,
         "read": true
       },
       "DOUBLE": {
@@ -250,10 +246,6 @@
         "read": true
       },
       "INT64": {
-        "write": true,
-        "read": true
-      },
-      "BYTE_ARRAY": {
         "write": true,
         "read": true
       }
@@ -263,25 +255,25 @@
         "write": true,
         "read": true
       },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false
+      },
       "DOUBLE": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "FLOAT": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "INT32": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       },
       "INT64": {
-        "write": true,
-        "read": true
-      },
-      "BYTE_ARRAY": {
-        "write": true,
-        "read": true
+        "write": false,
+        "read": false
       }
     },
     "RLE_DICTIONARY": {
@@ -289,6 +281,10 @@
         "write": true,
         "read": true
       },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true
+      },
       "DOUBLE": {
         "write": true,
         "read": true
@@ -304,36 +300,6 @@
       "INT64": {
         "write": true,
         "read": true
-      },
-      "BYTE_ARRAY": {
-        "write": true,
-        "read": true
-      }
-    },
-    "BYTE_STREAM_SPLIT_EXTENDED": {
-      "INT32": {
-        "write": false,
-        "read": false
-      },
-      "INT64": {
-        "write": false,
-        "read": false
-      },
-      "FLOAT": {
-        "write": false,
-        "read": false
-      },
-      "DOUBLE": {
-        "write": false,
-        "read": false
-      },
-      "BOOLEAN": {
-        "write": false,
-        "read": false
-      },
-      "BYTE_ARRAY": {
-        "write": false,
-        "read": false
       }
     }
   },
@@ -399,22 +365,6 @@
       "read": false
     },
     "UUID": {
-      "write": false,
-      "read": false
-    },
-    "UNKNOWN": {
-      "write": false,
-      "read": false
-    },
-    "VARIANT": {
-      "write": false,
-      "read": false
-    },
-    "GEOMETRY": {
-      "write": false,
-      "read": false
-    },
-    "GEOGRAPHY": {
       "write": false,
       "read": false
     }
