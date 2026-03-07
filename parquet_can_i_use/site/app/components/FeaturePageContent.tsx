@@ -208,8 +208,6 @@ function NonEncodingContent({
 }) {
   return (
     <FeatureTimeline
-      feature={feature}
-      featureLabel={feature}
       toolIds={toolIds}
       tools={tools}
       getEntry={(tool) => getEntryForTool(tool, category, feature)}
