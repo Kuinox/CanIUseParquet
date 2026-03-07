@@ -346,8 +346,14 @@ def bisect_versions(versions, run_func):
 
     def has_diff(idx_a, idx_b):
         a, b = tested.get(idx_a), tested.get(idx_b)
-        # flatten_features returns frozenset() for None, so a failed version
-        # (no features) will compare as different from a successful one.
+        # If one endpoint is a CLI error and the other is not, always explore
+        # the range: the "other" end may have features we haven't found yet
+        # (e.g. one end is a too-old API and the other succeeded but returned
+        # nothing – or vice-versa for a too-new API).
+        a_is_err = a is None or is_cli_error(a)
+        b_is_err = b is None or is_cli_error(b)
+        if a_is_err != b_is_err:
+            return True
         return flatten_features(a) != flatten_features(b)
 
     # Always test oldest and newest
@@ -423,10 +429,21 @@ def main():
             # Safeguard: if the CLI fails for the latest version, our test harness is
             # broken for this tool.  Skip saving results to avoid persisting incorrect
             # "not supported" data that is really a CLI failure.
+            # Also treat a result with zero features as a CLI failure: a working library
+            # always supports at least some basics; a zero-feature result almost certainly
+            # means the CLI itself is incompatible with the new API.
             latest_idx = len(versions) - 1
-            if is_cli_error(tested.get(latest_idx)):
+            latest_result = tested.get(latest_idx)
+            if is_cli_error(latest_result) or (
+                latest_result is not None and not flatten_features(latest_result)
+            ):
                 print(f"  [{tool_id}] WARNING: CLI failed for latest version "
                       f"{versions[latest_idx]}. Skipping results to avoid saving incorrect data.")
+                # Remove any stale result file so it cannot be picked up by
+                # --load-results and mistakenly displayed as all-unsupported.
+                stale = RESULTS_DIR / f"{tool_id}-{versions[latest_idx]}.json"
+                if stale.exists():
+                    stale.unlink()
                 continue
 
             version_results = []
@@ -468,10 +485,21 @@ def main():
             # Safeguard: if the CLI fails for the latest version, our test harness is
             # broken for this tool.  Skip saving results to avoid persisting incorrect
             # "not supported" data that is really a CLI failure.
+            # Also treat a result with zero features as a CLI failure: a working library
+            # always supports at least some basics; a zero-feature result almost certainly
+            # means the CLI itself is incompatible with the new API.
             latest_idx = len(versions) - 1
-            if is_cli_error(tested.get(latest_idx)):
+            latest_result = tested.get(latest_idx)
+            if is_cli_error(latest_result) or (
+                latest_result is not None and not flatten_features(latest_result)
+            ):
                 print(f"  [{tool_id}] WARNING: CLI failed for latest version "
                       f"{versions[latest_idx]}. Skipping results to avoid saving incorrect data.")
+                # Remove any stale result file so it cannot be picked up by
+                # --load-results and mistakenly displayed as all-unsupported.
+                stale = RESULTS_DIR / f"{tool_id}-{versions[latest_idx]}.json"
+                if stale.exists():
+                    stale.unlink()
                 continue
 
             version_results = []

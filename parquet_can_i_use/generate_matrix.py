@@ -217,6 +217,33 @@ def _get_rw(entry, access):
     return bool(entry) if entry is not None else False
 
 
+def _has_any_feature_support(version_result: dict) -> bool:
+    """Return True if the result contains at least one supported feature (read or write).
+
+    A version result with zero feature support is almost certainly a CLI failure
+    rather than evidence that the library genuinely dropped all feature support.
+    """
+    for cat in ("compression", "logical_types", "nested_types", "advanced_features"):
+        for entry in version_result.get(cat, {}).values():
+            if _get_rw(entry, "write") or _get_rw(entry, "read"):
+                return True
+    for enc_data in version_result.get("encoding", {}).values():
+        if not isinstance(enc_data, dict):
+            # Legacy boolean format
+            if enc_data is True:
+                return True
+        elif "write" in enc_data or "read" in enc_data:
+            # Whole-encoding rw entry
+            if _get_rw(enc_data, "write") or _get_rw(enc_data, "read"):
+                return True
+        else:
+            # Per-type breakdown: {INT32: {write: bool, read: bool}, ...}
+            for entry in enc_data.values():
+                if _get_rw(entry, "write") or _get_rw(entry, "read"):
+                    return True
+    return False
+
+
 def _version_sort_key(filepath, tool_id):
     """Return a sortable key for a versioned result file by semantic version."""
     version_str = filepath.stem[len(tool_id) + 1:]
@@ -324,6 +351,16 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
             continue
 
         latest = version_results[-1]
+        # Prefer the most recent result that actually has feature support.
+        # A result with zero features almost certainly means the CLI is
+        # incompatible with that library version's API, not that the library
+        # genuinely dropped all support.
+        latest_with_features = next(
+            (vr for vr in reversed(version_results) if _has_any_feature_support(vr)),
+            None,
+        )
+        if latest_with_features is not None:
+            latest = latest_with_features
         tested_versions = [vr.get("tested_version") or vr.get("version") for vr in version_results]
 
         tool_data = {
