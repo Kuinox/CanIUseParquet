@@ -302,7 +302,7 @@ def flatten_features(data):
     for enc, types in data.get("encoding", {}).items():
         if isinstance(types, dict):
             if "write" in types or "read" in types:
-                # types is itself a rw entry (whole encoding, no per-type breakdown)
+                # types is itself a rw dict (the whole encoding, not per-type breakdown)
                 if types.get("write") or types.get("read"):
                     supported.add(("encoding", enc, None))
             else:
