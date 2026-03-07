@@ -225,7 +225,7 @@ function EncodingFeatureContent({
   );
 }
 
-// For non-encoding: show support summary + timeline button
+// For non-encoding: show inline timeline
 function NonEncodingContent({
   feature,
   category,
@@ -237,137 +237,15 @@ function NonEncodingContent({
   toolIds: string[];
   tools: Record<string, ToolData>;
 }) {
-  const [showTimeline, setShowTimeline] = useState(false);
-
   return (
-    <div>
-      {showTimeline && (
-        <FeatureTimeline
-          feature={feature}
-          featureLabel={feature}
-          toolIds={toolIds}
-          tools={tools}
-          getEntry={(tool) => getEntryForTool(tool, category, feature)}
-          onClose={() => setShowTimeline(false)}
-        />
-      )}
-
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-white">Support by Tool</h2>
-        <button
-          onClick={() => setShowTimeline(true)}
-          className="px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white text-sm rounded-lg transition-colors flex items-center gap-2"
-        >
-          <span>▶</span> View Version Timeline
-        </button>
-      </div>
-
-      <div className="overflow-x-auto rounded-lg border border-gray-800">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-900">
-              <th className="px-3 py-2 text-left text-gray-300 font-medium min-w-[160px]">
-                Tool
-              </th>
-              <th className="px-3 py-2 text-center text-gray-300 font-medium">
-                Write
-              </th>
-              <th className="px-3 py-2 text-center text-gray-300 font-medium">
-                Read
-              </th>
-              <th className="px-3 py-2 text-center text-gray-300 font-medium">
-                Write Since
-              </th>
-              <th className="px-3 py-2 text-center text-gray-300 font-medium">
-                Read Since
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {toolIds.map((tid, i) => {
-              const tool = tools[tid];
-              const entry = getEntryForTool(tool, category, feature);
-              if (!entry) {
-                return (
-                  <tr
-                    key={tid}
-                    className={
-                      i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"
-                    }
-                  >
-                    <td className="px-3 py-2 font-semibold text-white">
-                      {tool.display_name}
-                    </td>
-                    <td
-                      colSpan={4}
-                      className="px-3 py-2 text-center text-gray-600"
-                    >
-                      Not tested
-                    </td>
-                  </tr>
-                );
-              }
-              if (entry.not_applicable) {
-                return (
-                  <tr
-                    key={tid}
-                    className={
-                      i % 2 === 0 ? "bg-gray-900/50" : "bg-gray-950"
-                    }
-                  >
-                    <td className="px-3 py-2 font-semibold text-white">
-                      {tool.display_name}
-                    </td>
-                    <td
-                      colSpan={4}
-                      className="px-3 py-2 text-center text-gray-500"
-                    >
-                      Not applicable
-                    </td>
-                  </tr>
-                );
-              }
-              const rowBg =
-                entry.write && entry.read
-                  ? "bg-green-950/20"
-                  : !entry.write && !entry.read
-                    ? "bg-red-950/20"
-                    : "bg-yellow-950/20";
-              return (
-                <tr key={tid} className={rowBg}>
-                  <td className="px-3 py-2 font-semibold text-white">
-                    {tool.display_name}
-                    <div className="text-[10px] text-gray-500 font-normal">
-                      {tool.language} · v{tool.latest_version}
-                    </div>
-                  </td>
-                  <td className="px-3 py-2 text-center">
-                    {entry.write ? (
-                      <span className="text-green-400">✅</span>
-                    ) : (
-                      <span className="text-red-400">❌</span>
-                    )}
-                  </td>
-                  <td className="px-3 py-2 text-center">
-                    {entry.read ? (
-                      <span className="text-green-400">✅</span>
-                    ) : (
-                      <span className="text-red-400">❌</span>
-                    )}
-                  </td>
-                  <td className="px-3 py-2 text-center font-mono text-xs text-gray-300">
-                    {entry.write_since ?? (entry.write ? "—" : "n/a")}
-                  </td>
-                  <td className="px-3 py-2 text-center font-mono text-xs text-gray-300">
-                    {entry.read_since ?? (entry.read ? "—" : "n/a")}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <FeatureTimeline
+      feature={feature}
+      featureLabel={feature}
+      toolIds={toolIds}
+      tools={tools}
+      getEntry={(tool) => getEntryForTool(tool, category, feature)}
+      inline
+    />
   );
 }
 
