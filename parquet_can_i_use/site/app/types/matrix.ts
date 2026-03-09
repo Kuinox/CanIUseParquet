@@ -4,6 +4,8 @@ export interface FeatureEntry {
   write_since?: string | null;
   read_since?: string | null;
   not_applicable?: boolean;
+  /** True when the test CLI itself could not test this feature (infra error, not a library feature gap). */
+  cli_error?: boolean;
 }
 
 export interface ToolData {

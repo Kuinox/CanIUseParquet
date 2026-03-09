@@ -77,6 +77,18 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
       </td>
     );
   }
+  if (entry.cli_error) {
+    return (
+      <td className="px-3 py-2 text-center bg-orange-950/20">
+        <span
+          className="text-orange-400 cursor-default"
+          title="Test infrastructure error — not a library feature gap"
+        >
+          ⚠️
+        </span>
+      </td>
+    );
+  }
 
   const bothSupported = entry.write && entry.read;
   const neitherSupported = !entry.write && !entry.read;
