@@ -217,6 +217,17 @@ def _get_rw(entry, access):
     return bool(entry) if entry is not None else False
 
 
+def _is_feature_cli_error(entry) -> bool:
+    """Return True if a feature entry signals a test-infrastructure error.
+
+    A feature-level CLI error means the test harness could not exercise this
+    specific feature (e.g. a required helper library was missing), rather than
+    the library genuinely not supporting it.  Distinct from a whole-version
+    cli_error where the entire CLI process crashed.
+    """
+    return isinstance(entry, dict) and entry.get("cli_error") is True
+
+
 def _has_any_feature_support(version_result: dict) -> bool:
     """Return True if the result contains at least one supported feature (read or write).
 
@@ -386,12 +397,15 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "compression", codec, access="write")
             read_since = find_first_version(version_results, "compression", codec, access="read")
-            tool_data["compression"][codec] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            if _is_feature_cli_error(entry):
+                cell["cli_error"] = True
+            tool_data["compression"][codec] = cell
 
         # Encoding x Type
         for enc in ENCODINGS:
@@ -418,9 +432,12 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
                     "read": read_ok,
                     "read_since": read_since,
                 }
-                # If neither supported and the spec doesn't define this combination,
-                # mark as not_applicable (shown as gray) instead of red.
-                if not is_supported:
+                if _is_feature_cli_error(entry):
+                    cell["cli_error"] = True
+                elif not is_supported:
+                    # Neither write nor read is supported and this is not a CLI error.
+                    # If the spec also doesn't define this encoding×type combination,
+                    # mark as not_applicable (shown as gray) rather than red.
                     spec_valid = SPEC_VALID_ENCODING_TYPES.get(enc, set())
                     if ptype not in spec_valid:
                         cell["not_applicable"] = True
@@ -433,12 +450,15 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "logical_types", lt, access="write")
             read_since = find_first_version(version_results, "logical_types", lt, access="read")
-            tool_data["logical_types"][lt] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            if _is_feature_cli_error(entry):
+                cell["cli_error"] = True
+            tool_data["logical_types"][lt] = cell
 
         # Nested Types
         for nt in NESTED_TYPES:
@@ -447,12 +467,15 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "nested_types", nt, access="write")
             read_since = find_first_version(version_results, "nested_types", nt, access="read")
-            tool_data["nested_types"][nt] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            if _is_feature_cli_error(entry):
+                cell["cli_error"] = True
+            tool_data["nested_types"][nt] = cell
 
         # Advanced Features
         for af in ADVANCED_FEATURES:
@@ -461,12 +484,15 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
             read_ok = _get_rw(entry, "read")
             write_since = find_first_version(version_results, "advanced_features", af, access="write")
             read_since = find_first_version(version_results, "advanced_features", af, access="read")
-            tool_data["advanced_features"][af] = {
+            cell = {
                 "write": write_ok,
                 "write_since": write_since,
                 "read": read_ok,
                 "read_since": read_since,
             }
+            if _is_feature_cli_error(entry):
+                cell["cli_error"] = True
+            tool_data["advanced_features"][af] = cell
 
         matrix["tools"][tool_id] = tool_data
 
@@ -485,6 +511,8 @@ def symbol(entry):
     if isinstance(entry, dict):
         if entry.get("not_applicable"):
             return "➖"
+        if entry.get("cli_error"):
+            return "⚠"
         # New format with write/read keys
         if "write" in entry or "read" in entry:
             write = entry.get("write", False)

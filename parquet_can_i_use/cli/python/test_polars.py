@@ -189,47 +189,57 @@ def main():
         "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
         "BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED",
     ]
-    for enc_name in encoding_names:
-        results["encoding"][enc_name] = {}
-        for ptype in encoding_types:
-            write_path = os.path.join(tmpdir, f"enc_write_{enc_name}_{ptype}.parquet")
-            read_path  = os.path.join(tmpdir, f"enc_read_{enc_name}_{ptype}.parquet")
+    if not _have_pyarrow:
+        # Encoding tests need pyarrow both to verify written encodings and to generate
+        # read-test fixtures.  Mark all cells as cli_error so the matrix shows a warning
+        # (infra limitation) rather than a misleading "not supported" (red).
+        for enc_name in encoding_names:
+            results["encoding"][enc_name] = {
+                ptype: {"write": False, "read": False, "cli_error": True}
+                for ptype in encoding_types
+            }
+    else:
+        for enc_name in encoding_names:
+            results["encoding"][enc_name] = {}
+            for ptype in encoding_types:
+                write_path = os.path.join(tmpdir, f"enc_write_{enc_name}_{ptype}.parquet")
+                read_path  = os.path.join(tmpdir, f"enc_read_{enc_name}_{ptype}.parquet")
 
-            def write_enc(p=write_path, en=enc_name, pt=ptype):
-                df = make_typed_df(pt)
-                df.write_parquet(p)
-                # Verify the encoding actually appears in the written file.
-                actual = get_polars_file_encodings(p)
-                if not actual:
-                    # No encodings detected (pyarrow unavailable or file is empty);
-                    # cannot verify, so conservatively mark as not supported.
-                    raise NotImplementedError("Could not read file encodings for verification")
-                if en not in actual:
-                    raise ValueError(
-                        f"Polars did not write {en} encoding; actual encodings: {actual}"
-                    )
+                def write_enc(p=write_path, en=enc_name, pt=ptype):
+                    df = make_typed_df(pt)
+                    df.write_parquet(p)
+                    # Verify the encoding actually appears in the written file.
+                    actual = get_polars_file_encodings(p)
+                    if not actual:
+                        # No encodings detected (pyarrow unavailable or file is empty);
+                        # cannot verify, so conservatively mark as not supported.
+                        raise NotImplementedError("Could not read file encodings for verification")
+                    if en not in actual:
+                        raise ValueError(
+                            f"Polars did not write {en} encoding; actual encodings: {actual}"
+                        )
 
-            def read_enc(rp=read_path, en=enc_name, pt=ptype):
-                # Write a file with the target encoding via pyarrow, then read with Polars.
-                if not _have_pyarrow:
-                    raise NotImplementedError("Cannot test encoding read without pyarrow")
-                pa_enc = _PYARROW_ENCODING_MAP.get(en)
-                if pa_enc is None:
-                    raise NotImplementedError(f"No pyarrow encoding mapping for {en}")
-                t = make_pa_typed_table(pt)
-                if t is None:
-                    raise ValueError(f"Could not build pyarrow table for {pt}")
-                try:
-                    _pq.write_table(
-                        t, rp, use_dictionary=(pa_enc in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")),
-                        column_encoding=None if pa_enc in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")
-                                        else pa_enc,
-                    )
-                except Exception:
-                    raise
-                pl.read_parquet(rp)
+                def read_enc(rp=read_path, en=enc_name, pt=ptype):
+                    # Write a file with the target encoding via pyarrow, then read with Polars.
+                    if not _have_pyarrow:
+                        raise NotImplementedError("Cannot test encoding read without pyarrow")
+                    pa_enc = _PYARROW_ENCODING_MAP.get(en)
+                    if pa_enc is None:
+                        raise NotImplementedError(f"No pyarrow encoding mapping for {en}")
+                    t = make_pa_typed_table(pt)
+                    if t is None:
+                        raise ValueError(f"Could not build pyarrow table for {pt}")
+                    try:
+                        _pq.write_table(
+                            t, rp, use_dictionary=(pa_enc in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")),
+                            column_encoding=None if pa_enc in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")
+                                            else pa_enc,
+                        )
+                    except Exception:
+                        raise
+                    pl.read_parquet(rp)
 
-            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
+                results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
     # --- Logical Types ---
     import datetime
     from decimal import Decimal

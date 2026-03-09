@@ -989,7 +989,7 @@
     },
     "install": "pip install polars=={version}",
     "cli": "cli/python/test_polars.py",
-    "extra_deps": []
+    "extra_deps": ["pyarrow"]
   },
   "duckdb": {
     "versions": [
