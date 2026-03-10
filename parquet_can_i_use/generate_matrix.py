@@ -281,10 +281,14 @@ def load_multiversion_results():
                         key=lambda f: _version_sort_key(f, tool_id)):
             if f.name == f"{tool_id}-cli_errors.json":
                 continue
+            if f.name == f"{tool_id}-cli_harness_broken.json":
+                continue
             with open(f) as fh:
                 data = json.load(fh)
             if isinstance(data, dict) and data.get("cli_error"):
                 continue  # skip any stray cli_error files
+            if isinstance(data, dict) and data.get("cli_harness_broken"):
+                continue  # skip cli_harness_broken markers
             tool_results.append(data)
         # Fall back to un-versioned result file
         if not tool_results:
@@ -309,6 +313,26 @@ def load_cli_error_versions() -> dict:
             if versions:
                 cli_errors[tool_id] = versions
     return cli_errors
+
+
+def load_cli_harness_broken() -> dict:
+    """Load tools marked as having a broken CLI harness.
+
+    A broken-harness marker is written by run_multiversion.py when the CLI for
+    the latest version either crashes or returns zero feature support.  We use
+    it to distinguish "library doesn't support this" from "our test harness
+    doesn't work for this library right now".
+
+    Returns a dict mapping tool_id to the marker data (contains at least
+    ``{"cli_harness_broken": True, "version": "x.y.z", "tool": "tool_id"}``).
+    """
+    broken = {}
+    for tool_id in TOOL_ORDER:
+        marker_file = RESULTS_DIR / f"{tool_id}-cli_harness_broken.json"
+        if marker_file.exists():
+            with open(marker_file) as f:
+                broken[tool_id] = json.load(f)
+    return broken
 
 
 def load_version_dates() -> dict:
@@ -337,12 +361,14 @@ def load_all_versions() -> dict:
     return {}
 
 
-def build_matrix_data(multiversion_results, cli_error_versions=None):
+def build_matrix_data(multiversion_results, cli_error_versions=None, cli_harness_broken_tools=None):
     """Build the complete matrix data structure for the site."""
     version_dates = load_version_dates()
     all_versions_map = load_all_versions()
     if cli_error_versions is None:
         cli_error_versions = {}
+    if cli_harness_broken_tools is None:
+        cli_harness_broken_tools = {}
 
     matrix = {
         "tools": {},
@@ -358,7 +384,39 @@ def build_matrix_data(multiversion_results, cli_error_versions=None):
 
     for tool_id in TOOL_ORDER:
         version_results = multiversion_results.get(tool_id, [])
-        if not version_results:
+        cli_broken = tool_id in cli_harness_broken_tools
+
+        if not version_results and not cli_broken:
+            continue
+
+        if cli_broken and not version_results:
+            # The test harness is broken for this tool: include it in the matrix
+            # so visitors know it is being tracked, but mark every cell as a CLI
+            # error (not a library capability gap).
+            all_versions = all_versions_map.get(tool_id, [])
+            marker = cli_harness_broken_tools[tool_id]
+            # Prefer the version recorded in the marker; fall back to the last
+            # known version from versions.json; last resort: "?".
+            broken_version = marker.get("version") or (all_versions[-1] if all_versions else "?")
+            tool_data = {
+                "display_name": TOOL_DISPLAY_NAMES.get(tool_id, tool_id),
+                "language": TOOL_LANGUAGES.get(tool_id, "?"),
+                "latest_version": broken_version,
+                "tested_versions": [],
+                "all_versions": all_versions,
+                "version_dates": version_dates.get(tool_id, {}),
+                "cli_error_versions": cli_error_versions.get(tool_id, []),
+                "cli_harness_broken": True,
+                "compression": {c: {"write": False, "read": False, "cli_error": True} for c in COMPRESSION_CODECS},
+                "encoding": {
+                    enc: {pt: {"write": False, "read": False, "cli_error": True} for pt in ENCODING_TYPES}
+                    for enc in ENCODINGS
+                },
+                "logical_types": {lt: {"write": False, "read": False, "cli_error": True} for lt in LOGICAL_TYPES},
+                "nested_types": {nt: {"write": False, "read": False, "cli_error": True} for nt in NESTED_TYPES},
+                "advanced_features": {af: {"write": False, "read": False, "cli_error": True} for af in ADVANCED_FEATURES},
+            }
+            matrix["tools"][tool_id] = tool_data
             continue
 
         latest = version_results[-1]
@@ -676,10 +734,12 @@ def main():
     if args.load_results:
         multiversion_results = load_multiversion_results()
         cli_error_versions = load_cli_error_versions()
+        cli_harness_broken_tools = load_cli_harness_broken()
     else:
         tools_to_run = args.only if args.only else list(TOOLS.keys())
         multiversion_results = {}
         cli_error_versions = {}
+        cli_harness_broken_tools = set()
 
         print("Running Parquet feature tests...")
         print()
@@ -697,7 +757,7 @@ def main():
                     with open(single) as f:
                         multiversion_results[tool_id] = [json.load(f)]
 
-    matrix_data = build_matrix_data(multiversion_results, cli_error_versions)
+    matrix_data = build_matrix_data(multiversion_results, cli_error_versions, cli_harness_broken_tools)
 
     OUTPUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_JSON, "w") as f:

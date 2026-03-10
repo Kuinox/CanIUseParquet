@@ -152,7 +152,17 @@ function NonEncodingTable({
                 key={tid}
                 className="px-3 py-2 text-center text-gray-300 font-medium min-w-[100px]"
               >
-                <div>{tools[tid].display_name}</div>
+                <div className="flex items-center justify-center gap-1">
+                  {tools[tid].display_name}
+                  {tools[tid].cli_harness_broken && (
+                    <span
+                      className="text-orange-400"
+                      title="CLI harness broken — results do not reflect library capabilities"
+                    >
+                      ⚠
+                    </span>
+                  )}
+                </div>
                 <div className="text-[10px] text-gray-500 font-normal">
                   v{tools[tid].latest_version}
                 </div>
@@ -252,7 +262,17 @@ function EncodingSection({
                   key={tid}
                   className="px-3 py-2 text-center text-gray-300 font-medium min-w-[100px]"
                 >
-                  <div>{tools[tid].display_name}</div>
+                  <div className="flex items-center justify-center gap-1">
+                    {tools[tid].display_name}
+                    {tools[tid].cli_harness_broken && (
+                      <span
+                        className="text-orange-400"
+                        title="CLI harness broken — results do not reflect library capabilities"
+                      >
+                        ⚠
+                      </span>
+                    )}
+                  </div>
                   <div className="text-[10px] text-gray-500 font-normal">
                     v{tools[tid].latest_version}
                   </div>

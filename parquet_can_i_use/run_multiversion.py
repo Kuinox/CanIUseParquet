@@ -444,6 +444,15 @@ def main():
                 stale = RESULTS_DIR / f"{tool_id}-{versions[latest_idx]}.json"
                 if stale.exists():
                     stale.unlink()
+                # Save a marker so the matrix can display "CLI harness broken"
+                # rather than silently omitting the tool.
+                marker_file = RESULTS_DIR / f"{tool_id}-cli_harness_broken.json"
+                with open(marker_file, "w") as f:
+                    json.dump({
+                        "cli_harness_broken": True,
+                        "version": versions[latest_idx],
+                        "tool": tool_id,
+                    }, f, indent=2)
                 continue
 
             version_results = []
@@ -500,6 +509,15 @@ def main():
                 stale = RESULTS_DIR / f"{tool_id}-{versions[latest_idx]}.json"
                 if stale.exists():
                     stale.unlink()
+                # Save a marker so the matrix can display "CLI harness broken"
+                # rather than silently omitting the tool.
+                marker_file = RESULTS_DIR / f"{tool_id}-cli_harness_broken.json"
+                with open(marker_file, "w") as f:
+                    json.dump({
+                        "cli_harness_broken": True,
+                        "version": versions[latest_idx],
+                        "tool": tool_id,
+                    }, f, indent=2)
                 continue
 
             version_results = []

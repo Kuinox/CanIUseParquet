@@ -49,6 +49,37 @@ async function writeAndRead(schema, rows) {
 }
 
 async function main() {
+  // Self-check: write a minimal UNCOMPRESSED file with the helper library and
+  // immediately read it back with hyparquet.  If this round-trip fails the test
+  // harness infrastructure is broken (e.g. an incompatible helper version), so
+  // we report a CLI error rather than letting every feature appear as
+  // "unsupported".
+  const selfCheckPath = join(tmp, 'self_check.parquet');
+  let selfCheckPassed = false;
+  try {
+    const selfSchema = new ParquetSchema({ col: { type: 'INT32' } });
+    const selfWriter = await ParquetWriter.openFile(selfSchema, selfCheckPath);
+    await selfWriter.appendRow({ col: 42 });
+    await selfWriter.close();
+    const selfBuffer = readFileSync(selfCheckPath).buffer;
+    await parquetRead({ file: selfBuffer, onComplete: () => {} });
+    selfCheckPassed = true;
+  } catch (err) {
+    // Any error (write failure, read failure, API incompatibility) means the
+    // harness cannot exercise hyparquet — treat as infrastructure broken.
+    process.stderr.write(`Self-check failed: ${err}\n`);
+    selfCheckPassed = false;
+  }
+  if (!selfCheckPassed) {
+    process.stdout.write(JSON.stringify({
+      cli_error: true,
+      cli_error_type: 'self_check_failed',
+      tool: TOOL,
+      version: VERSION,
+    }) + '\n');
+    process.exit(1);
+  }
+
   const results = {
     tool: TOOL,
     version: VERSION,
