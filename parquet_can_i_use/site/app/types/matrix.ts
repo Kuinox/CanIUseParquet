@@ -17,6 +17,8 @@ export interface ToolData {
   all_versions?: string[];
   /** Versions where the test CLI itself failed (infra error, not a feature gap) */
   cli_error_versions?: string[];
+  /** True when the test CLI harness failed for the latest version (infra error, not a library gap). */
+  cli_harness_broken?: boolean;
   /** Map from version string to ISO date string (YYYY-MM-DD) */
   version_dates: Record<string, string>;
   compression: Record<string, FeatureEntry>;

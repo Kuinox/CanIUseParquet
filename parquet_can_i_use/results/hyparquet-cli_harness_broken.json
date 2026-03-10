@@ -1,0 +1,5 @@
+{
+  "cli_harness_broken": true,
+  "version": "1.0.0",
+  "tool": "hyparquet"
+}

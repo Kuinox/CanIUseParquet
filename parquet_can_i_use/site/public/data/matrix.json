@@ -8642,695 +8642,561 @@
       "display_name": "hyparquet",
       "language": "JavaScript",
       "latest_version": "1.0.0",
-      "tested_versions": [
-        "1.0.0"
-      ],
+      "tested_versions": [],
       "all_versions": [
         "1.0.0"
       ],
       "version_dates": {},
       "cli_error_versions": [],
+      "cli_harness_broken": true,
       "compression": {
         "NONE": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "SNAPPY": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "GZIP": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "BROTLI": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "LZO": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "LZ4": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "LZ4_RAW": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "ZSTD": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         }
       },
       "encoding": {
         "PLAIN": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           }
         },
         "PLAIN_DICTIONARY": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           }
         },
         "RLE_DICTIONARY": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           }
         },
         "RLE": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           }
         },
         "BIT_PACKED": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           }
         },
         "DELTA_BINARY_PACKED": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           }
         },
         "DELTA_LENGTH_BYTE_ARRAY": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           }
         },
         "DELTA_BYTE_ARRAY": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           }
         },
         "BYTE_STREAM_SPLIT": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           }
         },
         "BYTE_STREAM_SPLIT_EXTENDED": {
           "INT32": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "INT64": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "FLOAT": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "DOUBLE": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null
+            "cli_error": true
           },
           "BOOLEAN": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           },
           "BYTE_ARRAY": {
             "write": false,
-            "write_since": null,
             "read": false,
-            "read_since": null,
-            "not_applicable": true
+            "cli_error": true
           }
         }
       },
       "logical_types": {
         "STRING": {
-          "write": true,
-          "write_since": "1.0.0",
+          "write": false,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "DATE": {
-          "write": true,
-          "write_since": "1.0.0",
+          "write": false,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "TIME_MILLIS": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "TIME_MICROS": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "TIME_NANOS": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "TIMESTAMP_MILLIS": {
-          "write": true,
-          "write_since": "1.0.0",
+          "write": false,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "TIMESTAMP_MICROS": {
-          "write": true,
-          "write_since": "1.0.0",
+          "write": false,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "TIMESTAMP_NANOS": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "INT96": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "DECIMAL": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "UUID": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "JSON": {
-          "write": true,
-          "write_since": "1.0.0",
+          "write": false,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "FLOAT16": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "ENUM": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "BSON": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "INTERVAL": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "UNKNOWN": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "VARIANT": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "GEOMETRY": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "GEOGRAPHY": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         }
       },
       "nested_types": {
         "LIST": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "MAP": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "STRUCT": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "NESTED_LIST": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "NESTED_MAP": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "DEEP_NESTING": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         }
       },
       "advanced_features": {
         "STATISTICS": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "PAGE_INDEX": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "BLOOM_FILTER": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "DATA_PAGE_V2": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "COLUMN_ENCRYPTION": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "SIZE_STATISTICS": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "PAGE_CRC32": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "PREDICATE_PUSHDOWN": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "PROJECTION_PUSHDOWN": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         },
         "SCHEMA_EVOLUTION": {
           "write": false,
-          "write_since": null,
           "read": false,
-          "read_since": null
+          "cli_error": true
         }
       }
     }
