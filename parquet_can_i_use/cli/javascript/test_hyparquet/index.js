@@ -21,9 +21,13 @@ function notSupported() {
   return { write: false, read: false };
 }
 
+function toArrayBuffer(nodeBuffer) {
+  return nodeBuffer.buffer.slice(nodeBuffer.byteOffset, nodeBuffer.byteOffset + nodeBuffer.byteLength);
+}
+
 async function testRead(filePath) {
   try {
-    const buffer = readFileSync(filePath).buffer;
+    const buffer = toArrayBuffer(readFileSync(filePath));
     const metadata = parquetMetadata(buffer);
     const rows = [];
     await parquetRead({ file: buffer, onComplete: data => rows.push(...data) });
@@ -61,7 +65,7 @@ async function main() {
     const selfWriter = await ParquetWriter.openFile(selfSchema, selfCheckPath);
     await selfWriter.appendRow({ col: 42 });
     await selfWriter.close();
-    const selfBuffer = readFileSync(selfCheckPath).buffer;
+    const selfBuffer = toArrayBuffer(readFileSync(selfCheckPath));
     await parquetRead({ file: selfBuffer, onComplete: () => {} });
     selfCheckPassed = true;
   } catch (err) {
