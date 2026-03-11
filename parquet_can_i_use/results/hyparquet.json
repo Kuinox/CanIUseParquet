@@ -1,0 +1,450 @@
+{
+  "tool": "hyparquet",
+  "version": "1.0.0",
+  "compression": {
+    "NONE": {
+      "write": false,
+      "read": true
+    },
+    "SNAPPY": {
+      "write": false,
+      "read": true
+    },
+    "GZIP": {
+      "write": false,
+      "read": true
+    },
+    "BROTLI": {
+      "write": false,
+      "read": true
+    },
+    "LZO": {
+      "write": false,
+      "read": true
+    },
+    "LZ4": {
+      "write": false,
+      "read": true
+    },
+    "LZ4_RAW": {
+      "write": false,
+      "read": true
+    },
+    "ZSTD": {
+      "write": false,
+      "read": true
+    }
+  },
+  "encoding": {
+    "PLAIN": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "PLAIN_DICTIONARY": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "RLE_DICTIONARY": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "RLE": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "BIT_PACKED": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "DELTA_BINARY_PACKED": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "DELTA_LENGTH_BYTE_ARRAY": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "DELTA_BYTE_ARRAY": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "BYTE_STREAM_SPLIT": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    },
+    "BYTE_STREAM_SPLIT_EXTENDED": {
+      "INT32": {
+        "write": false,
+        "read": true
+      },
+      "INT64": {
+        "write": false,
+        "read": true
+      },
+      "FLOAT": {
+        "write": false,
+        "read": true
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": true
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": true
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": true
+      }
+    }
+  },
+  "logical_types": {
+    "STRING": {
+      "write": true,
+      "read": true
+    },
+    "DATE": {
+      "write": true,
+      "read": true
+    },
+    "TIME_MILLIS": {
+      "write": false,
+      "read": false
+    },
+    "TIME_MICROS": {
+      "write": false,
+      "read": false
+    },
+    "TIME_NANOS": {
+      "write": false,
+      "read": false
+    },
+    "TIMESTAMP_MILLIS": {
+      "write": true,
+      "read": true
+    },
+    "TIMESTAMP_MICROS": {
+      "write": true,
+      "read": true
+    },
+    "TIMESTAMP_NANOS": {
+      "write": false,
+      "read": false
+    },
+    "INT96": {
+      "write": false,
+      "read": false
+    },
+    "DECIMAL": {
+      "write": false,
+      "read": false
+    },
+    "UUID": {
+      "write": false,
+      "read": false
+    },
+    "JSON": {
+      "write": true,
+      "read": true
+    },
+    "FLOAT16": {
+      "write": false,
+      "read": false
+    },
+    "ENUM": {
+      "write": false,
+      "read": false
+    },
+    "BSON": {
+      "write": false,
+      "read": false
+    },
+    "INTERVAL": {
+      "write": false,
+      "read": false
+    },
+    "UNKNOWN": {
+      "write": false,
+      "read": false
+    },
+    "VARIANT": {
+      "write": false,
+      "read": false
+    },
+    "GEOMETRY": {
+      "write": false,
+      "read": false
+    },
+    "GEOGRAPHY": {
+      "write": false,
+      "read": false
+    }
+  },
+  "nested_types": {
+    "LIST": {
+      "write": false,
+      "read": false
+    },
+    "MAP": {
+      "write": false,
+      "read": false
+    },
+    "STRUCT": {
+      "write": false,
+      "read": false
+    },
+    "NESTED_LIST": {
+      "write": false,
+      "read": false
+    },
+    "NESTED_MAP": {
+      "write": false,
+      "read": false
+    },
+    "DEEP_NESTING": {
+      "write": false,
+      "read": false
+    }
+  },
+  "advanced_features": {
+    "STATISTICS": {
+      "write": false,
+      "read": true
+    },
+    "PAGE_INDEX": {
+      "write": false,
+      "read": true
+    },
+    "BLOOM_FILTER": {
+      "write": false,
+      "read": false
+    },
+    "DATA_PAGE_V2": {
+      "write": false,
+      "read": true
+    },
+    "COLUMN_ENCRYPTION": {
+      "write": false,
+      "read": false
+    },
+    "SIZE_STATISTICS": {
+      "write": false,
+      "read": true
+    },
+    "PAGE_CRC32": {
+      "write": false,
+      "read": false
+    },
+    "PREDICATE_PUSHDOWN": {
+      "write": false,
+      "read": false
+    },
+    "PROJECTION_PUSHDOWN": {
+      "write": false,
+      "read": true
+    },
+    "SCHEMA_EVOLUTION": {
+      "write": false,
+      "read": false
+    }
+  }
+}
