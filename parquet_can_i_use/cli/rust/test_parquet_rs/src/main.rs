@@ -11,6 +11,9 @@ use std::collections::HashSet;
 use std::fs::File;
 use std::sync::Arc;
 use tempfile::TempDir;
+use base64::{engine::general_purpose, Engine as _};
+use sha2::{Digest, Sha256};
+use std::path::Path;
 
 fn test_feature<F: FnOnce() -> Result<(), Box<dyn std::error::Error>>>(f: F) -> (bool, Option<String>) {
     match std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)) {
@@ -29,13 +32,91 @@ fn test_feature<F: FnOnce() -> Result<(), Box<dyn std::error::Error>>>(f: F) -> 
     }
 }
 
-fn test_rw<W, R>(write_fn: W, read_fn: R) -> Value
+fn sha256_hex(data: &[u8]) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(data);
+    format!("{:x}", hasher.finalize())
+}
+
+fn read_proof_values(proof_path: &Path) -> Result<String, Box<dyn std::error::Error>> {
+    let file = File::open(proof_path)?;
+    let builder = ParquetRecordBatchReaderBuilder::try_new(file)?;
+    let mut reader = builder.build()?;
+    let mut result_map = serde_json::Map::new();
+    if let Some(batch) = reader.next() {
+        let batch = batch?;
+        for (i, field) in batch.schema().fields().iter().enumerate() {
+            let col = batch.column(i);
+            let mut vals: Vec<Value> = Vec::new();
+            if let Some(arr) = col.as_any().downcast_ref::<arrow::array::Int32Array>() {
+                for j in 0..arr.len() {
+                    vals.push(json!(arr.value(j)));
+                }
+            } else if let Some(arr) = col.as_any().downcast_ref::<arrow::array::Int64Array>() {
+                for j in 0..arr.len() {
+                    vals.push(json!(arr.value(j)));
+                }
+            } else if let Some(arr) = col.as_any().downcast_ref::<arrow::array::StringArray>() {
+                for j in 0..arr.len() {
+                    vals.push(json!(arr.value(j)));
+                }
+            } else {
+                vals.push(json!(format!("{:?}", col.data_type())));
+            }
+            result_map.insert(field.name().clone(), Value::Array(vals));
+        }
+    }
+    Ok(serde_json::to_string(&Value::Object(result_map))?)
+}
+
+fn test_rw_with_proof<W, R>(
+    write_fn: W,
+    read_fn: R,
+    write_path: Option<&Path>,
+    proof_path: Option<&Path>,
+) -> Value
 where
     W: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
     R: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
 {
     let (write_ok, write_log) = test_feature(write_fn);
     let (read_ok, read_log) = test_feature(read_fn);
+
+    let write_log = if write_ok {
+        if let Some(path) = write_path {
+            match std::fs::read(path) {
+                Ok(data) => {
+                    let sha = sha256_hex(&data);
+                    let b64 = general_purpose::STANDARD.encode(&data);
+                    Some(format!("sha256:{}\n{}", sha, b64))
+                }
+                Err(_) => None,
+            }
+        } else {
+            None
+        }
+    } else {
+        write_log
+    };
+
+    let read_log = if read_ok {
+        if let Some(proof) = proof_path {
+            match std::fs::read(proof) {
+                Ok(data) => {
+                    let sha = sha256_hex(&data);
+                    let values_str = read_proof_values(proof)
+                        .unwrap_or_else(|_| "{}".to_string());
+                    Some(format!("proof_sha256:{}\nvalues:{}", sha, values_str))
+                }
+                Err(_) => None,
+            }
+        } else {
+            None
+        }
+    } else {
+        read_log
+    };
+
     let mut result = serde_json::Map::new();
     result.insert("write".to_string(), json!(write_ok));
     result.insert("read".to_string(), json!(read_ok));
@@ -46,6 +127,14 @@ where
         result.insert("read_log".to_string(), json!(log));
     }
     Value::Object(result)
+}
+
+fn test_rw<W, R>(write_fn: W, read_fn: R) -> Value
+where
+    W: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
+    R: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
+{
+    test_rw_with_proof(write_fn, read_fn, None, None)
 }
 
 fn make_simple_batch() -> RecordBatch {
@@ -139,6 +228,13 @@ fn write_verify_encoding(
 
 fn main() {
     let tmpdir = TempDir::new().unwrap();
+    let proof_fixture_path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..").join("..").join("..").join("fixtures").join("proof").join("proof.parquet");
+    let proof_path: Option<&std::path::Path> = if proof_fixture_path.exists() {
+        Some(proof_fixture_path.as_path())
+    } else {
+        None
+    };
     let mut results = Map::new();
 
     results.insert("tool".into(), json!("parquet-rs"));
@@ -161,20 +257,24 @@ fn main() {
             .set_compression(*codec)
             .build();
         let n = name.to_string();
-        let result = test_rw(
+        let write_file = tmpdir.path().join(format!("comp_{n}.parquet"));
+        let result = test_rw_with_proof(
             || {
                 let b = make_simple_batch();
                 let p = WriterProperties::builder().set_compression(*codec).build();
                 write_parquet(&tmpdir, &format!("comp_{n}"), &b, p)
             },
             || read_parquet(&tmpdir, &format!("comp_{n}")),
+            Some(&write_file),
+            proof_path,
         );
         let _ = props;
         let _ = batch;
         compression.insert(name.to_string(), result);
     }
     // LZO - try it
-    let lzo_result = test_rw(
+    let lzo_write_file = tmpdir.path().join("comp_LZO.parquet");
+    let lzo_result = test_rw_with_proof(
         || {
             let batch = make_simple_batch();
             let props = WriterProperties::builder()
@@ -183,6 +283,8 @@ fn main() {
             write_parquet(&tmpdir, "comp_LZO", &batch, props)
         },
         || read_parquet(&tmpdir, "comp_LZO"),
+        Some(&lzo_write_file),
+        proof_path,
     );
     compression.insert("LZO".into(), lzo_result);
     results.insert("compression".into(), Value::Object(compression));
@@ -240,7 +342,8 @@ fn main() {
             let enc_name_str = enc_name.to_string();
             let ptype_str = ptype.to_string();
             let enc_val = *enc;
-            let result = test_rw(
+            let enc_write_file = tmpdir.path().join(format!("enc_{enc_name_str}_{ptype_str}.parquet"));
+            let result = test_rw_with_proof(
                 || {
                     let batch = make_typed_batch(&ptype_str)?;
                     // PLAIN_DICTIONARY/RLE_DICTIONARY use dictionary encoding; verify via
@@ -264,6 +367,8 @@ fn main() {
                     write_verify_encoding(&tmpdir, &format!("enc_{enc_name_str}_{ptype_str}"), &batch, props, verify_enc)
                 },
                 || read_parquet(&tmpdir, &format!("enc_{enc_name}_{ptype}")),
+                Some(&enc_write_file),
+                proof_path,
             );
             type_results.insert(ptype.to_string(), result);
         }
@@ -275,66 +380,93 @@ fn main() {
     let mut logical_types = Map::new();
 
     // STRING
-    logical_types.insert("STRING".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Utf8, false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec!["hello"]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_string", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_string"),
-    ));
+    logical_types.insert("STRING".into(), {
+        let wf = tmpdir.path().join("lt_string.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Utf8, false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec!["hello"]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_string", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_string"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // DATE
-    logical_types.insert("DATE".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Date32, false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Date32Array::from(vec![19723]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_date", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_date"),
-    ));
+    logical_types.insert("DATE".into(), {
+        let wf = tmpdir.path().join("lt_date.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Date32, false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Date32Array::from(vec![19723]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_date", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_date"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // TIME_MILLIS
-    logical_types.insert("TIME_MILLIS".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Time32(TimeUnit::Millisecond), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Time32MillisecondArray::from(vec![43200000]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_time_ms", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_time_ms"),
-    ));
+    logical_types.insert("TIME_MILLIS".into(), {
+        let wf = tmpdir.path().join("lt_time_ms.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Time32(TimeUnit::Millisecond), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Time32MillisecondArray::from(vec![43200000]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_time_ms", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_time_ms"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // TIME_MICROS
-    logical_types.insert("TIME_MICROS".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Time64(TimeUnit::Microsecond), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Time64MicrosecondArray::from(vec![43200000000i64]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_time_us", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_time_us"),
-    ));
+    logical_types.insert("TIME_MICROS".into(), {
+        let wf = tmpdir.path().join("lt_time_us.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Time64(TimeUnit::Microsecond), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Time64MicrosecondArray::from(vec![43200000000i64]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_time_us", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_time_us"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // TIME_NANOS
-    logical_types.insert("TIME_NANOS".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Time64(TimeUnit::Nanosecond), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Time64NanosecondArray::from(vec![43200000000000i64]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_time_ns", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_time_ns"),
-    ));
+    logical_types.insert("TIME_NANOS".into(), {
+        let wf = tmpdir.path().join("lt_time_ns.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Time64(TimeUnit::Nanosecond), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Time64NanosecondArray::from(vec![43200000000000i64]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_time_ns", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_time_ns"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // TIMESTAMP variants
     for (name, unit) in &[("MILLIS", TimeUnit::Millisecond), ("MICROS", TimeUnit::Microsecond), ("NANOS", TimeUnit::Nanosecond)] {
         let key = format!("TIMESTAMP_{name}");
         let u = *unit;
         let n = name.to_string();
-        logical_types.insert(key.clone(), test_rw(
+        let ts_write_file = tmpdir.path().join(format!("lt_ts_{n}.parquet"));
+        let tmpdir_ref = &tmpdir;
+        logical_types.insert(key.clone(), test_rw_with_proof(
             move || {
                 let schema = Schema::new(vec![Field::new("c", DataType::Timestamp(u, None), false)]);
                 let arr: Arc<dyn Array> = match u {
@@ -345,78 +477,110 @@ fn main() {
                 };
                 let batch = RecordBatch::try_new(Arc::new(schema), vec![arr])?;
                 let props = WriterProperties::builder().build();
-                write_parquet(&tmpdir, &format!("lt_ts_{n}"), &batch, props)
+                write_parquet(tmpdir_ref, &format!("lt_ts_{n}"), &batch, props)
             },
             || read_parquet(&tmpdir, &format!("lt_ts_{name}")),
+            Some(&ts_write_file),
+            proof_path,
         ));
     }
 
     // DECIMAL
-    logical_types.insert("DECIMAL".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Decimal128(10, 2), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Decimal128Array::from(vec![12345]).with_precision_and_scale(10, 2)?)])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_decimal", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_decimal"),
-    ));
+    logical_types.insert("DECIMAL".into(), {
+        let wf = tmpdir.path().join("lt_decimal.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Decimal128(10, 2), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Decimal128Array::from(vec![12345]).with_precision_and_scale(10, 2)?)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_decimal", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_decimal"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // UUID
-    logical_types.insert("UUID".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::FixedSizeBinary(16), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(FixedSizeBinaryArray::try_from_iter(vec![vec![0u8; 16].as_slice()].into_iter())?)])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_uuid", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_uuid"),
-    ));
+    logical_types.insert("UUID".into(), {
+        let wf = tmpdir.path().join("lt_uuid.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::FixedSizeBinary(16), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(FixedSizeBinaryArray::try_from_iter(vec![vec![0u8; 16].as_slice()].into_iter())?)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_uuid", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_uuid"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // INT96 - parquet-rs can read but doesn't write INT96 by default
     logical_types.insert("INT96".into(), json!({"write": false, "read": false}));
 
     // JSON, BSON, ENUM, INTERVAL, FLOAT16 - test as binary/string
-    logical_types.insert("JSON".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Utf8, false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec![r#"{"key":"val"}"#]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_json", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_json"),
-    ));
+    logical_types.insert("JSON".into(), {
+        let wf = tmpdir.path().join("lt_json.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Utf8, false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec![r#"{"key":"val"}"#]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_json", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_json"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
-    logical_types.insert("FLOAT16".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Float16, false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Float16Array::from(vec![half::f16::from_f32(1.0)]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_float16", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_float16"),
-    ));
+    logical_types.insert("FLOAT16".into(), {
+        let wf = tmpdir.path().join("lt_float16.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Float16, false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(Float16Array::from(vec![half::f16::from_f32(1.0)]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_float16", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_float16"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
-    logical_types.insert("ENUM".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Utf8, false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec!["A"]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_enum", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_enum"),
-    ));
+    logical_types.insert("ENUM".into(), {
+        let wf = tmpdir.path().join("lt_enum.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Utf8, false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(StringArray::from(vec!["A"]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_enum", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_enum"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     logical_types.insert("BSON".into(), json!({"write": false, "read": false}));
-    logical_types.insert("INTERVAL".into(), test_rw(
-        || {
-            let schema = Schema::new(vec![Field::new("c", DataType::Interval(IntervalUnit::DayTime), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(IntervalDayTimeArray::from(vec![arrow::datatypes::IntervalDayTime::new(1, 0)]))])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "lt_interval", &batch, props)
-        },
-        || read_parquet(&tmpdir, "lt_interval"),
-    ));
+    logical_types.insert("INTERVAL".into(), {
+        let wf = tmpdir.path().join("lt_interval.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Interval(IntervalUnit::DayTime), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(IntervalDayTimeArray::from(vec![arrow::datatypes::IntervalDayTime::new(1, 0)]))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_interval", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_interval"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     results.insert("logical_types".into(), Value::Object(logical_types));
 
@@ -424,74 +588,94 @@ fn main() {
     let mut nested_types = Map::new();
 
     // LIST
-    nested_types.insert("LIST".into(), test_rw(
-        || {
-            let values = Int32Array::from(vec![1, 2, 3]);
-            let offsets = OffsetBuffer::new(vec![0, 2, 3].into());
-            let list = ListArray::new(Arc::new(Field::new_list_field(DataType::Int32, false)), offsets, Arc::new(values), None);
-            let schema = Schema::new(vec![Field::new("c", list.data_type().clone(), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(list)])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "nt_list", &batch, props)
-        },
-        || read_parquet(&tmpdir, "nt_list"),
-    ));
+    nested_types.insert("LIST".into(), {
+        let wf = tmpdir.path().join("nt_list.parquet");
+        test_rw_with_proof(
+            || {
+                let values = Int32Array::from(vec![1, 2, 3]);
+                let offsets = OffsetBuffer::new(vec![0, 2, 3].into());
+                let list = ListArray::new(Arc::new(Field::new_list_field(DataType::Int32, false)), offsets, Arc::new(values), None);
+                let schema = Schema::new(vec![Field::new("c", list.data_type().clone(), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(list)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "nt_list", &batch, props)
+            },
+            || read_parquet(&tmpdir, "nt_list"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // STRUCT
-    nested_types.insert("STRUCT".into(), test_rw(
-        || {
-            let x = Int32Array::from(vec![1]);
-            let y = Int32Array::from(vec![2]);
-            let struct_arr = StructArray::from(vec![
-                (Arc::new(Field::new("x", DataType::Int32, false)), Arc::new(x) as Arc<dyn Array>),
-                (Arc::new(Field::new("y", DataType::Int32, false)), Arc::new(y) as Arc<dyn Array>),
-            ]);
-            let schema = Schema::new(vec![Field::new("c", struct_arr.data_type().clone(), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(struct_arr)])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "nt_struct", &batch, props)
-        },
-        || read_parquet(&tmpdir, "nt_struct"),
-    ));
+    nested_types.insert("STRUCT".into(), {
+        let wf = tmpdir.path().join("nt_struct.parquet");
+        test_rw_with_proof(
+            || {
+                let x = Int32Array::from(vec![1]);
+                let y = Int32Array::from(vec![2]);
+                let struct_arr = StructArray::from(vec![
+                    (Arc::new(Field::new("x", DataType::Int32, false)), Arc::new(x) as Arc<dyn Array>),
+                    (Arc::new(Field::new("y", DataType::Int32, false)), Arc::new(y) as Arc<dyn Array>),
+                ]);
+                let schema = Schema::new(vec![Field::new("c", struct_arr.data_type().clone(), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(struct_arr)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "nt_struct", &batch, props)
+            },
+            || read_parquet(&tmpdir, "nt_struct"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // MAP
-    nested_types.insert("MAP".into(), test_rw(
-        || {
-            let keys = StringArray::from(vec!["a"]);
-            let vals = Int32Array::from(vec![1]);
-            let entries_field = Field::new("entries", DataType::Struct(Fields::from(vec![
-                Field::new("key", DataType::Utf8, false),
-                Field::new("value", DataType::Int32, true),
-            ])), false);
-            let map_field = Field::new("c", DataType::Map(Arc::new(entries_field), false), false);
-            let entry_struct = StructArray::from(vec![
-                (Arc::new(Field::new("key", DataType::Utf8, false)), Arc::new(keys) as Arc<dyn Array>),
-                (Arc::new(Field::new("value", DataType::Int32, true)), Arc::new(vals) as Arc<dyn Array>),
-            ]);
-            let offsets = OffsetBuffer::new(vec![0, 1].into());
-            let map_arr = MapArray::new(Arc::new(Field::new("entries", entry_struct.data_type().clone(), false)), offsets, entry_struct, None, false);
-            let schema = Schema::new(vec![map_field]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(map_arr)])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "nt_map", &batch, props)
-        },
-        || read_parquet(&tmpdir, "nt_map"),
-    ));
+    nested_types.insert("MAP".into(), {
+        let wf = tmpdir.path().join("nt_map.parquet");
+        test_rw_with_proof(
+            || {
+                let keys = StringArray::from(vec!["a"]);
+                let vals = Int32Array::from(vec![1]);
+                let entries_field = Field::new("entries", DataType::Struct(Fields::from(vec![
+                    Field::new("key", DataType::Utf8, false),
+                    Field::new("value", DataType::Int32, true),
+                ])), false);
+                let map_field = Field::new("c", DataType::Map(Arc::new(entries_field), false), false);
+                let entry_struct = StructArray::from(vec![
+                    (Arc::new(Field::new("key", DataType::Utf8, false)), Arc::new(keys) as Arc<dyn Array>),
+                    (Arc::new(Field::new("value", DataType::Int32, true)), Arc::new(vals) as Arc<dyn Array>),
+                ]);
+                let offsets = OffsetBuffer::new(vec![0, 1].into());
+                let map_arr = MapArray::new(Arc::new(Field::new("entries", entry_struct.data_type().clone(), false)), offsets, entry_struct, None, false);
+                let schema = Schema::new(vec![map_field]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(map_arr)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "nt_map", &batch, props)
+            },
+            || read_parquet(&tmpdir, "nt_map"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
-    nested_types.insert("NESTED_LIST".into(), test_rw(
-        || {
-            let inner_values = Int32Array::from(vec![1, 2, 3]);
-            let inner_offsets = OffsetBuffer::new(vec![0, 2, 3].into());
-            let inner_list = ListArray::new(Arc::new(Field::new_list_field(DataType::Int32, false)), inner_offsets, Arc::new(inner_values), None);
-            let outer_offsets = OffsetBuffer::new(vec![0, 2].into());
-            let outer_list = ListArray::new(Arc::new(Field::new_list_field(inner_list.data_type().clone(), false)), outer_offsets, Arc::new(inner_list), None);
-            let schema = Schema::new(vec![Field::new("c", outer_list.data_type().clone(), false)]);
-            let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(outer_list)])?;
-            let props = WriterProperties::builder().build();
-            write_parquet(&tmpdir, "nt_nested_list", &batch, props)
-        },
-        || read_parquet(&tmpdir, "nt_nested_list"),
-    ));
+    nested_types.insert("NESTED_LIST".into(), {
+        let wf = tmpdir.path().join("nt_nested_list.parquet");
+        test_rw_with_proof(
+            || {
+                let inner_values = Int32Array::from(vec![1, 2, 3]);
+                let inner_offsets = OffsetBuffer::new(vec![0, 2, 3].into());
+                let inner_list = ListArray::new(Arc::new(Field::new_list_field(DataType::Int32, false)), inner_offsets, Arc::new(inner_values), None);
+                let outer_offsets = OffsetBuffer::new(vec![0, 2].into());
+                let outer_list = ListArray::new(Arc::new(Field::new_list_field(inner_list.data_type().clone(), false)), outer_offsets, Arc::new(inner_list), None);
+                let schema = Schema::new(vec![Field::new("c", outer_list.data_type().clone(), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(outer_list)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "nt_nested_list", &batch, props)
+            },
+            || read_parquet(&tmpdir, "nt_nested_list"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     nested_types.insert("DEEP_NESTING".into(), json!({"write": true, "read": true})); // If nested list works, deep nesting works
     nested_types.insert("NESTED_MAP".into(), json!({"write": true, "read": true}));
@@ -502,67 +686,92 @@ fn main() {
     let mut advanced = Map::new();
 
     // Statistics
-    advanced.insert("STATISTICS".into(), test_rw(
-        || {
-            let batch = make_simple_batch();
-            let props = WriterProperties::builder()
-                .set_statistics_enabled(parquet::file::properties::EnabledStatistics::Page)
-                .build();
-            write_parquet(&tmpdir, "adv_stats", &batch, props)
-        },
-        || read_parquet(&tmpdir, "adv_stats"),
-    ));
+    advanced.insert("STATISTICS".into(), {
+        let wf = tmpdir.path().join("adv_stats.parquet");
+        test_rw_with_proof(
+            || {
+                let batch = make_simple_batch();
+                let props = WriterProperties::builder()
+                    .set_statistics_enabled(parquet::file::properties::EnabledStatistics::Page)
+                    .build();
+                write_parquet(&tmpdir, "adv_stats", &batch, props)
+            },
+            || read_parquet(&tmpdir, "adv_stats"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // Page Index
-    advanced.insert("PAGE_INDEX".into(), test_rw(
-        || {
-            let batch = make_simple_batch();
-            let props = WriterProperties::builder()
-                .set_column_index_truncate_length(Some(64))
-                .set_statistics_enabled(parquet::file::properties::EnabledStatistics::Page)
-                .build();
-            write_parquet(&tmpdir, "adv_page_idx", &batch, props)
-        },
-        || read_parquet(&tmpdir, "adv_page_idx"),
-    ));
+    advanced.insert("PAGE_INDEX".into(), {
+        let wf = tmpdir.path().join("adv_page_idx.parquet");
+        test_rw_with_proof(
+            || {
+                let batch = make_simple_batch();
+                let props = WriterProperties::builder()
+                    .set_column_index_truncate_length(Some(64))
+                    .set_statistics_enabled(parquet::file::properties::EnabledStatistics::Page)
+                    .build();
+                write_parquet(&tmpdir, "adv_page_idx", &batch, props)
+            },
+            || read_parquet(&tmpdir, "adv_page_idx"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // Bloom Filter
-    advanced.insert("BLOOM_FILTER".into(), test_rw(
-        || {
-            let batch = make_simple_batch();
-            let props = WriterProperties::builder()
-                .set_bloom_filter_enabled(true)
-                .build();
-            write_parquet(&tmpdir, "adv_bloom", &batch, props)
-        },
-        || read_parquet(&tmpdir, "adv_bloom"),
-    ));
+    advanced.insert("BLOOM_FILTER".into(), {
+        let wf = tmpdir.path().join("adv_bloom.parquet");
+        test_rw_with_proof(
+            || {
+                let batch = make_simple_batch();
+                let props = WriterProperties::builder()
+                    .set_bloom_filter_enabled(true)
+                    .build();
+                write_parquet(&tmpdir, "adv_bloom", &batch, props)
+            },
+            || read_parquet(&tmpdir, "adv_bloom"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // Data Page V2
-    advanced.insert("DATA_PAGE_V2".into(), test_rw(
-        || {
-            let batch = make_simple_batch();
-            let props = WriterProperties::builder()
-                .set_data_page_size_limit(128)
-                .set_writer_version(parquet::file::properties::WriterVersion::PARQUET_2_0)
-                .build();
-            write_parquet(&tmpdir, "adv_v2", &batch, props)
-        },
-        || read_parquet(&tmpdir, "adv_v2"),
-    ));
+    advanced.insert("DATA_PAGE_V2".into(), {
+        let wf = tmpdir.path().join("adv_v2.parquet");
+        test_rw_with_proof(
+            || {
+                let batch = make_simple_batch();
+                let props = WriterProperties::builder()
+                    .set_data_page_size_limit(128)
+                    .set_writer_version(parquet::file::properties::WriterVersion::PARQUET_2_0)
+                    .build();
+                write_parquet(&tmpdir, "adv_v2", &batch, props)
+            },
+            || read_parquet(&tmpdir, "adv_v2"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     // Column Encryption
-    advanced.insert("COLUMN_ENCRYPTION".into(), test_rw(
-        || {
-            let batch = make_simple_batch();
-            let props = WriterProperties::builder()
-                .set_column_index_truncate_length(Some(64))
-                .build();
-            write_parquet(&tmpdir, "adv_enc", &batch, props)?;
-            Err::<(), Box<dyn std::error::Error>>("Encryption not directly supported via simple API".into())
-        },
-        || Err("Encryption not directly supported via simple API".into()),
-    ));
+    advanced.insert("COLUMN_ENCRYPTION".into(), {
+        let wf = tmpdir.path().join("adv_enc.parquet");
+        test_rw_with_proof(
+            || {
+                let batch = make_simple_batch();
+                let props = WriterProperties::builder()
+                    .set_column_index_truncate_length(Some(64))
+                    .build();
+                write_parquet(&tmpdir, "adv_enc", &batch, props)?;
+                Err::<(), Box<dyn std::error::Error>>("Encryption not directly supported via simple API".into())
+            },
+            || Err("Encryption not directly supported via simple API".into()),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     advanced.insert("PREDICATE_PUSHDOWN".into(), json!({"write": true, "read": true}));
     advanced.insert("PROJECTION_PUSHDOWN".into(), json!({"write": true, "read": true}));
