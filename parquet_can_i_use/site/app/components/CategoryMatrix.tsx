@@ -108,12 +108,16 @@ function FeatureCell({
     entry.write === entry.read && entry.write_since === entry.read_since;
 
   const hasLogs = !!(entry.write_log || entry.read_log);
+  // Show proof status for any entry that has at least one success
+  const hasSuccess = entry.write || entry.read;
+  const isClickable = hasLogs || hasSuccess;
+  const missingProof = hasSuccess && !hasLogs;
 
   return (
     <td
-      className={`px-3 py-2 text-center ${bgClass}${hasLogs ? " cursor-pointer hover:brightness-125 hover:ring-1 hover:ring-inset hover:ring-gray-500" : ""}`}
-      onClick={hasLogs ? onClick : undefined}
-      title={hasLogs ? "Click to view test logs" : undefined}
+      className={`px-3 py-2 text-center ${bgClass}${isClickable ? " cursor-pointer hover:brightness-125 hover:ring-1 hover:ring-inset hover:ring-gray-500" : ""}`}
+      onClick={isClickable ? onClick : undefined}
+      title={hasLogs ? "Click to view test logs" : missingProof ? "Click to view proof status" : undefined}
     >
       <div className="flex flex-col items-center gap-0.5">
         {canMerge ? (
@@ -134,6 +138,9 @@ function FeatureCell({
         )}
         {hasLogs && (
           <span className="text-[9px] text-gray-500 mt-0.5">📋 logs</span>
+        )}
+        {missingProof && (
+          <span className="text-[9px] text-yellow-600 mt-0.5" title="No proof available">⚠ no proof</span>
         )}
       </div>
     </td>

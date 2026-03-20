@@ -10,6 +10,16 @@ interface Props {
   onClose: () => void;
 }
 
+/** Parse a write_log in the format "sha256:<hex>\n<base64-data>" */
+function parseWriteProof(writeLog: string): { hash: string; base64Data: string } | null {
+  if (!writeLog.startsWith("sha256:")) return null;
+  const newlineIdx = writeLog.indexOf("\n");
+  if (newlineIdx === -1) return null;
+  const hash = writeLog.slice("sha256:".length, newlineIdx);
+  const base64Data = writeLog.slice(newlineIdx + 1);
+  return { hash, base64Data };
+}
+
 export default function LogModal({ toolName, featureName, entry, onClose }: Props) {
   // Close on Escape key
   useEffect(() => {
@@ -22,6 +32,11 @@ export default function LogModal({ toolName, featureName, entry, onClose }: Prop
 
   const hasWriteLog = !!entry.write_log;
   const hasReadLog = !!entry.read_log;
+
+  const writeProof = entry.write_log ? parseWriteProof(entry.write_log) : null;
+  const isWriteProof = entry.write && writeProof !== null;
+
+  const downloadFilename = `${featureName.toLowerCase().replace(/[\s\u00D7/\\]+/g, "-")}.parquet`;
 
   return (
     <div
@@ -63,22 +78,52 @@ export default function LogModal({ toolName, featureName, entry, onClose }: Prop
             </span>
           </div>
 
-          {!hasWriteLog && !hasReadLog && (
+          {!hasWriteLog && !hasReadLog && !entry.write && !entry.read && (
             <p className="text-gray-400 text-sm italic">
               No logs available for this result.
             </p>
           )}
 
+          {/* Write section */}
+          {entry.write && !hasWriteLog && (
+            <div>
+              <h3 className="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
+                <span className="text-yellow-400">⚠️</span> Write proof
+              </h3>
+              <p className="text-gray-400 text-sm italic">
+                No proof file available for this write result.
+              </p>
+            </div>
+          )}
+
           {hasWriteLog && (
             <div>
               <h3 className="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
-                {entry.write && entry.write_log?.startsWith("sha256:")
+                {isWriteProof
                   ? <><span className="text-green-400">✅</span> Write proof</>
                   : <><span className="text-red-400">❌</span> Write error</>}
               </h3>
-              <pre className={`bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs font-mono overflow-x-auto whitespace-pre-wrap break-words ${entry.write && entry.write_log?.startsWith("sha256:") ? "text-green-300" : "text-red-300"}`}>
-                {entry.write_log}
-              </pre>
+              {isWriteProof && writeProof ? (
+                <div className="bg-gray-950 border border-gray-800 rounded-lg p-3 space-y-2">
+                  <div className="flex items-center justify-between gap-3 flex-wrap">
+                    <span className="text-xs font-mono text-green-300 break-all">
+                      sha256:{writeProof.hash}
+                    </span>
+                    <a
+                      href={`data:application/octet-stream;base64,${writeProof.base64Data}`}
+                      download={downloadFilename}
+                      className="shrink-0 px-3 py-1 text-xs bg-green-700 hover:bg-green-600 text-white rounded transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      ⬇ Download .parquet
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <pre className="bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs font-mono overflow-x-auto whitespace-pre-wrap break-words text-red-300">
+                  {entry.write_log}
+                </pre>
+              )}
             </div>
           )}
 
@@ -92,6 +137,17 @@ export default function LogModal({ toolName, featureName, entry, onClose }: Prop
               <pre className={`bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs font-mono overflow-x-auto whitespace-pre-wrap break-words ${entry.read && entry.read_log?.startsWith("proof_sha256:") ? "text-green-300" : "text-red-300"}`}>
                 {entry.read_log}
               </pre>
+            </div>
+          )}
+
+          {entry.read && !hasReadLog && (
+            <div>
+              <h3 className="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
+                <span className="text-yellow-400">⚠️</span> Read proof
+              </h3>
+              <p className="text-gray-400 text-sm italic">
+                No proof available for this read result.
+              </p>
             </div>
           )}
         </div>
