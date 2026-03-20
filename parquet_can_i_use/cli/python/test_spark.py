@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Test Apache Spark (PySpark) Parquet feature support and output JSON results."""
 
+import base64
+import hashlib
 import json
 import logging
 import os
@@ -8,6 +10,8 @@ import sys
 import tempfile
 import traceback
 from pathlib import Path
+
+PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
 
 
 def test_feature(fn):
@@ -18,7 +22,7 @@ def test_feature(fn):
         return False, traceback.format_exc()
 
 
-def test_rw(write_fn, read_fn):
+def test_rw(write_fn, read_fn, write_path=None):
     """Run separate write and read tests, return {"write": bool, "read": bool, ...}."""
     write_ok, write_log = test_feature(write_fn)
     read_ok, read_log = test_feature(read_fn)
@@ -54,6 +58,35 @@ def main():
         .getOrCreate()
     )
     spark.sparkContext.setLogLevel("ERROR")
+
+    def _read_proof_log():
+        try:
+            if not PROOF_FIXTURE.exists():
+                return None
+            proof_data = PROOF_FIXTURE.read_bytes()
+            sha = hashlib.sha256(proof_data).hexdigest()
+            df = spark.read.parquet(str(PROOF_FIXTURE))
+            rows = df.collect()
+            values = {c: [getattr(r, c) for r in rows] for c in df.columns}
+            return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
+        except Exception as e:
+            return f"proof_read_error:{e}"
+
+    def test_rw(write_fn, read_fn, write_path=None):
+        write_ok, write_log = test_feature(write_fn)
+        read_ok, read_log = test_feature(read_fn)
+        if write_ok and write_path and os.path.exists(write_path):
+            data = open(write_path, "rb").read()
+            sha = hashlib.sha256(data).hexdigest()
+            write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+        if read_ok:
+            read_log = _read_proof_log()
+        result = {"write": write_ok, "read": read_ok}
+        if write_log:
+            result["write_log"] = write_log
+        if read_log:
+            result["read_log"] = read_log
+        return result
 
     version = pyspark.__version__
 

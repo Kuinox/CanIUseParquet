@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Test fastparquet's Parquet feature support and output JSON results."""
 
+import base64
+import hashlib
 import json
 import os
 import sys
 import tempfile
 import traceback
 from pathlib import Path
+
+PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
 
 def test_feature(name, fn):
     try:
@@ -15,7 +19,7 @@ def test_feature(name, fn):
     except Exception:
         return False, traceback.format_exc()
 
-def test_rw(write_fn, read_fn):
+def test_rw(write_fn, read_fn, write_path=None):
     """Run separate write and read tests, return {"write": bool, "read": bool, ...}."""
     write_ok, write_log = test_feature("write", write_fn)
     read_ok, read_log = test_feature("read", read_fn)
@@ -32,6 +36,34 @@ def main():
     except ImportError:
         print(json.dumps({"error": "fastparquet not installed"}))
         sys.exit(1)
+
+    def _read_proof_log():
+        try:
+            if not PROOF_FIXTURE.exists():
+                return None
+            proof_data = PROOF_FIXTURE.read_bytes()
+            sha = hashlib.sha256(proof_data).hexdigest()
+            df = fastparquet.ParquetFile(str(PROOF_FIXTURE)).to_pandas()
+            values = {c: df[c].tolist() for c in df.columns}
+            return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
+        except Exception as e:
+            return f"proof_read_error:{e}"
+
+    def test_rw(write_fn, read_fn, write_path=None):
+        write_ok, write_log = test_feature("write", write_fn)
+        read_ok, read_log = test_feature("read", read_fn)
+        if write_ok and write_path and os.path.exists(write_path):
+            data = open(write_path, "rb").read()
+            sha = hashlib.sha256(data).hexdigest()
+            write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+        if read_ok:
+            read_log = _read_proof_log()
+        result = {"write": write_ok, "read": read_ok}
+        if write_log:
+            result["write_log"] = write_log
+        if read_log:
+            result["read_log"] = read_log
+        return result
 
     results = {
         "tool": "fastparquet",
@@ -72,7 +104,7 @@ def main():
                 fastparquet.write(p, d, compression=c)
         def read_codec(p=read_path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["compression"][codec_name] = test_rw(write_codec, read_codec)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec, write_path=write_path)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
@@ -112,7 +144,7 @@ def main():
                     raise NotImplementedError(f"fastparquet does not support {e} encoding")
             def read_enc(p=path):
                 fastparquet.ParquetFile(p).to_pandas()
-            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc, write_path=path)
 
     # --- Logical Types ---
     import datetime
@@ -155,7 +187,7 @@ def main():
             fastparquet.write(p, df, **kwargs)
         def read_lt(p=path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt, write_path=path)
 
     # --- Nested Types ---
     nt_tests = {}
@@ -173,7 +205,7 @@ def main():
             fastparquet.write(p, df)
         def read_nt(p=path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt, write_path=path)
 
     # --- Advanced Features ---
     df = pd.DataFrame({"col": range(1000), "str_col": [f"val_{i}" for i in range(1000)]})
@@ -190,7 +222,7 @@ def main():
         p = os.path.join(tmpdir, "adv_stats.parquet")
         pf = fastparquet.ParquetFile(p)
         assert pf.row_groups[0].columns[0].meta_data.statistics is not None
-    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics, write_path=os.path.join(tmpdir, "adv_stats.parquet"))
 
     def write_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
@@ -199,7 +231,7 @@ def main():
         p = os.path.join(tmpdir, "adv_pred.parquet")
         pf = fastparquet.ParquetFile(p)
         pf.to_pandas(filters=[("col", ">", 500)])
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown, write_path=os.path.join(tmpdir, "adv_pred.parquet"))
 
     def write_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
@@ -209,7 +241,7 @@ def main():
         pf = fastparquet.ParquetFile(p)
         result = pf.to_pandas(columns=["col"])
         assert "col" in result.columns
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj.parquet"))
 
     # Features fastparquet doesn't support
     results["advanced_features"]["PAGE_INDEX"] = {"write": False, "read": False}
@@ -234,7 +266,7 @@ def main():
         # Try reading with different schema
         pf = fastparquet.ParquetFile(p1)
         pf.to_pandas()
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution, write_path=os.path.join(tmpdir, "adv_se1.parquet"))
 
     # Size Statistics (Parquet format 2.10.0) - not supported by fastparquet
     results["advanced_features"]["SIZE_STATISTICS"] = {"write": False, "read": False}

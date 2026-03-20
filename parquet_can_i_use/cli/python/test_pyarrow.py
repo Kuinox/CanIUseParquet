@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Test PyArrow's Parquet feature support and output JSON results."""
 
+import base64
+import hashlib
 import json
 import os
 import sys
 import tempfile
 import traceback
 from pathlib import Path
+
+PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
 
 def test_feature(name, fn):
     """Run a test function, return (success, log)."""
@@ -16,7 +20,7 @@ def test_feature(name, fn):
     except Exception:
         return False, traceback.format_exc()
 
-def test_rw(write_fn, read_fn):
+def test_rw(write_fn, read_fn, write_path=None):
     """Run separate write and read tests, return {"write": bool, "read": bool, ...}."""
     write_ok, write_log = test_feature("write", write_fn)
     read_ok, read_log = test_feature("read", read_fn)
@@ -34,6 +38,34 @@ def main():
     except ImportError:
         print(json.dumps({"error": "pyarrow not installed"}))
         sys.exit(1)
+
+    def _read_proof_log():
+        try:
+            if not PROOF_FIXTURE.exists():
+                return None
+            proof_data = PROOF_FIXTURE.read_bytes()
+            sha = hashlib.sha256(proof_data).hexdigest()
+            t = pq.read_table(str(PROOF_FIXTURE))
+            values = {c: t.column(c).to_pylist() for c in t.schema.names}
+            return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
+        except Exception as e:
+            return f"proof_read_error:{e}"
+
+    def test_rw(write_fn, read_fn, write_path=None):
+        write_ok, write_log = test_feature("write", write_fn)
+        read_ok, read_log = test_feature("read", read_fn)
+        if write_ok and write_path and os.path.exists(write_path):
+            data = open(write_path, "rb").read()
+            sha = hashlib.sha256(data).hexdigest()
+            write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+        if read_ok:
+            read_log = _read_proof_log()
+        result = {"write": write_ok, "read": read_ok}
+        if write_log:
+            result["write_log"] = write_log
+        if read_log:
+            result["read_log"] = read_log
+        return result
 
     results = {
         "tool": "PyArrow",
@@ -68,7 +100,7 @@ def main():
             pq.write_table(t, p, compression=c)
         def read_codec(p=read_path):
             pq.read_table(p)
-        results["compression"][codec_name] = test_rw(write_codec, read_codec)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec, write_path=write_path)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
@@ -116,7 +148,7 @@ def main():
                         raise ValueError(f"Expected {e} in encodings, got {actual}")
             def read_enc(p=path):
                 pq.read_table(p)
-            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc, write_path=path)
 
     # BYTE_STREAM_SPLIT_EXTENDED: tests BYTE_STREAM_SPLIT for FLOAT16 (Parquet format 2.11.0 extension).
     # In PyArrow 14+, column_encoding="BYTE_STREAM_SPLIT" works for float16 columns.
@@ -131,7 +163,7 @@ def main():
                 raise ValueError(f"Expected BYTE_STREAM_SPLIT in encodings, got {actual}")
         def read_byte_stream_split_extended(p=path_ext):
             pq.read_table(p)
-        results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"][ptype] = test_rw(write_byte_stream_split_extended, read_byte_stream_split_extended)
+        results["encoding"]["BYTE_STREAM_SPLIT_EXTENDED"][ptype] = test_rw(write_byte_stream_split_extended, read_byte_stream_split_extended, write_path=path_ext)
 
     # --- Logical Types ---
     import datetime
@@ -184,7 +216,7 @@ def main():
                 pq.write_table(t, p)
         def read_lt(p=path):
             pq.read_table(p)
-        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt, write_path=path)
 
     # --- Nested Types ---
     nested_tests = {}
@@ -202,7 +234,7 @@ def main():
             pq.write_table(t, p)
         def read_nt(p=path):
             pq.read_table(p)
-        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt, write_path=path)
 
     # --- Advanced Features ---
     table = pa.table({"col": pa.array(range(1000)), "str_col": pa.array([f"val_{i}" for i in range(1000)])})
@@ -214,7 +246,7 @@ def main():
     def read_page_index():
         p = os.path.join(tmpdir, "adv_page_index.parquet")
         pq.read_table(p)
-    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
+    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index, write_path=os.path.join(tmpdir, "adv_page_index.parquet"))
 
     # Bloom Filters (PyArrow doesn't expose bloom filter writing via write_table)
     def write_bloom_filter():
@@ -245,7 +277,7 @@ def main():
     def read_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
         pq.read_table(p)
-    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2.parquet"))
 
     # Statistics
     def write_statistics():
@@ -259,7 +291,7 @@ def main():
         p = os.path.join(tmpdir, "adv_stats.parquet")
         md = pq.read_metadata(p)
         assert md.row_group(0).column(0).statistics is not None
-    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics, write_path=os.path.join(tmpdir, "adv_stats.parquet"))
 
     # Predicate Pushdown (via filters)
     def write_predicate_pushdown():
@@ -268,7 +300,7 @@ def main():
     def read_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
         pq.read_table(p, filters=[("col", ">", 500)])
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown, write_path=os.path.join(tmpdir, "adv_pred.parquet"))
 
     # Projection Pushdown
     def write_projection_pushdown():
@@ -277,7 +309,7 @@ def main():
     def read_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
         pq.read_table(p, columns=["col"])
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj.parquet"))
 
     # Schema Evolution (reading with missing columns)
     def write_schema_evolution():
@@ -306,7 +338,7 @@ def main():
     def read_size_statistics():
         p = os.path.join(tmpdir, "adv_size_stats.parquet")
         pq.read_table(p)
-    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics)
+    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics, write_path=os.path.join(tmpdir, "adv_size_stats.parquet"))
 
     # Page CRC32 checksum (Parquet format feature, PyArrow 16+)
     def write_page_crc32():
@@ -315,7 +347,7 @@ def main():
     def read_page_crc32():
         p = os.path.join(tmpdir, "adv_crc32.parquet")
         pq.read_table(p)
-    results["advanced_features"]["PAGE_CRC32"] = test_rw(write_page_crc32, read_page_crc32)
+    results["advanced_features"]["PAGE_CRC32"] = test_rw(write_page_crc32, read_page_crc32, write_path=os.path.join(tmpdir, "adv_crc32.parquet"))
 
     print(json.dumps(results, indent=2))
 
