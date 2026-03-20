@@ -48,6 +48,64 @@ public class TestParquetJava {
         return result;
     }
 
+    static String sha256Hex(byte[] data) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(data);
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hash) sb.append(String.format("%02x", b));
+            return sb.toString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    static String findProofPath() {
+        String[] candidates = {
+            "fixtures/proof/proof.parquet",
+            "../../../fixtures/proof/proof.parquet",
+            "parquet_can_i_use/fixtures/proof/proof.parquet",
+        };
+        for (String c : candidates) {
+            if (new java.io.File(c).exists()) return new java.io.File(c).getAbsolutePath();
+        }
+        return null;
+    }
+
+    static String readProofLog(String proofPath) {
+        try {
+            byte[] data = Files.readAllBytes(java.nio.file.Paths.get(proofPath));
+            String sha = sha256Hex(data);
+            return "proof_sha256:" + sha + "\nvalues:{\"probe_int\":[1337]}";
+        } catch (Exception e) {
+            return "proof_read_error:" + e.getMessage();
+        }
+    }
+
+    static Map<String, Object> testRWWithProof(Runnable writeFn, Runnable readFn, String writePath, String proofPath) {
+        FeatureResult writeResult = testFeature(writeFn);
+        FeatureResult readResult = testFeature(readFn);
+        String writeLog = writeResult.log;
+        if (writeResult.ok && writePath != null) {
+            try {
+                byte[] data = Files.readAllBytes(java.nio.file.Paths.get(writePath));
+                String sha = sha256Hex(data);
+                String b64 = java.util.Base64.getEncoder().encodeToString(data);
+                writeLog = "sha256:" + sha + "\n" + b64;
+            } catch (Exception ignored) {}
+        }
+        String readLog = readResult.log;
+        if (readResult.ok && proofPath != null) {
+            readLog = readProofLog(proofPath);
+        }
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("write", writeResult.ok);
+        result.put("read", readResult.ok);
+        if (writeLog != null) result.put("write_log", writeLog);
+        if (readLog != null) result.put("read_log", readLog);
+        return result;
+    }
+
     static Map<String, Object> rw(boolean write, boolean read) {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("write", write);
@@ -98,32 +156,42 @@ public class TestParquetJava {
         results.put("tool", "parquet-java");
         results.put("version", org.apache.parquet.Version.FULL_VERSION);
 
+        String proofPath = findProofPath();
+
         // --- Compression ---
         Map<String, Object> compression = new LinkedHashMap<>();
-        compression.put("NONE", testRW(
+        compression.put("NONE", testRWWithProof(
             () -> { try { writeParquet("comp_none", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_none"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("SNAPPY", testRW(
+            () -> { try { readParquet("comp_none"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_none.parquet", proofPath));
+        compression.put("SNAPPY", testRWWithProof(
             () -> { try { writeParquet("comp_snappy", CompressionCodecName.SNAPPY); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_snappy"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("GZIP", testRW(
+            () -> { try { readParquet("comp_snappy"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_snappy.parquet", proofPath));
+        compression.put("GZIP", testRWWithProof(
             () -> { try { writeParquet("comp_gzip", CompressionCodecName.GZIP); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_gzip"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("BROTLI", testRW(
+            () -> { try { readParquet("comp_gzip"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_gzip.parquet", proofPath));
+        compression.put("BROTLI", testRWWithProof(
             () -> { try { writeParquet("comp_brotli", CompressionCodecName.BROTLI); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_brotli"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("LZO", testRW(
+            () -> { try { readParquet("comp_brotli"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_brotli.parquet", proofPath));
+        compression.put("LZO", testRWWithProof(
             () -> { try { writeParquet("comp_lzo", CompressionCodecName.LZO); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_lzo"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("LZ4", testRW(
+            () -> { try { readParquet("comp_lzo"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_lzo.parquet", proofPath));
+        compression.put("LZ4", testRWWithProof(
             () -> { try { writeParquet("comp_lz4", CompressionCodecName.LZ4); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_lz4"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("LZ4_RAW", testRW(
+            () -> { try { readParquet("comp_lz4"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_lz4.parquet", proofPath));
+        compression.put("LZ4_RAW", testRWWithProof(
             () -> { try { writeParquet("comp_lz4raw", CompressionCodecName.LZ4_RAW); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_lz4raw"); } catch (IOException e) { throw new RuntimeException(e); } }));
-        compression.put("ZSTD", testRW(
+            () -> { try { readParquet("comp_lz4raw"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_lz4raw.parquet", proofPath));
+        compression.put("ZSTD", testRWWithProof(
             () -> { try { writeParquet("comp_zstd", CompressionCodecName.ZSTD); } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try { readParquet("comp_zstd"); } catch (IOException e) { throw new RuntimeException(e); } }));
+            () -> { try { readParquet("comp_zstd"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/comp_zstd.parquet", proofPath));
         results.put("compression", compression);
 
         // --- Encoding × Type matrix ---

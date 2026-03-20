@@ -65,16 +65,18 @@ export default function LogModal({ toolName, featureName, entry, onClose }: Prop
 
           {!hasWriteLog && !hasReadLog && (
             <p className="text-gray-400 text-sm italic">
-              No error logs available for this result.
+              No logs available for this result.
             </p>
           )}
 
           {hasWriteLog && (
             <div>
               <h3 className="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
-                <span className="text-red-400">❌</span> Write error
+                {entry.write && entry.write_log?.startsWith("sha256:")
+                  ? <><span className="text-green-400">✅</span> Write proof</>
+                  : <><span className="text-red-400">❌</span> Write error</>}
               </h3>
-              <pre className="bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs text-red-300 font-mono overflow-x-auto whitespace-pre-wrap break-words">
+              <pre className={`bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs font-mono overflow-x-auto whitespace-pre-wrap break-words ${entry.write && entry.write_log?.startsWith("sha256:") ? "text-green-300" : "text-red-300"}`}>
                 {entry.write_log}
               </pre>
             </div>
@@ -83,9 +85,11 @@ export default function LogModal({ toolName, featureName, entry, onClose }: Prop
           {hasReadLog && (
             <div>
               <h3 className="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
-                <span className="text-red-400">❌</span> Read error
+                {entry.read && entry.read_log?.startsWith("proof_sha256:")
+                  ? <><span className="text-green-400">✅</span> Read proof</>
+                  : <><span className="text-red-400">❌</span> Read error</>}
               </h3>
-              <pre className="bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs text-red-300 font-mono overflow-x-auto whitespace-pre-wrap break-words">
+              <pre className={`bg-gray-950 border border-gray-800 rounded-lg p-3 text-xs font-mono overflow-x-auto whitespace-pre-wrap break-words ${entry.read && entry.read_log?.startsWith("proof_sha256:") ? "text-green-300" : "text-red-300"}`}>
                 {entry.read_log}
               </pre>
             </div>

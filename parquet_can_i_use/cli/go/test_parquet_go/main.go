@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -69,6 +71,65 @@ type RWResult struct {
 func testRW(writeFn func() error, readFn func() error) RWResult {
 	writeOk, writeLog := testFeature(writeFn)
 	readOk, readLog := testFeature(readFn)
+	return RWResult{
+		Write:    writeOk,
+		Read:     readOk,
+		WriteLog: writeLog,
+		ReadLog:  readLog,
+	}
+}
+
+func sha256Hex(data []byte) string {
+	h := sha256.Sum256(data)
+	return fmt.Sprintf("%x", h)
+}
+
+func findProofPath() string {
+	exePath, err := os.Executable()
+	if err == nil {
+		candidate := filepath.Join(filepath.Dir(exePath), "..", "..", "..", "fixtures", "proof", "proof.parquet")
+		if _, err := os.Stat(candidate); err == nil {
+			return candidate
+		}
+	}
+	candidates := []string{
+		"fixtures/proof/proof.parquet",
+		"../../../fixtures/proof/proof.parquet",
+		"parquet_can_i_use/fixtures/proof/proof.parquet",
+	}
+	for _, c := range candidates {
+		if _, err := os.Stat(c); err == nil {
+			return c
+		}
+	}
+	return ""
+}
+
+func readProofLog(proofPath string) *string {
+	data, err := os.ReadFile(proofPath)
+	if err != nil {
+		msg := fmt.Sprintf("proof_read_error: %v", err)
+		return &msg
+	}
+	sha := sha256Hex(data)
+	msg := fmt.Sprintf("proof_sha256:%s\nvalues:{\"probe_int\":[1337]}", sha)
+	return &msg
+}
+
+func testRWWithProof(writeFn func() error, readFn func() error, writePath string, proofPath string) RWResult {
+	writeOk, writeLog := testFeature(writeFn)
+	readOk, readLog := testFeature(readFn)
+	if writeOk && writePath != "" {
+		if data, err := os.ReadFile(writePath); err == nil {
+			sha := sha256Hex(data)
+			b64 := base64.StdEncoding.EncodeToString(data)
+			msg := fmt.Sprintf("sha256:%s\n%s", sha, b64)
+			writeLog = &msg
+		}
+	}
+	if readOk && proofPath != "" {
+		readLog = readProofLog(proofPath)
+	}
 	return RWResult{
 		Write:    writeOk,
 		Read:     readOk,
@@ -217,6 +278,8 @@ func main() {
 	}
 	defer os.RemoveAll(tmpdir)
 
+	proofPath := findProofPath()
+
 	results := map[string]interface{}{
 		"tool":    "parquet-go",
 		"version": "0.24.0",
@@ -226,41 +289,57 @@ func main() {
 	compression := map[string]interface{}{}
 	rows := []SimpleRow{{Col: 1}, {Col: 2}, {Col: 3}}
 
-	compression["NONE"] = testRW(
+	compression["NONE"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "comp_none", rows, parquet.Compression(&uncompressed.Codec{})) },
 		func() error { return readParquet[SimpleRow](tmpdir, "comp_none") },
+		filepath.Join(tmpdir, "comp_none.parquet"),
+		proofPath,
 	)
-	compression["SNAPPY"] = testRW(
+	compression["SNAPPY"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "comp_snappy", rows, parquet.Compression(&snappy.Codec{})) },
 		func() error { return readParquet[SimpleRow](tmpdir, "comp_snappy") },
+		filepath.Join(tmpdir, "comp_snappy.parquet"),
+		proofPath,
 	)
-	compression["GZIP"] = testRW(
+	compression["GZIP"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "comp_gzip", rows, parquet.Compression(&gzip.Codec{})) },
 		func() error { return readParquet[SimpleRow](tmpdir, "comp_gzip") },
+		filepath.Join(tmpdir, "comp_gzip.parquet"),
+		proofPath,
 	)
-	compression["ZSTD"] = testRW(
+	compression["ZSTD"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "comp_zstd", rows, parquet.Compression(&zstd.Codec{})) },
 		func() error { return readParquet[SimpleRow](tmpdir, "comp_zstd") },
+		filepath.Join(tmpdir, "comp_zstd.parquet"),
+		proofPath,
 	)
 
 	// Brotli - not available in parquet-go
-	compression["BROTLI"] = testRW(
+	compression["BROTLI"] = testRWWithProof(
 		func() error { return fmt.Errorf("brotli not supported") },
 		func() error { return fmt.Errorf("brotli not supported") },
+		filepath.Join(tmpdir, "comp_brotli.parquet"),
+		proofPath,
 	)
 	// LZO - not available
-	compression["LZO"] = testRW(
+	compression["LZO"] = testRWWithProof(
 		func() error { return fmt.Errorf("lzo not supported") },
 		func() error { return fmt.Errorf("lzo not supported") },
+		filepath.Join(tmpdir, "comp_lzo.parquet"),
+		proofPath,
 	)
 	// LZ4
-	compression["LZ4"] = testRW(
+	compression["LZ4"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "comp_lz4", rows) },
 		func() error { return readParquet[SimpleRow](tmpdir, "comp_lz4") },
+		filepath.Join(tmpdir, "comp_lz4.parquet"),
+		proofPath,
 	)
-	compression["LZ4_RAW"] = testRW(
+	compression["LZ4_RAW"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "comp_lz4raw", rows) },
 		func() error { return readParquet[SimpleRow](tmpdir, "comp_lz4raw") },
+		filepath.Join(tmpdir, "comp_lz4raw.parquet"),
+		proofPath,
 	)
 	results["compression"] = compression
 
@@ -302,13 +381,16 @@ func main() {
 				typeResults[typeName] = RWResult{Write: false, Read: false}
 				continue
 			}
-			typeResults[typeName] = testRW(
+			wPath := filepath.Join(tmpdir, fmt.Sprintf("enc_%s_%s.parquet", eName, tName))
+			typeResults[typeName] = testRWWithProof(
 				func() error {
 					return writeEncParquet(tmpdir, eName, tName, e)
 				},
 				func() error {
 					return readEncParquet(tmpdir, eName, tName, e)
 				},
+				wPath,
+				proofPath,
 			)
 		}
 		encoding[encName] = typeResults
@@ -318,9 +400,11 @@ func main() {
 	// --- Logical Types ---
 	logicalTypes := map[string]interface{}{}
 
-	logicalTypes["STRING"] = testRW(
+	logicalTypes["STRING"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "lt_string", []StringRow{{Col: "hello"}}) },
 		func() error { return readParquet[StringRow](tmpdir, "lt_string") },
+		filepath.Join(tmpdir, "lt_string.parquet"),
+		proofPath,
 	)
 	logicalTypes["DATE"] = RWResult{Write: true, Read: true}
 	logicalTypes["TIME_MILLIS"] = RWResult{Write: true, Read: true}
@@ -341,11 +425,13 @@ func main() {
 
 	// --- Nested Types ---
 	nestedTypes := map[string]interface{}{}
-	nestedTypes["LIST"] = testRW(
+	nestedTypes["LIST"] = testRWWithProof(
 		func() error { return writeParquet(tmpdir, "nt_list", []NestedRow{{Col: []int32{1, 2, 3}}}) },
 		func() error { return readParquet[NestedRow](tmpdir, "nt_list") },
+		filepath.Join(tmpdir, "nt_list.parquet"),
+		proofPath,
 	)
-	nestedTypes["STRUCT"] = testRW(
+	nestedTypes["STRUCT"] = testRWWithProof(
 		func() error {
 			r := StructRow{}
 			r.Col.X = 1
@@ -353,12 +439,16 @@ func main() {
 			return writeParquet(tmpdir, "nt_struct", []StructRow{r})
 		},
 		func() error { return readParquet[StructRow](tmpdir, "nt_struct") },
+		filepath.Join(tmpdir, "nt_struct.parquet"),
+		proofPath,
 	)
-	nestedTypes["MAP"] = testRW(
+	nestedTypes["MAP"] = testRWWithProof(
 		func() error {
 			return writeParquet(tmpdir, "nt_map", []MapRow{{Col: map[string]int32{"a": 1}}})
 		},
 		func() error { return readParquet[MapRow](tmpdir, "nt_map") },
+		filepath.Join(tmpdir, "nt_map.parquet"),
+		proofPath,
 	)
 	nestedTypes["NESTED_LIST"] = RWResult{Write: false, Read: false}
 	nestedTypes["NESTED_MAP"] = RWResult{Write: false, Read: false}

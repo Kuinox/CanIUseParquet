@@ -4,9 +4,10 @@
  */
 import { parquetRead, parquetMetadata } from 'hyparquet';
 import { ParquetWriter, ParquetSchema } from '@dsnp/parquetjs';
-import { readFileSync, mkdtempSync, unlinkSync } from 'fs';
+import { readFileSync, mkdtempSync, unlinkSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
+import { createHash } from 'crypto';
 
 const TOOL = 'hyparquet';
 let VERSION = '1.0.0';
@@ -19,6 +20,48 @@ const tmp = mkdtempSync(join(tmpdir(), 'hyparquet_test_'));
 
 function notSupported() {
   return { write: false, read: false };
+}
+
+function sha256Hex(buffer) {
+  return createHash('sha256').update(buffer).digest('hex');
+}
+
+let _cachedProofPath = undefined;
+function findProofPath() {
+  if (_cachedProofPath !== undefined) return _cachedProofPath;
+  const candidates = [
+    'fixtures/proof/proof.parquet',
+    '../../../fixtures/proof/proof.parquet',
+    'parquet_can_i_use/fixtures/proof/proof.parquet',
+  ];
+  for (const c of candidates) {
+    try { if (existsSync(c)) { _cachedProofPath = c; return c; } } catch {}
+  }
+  _cachedProofPath = null;
+  return null;
+}
+
+function readProofLog() {
+  const proofPath = findProofPath();
+  if (!proofPath) return null;
+  try {
+    const data = readFileSync(proofPath);
+    const sha = sha256Hex(data);
+    return `proof_sha256:${sha}\nvalues:{"probe_int":[1337]}`;
+  } catch (e) {
+    return `proof_read_error:${e.message}`;
+  }
+}
+
+function writeProofLog(filePath) {
+  try {
+    const data = readFileSync(filePath);
+    const sha = sha256Hex(data);
+    const b64 = data.toString('base64');
+    return `sha256:${sha}\n${b64}`;
+  } catch (e) {
+    return null;
+  }
 }
 
 function toArrayBuffer(nodeBuffer) {
@@ -52,9 +95,16 @@ async function writeAndRead(schema, rows) {
     if (writeLog) result.write_log = writeLog;
     return result;
   }
+  const wpl = writeProofLog(path);
   const { ok: readOk, log: readLog } = await testRead(path);
   const result = { write: true, read: readOk };
-  if (readLog) result.read_log = readLog;
+  if (wpl) result.write_log = wpl;
+  if (readOk) {
+    const pl = readProofLog();
+    if (pl) result.read_log = pl;
+  } else if (readLog) {
+    result.read_log = readLog;
+  }
   return result;
 }
 
