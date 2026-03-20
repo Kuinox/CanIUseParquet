@@ -55,7 +55,8 @@ def main():
         write_ok, write_log = test_feature("write", write_fn)
         read_ok, read_log = test_feature("read", read_fn)
         if write_ok and write_path and os.path.exists(write_path):
-            data = open(write_path, "rb").read()
+            with open(write_path, "rb") as f:
+                data = f.read()
             sha = hashlib.sha256(data).hexdigest()
             write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
         if read_ok:
