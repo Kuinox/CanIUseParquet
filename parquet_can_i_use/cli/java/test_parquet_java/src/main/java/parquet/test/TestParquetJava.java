@@ -22,24 +22,34 @@ public class TestParquetJava {
 
     static String tmpDir;
 
-    static boolean testFeature(Runnable fn) {
+    static class FeatureResult {
+        boolean ok;
+        String log;
+        FeatureResult(boolean ok, String log) { this.ok = ok; this.log = log; }
+    }
+
+    static FeatureResult testFeature(Runnable fn) {
         try {
             fn.run();
-            return true;
+            return new FeatureResult(true, null);
         } catch (Exception e) {
-            return false;
+            return new FeatureResult(false, e.toString());
         }
     }
 
-    static Map<String, Boolean> testRW(Runnable writeFn, Runnable readFn) {
-        Map<String, Boolean> result = new LinkedHashMap<>();
-        result.put("write", testFeature(writeFn));
-        result.put("read", testFeature(readFn));
+    static Map<String, Object> testRW(Runnable writeFn, Runnable readFn) {
+        FeatureResult writeResult = testFeature(writeFn);
+        FeatureResult readResult = testFeature(readFn);
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("write", writeResult.ok);
+        result.put("read", readResult.ok);
+        if (writeResult.log != null) result.put("write_log", writeResult.log);
+        if (readResult.log != null) result.put("read_log", readResult.log);
         return result;
     }
 
-    static Map<String, Boolean> rw(boolean write, boolean read) {
-        Map<String, Boolean> result = new LinkedHashMap<>();
+    static Map<String, Object> rw(boolean write, boolean read) {
+        Map<String, Object> result = new LinkedHashMap<>();
         result.put("write", write);
         result.put("read", read);
         return result;

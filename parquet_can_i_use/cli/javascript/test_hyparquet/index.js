@@ -31,25 +31,31 @@ async function testRead(filePath) {
     const metadata = parquetMetadata(buffer);
     const rows = [];
     await parquetRead({ file: buffer, onComplete: data => rows.push(...data) });
-    return true;
-  } catch {
-    return false;
+    return { ok: true, log: null };
+  } catch (e) {
+    return { ok: false, log: e?.stack || String(e) };
   }
 }
 
 async function writeAndRead(schema, rows) {
   const path = join(tmp, `test_${Date.now()}_${Math.random().toString(36).slice(2)}.parquet`);
+  let writeLog = null;
   try {
     const writer = await ParquetWriter.openFile(schema, path);
     for (const row of rows) {
       await writer.appendRow(row);
     }
     await writer.close();
-    const readOk = await testRead(path);
-    return { write: true, read: readOk };
-  } catch {
-    return { write: false, read: false };
+  } catch (e) {
+    writeLog = e?.stack || String(e);
+    const result = { write: false, read: false };
+    if (writeLog) result.write_log = writeLog;
+    return result;
   }
+  const { ok: readOk, log: readLog } = await testRead(path);
+  const result = { write: true, read: readOk };
+  if (readLog) result.read_log = readLog;
+  return result;
 }
 
 async function main() {
@@ -113,10 +119,12 @@ async function main() {
       const writer = await ParquetWriter.openFile(schema, path, { compression: codec });
       await writer.appendRow({ col: 1 });
       await writer.close();
-      const readOk = await testRead(path);
-      results.compression[name] = { write: false, read: readOk };
-    } catch {
-      results.compression[name] = { write: false, read: false };
+      const { ok: readOk, log: readLog } = await testRead(path);
+      const entry = { write: false, read: readOk };
+      if (readLog) entry.read_log = readLog;
+      results.compression[name] = entry;
+    } catch (e) {
+      results.compression[name] = { write: false, read: false, write_log: e?.stack || String(e) };
     }
   }
 
@@ -131,18 +139,24 @@ async function main() {
   // Write a basic file and test reading; encoding-specific write is limited in parquetjs
   const basicSchema = new ParquetSchema({ col: { type: 'INT32' } });
   let basicPath = join(tmp, 'enc_basic.parquet');
+  let basicReadResult = { ok: false, log: null };
   try {
     const w = await ParquetWriter.openFile(basicSchema, basicPath);
     await w.appendRow({ col: 42 });
     await w.close();
-  } catch { basicPath = null; }
+    basicReadResult = await testRead(basicPath);
+  } catch (e) {
+    basicPath = null;
+    basicReadResult = { ok: false, log: e?.stack || String(e) };
+  }
 
   for (const enc of encodings) {
     results.encoding[enc] = {};
     for (const ptype of encodingTypes) {
       // hyparquet reads all standard encodings; report read based on basic file read
-      const readOk = basicPath ? await testRead(basicPath) : false;
-      results.encoding[enc][ptype] = { write: false, read: readOk };
+      const entry = { write: false, read: basicReadResult.ok };
+      if (basicReadResult.log) entry.read_log = basicReadResult.log;
+      results.encoding[enc][ptype] = entry;
     }
   }
 
@@ -181,8 +195,8 @@ async function main() {
   for (const [name, testFn] of Object.entries(logicalTypeTests)) {
     try {
       results.logical_types[name] = await testFn();
-    } catch {
-      results.logical_types[name] = { write: false, read: false };
+    } catch (e) {
+      results.logical_types[name] = { write: false, read: false, write_log: e?.stack || String(e) };
     }
   }
 
@@ -198,28 +212,33 @@ async function main() {
   for (const [name, testFn] of Object.entries(nestedTypeTests)) {
     try {
       results.nested_types[name] = await testFn();
-    } catch {
-      results.nested_types[name] = { write: false, read: false };
+    } catch (e) {
+      results.nested_types[name] = { write: false, read: false, write_log: e?.stack || String(e) };
     }
   }
 
   // --- Advanced Features ---
   // Test reading statistics, page index from a basic file
-  let basicReadOk = false;
-  if (basicPath) {
-    basicReadOk = await testRead(basicPath);
+  // basicReadResult is already populated from the encoding section above
+  const advReadOk = basicReadResult.ok;
+  const advReadLog = basicReadResult.log;
+
+  function advEntry(read) {
+    const e = { write: false, read };
+    if (!read && advReadLog) e.read_log = advReadLog;
+    return e;
   }
 
   results.advanced_features = {
-    STATISTICS:          { write: false, read: basicReadOk },
-    PAGE_INDEX:          { write: false, read: basicReadOk },
+    STATISTICS:          advEntry(advReadOk),
+    PAGE_INDEX:          advEntry(advReadOk),
     BLOOM_FILTER:        { write: false, read: false },
-    DATA_PAGE_V2:        { write: false, read: basicReadOk },
+    DATA_PAGE_V2:        advEntry(advReadOk),
     COLUMN_ENCRYPTION:   { write: false, read: false },
-    SIZE_STATISTICS:     { write: false, read: basicReadOk },
+    SIZE_STATISTICS:     advEntry(advReadOk),
     PAGE_CRC32:          { write: false, read: false },
     PREDICATE_PUSHDOWN:  { write: false, read: false },
-    PROJECTION_PUSHDOWN: { write: false, read: basicReadOk },
+    PROJECTION_PUSHDOWN: advEntry(advReadOk),
     SCHEMA_EVOLUTION:    { write: false, read: false },
   };
 

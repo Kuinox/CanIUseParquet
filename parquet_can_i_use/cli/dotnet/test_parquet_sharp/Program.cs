@@ -10,23 +10,24 @@ class Program
 {
     static string tmpDir = Path.Combine(Path.GetTempPath(), "parquet_sharp_test_" + Guid.NewGuid().ToString("N"));
 
-    static bool TestFeature(Action fn)
+    static (bool ok, string? log) TestFeature(Action fn)
     {
-        try { fn(); return true; }
-        catch { return false; }
+        try { fn(); return (true, null); }
+        catch (Exception e) { return (false, e.ToString()); }
     }
 
-    static Dictionary<string, bool> TestRW(Action writeFn, Action readFn)
+    static Dictionary<string, object> TestRW(Action writeFn, Action readFn)
     {
-        return new Dictionary<string, bool>
-        {
-            ["write"] = TestFeature(writeFn),
-            ["read"] = TestFeature(readFn),
-        };
+        var (writeOk, writeLog) = TestFeature(writeFn);
+        var (readOk, readLog) = TestFeature(readFn);
+        var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
+        if (writeLog != null) result["write_log"] = writeLog;
+        if (readLog != null) result["read_log"] = readLog;
+        return result;
     }
 
-    static Dictionary<string, bool> RW(bool write, bool read) =>
-        new Dictionary<string, bool> { ["write"] = write, ["read"] = read };
+    static Dictionary<string, object> RW(bool write, bool read) =>
+        new Dictionary<string, object> { ["write"] = write, ["read"] = read };
 
     static string TmpPath(string name) => Path.Combine(tmpDir, name + ".parquet");
 

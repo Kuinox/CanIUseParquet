@@ -6,22 +6,28 @@ import logging
 import os
 import sys
 import tempfile
+import traceback
 from pathlib import Path
 
 
 def test_feature(fn):
     try:
         fn()
-        return True
+        return True, None
     except Exception:
-        return False
+        return False, traceback.format_exc()
 
 
 def test_rw(write_fn, read_fn):
-    """Run separate write and read tests, return {"write": bool, "read": bool}."""
-    write_ok = test_feature(write_fn)
-    read_ok = test_feature(read_fn)
-    return {"write": write_ok, "read": read_ok}
+    """Run separate write and read tests, return {"write": bool, "read": bool, ...}."""
+    write_ok, write_log = test_feature(write_fn)
+    read_ok, read_log = test_feature(read_fn)
+    result = {"write": write_ok, "read": read_ok}
+    if write_log:
+        result["write_log"] = write_log
+    if read_log:
+        result["read_log"] = read_log
+    return result
 
 
 def main():

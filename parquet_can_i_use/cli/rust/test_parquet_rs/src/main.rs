@@ -12,10 +12,20 @@ use std::fs::File;
 use std::sync::Arc;
 use tempfile::TempDir;
 
-fn test_feature<F: FnOnce() -> Result<(), Box<dyn std::error::Error>>>(f: F) -> bool {
+fn test_feature<F: FnOnce() -> Result<(), Box<dyn std::error::Error>>>(f: F) -> (bool, Option<String>) {
     match std::panic::catch_unwind(std::panic::AssertUnwindSafe(f)) {
-        Ok(Ok(())) => true,
-        _ => false,
+        Ok(Ok(())) => (true, None),
+        Ok(Err(e)) => (false, Some(e.to_string())),
+        Err(e) => {
+            let msg = if let Some(s) = e.downcast_ref::<String>() {
+                s.clone()
+            } else if let Some(s) = e.downcast_ref::<&str>() {
+                s.to_string()
+            } else {
+                "panic".to_string()
+            };
+            (false, Some(msg))
+        }
     }
 }
 
@@ -24,9 +34,18 @@ where
     W: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
     R: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
 {
-    let write_ok = test_feature(write_fn);
-    let read_ok = test_feature(read_fn);
-    json!({"write": write_ok, "read": read_ok})
+    let (write_ok, write_log) = test_feature(write_fn);
+    let (read_ok, read_log) = test_feature(read_fn);
+    let mut result = serde_json::Map::new();
+    result.insert("write".to_string(), json!(write_ok));
+    result.insert("read".to_string(), json!(read_ok));
+    if let Some(log) = write_log {
+        result.insert("write_log".to_string(), json!(log));
+    }
+    if let Some(log) = read_log {
+        result.insert("read_log".to_string(), json!(log));
+    }
+    Value::Object(result)
 }
 
 fn make_simple_batch() -> RecordBatch {

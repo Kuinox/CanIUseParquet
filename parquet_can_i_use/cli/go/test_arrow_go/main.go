@@ -17,21 +17,35 @@ import (
 )
 
 type RWResult struct {
-	Write bool `json:"write"`
-	Read  bool `json:"read"`
+	Write    bool    `json:"write"`
+	Read     bool    `json:"read"`
+	WriteLog *string `json:"write_log,omitempty"`
+	ReadLog  *string `json:"read_log,omitempty"`
 }
 
-func testFeature(fn func() error) bool {
+func testFeature(fn func() error) (ok bool, errMsg *string) {
 	defer func() {
-		recover()
+		if r := recover(); r != nil {
+			ok = false
+			msg := fmt.Sprintf("panic: %v", r)
+			errMsg = &msg
+		}
 	}()
-	return fn() == nil
+	if err := fn(); err != nil {
+		msg := err.Error()
+		return false, &msg
+	}
+	return true, nil
 }
 
 func testRW(writeFn func() error, readFn func() error) RWResult {
+	writeOk, writeLog := testFeature(writeFn)
+	readOk, readLog := testFeature(readFn)
 	return RWResult{
-		Write: testFeature(writeFn),
-		Read:  testFeature(readFn),
+		Write:    writeOk,
+		Read:     readOk,
+		WriteLog: writeLog,
+		ReadLog:  readLog,
 	}
 }
 
