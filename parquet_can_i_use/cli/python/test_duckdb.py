@@ -1,24 +1,34 @@
 #!/usr/bin/env python3
 """Test DuckDB's Parquet feature support and output JSON results."""
 
+import base64
+import hashlib
 import json
 import os
 import sys
 import tempfile
+import traceback
 from pathlib import Path
+
+PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
 
 def test_feature(name, fn):
     try:
         fn()
-        return True
+        return True, None
     except Exception:
-        return False
+        return False, traceback.format_exc()
 
-def test_rw(write_fn, read_fn):
-    """Run separate write and read tests, return {"write": bool, "read": bool}."""
-    write_ok = test_feature("write", write_fn)
-    read_ok = test_feature("read", read_fn)
-    return {"write": write_ok, "read": read_ok}
+def test_rw(write_fn, read_fn, write_path=None):
+    """Run separate write and read tests, return {"write": bool, "read": bool, ...}."""
+    write_ok, write_log = test_feature("write", write_fn)
+    read_ok, read_log = test_feature("read", read_fn)
+    result = {"write": write_ok, "read": read_ok}
+    if write_log:
+        result["write_log"] = write_log
+    if read_log:
+        result["read_log"] = read_log
+    return result
 
 def main():
     try:
@@ -40,6 +50,36 @@ def main():
     tmpdir = tempfile.mkdtemp()
     FIXTURES_DIR = Path(__file__).parent.parent.parent / "fixtures"
     con = duckdb.connect()
+
+    def _read_proof_log():
+        try:
+            if not PROOF_FIXTURE.exists():
+                return None
+            proof_data = PROOF_FIXTURE.read_bytes()
+            sha = hashlib.sha256(proof_data).hexdigest()
+            rows = con.execute(f"SELECT * FROM read_parquet('{PROOF_FIXTURE}')").fetchall()
+            cols = con.execute(f"DESCRIBE SELECT * FROM read_parquet('{PROOF_FIXTURE}')").fetchall()
+            values = {col[0]: [r[i] for r in rows] for i, col in enumerate(cols)}
+            return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
+        except Exception as e:
+            return f"proof_read_error:{e}"
+
+    def test_rw(write_fn, read_fn, write_path=None):
+        write_ok, write_log = test_feature("write", write_fn)
+        read_ok, read_log = test_feature("read", read_fn)
+        if write_ok and write_path and os.path.exists(write_path):
+            with open(write_path, "rb") as f:
+                data = f.read()
+            sha = hashlib.sha256(data).hexdigest()
+            write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+        if read_ok:
+            read_log = _read_proof_log()
+        result = {"write": write_ok, "read": read_ok}
+        if write_log:
+            result["write_log"] = write_log
+        if read_log:
+            result["read_log"] = read_log
+        return result
 
     # --- Compression ---
     # DuckDB's CODEC 'LZ4' writes LZ4_RAW format internally (confirmed via parquet_metadata).
@@ -91,7 +131,7 @@ def main():
         def read_codec(p=read_path):
             con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
 
-        results["compression"][codec_name] = test_rw(write_codec, read_codec)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec, write_path=write_path)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
@@ -175,7 +215,7 @@ def main():
                         raise ValueError(f"Expected {e} in encodings, got {actual}")
             def read_enc(p=path):
                 con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
+            results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc, write_path=path)
 
     # --- Logical Types ---
     lt_tests = {
@@ -210,7 +250,7 @@ def main():
             if q is None:
                 raise NotImplementedError("Not supported")
             con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt, write_path=path)
 
     # --- Nested Types ---
     nt_tests = {
@@ -227,7 +267,7 @@ def main():
             con.execute(f"COPY ({q}) TO '{p}' (FORMAT PARQUET)")
         def read_nt(p=path):
             con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt, write_path=path)
 
     # --- Advanced Features ---
     # Create a shared data file used by several read-side tests.  Wrap in
@@ -255,7 +295,7 @@ def main():
     def read_bloom_filter():
         p = os.path.join(tmpdir, "adv_bloom.parquet")
         con.execute(f"SELECT * FROM parquet_metadata('{p}')").fetchall()
-    results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter)
+    results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter, write_path=os.path.join(tmpdir, "adv_bloom.parquet"))
 
     def write_encryption():
         p = os.path.join(tmpdir, "adv_enc.parquet")
@@ -264,7 +304,7 @@ def main():
     def read_encryption():
         p = os.path.join(tmpdir, "adv_enc.parquet")
         con.execute(f"SELECT * FROM read_parquet('{p}', encryption_config={{footer_key: 'test_key'}})").fetchall()
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_rw(write_encryption, read_encryption)
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_rw(write_encryption, read_encryption, write_path=os.path.join(tmpdir, "adv_enc.parquet"))
 
     def write_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
@@ -272,7 +312,7 @@ def main():
     def read_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
         con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2.parquet"))
 
     def write_statistics():
         pass  # DuckDB always writes statistics
@@ -301,7 +341,7 @@ def main():
         p1 = os.path.join(tmpdir, "adv_se1.parquet")
         p2 = os.path.join(tmpdir, "adv_se2.parquet")
         con.execute(f"SELECT * FROM read_parquet(['{p1}', '{p2}'], union_by_name=true)").fetchall()
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution, write_path=os.path.join(tmpdir, "adv_se1.parquet"))
 
     # Size Statistics (Parquet format 2.10.0) - DuckDB reads size_statistics metadata
     def write_size_statistics():

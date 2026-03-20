@@ -9,3 +9,5 @@ arrow = { version = "55", features = ["prettyprint"] }
 serde_json = "1"
 tempfile = "3"
 half = "2"
+sha2 = "0.10"
+base64 = "0.22"

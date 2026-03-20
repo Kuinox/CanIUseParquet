@@ -228,6 +228,18 @@ def _is_feature_cli_error(entry) -> bool:
     return isinstance(entry, dict) and entry.get("cli_error") is True
 
 
+def _copy_logs(cell: dict, entry) -> None:
+    """Copy write_log / read_log from a raw feature entry into a matrix cell."""
+    if not isinstance(entry, dict):
+        return
+    write_log = entry.get("write_log")
+    read_log = entry.get("read_log")
+    if write_log:
+        cell["write_log"] = write_log
+    if read_log:
+        cell["read_log"] = read_log
+
+
 def _has_any_feature_support(version_result: dict) -> bool:
     """Return True if the result contains at least one supported feature (read or write).
 
@@ -463,6 +475,7 @@ def build_matrix_data(multiversion_results, cli_error_versions=None, cli_harness
             }
             if _is_feature_cli_error(entry):
                 cell["cli_error"] = True
+            _copy_logs(cell, entry)
             tool_data["compression"][codec] = cell
 
         # Encoding x Type
@@ -499,6 +512,7 @@ def build_matrix_data(multiversion_results, cli_error_versions=None, cli_harness
                     spec_valid = SPEC_VALID_ENCODING_TYPES.get(enc, set())
                     if ptype not in spec_valid:
                         cell["not_applicable"] = True
+                _copy_logs(cell, entry)
                 tool_data["encoding"][enc][ptype] = cell
 
         # Logical Types
@@ -516,6 +530,7 @@ def build_matrix_data(multiversion_results, cli_error_versions=None, cli_harness
             }
             if _is_feature_cli_error(entry):
                 cell["cli_error"] = True
+            _copy_logs(cell, entry)
             tool_data["logical_types"][lt] = cell
 
         # Nested Types
@@ -533,6 +548,7 @@ def build_matrix_data(multiversion_results, cli_error_versions=None, cli_harness
             }
             if _is_feature_cli_error(entry):
                 cell["cli_error"] = True
+            _copy_logs(cell, entry)
             tool_data["nested_types"][nt] = cell
 
         # Advanced Features
@@ -550,6 +566,7 @@ def build_matrix_data(multiversion_results, cli_error_versions=None, cli_harness
             }
             if _is_feature_cli_error(entry):
                 cell["cli_error"] = True
+            _copy_logs(cell, entry)
             tool_data["advanced_features"][af] = cell
 
         matrix["tools"][tool_id] = tool_data

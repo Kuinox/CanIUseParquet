@@ -6,6 +6,10 @@ export interface FeatureEntry {
   not_applicable?: boolean;
   /** True when the test CLI itself could not test this feature (infra error, not a library feature gap). */
   cli_error?: boolean;
+  /** Error log captured when the write test failed. */
+  write_log?: string | null;
+  /** Error log captured when the read test failed. */
+  read_log?: string | null;
 }
 
 export interface ToolData {

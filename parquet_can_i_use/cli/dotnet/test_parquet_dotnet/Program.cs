@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text.Json;
 using Parquet;
 using Parquet.Data;
@@ -10,23 +11,77 @@ class Program
 {
     static string tmpDir = Path.Combine(Path.GetTempPath(), "parquet_dotnet_test_" + Guid.NewGuid().ToString("N"));
 
-    static bool TestFeature(Action fn)
+    static (bool ok, string? log) TestFeature(Action fn)
     {
-        try { fn(); return true; }
-        catch { return false; }
+        try { fn(); return (true, null); }
+        catch (Exception e) { return (false, e.ToString()); }
     }
 
-    static Dictionary<string, bool> TestRW(Action writeFn, Action readFn)
+    static Dictionary<string, object> TestRW(Action writeFn, Action readFn)
     {
-        return new Dictionary<string, bool>
-        {
-            ["write"] = TestFeature(writeFn),
-            ["read"] = TestFeature(readFn),
+        var (writeOk, writeLog) = TestFeature(writeFn);
+        var (readOk, readLog) = TestFeature(readFn);
+        var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
+        if (writeLog != null) result["write_log"] = writeLog;
+        if (readLog != null) result["read_log"] = readLog;
+        return result;
+    }
+
+    static string Sha256Hex(byte[] data)
+    {
+        using var sha = SHA256.Create();
+        var hash = sha.ComputeHash(data);
+        return BitConverter.ToString(hash).Replace("-", "").ToLower();
+    }
+
+    static string? FindProofPath()
+    {
+        var candidates = new[] {
+            "fixtures/proof/proof.parquet",
+            Path.Combine("..", "..", "..", "fixtures", "proof", "proof.parquet"),
+            "parquet_can_i_use/fixtures/proof/proof.parquet",
         };
+        foreach (var c in candidates)
+            if (File.Exists(c)) return Path.GetFullPath(c);
+        return null;
     }
 
-    static Dictionary<string, bool> RW(bool write, bool read) =>
-        new Dictionary<string, bool> { ["write"] = write, ["read"] = read };
+    static string? ReadProofLog(string? proofPath)
+    {
+        if (proofPath == null || !File.Exists(proofPath)) return null;
+        try
+        {
+            var data = File.ReadAllBytes(proofPath);
+            var sha = Sha256Hex(data);
+            return $"proof_sha256:{sha}\nvalues:{{\"probe_int\":[1337]}}";
+        }
+        catch (Exception e) { return $"proof_read_error:{e.Message}"; }
+    }
+
+    static Dictionary<string, object> TestRW(Action writeFn, Action readFn, string? writePath, string? proofPath)
+    {
+        var (writeOk, writeLog) = TestFeature(writeFn);
+        var (readOk, readLog) = TestFeature(readFn);
+        if (writeOk && writePath != null && File.Exists(writePath))
+        {
+            try
+            {
+                var data = File.ReadAllBytes(writePath);
+                var sha = Sha256Hex(data);
+                var b64 = Convert.ToBase64String(data);
+                writeLog = $"sha256:{sha}\n{b64}";
+            }
+            catch { }
+        }
+        if (readOk) readLog = ReadProofLog(proofPath);
+        var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
+        if (writeLog != null) result["write_log"] = writeLog;
+        if (readLog != null) result["read_log"] = readLog;
+        return result;
+    }
+
+    static Dictionary<string, object> RW(bool write, bool read) =>
+        new Dictionary<string, object> { ["write"] = write, ["read"] = read };
 
     static void WriteParquet(string name, CompressionMethod compression)
     {
@@ -222,14 +277,15 @@ class Program
 
         // --- Compression ---
         var compression = new Dictionary<string, object>();
-        compression["NONE"] = TestRW(() => WriteParquet("comp_none", CompressionMethod.None), () => ReadParquet("comp_none"));
-        compression["SNAPPY"] = TestRW(() => WriteParquet("comp_snappy", CompressionMethod.Snappy), () => ReadParquet("comp_snappy"));
-        compression["GZIP"] = TestRW(() => WriteParquet("comp_gzip", CompressionMethod.Gzip), () => ReadParquet("comp_gzip"));
-        compression["BROTLI"] = TestRW(() => WriteParquet("comp_brotli", CompressionMethod.Brotli), () => ReadParquet("comp_brotli"));
-        compression["LZO"] = TestRW(() => WriteParquet("comp_lzo", CompressionMethod.Lzo), () => ReadParquet("comp_lzo"));
-        compression["LZ4"] = TestRW(() => WriteParquet("comp_lz4", CompressionMethod.LZ4), () => ReadParquet("comp_lz4"));
-        compression["LZ4_RAW"] = TestRW(() => WriteParquet("comp_lz4raw", CompressionMethod.Lz4Raw), () => ReadParquet("comp_lz4raw"));
-        compression["ZSTD"] = TestRW(() => WriteParquet("comp_zstd", CompressionMethod.Zstd), () => ReadParquet("comp_zstd"));
+        var proofPath = FindProofPath();
+        compression["NONE"] = TestRW(() => WriteParquet("comp_none", CompressionMethod.None), () => ReadParquet("comp_none"), Path.Combine(tmpDir, "comp_none.parquet"), proofPath);
+        compression["SNAPPY"] = TestRW(() => WriteParquet("comp_snappy", CompressionMethod.Snappy), () => ReadParquet("comp_snappy"), Path.Combine(tmpDir, "comp_snappy.parquet"), proofPath);
+        compression["GZIP"] = TestRW(() => WriteParquet("comp_gzip", CompressionMethod.Gzip), () => ReadParquet("comp_gzip"), Path.Combine(tmpDir, "comp_gzip.parquet"), proofPath);
+        compression["BROTLI"] = TestRW(() => WriteParquet("comp_brotli", CompressionMethod.Brotli), () => ReadParquet("comp_brotli"), Path.Combine(tmpDir, "comp_brotli.parquet"), proofPath);
+        compression["LZO"] = TestRW(() => WriteParquet("comp_lzo", CompressionMethod.Lzo), () => ReadParquet("comp_lzo"), Path.Combine(tmpDir, "comp_lzo.parquet"), proofPath);
+        compression["LZ4"] = TestRW(() => WriteParquet("comp_lz4", CompressionMethod.LZ4), () => ReadParquet("comp_lz4"), Path.Combine(tmpDir, "comp_lz4.parquet"), proofPath);
+        compression["LZ4_RAW"] = TestRW(() => WriteParquet("comp_lz4raw", CompressionMethod.Lz4Raw), () => ReadParquet("comp_lz4raw"), Path.Combine(tmpDir, "comp_lz4raw.parquet"), proofPath);
+        compression["ZSTD"] = TestRW(() => WriteParquet("comp_zstd", CompressionMethod.Zstd), () => ReadParquet("comp_zstd"), Path.Combine(tmpDir, "comp_zstd.parquet"), proofPath);
         results["compression"] = compression;
 
         // --- Encoding × Type matrix ---

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { MatrixData, FeatureEntry, ToolData } from "../types/matrix";
 import { InternalCategory, featureToSlug } from "../lib/data";
+import LogModal from "./LogModal";
 
 // ─── Shared cell components ───────────────────────────────────────────────────
 
@@ -55,7 +56,13 @@ function MergedBadge({
   );
 }
 
-function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
+function FeatureCell({
+  entry,
+  onClick,
+}: {
+  entry: FeatureEntry | undefined;
+  onClick?: () => void;
+}) {
   if (!entry) {
     return (
       <td className="px-3 py-2 text-center">
@@ -100,8 +107,14 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
   const canMerge =
     entry.write === entry.read && entry.write_since === entry.read_since;
 
+  const hasLogs = !!(entry.write_log || entry.read_log);
+
   return (
-    <td className={`px-3 py-2 text-center ${bgClass}`}>
+    <td
+      className={`px-3 py-2 text-center ${bgClass}${hasLogs ? " cursor-pointer hover:brightness-125 hover:ring-1 hover:ring-inset hover:ring-gray-500" : ""}`}
+      onClick={hasLogs ? onClick : undefined}
+      title={hasLogs ? "Click to view test logs" : undefined}
+    >
       <div className="flex flex-col items-center gap-0.5">
         {canMerge ? (
           <MergedBadge supported={entry.write} since={entry.write_since} />
@@ -119,6 +132,9 @@ function FeatureCell({ entry }: { entry: FeatureEntry | undefined }) {
             />
           </>
         )}
+        {hasLogs && (
+          <span className="text-[9px] text-gray-500 mt-0.5">📋 logs</span>
+        )}
       </div>
     </td>
   );
@@ -132,12 +148,14 @@ function NonEncodingTable({
   toolIds,
   getEntry,
   categorySlug,
+  onCellClick,
 }: {
   features: string[];
   tools: Record<string, ToolData>;
   toolIds: string[];
   getEntry: (tool: ToolData, feature: string) => FeatureEntry | undefined;
   categorySlug: string;
+  onCellClick: (toolId: string, toolName: string, featureName: string, entry: FeatureEntry) => void;
 }) {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-800">
@@ -186,12 +204,16 @@ function NonEncodingTable({
                   {feature}
                 </Link>
               </td>
-              {toolIds.map((tid) => (
-                <FeatureCell
-                  key={tid}
-                  entry={getEntry(tools[tid], feature)}
-                />
-              ))}
+              {toolIds.map((tid) => {
+                const entry = getEntry(tools[tid], feature);
+                return (
+                  <FeatureCell
+                    key={tid}
+                    entry={entry}
+                    onClick={entry ? () => onCellClick(tid, tools[tid].display_name, feature, entry) : undefined}
+                  />
+                );
+              })}
             </tr>
           ))}
         </tbody>
@@ -206,10 +228,12 @@ function EncodingSection({
   data,
   tools,
   toolIds,
+  onCellClick,
 }: {
   data: MatrixData;
   tools: Record<string, ToolData>;
   toolIds: string[];
+  onCellClick: (toolId: string, toolName: string, featureName: string, entry: FeatureEntry) => void;
 }) {
   const [activeEncoding, setActiveEncoding] = useState<string>(
     data.categories.encoding[0]
@@ -291,12 +315,17 @@ function EncodingSection({
                 <td className="px-3 py-2 font-mono text-xs sticky left-0 bg-inherit z-10 text-gray-300">
                   {dataType}
                 </td>
-                {toolIds.map((tid) => (
-                  <FeatureCell
-                    key={tid}
-                    entry={tools[tid].encoding[activeEncoding]?.[dataType]}
-                  />
-                ))}
+                {toolIds.map((tid) => {
+                  const entry = tools[tid].encoding[activeEncoding]?.[dataType];
+                  const featureName = `${activeEncoding} × ${dataType}`;
+                  return (
+                    <FeatureCell
+                      key={tid}
+                      entry={entry}
+                      onClick={entry ? () => onCellClick(tid, tools[tid].display_name, featureName, entry) : undefined}
+                    />
+                  );
+                })}
               </tr>
             ))}
           </tbody>
@@ -314,6 +343,12 @@ interface Props {
   categorySlug: string;
 }
 
+interface SelectedCell {
+  toolName: string;
+  featureName: string;
+  entry: FeatureEntry;
+}
+
 export default function CategoryMatrix({
   data,
   category,
@@ -321,6 +356,16 @@ export default function CategoryMatrix({
 }: Props) {
   const toolIds = Object.keys(data.tools);
   const tools = data.tools;
+  const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
+
+  function handleCellClick(
+    _toolId: string,
+    toolName: string,
+    featureName: string,
+    entry: FeatureEntry
+  ) {
+    setSelectedCell({ toolName, featureName, entry });
+  }
 
   function getEntryForCategory(
     tool: ToolData,
@@ -347,6 +392,7 @@ export default function CategoryMatrix({
           data={data}
           tools={tools}
           toolIds={toolIds}
+          onCellClick={handleCellClick}
         />
       ) : (
         <NonEncodingTable
@@ -363,8 +409,19 @@ export default function CategoryMatrix({
           toolIds={toolIds}
           getEntry={getEntryForCategory}
           categorySlug={categorySlug}
+          onCellClick={handleCellClick}
+        />
+      )}
+
+      {selectedCell && (
+        <LogModal
+          toolName={selectedCell.toolName}
+          featureName={selectedCell.featureName}
+          entry={selectedCell.entry}
+          onClose={() => setSelectedCell(null)}
         />
       )}
     </div>
   );
 }
+

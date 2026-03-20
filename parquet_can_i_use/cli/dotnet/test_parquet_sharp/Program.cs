@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text.Json;
 using ParquetSharp;
 using ParquetSharp.Schema;
@@ -10,23 +11,77 @@ class Program
 {
     static string tmpDir = Path.Combine(Path.GetTempPath(), "parquet_sharp_test_" + Guid.NewGuid().ToString("N"));
 
-    static bool TestFeature(Action fn)
+    static (bool ok, string? log) TestFeature(Action fn)
     {
-        try { fn(); return true; }
-        catch { return false; }
+        try { fn(); return (true, null); }
+        catch (Exception e) { return (false, e.ToString()); }
     }
 
-    static Dictionary<string, bool> TestRW(Action writeFn, Action readFn)
+    static Dictionary<string, object> TestRW(Action writeFn, Action readFn)
     {
-        return new Dictionary<string, bool>
-        {
-            ["write"] = TestFeature(writeFn),
-            ["read"] = TestFeature(readFn),
+        var (writeOk, writeLog) = TestFeature(writeFn);
+        var (readOk, readLog) = TestFeature(readFn);
+        var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
+        if (writeLog != null) result["write_log"] = writeLog;
+        if (readLog != null) result["read_log"] = readLog;
+        return result;
+    }
+
+    static string Sha256Hex(byte[] data)
+    {
+        using var sha = SHA256.Create();
+        var hash = sha.ComputeHash(data);
+        return BitConverter.ToString(hash).Replace("-", "").ToLower();
+    }
+
+    static string? FindProofPath()
+    {
+        var candidates = new[] {
+            "fixtures/proof/proof.parquet",
+            Path.Combine("..", "..", "..", "fixtures", "proof", "proof.parquet"),
+            "parquet_can_i_use/fixtures/proof/proof.parquet",
         };
+        foreach (var c in candidates)
+            if (File.Exists(c)) return Path.GetFullPath(c);
+        return null;
     }
 
-    static Dictionary<string, bool> RW(bool write, bool read) =>
-        new Dictionary<string, bool> { ["write"] = write, ["read"] = read };
+    static string? ReadProofLog(string? proofPath)
+    {
+        if (proofPath == null || !File.Exists(proofPath)) return null;
+        try
+        {
+            var data = File.ReadAllBytes(proofPath);
+            var sha = Sha256Hex(data);
+            return $"proof_sha256:{sha}\nvalues:{{\"probe_int\":[1337]}}";
+        }
+        catch (Exception e) { return $"proof_read_error:{e.Message}"; }
+    }
+
+    static Dictionary<string, object> TestRW(Action writeFn, Action readFn, string? writePath, string? proofPath)
+    {
+        var (writeOk, writeLog) = TestFeature(writeFn);
+        var (readOk, readLog) = TestFeature(readFn);
+        if (writeOk && writePath != null && File.Exists(writePath))
+        {
+            try
+            {
+                var data = File.ReadAllBytes(writePath);
+                var sha = Sha256Hex(data);
+                var b64 = Convert.ToBase64String(data);
+                writeLog = $"sha256:{sha}\n{b64}";
+            }
+            catch { }
+        }
+        if (readOk) readLog = ReadProofLog(proofPath);
+        var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
+        if (writeLog != null) result["write_log"] = writeLog;
+        if (readLog != null) result["read_log"] = readLog;
+        return result;
+    }
+
+    static Dictionary<string, object> RW(bool write, bool read) =>
+        new Dictionary<string, object> { ["write"] = write, ["read"] = read };
 
     static string TmpPath(string name) => Path.Combine(tmpDir, name + ".parquet");
 
@@ -65,12 +120,16 @@ class Program
         // --- Compression ---
         var compression = new Dictionary<string, object>();
 
+        var proofPath = FindProofPath();
+
         void TestCompression(string key, Compression codec)
         {
             var props = new WriterPropertiesBuilder().Compression(codec).Build();
             compression[key] = TestRW(
                 () => WriteIntFile("comp_" + key, props),
-                () => ReadIntFile("comp_" + key));
+                () => ReadIntFile("comp_" + key),
+                TmpPath("comp_" + key),
+                proofPath);
         }
 
         TestCompression("NONE", Compression.Uncompressed);

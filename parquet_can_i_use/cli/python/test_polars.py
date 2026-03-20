@@ -1,24 +1,34 @@
 #!/usr/bin/env python3
 """Test Polars' Parquet feature support and output JSON results."""
 
+import base64
+import hashlib
 import json
 import os
 import sys
 import tempfile
+import traceback
 from pathlib import Path
+
+PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
 
 def test_feature(name, fn):
     try:
         fn()
-        return True
+        return True, None
     except Exception:
-        return False
+        return False, traceback.format_exc()
 
-def test_rw(write_fn, read_fn):
-    """Run separate write and read tests, return {"write": bool, "read": bool}."""
-    write_ok = test_feature("write", write_fn)
-    read_ok = test_feature("read", read_fn)
-    return {"write": write_ok, "read": read_ok}
+def test_rw(write_fn, read_fn, write_path=None):
+    """Run separate write and read tests, return {"write": bool, "read": bool, ...}."""
+    write_ok, write_log = test_feature("write", write_fn)
+    read_ok, read_log = test_feature("read", read_fn)
+    result = {"write": write_ok, "read": read_ok}
+    if write_log:
+        result["write_log"] = write_log
+    if read_log:
+        result["read_log"] = read_log
+    return result
 
 def main():
     try:
@@ -26,6 +36,35 @@ def main():
     except ImportError:
         print(json.dumps({"error": "polars not installed"}))
         sys.exit(1)
+
+    def _read_proof_log():
+        try:
+            if not PROOF_FIXTURE.exists():
+                return None
+            proof_data = PROOF_FIXTURE.read_bytes()
+            sha = hashlib.sha256(proof_data).hexdigest()
+            df = pl.read_parquet(str(PROOF_FIXTURE))
+            values = {c: df[c].to_list() for c in df.columns}
+            return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
+        except Exception as e:
+            return f"proof_read_error:{e}"
+
+    def test_rw(write_fn, read_fn, write_path=None):
+        write_ok, write_log = test_feature("write", write_fn)
+        read_ok, read_log = test_feature("read", read_fn)
+        if write_ok and write_path and os.path.exists(write_path):
+            with open(write_path, "rb") as f:
+                data = f.read()
+            sha = hashlib.sha256(data).hexdigest()
+            write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+        if read_ok:
+            read_log = _read_proof_log()
+        result = {"write": write_ok, "read": read_ok}
+        if write_log:
+            result["write_log"] = write_log
+        if read_log:
+            result["read_log"] = read_log
+        return result
 
     results = {
         "tool": "Polars",
@@ -64,7 +103,7 @@ def main():
         if codec_val is None:
             # Cannot write this codec; try reading from fixture to detect read-only support.
             if fixture_path.exists():
-                read_ok = test_feature("read", lambda p=str(fixture_path): pl.read_parquet(p))
+                read_ok, _ = test_feature("read", lambda p=str(fixture_path): pl.read_parquet(p))
             else:
                 read_ok = False
             results["compression"][codec_name] = {"write": False, "read": read_ok}
@@ -75,7 +114,7 @@ def main():
                 d.write_parquet(p, compression=c)
             def read_codec(p=read_path):
                 pl.read_parquet(p)
-            results["compression"][codec_name] = test_rw(write_codec, read_codec)
+            results["compression"][codec_name] = test_rw(write_codec, read_codec, write_path=write_path)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
@@ -239,7 +278,7 @@ def main():
                         raise
                     pl.read_parquet(rp)
 
-                results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc)
+                results["encoding"][enc_name][ptype] = test_rw(write_enc, read_enc, write_path=write_path)
     # --- Logical Types ---
     import datetime
     from decimal import Decimal
@@ -287,7 +326,7 @@ def main():
             df.write_parquet(p)
         def read_lt(p=path):
             pl.read_parquet(p)
-        results["logical_types"][type_name] = test_rw(write_lt, read_lt)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt, write_path=path)
 
     # --- Nested Types ---
     nt_tests = {}
@@ -305,7 +344,7 @@ def main():
             df.write_parquet(p)
         def read_nt(p=path):
             pl.read_parquet(p)
-        results["nested_types"][type_name] = test_rw(write_nt, read_nt)
+        results["nested_types"][type_name] = test_rw(write_nt, read_nt, write_path=path)
 
     # --- Advanced Features ---
     df = pl.DataFrame({"col": range(1000), "str_col": [f"val_{i}" for i in range(1000)]})
@@ -316,7 +355,7 @@ def main():
     def read_statistics():
         p = os.path.join(tmpdir, "adv_stats.parquet")
         pl.read_parquet(p)
-    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics, write_path=os.path.join(tmpdir, "adv_stats.parquet"))
 
     def write_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
@@ -324,7 +363,7 @@ def main():
     def read_predicate_pushdown():
         p = os.path.join(tmpdir, "adv_pred.parquet")
         pl.scan_parquet(p).filter(pl.col("col") > 500).collect()
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown, write_path=os.path.join(tmpdir, "adv_pred.parquet"))
 
     def write_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
@@ -332,7 +371,7 @@ def main():
     def read_projection_pushdown():
         p = os.path.join(tmpdir, "adv_proj.parquet")
         pl.scan_parquet(p).select("col").collect()
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj.parquet"))
 
     results["advanced_features"]["PAGE_INDEX"] = {"write": False, "read": False}
     results["advanced_features"]["BLOOM_FILTER"] = {"write": False, "read": False}
@@ -344,7 +383,7 @@ def main():
     def read_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
         pl.read_parquet(p)
-    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2.parquet"))
 
     results["advanced_features"]["SCHEMA_EVOLUTION"] = {"write": False, "read": False}
 

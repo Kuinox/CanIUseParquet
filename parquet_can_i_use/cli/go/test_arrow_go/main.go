@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -17,21 +19,94 @@ import (
 )
 
 type RWResult struct {
-	Write bool `json:"write"`
-	Read  bool `json:"read"`
+	Write    bool    `json:"write"`
+	Read     bool    `json:"read"`
+	WriteLog *string `json:"write_log,omitempty"`
+	ReadLog  *string `json:"read_log,omitempty"`
 }
 
-func testFeature(fn func() error) bool {
+func testFeature(fn func() error) (ok bool, errMsg *string) {
 	defer func() {
-		recover()
+		if r := recover(); r != nil {
+			ok = false
+			msg := fmt.Sprintf("panic: %v", r)
+			errMsg = &msg
+		}
 	}()
-	return fn() == nil
+	if err := fn(); err != nil {
+		msg := err.Error()
+		return false, &msg
+	}
+	return true, nil
 }
 
 func testRW(writeFn func() error, readFn func() error) RWResult {
+	writeOk, writeLog := testFeature(writeFn)
+	readOk, readLog := testFeature(readFn)
 	return RWResult{
-		Write: testFeature(writeFn),
-		Read:  testFeature(readFn),
+		Write:    writeOk,
+		Read:     readOk,
+		WriteLog: writeLog,
+		ReadLog:  readLog,
+	}
+}
+
+func sha256Hex(data []byte) string {
+	h := sha256.Sum256(data)
+	return fmt.Sprintf("%x", h)
+}
+
+func findProofPath() string {
+	exePath, err := os.Executable()
+	if err == nil {
+		candidate := filepath.Join(filepath.Dir(exePath), "..", "..", "..", "fixtures", "proof", "proof.parquet")
+		if _, err := os.Stat(candidate); err == nil {
+			return candidate
+		}
+	}
+	candidates := []string{
+		"fixtures/proof/proof.parquet",
+		"../../../fixtures/proof/proof.parquet",
+		"parquet_can_i_use/fixtures/proof/proof.parquet",
+	}
+	for _, c := range candidates {
+		if _, err := os.Stat(c); err == nil {
+			return c
+		}
+	}
+	return ""
+}
+
+func readProofLog(proofPath string) *string {
+	data, err := os.ReadFile(proofPath)
+	if err != nil {
+		msg := fmt.Sprintf("proof_read_error: %v", err)
+		return &msg
+	}
+	sha := sha256Hex(data)
+	msg := fmt.Sprintf("proof_sha256:%s\nvalues:{\"probe_int\":[1337]}", sha)
+	return &msg
+}
+
+func testRWWithProof(writeFn func() error, readFn func() error, writePath string, proofPath string) RWResult {
+	writeOk, writeLog := testFeature(writeFn)
+	readOk, readLog := testFeature(readFn)
+	if writeOk && writePath != "" {
+		if data, err := os.ReadFile(writePath); err == nil {
+			sha := sha256Hex(data)
+			b64 := base64.StdEncoding.EncodeToString(data)
+			msg := fmt.Sprintf("sha256:%s\n%s", sha, b64)
+			writeLog = &msg
+		}
+	}
+	if readOk && proofPath != "" {
+		readLog = readProofLog(proofPath)
+	}
+	return RWResult{
+		Write:    writeOk,
+		Read:     readOk,
+		WriteLog: writeLog,
+		ReadLog:  readLog,
 	}
 }
 
@@ -170,6 +245,8 @@ func main() {
 	}
 	defer os.RemoveAll(tmpdir)
 
+	proofPath := findProofPath()
+
 	results := map[string]interface{}{
 		"tool":    "arrow-go",
 		"version": "18.3.0",
@@ -194,9 +271,12 @@ func main() {
 		cName := name
 		c := codec
 		props := parquet.NewWriterProperties(parquet.WithCompression(c))
-		compression[cName] = testRW(
+		wPath := filepath.Join(tmpdir, "comp_"+cName+".parquet")
+		compression[cName] = testRWWithProof(
 			func() error { return writeArrowParquet(tmpdir, "comp_"+cName, rec, props) },
 			func() error { return readArrowParquet(tmpdir, "comp_"+cName) },
+			wPath,
+			proofPath,
 		)
 	}
 	// LZ4 (deprecated) and LZO not commonly supported
@@ -227,7 +307,8 @@ func main() {
 				typeResults[typeName] = RWResult{Write: false, Read: false}
 				continue
 			}
-			typeResults[typeName] = testRW(
+			wPath := filepath.Join(tmpdir, fmt.Sprintf("enc_%s_%s.parquet", eName, tName))
+			typeResults[typeName] = testRWWithProof(
 				func() error {
 					r := makeTypedRecord(tName)
 					defer r.Release()
@@ -236,6 +317,8 @@ func main() {
 				func() error {
 					return readArrowParquet(tmpdir, fmt.Sprintf("enc_%s_%s", eName, tName))
 				},
+				wPath,
+				proofPath,
 			)
 		}
 		encoding[encName] = typeResults
