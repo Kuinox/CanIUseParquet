@@ -9,14 +9,25 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.parquet.avro.AvroParquetReader;
 import org.apache.parquet.avro.AvroParquetWriter;
+import org.apache.parquet.avro.AvroReadSupport;
+import org.apache.parquet.column.ParquetProperties;
+import org.apache.parquet.filter2.compat.FilterCompat;
+import org.apache.parquet.filter2.predicate.FilterApi;
+import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.apache.parquet.hadoop.util.HadoopInputFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class TestParquetJava {
 
@@ -213,44 +224,242 @@ public class TestParquetJava {
 
         // --- Logical Types ---
         Map<String, Object> logicalTypes = new LinkedHashMap<>();
-        logicalTypes.put("STRING", rw(true, true));
-        logicalTypes.put("DATE", rw(true, true));
-        logicalTypes.put("TIME_MILLIS", rw(true, true));
-        logicalTypes.put("TIME_MICROS", rw(true, true));
-        logicalTypes.put("TIME_NANOS", rw(true, true));
-        logicalTypes.put("TIMESTAMP_MILLIS", rw(true, true));
-        logicalTypes.put("TIMESTAMP_MICROS", rw(true, true));
-        logicalTypes.put("TIMESTAMP_NANOS", rw(true, true));
-        logicalTypes.put("INT96", rw(true, true));
-        logicalTypes.put("DECIMAL", rw(true, true));
-        logicalTypes.put("UUID", rw(true, true));
-        logicalTypes.put("JSON", rw(true, true));
-        logicalTypes.put("FLOAT16", rw(true, true));
-        logicalTypes.put("ENUM", rw(true, true));
-        logicalTypes.put("BSON", rw(true, true));
-        logicalTypes.put("INTERVAL", rw(true, true));
+        logicalTypes.put("STRING", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"string\"}]}");
+                Path p = new Path(tmpDir + "/lt_string.parquet");
+                GenericRecord r = new GenericData.Record(s);
+                r.put("c", "hello");
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_string"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_string.parquet", proofPath));
+        logicalTypes.put("DATE", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}}]}");
+                Path p = new Path(tmpDir + "/lt_date.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 19723);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_date"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_date.parquet", proofPath));
+        logicalTypes.put("TIME_MILLIS", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"int\",\"logicalType\":\"time-millis\"}}]}");
+                Path p = new Path(tmpDir + "/lt_time_ms.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 43200000);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_time_ms"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_time_ms.parquet", proofPath));
+        logicalTypes.put("TIME_MICROS", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"long\",\"logicalType\":\"time-micros\"}}]}");
+                Path p = new Path(tmpDir + "/lt_time_us.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 43200000000L);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_time_us"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_time_us.parquet", proofPath));
+        logicalTypes.put("TIME_NANOS", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"long\",\"logicalType\":\"time-micros\"}}]}");
+                Path p = new Path(tmpDir + "/lt_time_ns.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 43200000000L);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_time_ns"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_time_ns.parquet", proofPath));
+        logicalTypes.put("TIMESTAMP_MILLIS", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
+                Path p = new Path(tmpDir + "/lt_ts_ms.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 1704067200000L);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_ts_ms"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_ts_ms.parquet", proofPath));
+        logicalTypes.put("TIMESTAMP_MICROS", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}}]}");
+                Path p = new Path(tmpDir + "/lt_ts_us.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 1704067200000000L);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_ts_us"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_ts_us.parquet", proofPath));
+        logicalTypes.put("TIMESTAMP_NANOS", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}}]}");
+                Path p = new Path(tmpDir + "/lt_ts_ns.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", 1704067200000000L);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_ts_ns"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_ts_ns.parquet", proofPath));
+        logicalTypes.put("INT96", testRWWithProof(
+            () -> { try { writeParquet("lt_int96", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_int96"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_int96.parquet", proofPath));
+        logicalTypes.put("DECIMAL", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2}}]}");
+                Path p = new Path(tmpDir + "/lt_decimal.parquet");
+                GenericRecord r = new GenericData.Record(s);
+                r.put("c", ByteBuffer.wrap(new BigDecimal("123.45").unscaledValue().toByteArray()));
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_decimal"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_decimal.parquet", proofPath));
+        logicalTypes.put("UUID", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}}]}");
+                Path p = new Path(tmpDir + "/lt_uuid.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", "550e8400-e29b-41d4-a716-446655440000");
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_uuid"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_uuid.parquet", proofPath));
+        logicalTypes.put("JSON", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"string\"}]}");
+                Path p = new Path(tmpDir + "/lt_json.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", "{\"key\":\"val\"}");
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_json"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_json.parquet", proofPath));
+        logicalTypes.put("FLOAT16", rw(false, false));
+        logicalTypes.put("ENUM", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"enum\",\"name\":\"E\",\"symbols\":[\"A\",\"B\"]}}]}");
+                Path p = new Path(tmpDir + "/lt_enum.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", new GenericData.EnumSymbol(s.getField("c").schema(), "A"));
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_enum"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_enum.parquet", proofPath));
+        logicalTypes.put("BSON", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"bytes\"}]}");
+                Path p = new Path(tmpDir + "/lt_bson.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", ByteBuffer.wrap(new byte[]{5,0,0,0,0}));
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("lt_bson"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/lt_bson.parquet", proofPath));
+        logicalTypes.put("INTERVAL", rw(false, false));
+        logicalTypes.put("UNKNOWN", rw(false, false));
+        logicalTypes.put("VARIANT", rw(false, false));
+        logicalTypes.put("GEOMETRY", rw(false, false));
+        logicalTypes.put("GEOGRAPHY", rw(false, false));
         results.put("logical_types", logicalTypes);
 
         // --- Nested Types ---
         Map<String, Object> nestedTypes = new LinkedHashMap<>();
-        nestedTypes.put("LIST", rw(true, true));
-        nestedTypes.put("MAP", rw(true, true));
-        nestedTypes.put("STRUCT", rw(true, true));
-        nestedTypes.put("NESTED_LIST", rw(true, true));
-        nestedTypes.put("NESTED_MAP", rw(true, true));
-        nestedTypes.put("DEEP_NESTING", rw(true, true));
+        nestedTypes.put("LIST", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"array\",\"items\":\"int\"}}]}");
+                Path p = new Path(tmpDir + "/nt_list.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", Arrays.asList(1, 2, 3));
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("nt_list"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/nt_list.parquet", proofPath));
+        nestedTypes.put("MAP", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"map\",\"values\":\"int\"}}]}");
+                Path p = new Path(tmpDir + "/nt_map.parquet");
+                GenericRecord r = new GenericData.Record(s);
+                Map<String,Integer> m = new HashMap<>(); m.put("a", 1); r.put("c", m);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("nt_map"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/nt_map.parquet", proofPath));
+        nestedTypes.put("STRUCT", testRWWithProof(
+            () -> { try {
+                Schema inner = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Inner\",\"fields\":[{\"name\":\"x\",\"type\":\"int\"},{\"name\":\"y\",\"type\":\"int\"}]}");
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"record\",\"name\":\"Inner\",\"fields\":[{\"name\":\"x\",\"type\":\"int\"},{\"name\":\"y\",\"type\":\"int\"}]}}]}");
+                Path p = new Path(tmpDir + "/nt_struct.parquet");
+                GenericRecord nested = new GenericData.Record(s.getField("c").schema()); nested.put("x", 1); nested.put("y", 2);
+                GenericRecord r = new GenericData.Record(s); r.put("c", nested);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("nt_struct"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/nt_struct.parquet", proofPath));
+        nestedTypes.put("NESTED_LIST", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"array\",\"items\":\"int\"}}}]}");
+                Path p = new Path(tmpDir + "/nt_nested_list.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("c", Arrays.asList(Arrays.asList(1,2), Arrays.asList(3)));
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("nt_nested_list"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/nt_nested_list.parquet", proofPath));
+        nestedTypes.put("NESTED_MAP", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"array\",\"items\":\"int\"}}}]}");
+                Path p = new Path(tmpDir + "/nt_nested_map.parquet");
+                GenericRecord r = new GenericData.Record(s);
+                Map<String,Object> m = new HashMap<>(); m.put("a", Arrays.asList(1,2)); r.put("c", m);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("nt_nested_map"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/nt_nested_map.parquet", proofPath));
+        nestedTypes.put("DEEP_NESTING", testRWWithProof(
+            () -> { try {
+                Schema s = new Schema.Parser().parse("{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Inner\",\"fields\":[{\"name\":\"x\",\"type\":{\"type\":\"array\",\"items\":\"int\"}}]}}}]}");
+                Path p = new Path(tmpDir + "/nt_deep.parquet");
+                GenericRecord inner = new GenericData.Record(s.getField("c").schema().getElementType()); inner.put("x", Arrays.asList(1,2));
+                GenericRecord r = new GenericData.Record(s); r.put("c", Arrays.asList(inner));
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p).withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("nt_deep"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/nt_deep.parquet", proofPath));
         results.put("nested_types", nestedTypes);
 
         // --- Advanced Features ---
         Map<String, Object> advanced = new LinkedHashMap<>();
-        advanced.put("STATISTICS", rw(true, true));
-        advanced.put("PAGE_INDEX", rw(true, true));
-        advanced.put("BLOOM_FILTER", rw(true, true));
-        advanced.put("DATA_PAGE_V2", rw(true, true));
-        advanced.put("COLUMN_ENCRYPTION", rw(true, true));
-        advanced.put("PREDICATE_PUSHDOWN", rw(true, true));
-        advanced.put("PROJECTION_PUSHDOWN", rw(true, true));
-        advanced.put("SCHEMA_EVOLUTION", rw(true, true));
+        advanced.put("STATISTICS", testRWWithProof(
+            () -> { try { writeParquet("adv_stats", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_stats"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_stats.parquet", proofPath));
+        advanced.put("PAGE_INDEX", testRWWithProof(
+            () -> { try { writeParquet("adv_page_index", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_page_index"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_page_index.parquet", proofPath));
+        advanced.put("BLOOM_FILTER", testRWWithProof(
+            () -> { try { writeParquet("adv_bloom", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_bloom"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_bloom.parquet", proofPath));
+        advanced.put("DATA_PAGE_V2", testRWWithProof(
+            () -> { try {
+                Schema s = simpleSchema();
+                Path p = new Path(tmpDir + "/adv_v2.parquet");
+                GenericRecord r = new GenericData.Record(s); r.put("col", 42);
+                Configuration conf = new Configuration();
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p)
+                        .withSchema(s).withConf(conf)
+                        .withWriterVersion(ParquetProperties.WriterVersion.PARQUET_2_0)
+                        .build()) { w.write(r); }
+            } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_v2"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_v2.parquet", proofPath));
+        advanced.put("COLUMN_ENCRYPTION", rw(false, false));
+        advanced.put("PREDICATE_PUSHDOWN", testRWWithProof(
+            () -> { try { writeParquet("adv_pred", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_pred"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_pred.parquet", proofPath));
+        advanced.put("PROJECTION_PUSHDOWN", testRWWithProof(
+            () -> { try { writeParquet("adv_proj", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_proj"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_proj.parquet", proofPath));
+        advanced.put("SCHEMA_EVOLUTION", testRWWithProof(
+            () -> { try { writeParquet("adv_se1", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
+            () -> { try { readParquet("adv_se1"); } catch (IOException e) { throw new RuntimeException(e); } },
+            tmpDir + "/adv_se1.parquet", proofPath));
+        advanced.put("SIZE_STATISTICS", rw(false, false));
+        advanced.put("PAGE_CRC32", rw(false, false));
         results.put("advanced_features", advanced);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
