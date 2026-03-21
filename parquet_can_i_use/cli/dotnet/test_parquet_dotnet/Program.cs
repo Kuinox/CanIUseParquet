@@ -53,7 +53,22 @@ class Program
         {
             var data = File.ReadAllBytes(proofPath);
             var sha = Sha256Hex(data);
-            return $"proof_sha256:{sha}\nvalues:{{\"probe_int\":[1337]}}";
+            using var stream = new MemoryStream(data);
+            using var reader = ParquetReader.CreateAsync(stream).Result;
+            var values = new Dictionary<string, List<object?>>();
+            for (int rg = 0; rg < reader.RowGroupCount; rg++)
+            {
+                using var rowGroupReader = reader.OpenRowGroupReader(rg);
+                foreach (var field in reader.Schema.DataFields)
+                {
+                    if (!values.ContainsKey(field.Name))
+                        values[field.Name] = new List<object?>();
+                    var col = rowGroupReader.ReadColumnAsync(field).Result;
+                    foreach (var val in col.Data)
+                        values[field.Name].Add(val);
+                }
+            }
+            return $"proof_sha256:{sha}\nvalues:{JsonSerializer.Serialize(values)}";
         }
         catch (Exception e) { return $"proof_read_error:{e.Message}"; }
     }

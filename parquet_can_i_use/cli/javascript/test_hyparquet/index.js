@@ -41,13 +41,27 @@ function findProofPath() {
   return null;
 }
 
-function readProofLog() {
+async function readProofLog() {
   const proofPath = findProofPath();
   if (!proofPath) return null;
   try {
     const data = readFileSync(proofPath);
     const sha = sha256Hex(data);
-    return `proof_sha256:${sha}\nvalues:{"probe_int":[1337]}`;
+    const buffer = toArrayBuffer(data);
+    const metadata = parquetMetadata(buffer);
+    const colNames = (metadata.row_groups?.[0]?.columns ?? [])
+      .map(c => c.meta_data?.path_in_schema?.join('.') ?? '');
+    const rows = [];
+    await parquetRead({ file: buffer, onComplete: d => rows.push(...d) });
+    const values = {};
+    for (const name of colNames) values[name] = [];
+    for (const row of rows) {
+      const arr = Array.isArray(row) ? row : [row];
+      for (let i = 0; i < colNames.length; i++) {
+        values[colNames[i]].push(arr[i]);
+      }
+    }
+    return `proof_sha256:${sha}\nvalues:${JSON.stringify(values)}`;
   } catch (e) {
     return `proof_read_error:${e.message}`;
   }
@@ -100,7 +114,7 @@ async function writeAndRead(schema, rows) {
   const result = { write: true, read: readOk };
   if (wpl) result.write_log = wpl;
   if (readOk) {
-    const pl = readProofLog();
+    const pl = await readProofLog();
     if (pl) result.read_log = pl;
   } else if (readLog) {
     result.read_log = readLog;
@@ -172,7 +186,7 @@ async function main() {
       const { ok: readOk, log: readLog } = await testRead(path);
       const entry = { write: false, read: readOk };
       if (readOk) {
-        const pl = readProofLog();
+        const pl = await readProofLog();
         if (pl) entry.read_log = pl;
       } else if (readLog) {
         entry.read_log = readLog;
@@ -204,7 +218,7 @@ async function main() {
     basicPath = null;
     basicReadResult = { ok: false, log: e?.stack || String(e) };
   }
-  const basicReadProofLog = basicReadResult.ok ? readProofLog() : null;
+  const basicReadProofLog = basicReadResult.ok ? await readProofLog() : null;
 
   for (const enc of encodings) {
     results.encoding[enc] = {};
@@ -281,7 +295,7 @@ async function main() {
   // Test reading statistics, page index from a basic file
   // basicReadResult is already populated from the encoding section above
   const advReadOk = basicReadResult.ok;
-  const advReadLog = basicReadResult.ok ? readProofLog() : basicReadResult.log;
+  const advReadLog = basicReadResult.ok ? await readProofLog() : basicReadResult.log;
 
   function advEntry(read) {
     const e = { write: false, read };
