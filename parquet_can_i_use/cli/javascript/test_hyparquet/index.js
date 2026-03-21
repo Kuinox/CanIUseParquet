@@ -1,10 +1,11 @@
 /**
- * Test hyparquet's Parquet read support, using @dsnp/parquetjs to write test files.
+ * Test hyparquet's Parquet read support, using @dsnp/parquetjs to write test files
+ * and pyarrow-generated fixture files for feature coverage.
  * hyparquet is a pure-JS reader; write results are always false.
  */
 import { parquetRead, parquetMetadata } from 'hyparquet';
 import { ParquetWriter, ParquetSchema } from '@dsnp/parquetjs';
-import { readFileSync, mkdtempSync, unlinkSync, existsSync } from 'fs';
+import { readFileSync, mkdtempSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { createHash } from 'crypto';
@@ -18,27 +19,32 @@ try {
 
 const tmp = mkdtempSync(join(tmpdir(), 'hyparquet_test_'));
 
-function notSupported() {
-  return { write: false, read: false };
-}
-
 function sha256Hex(buffer) {
   return createHash('sha256').update(buffer).digest('hex');
 }
 
-let _cachedProofPath = undefined;
-function findProofPath() {
-  if (_cachedProofPath !== undefined) return _cachedProofPath;
+// Locate the fixtures directory.  The PARQUET_FIXTURES_DIR env var is set by the
+// run_multiversion.py harness; fall back to relative paths for local development.
+function findFixturesDir() {
+  const envDir = process.env.PARQUET_FIXTURES_DIR;
+  if (envDir && existsSync(envDir)) return envDir;
   const candidates = [
-    'fixtures/proof/proof.parquet',
-    '../../../fixtures/proof/proof.parquet',
-    'parquet_can_i_use/fixtures/proof/proof.parquet',
+    'fixtures',
+    '../../../fixtures',
+    'parquet_can_i_use/fixtures',
   ];
   for (const c of candidates) {
-    try { if (existsSync(c)) { _cachedProofPath = c; return c; } } catch {}
+    try { if (existsSync(c)) return c; } catch {}
   }
-  _cachedProofPath = null;
   return null;
+}
+
+const FIXTURES_DIR = findFixturesDir();
+
+function findProofPath() {
+  if (!FIXTURES_DIR) return null;
+  const p = join(FIXTURES_DIR, 'proof', 'proof.parquet');
+  return existsSync(p) ? p : null;
 }
 
 async function readProofLog() {
@@ -92,6 +98,25 @@ async function testRead(filePath) {
   } catch (e) {
     return { ok: false, log: e?.stack || String(e) };
   }
+}
+
+/**
+ * Try to read a fixture file and return a {write, read, ...} result.
+ * Since hyparquet is read-only, write is always false.
+ * If no fixture is available, the feature is marked as not tested (write:false, read:false).
+ */
+async function testReadFixture(fixturePath, proofLog) {
+  if (!fixturePath || !existsSync(fixturePath)) {
+    return { write: false, read: false };
+  }
+  const { ok: readOk, log: readLog } = await testRead(fixturePath);
+  const entry = { write: false, read: readOk };
+  if (readOk && proofLog) {
+    entry.read_log = proofLog;
+  } else if (!readOk && readLog) {
+    entry.read_log = readLog;
+  }
+  return entry;
 }
 
 async function writeAndRead(schema, rows) {
@@ -165,7 +190,8 @@ async function main() {
   };
 
   // --- Compression ---
-  // hyparquet reads most compressions; parquetjs writes UNCOMPRESSED and SNAPPY by default
+  // Try to write with parquetjs; if the codec is not supported by parquetjs, fall back to a
+  // fixture file written by pyarrow to test hyparquet's read capability independently.
   const compressionCodecs = {
     NONE: 'UNCOMPRESSED',
     SNAPPY: 'SNAPPY',
@@ -177,7 +203,9 @@ async function main() {
     ZSTD: 'ZSTD',
   };
   const schema = new ParquetSchema({ col: { type: 'INT32' } });
+  const proofLogForRead = await readProofLog();
   for (const [name, codec] of Object.entries(compressionCodecs)) {
+    const fixturePath = FIXTURES_DIR ? join(FIXTURES_DIR, 'compression', `comp_${name}.parquet`) : null;
     try {
       const path = join(tmp, `comp_${name}.parquet`);
       const writer = await ParquetWriter.openFile(schema, path, { compression: codec });
@@ -186,81 +214,61 @@ async function main() {
       const { ok: readOk, log: readLog } = await testRead(path);
       const entry = { write: false, read: readOk };
       if (readOk) {
-        const pl = await readProofLog();
-        if (pl) entry.read_log = pl;
+        if (proofLogForRead) entry.read_log = proofLogForRead;
       } else if (readLog) {
         entry.read_log = readLog;
       }
       results.compression[name] = entry;
     } catch (e) {
-      results.compression[name] = { write: false, read: false, write_log: e?.stack || String(e) };
+      // parquetjs does not support this codec; try fixture file instead
+      results.compression[name] = await testReadFixture(fixturePath, proofLogForRead);
+      if (!results.compression[name].read && !results.compression[name].read_log) {
+        results.compression[name].write_log = e?.stack || String(e);
+      }
     }
   }
 
   // --- Encodings ---
-  // hyparquet reads all standard encodings; we just test read capability
+  // Test each encoding using a fixture file written by pyarrow.
+  // hyparquet is a reader; write is always false.
   const encodingTypes = ['INT32', 'INT64', 'FLOAT', 'DOUBLE', 'BOOLEAN', 'BYTE_ARRAY'];
   const encodings = [
     'PLAIN', 'PLAIN_DICTIONARY', 'RLE_DICTIONARY', 'RLE', 'BIT_PACKED',
     'DELTA_BINARY_PACKED', 'DELTA_LENGTH_BYTE_ARRAY', 'DELTA_BYTE_ARRAY',
     'BYTE_STREAM_SPLIT', 'BYTE_STREAM_SPLIT_EXTENDED',
   ];
-  // Write a basic file and test reading; encoding-specific write is limited in parquetjs
-  const basicSchema = new ParquetSchema({ col: { type: 'INT32' } });
-  let basicPath = join(tmp, 'enc_basic.parquet');
-  let basicReadResult = { ok: false, log: null };
-  try {
-    const w = await ParquetWriter.openFile(basicSchema, basicPath);
-    await w.appendRow({ col: 42 });
-    await w.close();
-    basicReadResult = await testRead(basicPath);
-  } catch (e) {
-    basicPath = null;
-    basicReadResult = { ok: false, log: e?.stack || String(e) };
-  }
-  const basicReadProofLog = basicReadResult.ok ? await readProofLog() : null;
 
   for (const enc of encodings) {
     results.encoding[enc] = {};
+    // Test against the fixture file for this encoding (one file covers all types for read).
+    const fixturePath = FIXTURES_DIR ? join(FIXTURES_DIR, 'encodings', `enc_${enc}.parquet`) : null;
+    const encResult = await testReadFixture(fixturePath, proofLogForRead);
     for (const ptype of encodingTypes) {
-      // hyparquet reads all standard encodings; report read based on basic file read
-      const entry = { write: false, read: basicReadResult.ok };
-      if (basicReadResult.ok && basicReadProofLog) {
-        entry.read_log = basicReadProofLog;
-      } else if (basicReadResult.log) {
-        entry.read_log = basicReadResult.log;
-      }
-      results.encoding[enc][ptype] = entry;
+      results.encoding[enc][ptype] = { ...encResult };
     }
   }
 
   // --- Logical Types ---
-  // Test read capability for each logical type using parquetjs-written files
-  const ltSchema = {
-    STRING: new ParquetSchema({ c: { type: 'UTF8' } }),
-    DATE: new ParquetSchema({ c: { type: 'DATE' } }),
-    DECIMAL: new ParquetSchema({ c: { type: 'DECIMAL', precision: 10, scale: 2 } }),
-    INT32: new ParquetSchema({ c: { type: 'INT32' } }),
-  };
-
+  // For types supported by parquetjs, write with parquetjs and read with hyparquet.
+  // For other types, use fixture files written by pyarrow.
   const logicalTypeTests = {
     STRING:           async () => writeAndRead(new ParquetSchema({ c: { type: 'UTF8' } }), [{ c: 'hello' }]),
     DATE:             async () => writeAndRead(new ParquetSchema({ c: { type: 'DATE' } }), [{ c: new Date('2024-01-01') }]),
-    TIME_MILLIS:      async () => ({ write: false, read: false }),
-    TIME_MICROS:      async () => ({ write: false, read: false }),
-    TIME_NANOS:       async () => ({ write: false, read: false }),
+    TIME_MILLIS:      async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_MILLIS.parquet') : null, proofLogForRead),
+    TIME_MICROS:      async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_MICROS.parquet') : null, proofLogForRead),
+    TIME_NANOS:       async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_NANOS.parquet') : null, proofLogForRead),
     TIMESTAMP_MILLIS: async () => writeAndRead(new ParquetSchema({ c: { type: 'TIMESTAMP_MILLIS' } }), [{ c: new Date('2024-01-01') }]),
     TIMESTAMP_MICROS: async () => writeAndRead(new ParquetSchema({ c: { type: 'TIMESTAMP_MICROS' } }), [{ c: new Date('2024-01-01') }]),
-    TIMESTAMP_NANOS:  async () => ({ write: false, read: false }),
-    INT96:            async () => ({ write: false, read: false }),
-    DECIMAL:          async () => ({ write: false, read: false }),
-    UUID:             async () => ({ write: false, read: false }),
+    TIMESTAMP_NANOS:  async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIMESTAMP_NANOS.parquet') : null, proofLogForRead),
+    INT96:            async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INT96.parquet') : null, proofLogForRead),
+    DECIMAL:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_DECIMAL.parquet') : null, proofLogForRead),
+    UUID:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UUID.parquet') : null, proofLogForRead),
     JSON:             async () => writeAndRead(new ParquetSchema({ c: { type: 'UTF8' } }), [{ c: '{"key":"val"}' }]),
-    FLOAT16:          async () => ({ write: false, read: false }),
-    ENUM:             async () => ({ write: false, read: false }),
-    BSON:             async () => ({ write: false, read: false }),
-    INTERVAL:         async () => ({ write: false, read: false }),
-    UNKNOWN:          async () => ({ write: false, read: false }),
+    FLOAT16:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_FLOAT16.parquet') : null, proofLogForRead),
+    ENUM:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_ENUM.parquet') : null, proofLogForRead),
+    BSON:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_BSON.parquet') : null, proofLogForRead),
+    INTERVAL:         async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INTERVAL.parquet') : null, proofLogForRead),
+    UNKNOWN:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UNKNOWN.parquet') : null, proofLogForRead),
     VARIANT:          async () => ({ write: false, read: false }),
     GEOMETRY:         async () => ({ write: false, read: false }),
     GEOGRAPHY:        async () => ({ write: false, read: false }),
@@ -275,50 +283,33 @@ async function main() {
   }
 
   // --- Nested Types ---
-  const nestedTypeTests = {
-    LIST:        async () => ({ write: false, read: false }),
-    MAP:         async () => ({ write: false, read: false }),
-    STRUCT:      async () => ({ write: false, read: false }),
-    NESTED_LIST: async () => ({ write: false, read: false }),
-    NESTED_MAP:  async () => ({ write: false, read: false }),
-    DEEP_NESTING: async () => ({ write: false, read: false }),
-  };
-  for (const [name, testFn] of Object.entries(nestedTypeTests)) {
-    try {
-      results.nested_types[name] = await testFn();
-    } catch (e) {
-      results.nested_types[name] = { write: false, read: false, write_log: e?.stack || String(e) };
-    }
+  // Use fixture files written by pyarrow to test read capability for each nested type.
+  const nestedTypeNames = ['LIST', 'MAP', 'STRUCT', 'NESTED_LIST', 'NESTED_MAP', 'DEEP_NESTING'];
+  for (const name of nestedTypeNames) {
+    const fixturePath = FIXTURES_DIR ? join(FIXTURES_DIR, 'nested_types', `nt_${name}.parquet`) : null;
+    results.nested_types[name] = await testReadFixture(fixturePath, proofLogForRead);
   }
 
   // --- Advanced Features ---
-  // Test reading statistics, page index from a basic file
-  // basicReadResult is already populated from the encoding section above
-  const advReadOk = basicReadResult.ok;
-  const advReadLog = basicReadResult.ok ? await readProofLog() : basicReadResult.log;
+  // Use fixture files written by pyarrow to test read capability for each advanced feature.
+  const advFixtures = {
+    STATISTICS:          FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_STATISTICS.parquet') : null,
+    PAGE_INDEX:          FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_PAGE_INDEX.parquet') : null,
+    DATA_PAGE_V2:        FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_DATA_PAGE_V2.parquet') : null,
+    SIZE_STATISTICS:     FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_SIZE_STATISTICS.parquet') : null,
+    PAGE_CRC32:          FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_PAGE_CRC32.parquet') : null,
+    PREDICATE_PUSHDOWN:  FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_PREDICATE_PUSHDOWN.parquet') : null,
+    PROJECTION_PUSHDOWN: FIXTURES_DIR ? join(FIXTURES_DIR, 'advanced_features', 'adv_PROJECTION_PUSHDOWN.parquet') : null,
+  };
 
-  function advEntry(read) {
-    const e = { write: false, read };
-    if (read && advReadLog) {
-      e.read_log = advReadLog;
-    } else if (!read && advReadLog) {
-      e.read_log = advReadLog;
-    }
-    return e;
+  for (const [feat, fixturePath] of Object.entries(advFixtures)) {
+    results.advanced_features[feat] = await testReadFixture(fixturePath, proofLogForRead);
   }
 
-  results.advanced_features = {
-    STATISTICS:          advEntry(advReadOk),
-    PAGE_INDEX:          advEntry(advReadOk),
-    BLOOM_FILTER:        { write: false, read: false },
-    DATA_PAGE_V2:        advEntry(advReadOk),
-    COLUMN_ENCRYPTION:   { write: false, read: false },
-    SIZE_STATISTICS:     advEntry(advReadOk),
-    PAGE_CRC32:          { write: false, read: false },
-    PREDICATE_PUSHDOWN:  { write: false, read: false },
-    PROJECTION_PUSHDOWN: advEntry(advReadOk),
-    SCHEMA_EVOLUTION:    { write: false, read: false },
-  };
+  // Features that require write-side capabilities not testable via read-only fixtures:
+  results.advanced_features.BLOOM_FILTER = { write: false, read: false };
+  results.advanced_features.COLUMN_ENCRYPTION = { write: false, read: false };
+  results.advanced_features.SCHEMA_EVOLUTION = { write: false, read: false };
 
   process.stdout.write(JSON.stringify(results, null, 2) + '\n');
 }
