@@ -18,7 +18,8 @@
     },
     "PAGE_CRC32": {
       "write": false,
-      "read": false
+      "read": true,
+      "write_log": "write not supported in arrow-go writer API"
     },
     "PAGE_INDEX": {
       "write": true,
@@ -568,8 +569,10 @@
       "read": false
     },
     "UNKNOWN": {
-      "write": false,
-      "read": false
+      "write": true,
+      "read": true,
+      "write_log": "sha256:160fb4f6fe8b49900f6ee40134df4292793b7a776c8c2a7a94f23f816e5a185d\nUEFSMRUEFQAVAEwVABUAEgAAFQAVDhUOLBUEFRAVBhUGHAAAAAIAAAAEAAAVBBksNQQYBnNjaGVtYRUCABUCJQIYAWNsvAAAABYEGRwZHCYAHBUCGTUQAAYZGAFjFQAWBBZQFlAmJCYIKSwVBBUAFQIAFQAVEBUCAAAAFlAWBCYIFlAUAAAZDBgZcGFycXVldC1nbyB2ZXJzaW9uIDE4LjMuMBkcHAAAAH0AAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "UUID": {
       "write": true,
