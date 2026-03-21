@@ -1,446 +1,652 @@
 {
   "tool": "DuckDB",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "compression": {
     "NONE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:0d8ed7ec254453e40004aacddca8608725af36805c88a61ee6bd9e028a84913b\nUEFSMRUAFRQVFCwVAhUAFQYVBgAAAgAAAAIBAQAAABUAFRQVFCwVAhUAFQYVBgAAAgAAAAIBAgAAABUCGTw1ABgNZHVja2RiX3NjaGVtYRUEABUCJQIYA2NvbCUiABUCJQIYBGNvbDIlIgAWAhkcGSwmABwVAhkVABkYA2NvbBUAFgIWNhY2Jgg8GAQBAAAAGAQBAAAAFgAoBAEAAAAYBAEAAAAREQAAACYAHBUCGRUAGRgEY29sMhUAFgIWNhY2Jj48GAQCAAAAGAQCAAAAFgAoBAIAAAAYBAIAAAAREQAAABZsFgImCBZsACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRksHAAAHAAAAOQAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SNAPPY": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:cf971e9b850e1a36923b036967acaef424fcf80a0ebf39c2d6087fcaa47c977e\nUEFSMRUAFRQVGCwVAhUAFQYVBgAACiQCAAAAAgEBAAAAFQAVFBUYLBUCFQAVBhUGAAAKJAIAAAACAQIAAAAVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVAiUCGANjb2wlIgAVAiUCGARjb2wyJSIAFgIZHBksJgAcFQIZFQAZGANjb2wVAhYCFjYWOiYIPBgEAQAAABgEAQAAABYAKAQBAAAAGAQBAAAAEREAAAAmABwVAhkVABkYBGNvbDIVAhYCFjYWOiZCPBgEAgAAABgEAgAAABYAKAQCAAAAGAQCAAAAEREAAAAWbBYCJggWdAAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZLBwAABwAAADkAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "GZIP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:7110818ff31d80eac1f76a91210dd1c6c7413e64fb7fe0bbb1d8dc78f3f12b66\nUEFSMRUAFRQVQiwVAhUAFQYVBgAAH4sIAAAAAAAA/wEKAPX/AgAAAAIBAQAAAJVXay8KAAAAFQAVFBVCLBUCFQAVBhUGAAAfiwgAAAAAAAD/AQoA9f8CAAAAAgECAAAAe/jePQoAAAAVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVAiUCGANjb2wlIgAVAiUCGARjb2wyJSIAFgIZHBksJgAcFQIZFQAZGANjb2wVBBYCFjYWZCYIPBgEAQAAABgEAQAAABYAKAQBAAAAGAQBAAAAEREAAAAmABwVAhkVABkYBGNvbDIVBBYCFjYWZCZsPBgEAgAAABgEAgAAABYAKAQCAAAAGAQCAAAAEREAAAAWbBYCJggWyAEAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGSwcAAAcAAAA5QAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "BROTLI": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:9e399d06f2f93038a562d920ba65352668d34835378449526855d84b92a21123\nUEFSMRUAFRQVHCwVAhUAFQYVBgAAiwSAAgAAAAIBAQAAAAMVABUUFRosFQIVABUGFQYAABsJAPgnAQIEQpY4wDgVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVAiUCGANjb2wlIgAVAiUCGARjb2wyJSIAFgIZHBksJgAcFQIZFQAZGANjb2wVCBYCFjYWPiYIPBgEAQAAABgEAQAAABYAKAQBAAAAGAQBAAAAEREAAAAmABwVAhkVABkYBGNvbDIVCBYCFjYWPCZGPBgEAgAAABgEAgAAABYAKAQCAAAAGAQCAAAAEREAAAAWbBYCJggWegAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZLBwAABwAAADkAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "LZO": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 117, in write_codec\n    con.execute(f\"COPY (SELECT 1 AS col, 2 AS col2) TO '{p}' (FORMAT PARQUET, CODEC '{c}')\")\n_duckdb.BinderException: Binder Error: Expected codec argument to be any of [uncompressed, brotli, gzip, snappy, lz4, lz4_raw or zstd]\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 132, in read_codec\n    con.execute(f\"SELECT * FROM read_parquet('{p}')\").fetchall()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_duckdb.InvalidInputException: Invalid Input Error: Failed to read file \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/fixtures/compression/comp_LZO.parquet\": Unsupported compression codec \"LZO\". Supported options are uncompressed, brotli, gzip, lz4_raw, snappy or zstd\n"
     },
     "LZ4": {
       "write": false,
-      "read": true
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 126, in write_codec\n    raise ValueError(\nValueError: Expected compression 'LZ4' for codec 'LZ4', but parquet_metadata shows 'LZ4_RAW'\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 132, in read_codec\n    con.execute(f\"SELECT * FROM read_parquet('{p}')\").fetchall()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_duckdb.InvalidInputException: Invalid Input Error: Failed to read file \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/fixtures/compression/comp_LZ4.parquet\": Unsupported compression codec \"LZ4\". Supported options are uncompressed, brotli, gzip, lz4_raw, snappy or zstd\n"
     },
     "LZ4_RAW": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ee34075ddbe4aa76af52b4c607c86abc09b985cf5b905e658ccafef3d1f3d460\nUEFSMRUAFRQVFiwVAhUAFQYVBgAAoAIAAAACAQEAAAAVABUUFRYsFQIVABUGFQYAAKACAAAAAgECAAAAFQIZPDUAGA1kdWNrZGJfc2NoZW1hFQQAFQIlAhgDY29sJSIAFQIlAhgEY29sMiUiABYCGRwZLCYAHBUCGRUAGRgDY29sFQ4WAhY2FjgmCDwYBAEAAAAYBAEAAAAWACgEAQAAABgEAQAAABERAAAAJgAcFQIZFQAZGARjb2wyFQ4WAhY2FjgmQDwYBAIAAAAYBAIAAAAWACgEAgAAABgEAgAAABERAAAAFmwWAiYIFnAAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGSwcAAAcAAAA5AAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "ZSTD": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:3db1838b28f41a830b6046e2bdab74c39c1a449c0d5645805b02ec36c7dd2255\nUEFSMRUAFRQVJiwVAhUAFQYVBgAAKLUv/SAKUQAAAgAAAAIBAQAAABUAFRQVJiwVAhUAFQYVBgAAKLUv/SAKUQAAAgAAAAIBAgAAABUCGTw1ABgNZHVja2RiX3NjaGVtYRUEABUCJQIYA2NvbCUiABUCJQIYBGNvbDIlIgAWAhkcGSwmABwVAhkVABkYA2NvbBUMFgIWNhZIJgg8GAQBAAAAGAQBAAAAFgAoBAEAAAAYBAEAAAAREQAAACYAHBUCGRUAGRgEY29sMhUMFgIWNhZIJlA8GAQCAAAAGAQCAAAAFgAoBAIAAAAYBAIAAAAREQAAABZsFgImCBaQAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZLBwAABwAAADlAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   },
   "encoding": {
     "PLAIN": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:a47844e9888788ba65c3e2a8f3b1ce16ef6b480136016fa647650568a9150ade\nUEFSMRUAFa4GFbQGLBXIARUAFQYVBgAAlwMoAwAAAMgBAQAAAAABBQwCAAAAARP0fwEEAAAABQAAAAYAAAAHAAAACAAAAAkAAAAKAAAACwAAAAwAAAANAAAADgAAAA8AAAAQAAAAEQAAABIAAAATAAAAFAAAABUAAAAWAAAAFwAAABgAAAAZAAAAGgAAABsAAAAcAAAAHQAAAB4AAAAfAAAAIAAAACEAAAAiAAAAIwAAACQAAAAlAAAAJgAAACcAAAAoAAAAKQAAACoAAAArAAAALAAAAC0AAAAuAAAALwAAADAAAAAxAAAAMgAAADMAAAA0AAAANQAAADYAAAA3AAAAOAAAADkAAAA6AAAAOwAAADwAAAA9AAAAPgAAAD8AAABAAAAAQQAAAEIAAABDAAAARAAAAEUAAABGAAAARwAAAEgAAABJAAAASgAAAEsAAABMAAAATQAAAE4AAABPAAAAUAAAAFEAAABSAAAAUwAAAFQAAABVAAAAVgAAAFcAAABYAAAAWQAAAFoAAABbAAAAXAAAAF0AAABeAAAAXwAAAGAAAABhAAAAYgAAAGMAAAAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVAiUCGANjb2wlIgAWyAEZHBkcJgAcFQIZFQAZGANjb2wVAhbIARbWBhbcBiYIPBgEYwAAABgEAAAAABYAKARjAAAAGAQAAAAAEREAAAAW1gYWyAEmCBbcBgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACiAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:1654dba70bcdfa36938e4e25097dfc2b3b4d6e0ffafc4e0252fe92f5098a8c97\nUEFSMRUAFc4MFfQKLBXIARUAFQYVBgAApwYcAwAAAMgBAQANAREJAAINEAEfAQEABAEFDAAAAAUBBQwAAAAGAQUMAAAABwEFDAAAAAgBBQwAAAAJAQUMAAAACgEFDAAAAAsBBQwAAAAMAQUMAAAADQEFDAAAAA4BBQwAAAAPAQUMAAAAEAEFDAAAABEBBQwAAAASAQUMAAAAEwEFDAAAABQBBQwAAAAVAQUMAAAAFgEFDAAAABcBBQwAAAAYAQUMAAAAGQEFDAAAABoBBQwAAAAbAQUMAAAAHAEFDAAAAB0BBQwAAAAeAQUMAAAAHwEFDAAAACABBQwAAAAhAQUMAAAAIgEFDAAAACMBBQwAAAAkAQUMAAAAJQEFDAAAACYBBQwAAAAnAQUMAAAAKAEFDAAAACkBBQwAAAAqAQUMAAAAKwEFDAAAACwBBQwAAAAtAQUMAAAALgEFDAAAAC8BBQwAAAAwAQUMAAAAMQEFDAAAADIBBQwAAAAzAQUMAAAANAEFDAAAADUBBQwAAAA2AQUMAAAANwEFDAAAADgBBQwAAAA5AQUMAAAAOgEFDAAAADsBBQwAAAA8AQUMAAAAPQEFDAAAAD4BBQwAAAA/AQUMAAAAQAEFDAAAAEEBBQwAAABCAQUMAAAAQwEFDAAAAEQBBQwAAABFAQUMAAAARgEFDAAAAEcBBQwAAABIAQUMAAAASQEFDAAAAEoBBQwAAABLAQUMAAAATAEFDAAAAE0BBQwAAABOAQUMAAAATwEFDAAAAFABBQwAAABRAQUMAAAAUgEFDAAAAFMBBQwAAABUAQUMAAAAVQEFDAAAAFYBBQwAAABXAQUMAAAAWAEFDAAAAFkBBQwAAABaAQUMAAAAWwEFDAAAAFwBBQwAAABdAQUMAAAAXgEFDAAAAF8BBQwAAABgAQUMAAAAYQEFSAAAAGIAAAAAAAAAYwAAAAAAAAAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVBCUCGANjb2wlJAAWyAEZHBkcJgAcFQQZFQAZGANjb2wVAhbIARb2DBacCyYIPBgIYwAAAAAAAAAYCAAAAAAAAAAAFgAoCGMAAAAAAAAAGAgAAAAAAAAAABERAAAAFvYMFsgBJggWnAsAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAsgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:8f47de7b1ad508b573305dceb14a8577dd7977cfbb1165713bd94e57c51bccde\nUEFSMRUAFa4GFbQGLBXIARUAFQYVBgAAlwMcAwAAAMgBAQAFAfSJAYA/AAAAQAAAQEAAAIBAAACgQAAAwEAAAOBAAAAAQQAAEEEAACBBAAAwQQAAQEEAAFBBAABgQQAAcEEAAIBBAACIQQAAkEEAAJhBAACgQQAAqEEAALBBAAC4QQAAwEEAAMhBAADQQQAA2EEAAOBBAADoQQAA8EEAAPhBAAAAQgAABEIAAAhCAAAMQgAAEEIAABRCAAAYQgAAHEIAACBCAAAkQgAAKEIAACxCAAAwQgAANEIAADhCAAA8QgAAQEIAAERCAABIQgAATEIAAFBCAABUQgAAWEIAAFxCAABgQgAAZEIAAGhCAABsQgAAcEIAAHRCAAB4QgAAfEIAAIBCAACCQgAAhEIAAIZCAACIQgAAikIAAIxCAACOQgAAkEIAAJJCAACUQgAAlkIAAJhCAACaQgAAnEIAAJ5CAACgQgAAokIAAKRCAACmQgAAqEIAAKpCAACsQgAArkIAALBCAACyQgAAtEIAALZCAAC4QgAAukIAALxCAAC+QgAAwEIAAMJCAADEQgAAxkIVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVCCUCGANjb2wAFsgBGRwZHCYAHBUIGRUAGRgDY29sFQIWyAEW1gYW3AYmCDwYBAAAxkIYBAAAAAAWACgEAADGQhgEAAAAABERAAAAFtYGFsgBJggW3AYAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAoAAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:ab60cbe642c61de458010e2ac5bfa51b01e4f3775b45c431606e4ba463c32ca2\nUEFSMRUAFc4MFZIGLBXIARUAFQYVBgAApwYcAwAAAMgBAQAyAQAE8D8NDwBACQgACA0IABANCAAUDQgAGA0IABwNCAAgDQgAIg0IACQNCAAmDQgAKA0IACoNCAAsDQgALg0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABACQgAgA0IBABBDRANCAQAQg0QDQgEAEMNEA0IBABEDRANCAQARQ0QDQgEAEYNEA0IBABHDRANCAQASA0QDQgEAEkNEA0IBABKDRANCAQASw0QDQgEAEwNEA0IBABNDRANCAQATg0QDQgEAE8NEA0IBABQCRAAQA0IAIANCADADQgEAFENIA0IAIANCADADQgEAFINIA0IAIANCADADQgEAFMNIA0IAIANCADADQgEAFQNIA0IAIANCADADQgEAFUNIA0IAIANCADADQgEAFYNIA0IAIANCADADQgEAFcNIA0IAIANCADADQgEAFgNIA0IKIBYQAAAAAAAwFhAFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQolAhgDY29sABbIARkcGRwmABwVChkVABkYA2NvbBUCFsgBFvYMFroGJgg8GAgAAAAAAMBYQBgIAAAAAAAAAAAWACgIAAAAAADAWEAYCAAAAAAAAAAAEREAAAAW9gwWyAEmCBa6BgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACwAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:1a2212f9f38c03a1974a4ce841e705c1b2bc4da0e39c7175500ae60632b235cc\nUEFSMRUAFSgVLCwVyAEVABUGFQYAABRMAwAAAMgBAVVVVVVVVVVVVVVVVQUVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVACUCGANjb2wAFsgBGRwZHCYAHBUAGRUAGRgDY29sFQIWyAEWTBZQJgg8GAEBGAEAFgAoAQEYAQAREQAAABZMFsgBJggWUAAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACQAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:1e711d7424766a624fa394e624e921bad1de25ca0fc331e3a4f51afcffa3324f\nUEFSMRUAFaoJFcYGLBXIARUAFQYVBgAA1QQsAwAAAMgBAQEAAAAwAQUAMQEFADIBBQAzAQUANAEFADUBBQA2AQUANwEFADgBBRg5AgAAADEwBQYAMQUGADIFBgAzBQYANAUGADUFBgA2BQYANwUGADgFBgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwEMjgBPAAyBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADQFPAA0BTwANAU8BDQzAVoANAU8ADQFPAQ0NgUSBTwANAU8ADQFPAA1BTwANQU8ADUFPAA1BTwENTQBMAQ1NQUGBTwANQU8ADUFPAA1BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwENjYBQgA2BTwANgU8ADYFPAA3BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwAOAU8ADgFPAQ4MgFgADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAA5BTw0OTcCAAAAOTgCAAAAOTkVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVDCUCGANjb2wAFsgBGRwZHCYAHBUMGRUAGRgDY29sFQIWyAEW0gkW7gYmCDwYAjk5GAEwFgAoAjk5GAEwEREAAAAW0gkWyAEmCBbuBgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACWAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:78dc2e0566338ab3c32973f9a31a047850f079bf03f6b95ee5dad6cd162d5cf9\nUEFSMRUEFSgVLEwVChUAAAAUTAAAAAABAAAAAgAAAAMAAAAEAAAAFQAV0gEVRiwVyAEVBBUGFQYAAGlcAwAAAMgBAQNBiEZEI6IR0YhoRDQiGhGNVg8ABAgA4gEAFUAcHAAAHBwAABwcAAAAJAAMIAAAIAwIwIAABwIAIIAggIQQIEIAAChQAgA4QAAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVAiUCGANjb2wlIgAWyAEZHBkcJgAcFQIZFQQZGANjb2wVAhbIARa6AhayASZOJggcGAQEAAAAGAQAAAAAFgAWChgEBAAAABgEAAAAABERACa6ARVeAAAWugIWyAEmCBayAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACrAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:b63aba2fb99ecd73afb7fd795abbb64f96ba337bcf18d5e36330fe8b6e3cc4d6\nUEFSMRUEFVAVPEwVChUAAAAoAAANAQABDQgAAg0IPAMAAAAAAAAABAAAAAAAAAAVABXSARVGLBXIARUEFQYVBgAAaVwDAAAAyAEBA0GIRkQjohHRiGhENCIaEY1WDwAECADiAQAVQBwcAAAcHAAAHBwAAAAQAhgIBAAEBgIkgAIAACYKcABABAEAAphAQAAgIEkAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYA2NvbCUkABbIARkcGRwmABwVBBkVBBkYA2NvbBUCFsgBFuICFsIBJl4mCBwYCAQAAAAAAAAAGAgAAAAAAAAAABYAFgoYCAQAAAAAAAAAGAgAAAAAAAAAABERACbKARVeAAAW4gIWyAEmCBbCAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAAC7AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:1897f2d1636fa245cf663a0e114699fd54e44ea4b7e66e2a36c382ed8ee4f99d\nUEFSMRUEFSgVKEwVChUAAAAUAAAFATSAPwAAAEAAAEBAAACAQBUAFdIBFUYsFcgBFQQVBhUGAABpXAMAAADIAQEDQYhGRCOiEdGIaEQ0IhoRjVYPAAQIAOIBABVAHBwAABwcAAAcHAAAAAIAASQAEAJICqAAASIAKgAAIEREEAAIoAAIFGAASGAEFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQglAhgDY29sABbIARkcGRwmABwVCBkVBBkYA2NvbBUCFsgBFroCFq4BJkomCBwYBAAAgEAYBAAAAAAWABYKGAQAAIBAGAQAAAAAEREAJrYBFV4AABa6AhbIASYIFq4BACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAKkAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:862c67209761cee886ba7217f245c5465952579ecf81c3a5559dd00edc05abcf\nUEFSMRUEFVAVNEwVChUAAAAoAAAyAQAE8D8NDwBACQgkCEAAAAAAAAAQQBUAFdIBFUYsFcgBFQQVBhUGAABpXAMAAADIAQEDQYhGRCOiEdGIaEQ0IhoRjVYPAAQIAOIBABVAHBwAABwcAAAcHAAAAAAiAEoGwAAECCAARSAEQANYAAFAABoAEADFAQBQYAAQFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQolAhgDY29sABbIARkcGRwmABwVChkVBBkYA2NvbBUCFsgBFuICFroBJlYmCBwYCAAAAAAAABBAGAgAAAAAAAAAABYAFgoYCAAAAAAAABBAGAgAAAAAAAAAABERACbCARVeAAAW4gIWyAEmCBa6AQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAAC5AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 209, in write_enc\n    raise ValueError(f\"Expected dictionary encoding, got {actual}\")\nValueError: Expected dictionary encoding, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:788a31989039d1cb9d8139fb457e6fad62dd3365202e3d063e2d06ac8371c99d\nUEFSMRUEFTQVOEwVBBUAAAAaZAkAAABoNjU2QzZDNkYJAAAAdzZGNzI2QzY0FQAVkgEVKCwVyAEVBBUGFQYAAEkkAwAAAMgBAQJBRF4BAAAAlgEAFUAcHAAAHBwAABwcAAAAAAKAAAAAAAyABAAAAAAQBAAAAkAgBAAAEAAEAAABABAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVDCUCGANjb2wAFsgBGRwZHCYAHBUMGRUEGRgDY29sFQIWyAEWhgIWoAEmWiYIHBgJdzZGNzI2QzY0GAloNjU2QzZDNkYWABYEGAl3NkY3MjZDNjQYCWg2NTZDNkM2RhERACaoARVeAAAWhgIWyAEmCBagAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAAC9AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "RLE_DICTIONARY": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:78dc2e0566338ab3c32973f9a31a047850f079bf03f6b95ee5dad6cd162d5cf9\nUEFSMRUEFSgVLEwVChUAAAAUTAAAAAABAAAAAgAAAAMAAAAEAAAAFQAV0gEVRiwVyAEVBBUGFQYAAGlcAwAAAMgBAQNBiEZEI6IR0YhoRDQiGhGNVg8ABAgA4gEAFUAcHAAAHBwAABwcAAAAJAAMIAAAIAwIwIAABwIAIIAggIQQIEIAAChQAgA4QAAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVAiUCGANjb2wlIgAWyAEZHBkcJgAcFQIZFQQZGANjb2wVAhbIARa6AhayASZOJggcGAQEAAAAGAQAAAAAFgAWChgEBAAAABgEAAAAABERACa6ARVeAAAWugIWyAEmCBayAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACrAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:b63aba2fb99ecd73afb7fd795abbb64f96ba337bcf18d5e36330fe8b6e3cc4d6\nUEFSMRUEFVAVPEwVChUAAAAoAAANAQABDQgAAg0IPAMAAAAAAAAABAAAAAAAAAAVABXSARVGLBXIARUEFQYVBgAAaVwDAAAAyAEBA0GIRkQjohHRiGhENCIaEY1WDwAECADiAQAVQBwcAAAcHAAAHBwAAAAQAhgIBAAEBgIkgAIAACYKcABABAEAAphAQAAgIEkAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYA2NvbCUkABbIARkcGRwmABwVBBkVBBkYA2NvbBUCFsgBFuICFsIBJl4mCBwYCAQAAAAAAAAAGAgAAAAAAAAAABYAFgoYCAQAAAAAAAAAGAgAAAAAAAAAABERACbKARVeAAAW4gIWyAEmCBbCAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAAC7AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:1897f2d1636fa245cf663a0e114699fd54e44ea4b7e66e2a36c382ed8ee4f99d\nUEFSMRUEFSgVKEwVChUAAAAUAAAFATSAPwAAAEAAAEBAAACAQBUAFdIBFUYsFcgBFQQVBhUGAABpXAMAAADIAQEDQYhGRCOiEdGIaEQ0IhoRjVYPAAQIAOIBABVAHBwAABwcAAAcHAAAAAIAASQAEAJICqAAASIAKgAAIEREEAAIoAAIFGAASGAEFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQglAhgDY29sABbIARkcGRwmABwVCBkVBBkYA2NvbBUCFsgBFroCFq4BJkomCBwYBAAAgEAYBAAAAAAWABYKGAQAAIBAGAQAAAAAEREAJrYBFV4AABa6AhbIASYIFq4BACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAKkAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:862c67209761cee886ba7217f245c5465952579ecf81c3a5559dd00edc05abcf\nUEFSMRUEFVAVNEwVChUAAAAoAAAyAQAE8D8NDwBACQgkCEAAAAAAAAAQQBUAFdIBFUYsFcgBFQQVBhUGAABpXAMAAADIAQEDQYhGRCOiEdGIaEQ0IhoRjVYPAAQIAOIBABVAHBwAABwcAAAcHAAAAAAiAEoGwAAECCAARSAEQANYAAFAABoAEADFAQBQYAAQFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQolAhgDY29sABbIARkcGRwmABwVChkVBBkYA2NvbBUCFsgBFuICFroBJlYmCBwYCAAAAAAAABBAGAgAAAAAAAAAABYAFgoYCAAAAAAAABBAGAgAAAAAAAAAABERACbCARVeAAAW4gIWyAEmCBa6AQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAAC5AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 209, in write_enc\n    raise ValueError(f\"Expected dictionary encoding, got {actual}\")\nValueError: Expected dictionary encoding, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:788a31989039d1cb9d8139fb457e6fad62dd3365202e3d063e2d06ac8371c99d\nUEFSMRUEFTQVOEwVBBUAAAAaZAkAAABoNjU2QzZDNkYJAAAAdzZGNzI2QzY0FQAVkgEVKCwVyAEVBBUGFQYAAEkkAwAAAMgBAQJBRF4BAAAAlgEAFUAcHAAAHBwAABwcAAAAAAKAAAAAAAyABAAAAAAQBAAAAkAgBAAAEAAEAAABABAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVDCUCGANjb2wAFsgBGRwZHCYAHBUMGRUEGRgDY29sFQIWyAEWhgIWoAEmWiYIHBgJdzZGNzI2QzY0GAloNjU2QzZDNkYWABYEGAl3NkY3MjZDNjQYCWg2NTZDNkM2RhERACaoARVeAAAWhgIWyAEmCBagAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAAC9AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "RLE": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected RLE in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected RLE in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected RLE in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected RLE in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected RLE in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected RLE in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "BIT_PACKED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BIT_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BIT_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BIT_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BIT_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BIT_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BIT_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "DELTA_BINARY_PACKED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BINARY_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BINARY_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BINARY_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BINARY_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BINARY_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BINARY_PACKED in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_LENGTH_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_LENGTH_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_LENGTH_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_LENGTH_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_LENGTH_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_LENGTH_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected DELTA_BYTE_ARRAY in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "BYTE_STREAM_SPLIT": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 215, in write_enc\n    raise ValueError(f\"Expected {e} in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "BYTE_STREAM_SPLIT_EXTENDED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 212, in write_enc\n    raise ValueError(f\"Expected BYTE_STREAM_SPLIT in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 212, in write_enc\n    raise ValueError(f\"Expected BYTE_STREAM_SPLIT in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 212, in write_enc\n    raise ValueError(f\"Expected BYTE_STREAM_SPLIT in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 212, in write_enc\n    raise ValueError(f\"Expected BYTE_STREAM_SPLIT in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 212, in write_enc\n    raise ValueError(f\"Expected BYTE_STREAM_SPLIT in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 212, in write_enc\n    raise ValueError(f\"Expected BYTE_STREAM_SPLIT in encodings, got {actual}\")\nValueError: Expected BYTE_STREAM_SPLIT in encodings, got {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     }
   },
   "logical_types": {
     "STRING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:10492986975bce0a86f8f5901798c2a740b28720cea860af97ca2a76c44e1966\nUEFSMRUAFR4VIiwVAhUAFQYVBgAADzgCAAAAAgEFAAAAaGVsbG8VAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVDCUCGAFjJQAAFgIZHBkcJgAcFQwZFQAZGAFjFQIWAhZAFkQmCDwYBWhlbGxvGAVoZWxsbxYAKAVoZWxsbxgFaGVsbG8REQAAABZAFgImCBZEACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAJsAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "DATE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ed267273cc71aa71bb6e6ff2a2a08bbd1f18f5b838160b8f2443a3389df85b8b\nUEFSMRUAFRQVGCwVAhUAFQYVBgAACiQCAAAAAgELTQAAFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQIlAhgBYyUMABYCGRwZHCYAHBUCGRUAGRgBYxUCFgIWNhY6Jgg8GAQLTQAAGAQLTQAAFgAoBAtNAAAYBAtNAAAREQAAABY2FgImCBY6ACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAJcAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIME_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:deb9df07a6857aeaab0cc59ff12f51367dc771968348902e5210f5344e78c749\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgEAsOsOCgAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWMlEEx8EhwsAAAAAAAWAhkcGRwmABwVBBkVABkYAWMVAhYCFj4WQiYIPBgIALDrDgoAAAAYCACw6w4KAAAAFgAoCACw6w4KAAAAGAgAsOsOCgAAABERAAAAFj4WAiYIFkIAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAsAAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIME_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:deb9df07a6857aeaab0cc59ff12f51367dc771968348902e5210f5344e78c749\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgEAsOsOCgAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWMlEEx8EhwsAAAAAAAWAhkcGRwmABwVBBkVABkYAWMVAhYCFj4WQiYIPBgIALDrDgoAAAAYCACw6w4KAAAAFgAoCACw6w4KAAAAGAgAsOsOCgAAABERAAAAFj4WAiYIFkIAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAsAAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIME_NANOS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:deb9df07a6857aeaab0cc59ff12f51367dc771968348902e5210f5344e78c749\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgEAsOsOCgAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWMlEEx8EhwsAAAAAAAWAhkcGRwmABwVBBkVABkYAWMVAhYCFj4WQiYIPBgIALDrDgoAAAAYCACw6w4KAAAAFgAoCACw6w4KAAAAGAgAsOsOCgAAABERAAAAFj4WAiYIFkIAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAsAAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:4e1a4553869965c85e98529244cde8f6b4fed26dce10cb8eec2d5b7105a0c877\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgEAICEQ1w0GABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWMlFEyMEhwsAAAAAAAWAhkcGRwmABwVBBkVABkYAWMVAhYCFj4WQiYIPBgIACAhENcNBgAYCAAgIRDXDQYAFgAoCAAgIRDXDQYAGAgAICEQ1w0GABERAAAAFj4WAiYIFkIAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAsAAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:4e1a4553869965c85e98529244cde8f6b4fed26dce10cb8eec2d5b7105a0c877\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgEAICEQ1w0GABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWMlFEyMEhwsAAAAAAAWAhkcGRwmABwVBBkVABkYAWMVAhYCFj4WQiYIPBgIACAhENcNBgAYCAAgIRDXDQYAFgAoCAAgIRDXDQYAGAgAICEQ1w0GABERAAAAFj4WAiYIFkIAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAsAAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_NANOS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:acafe70718e3ad45a7b2b506129ff331a1371f6f26e9af7246e4f43662660ae9\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgEAAGUBFxCmFxUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWNsjBIcPAAAAAAAFgIZHBkcJgAcFQQZFQAZGAFjFQIWAhY+FkImCDwYCAAAZQEXEKYXGAgAAGUBFxCmFxYAKAgAAGUBFxCmFxgIAABlARcQphcREQAAABY+FgImCBZCACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAK4AAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "INT96": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "DECIMAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:87f0bdb2953ead0099851e5ccfd2cd7c6b2aa459189441b25d1cf6302758775d\nUEFSMRUAFRwVICwVAhUAFQYVBgAADjQCAAAAAgE5MAAAAAAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYAWMlChUEFRQsXBUEFRQAAAAWAhkcGRwmABwVBBkVABkYAWMVAhYCFj4WQiYIPBgIOTAAAAAAAAAYCDkwAAAAAAAAFgAoCDkwAAAAAAAAGAg5MAAAAAAAABERAAAAFj4WAiYIFkIAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAswAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UUID": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:5a6c44b7e5a694a2c3384c135904389547bfce73228980e3aa8f7743c3576ef6\nUEFSMRUAFSwVMCwVAhUAFQYVBgAAFlQCAAAAAgEFI15nkzNO2aXKPlfCju3nFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQ4VIBUCGAFjbOwAAAAWAhkcGRwmABwVDhkVABkYAWMVAhYCFk4WUiYIPBgQBSNeZ5MzTtmlyj5Xwo7t5xgQBSNeZ5MzTtmlyj5Xwo7t5xYAKBAFI15nkzNO2aXKPlfCju3nGBAFI15nkzNO2aXKPlfCju3nEREAAAAWThYCJggWUgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAADLAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "JSON": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:33aa0beb3ed0dc4d0cb4b2c63a358acfa5189b3102a4b76c4309ee8361602a05\nUEFSMRUAFS4VMiwVAhUAFQYVBgAAF1gCAAAAAgENAAAAeyJrZXkiOiJ2YWwifRUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUMJQIYAWMlJkzMAAAAFgIZHBkcJgAcFQwZFQAZGAFjFQIWAhZQFlQmCDwYDXsia2V5IjoidmFsIn0YDXsia2V5IjoidmFsIn0WACgNeyJrZXkiOiJ2YWwifRgNeyJrZXkiOiJ2YWwifRERAAAAFlAWAiYIFlQAKChEdWNrREIgdmVyc2lvbiB2MS41LjAgKGJ1aWxkIDNhMzk2N2FhODEpGRwcAAAAvwAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "FLOAT16": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "ENUM": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:f906c17869d625ae2e5a28a31f3e38b1d96b6c08d9dd4355c4bfb39e22bd6df9\nUEFSMRUAFRYVGiwVAhUAFQYVBgAACygCAAAAAgEBAAAAQRUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUMJQIYAWMlAAAWAhkcGRwmABwVDBkVABkYAWMVAhYCFjgWPCYIPBgBQRgBQRYAKAFBGAFBEREAAAAWOBYCJggWPAAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACLAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "BSON": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "INTERVAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:4c7dc4c447300d1c85e9d2380da73cfae0afbc8876e19d72a08d25d13820a455\nUEFSMRUAFSQVKCwVAhUAFQYVBgAAEkQCAAAAAgEAAAAAAQAAAAAAAAAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVDhUYFQIYAWMlKgAWAhkcGRwmABwVDhkFGRgBYxUCFgIWRhZKJggAABZGFgImCBZKACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAHoAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UNKNOWN": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "VARIANT": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "GEOMETRY": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "GEOGRAPHY": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     }
   },
   "nested_types": {
     "LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:59b7199c86a37081fa21dd23238d1c03576dbf8aa1160769a6ace0b5504759dc\nUEFSMRUAFW4VPiwVBhUAFQYVBgAANxghAAAAQQYAdgEARAIAAAAGAwEAAAACAAAAAwAAABUCGUw1ABgNZHVja2RiX3NjaGVtYRUCADUCGAFjFQIVBgA1BBgEbGlzdBUCABUCJQIYB2VsZW1lbnQlIgAWAhkcGRwmABwVAhkVABk4AWMEbGlzdAdlbGVtZW50FQIWBhaQARZgJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAREQAAABaQARYCJggWYAAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAADBAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "MAP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:b4b81e4786563aeec6b4af9ba833733d14c11ab8d593b6fb4a7e81e97c4ae0a2\nUEFSMRUAFWoVNiwVBBUAFQYVBgAANRghAAAAQQIAdgEAASAsBAIBAAAAYQEAAABiFQAVZhU2LBUEFQAVBhUGAAAzGCEAAABBAgB2AQA0AgAAAAQDAQAAAAIAAAAVAhlcNQAYDWR1Y2tkYl9zY2hlbWEVAgA1AhgBYxUCFQIANQQYCWtleV92YWx1ZRUEABUMJQAYA2tleSUAABUCJQIYBXZhbHVlJSIAFgIZHBksJgAcFQwZFQAZOAFjCWtleV92YWx1ZQNrZXkVAhYEFowBFlgmCDwYAWIYAWEWACgBYhgBYRERAAAAJgAcFQIZFQAZOAFjCWtleV92YWx1ZQV2YWx1ZRUCFgQWiAEWWCZgPBgEAgAAABgEAQAAABYAKAQCAAAAGAQBAAAAEREAAAAWlAIWAiYIFrABACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRksHAAAHAAAABABAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "STRUCT": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:53d901d88e8a4420a0e99f363eea195688543c1f5b56313e9c755e2a6fbab46e\nUEFSMRUAFRQVGCwVAhUAFQYVBgAACiQCAAAAAgIBAAAAFQAVFBUYLBUCFQAVBhUGAAAKJAIAAAACAgIAAAAVAhlMNQAYDWR1Y2tkYl9zY2hlbWEVAgA1AhgBYxUEABUCJQIYAXglIgAVAiUCGAF5JSIAFgIZHBksJgAcFQIZFQAZKAFjAXgVAhYCFjYWOiYIPBgEAQAAABgEAQAAABYAKAQBAAAAGAQBAAAAEREAAAAmABwVAhkVABkoAWMBeRUCFgIWNhY6JkI8GAQCAAAAGAQCAAAAFgAoBAIAAAAYBAIAAAAREQAAABZsFgImCBZ0ACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRksHAAAHAAAAOYAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "NESTED_LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:838c23951d8cc6b20c4342aa1de6e2db9d656555cd4d71dd39bdc346094579a8\nUEFSMRUAFa4BFT4sFQYVABUGFQYAAFcYQQAAAEEYAPYBAEQCAAAABgUBAAAAAgAAAAMAAAAVAhlsNQAYDWR1Y2tkYl9zY2hlbWEVAgA1AhgBYxUCFQYANQQYBGxpc3QVAgA1AhgHZWxlbWVudBUCFQYANQQYBGxpc3QVAgAVAiUCGAdlbGVtZW50JSIAFgIZHBkcJgAcFQIZFQAZWAFjBGxpc3QHZWxlbWVudARsaXN0B2VsZW1lbnQVAhYGFtIBFmImCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAABERAAAAFtIBFgImCBZiACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAOkAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "NESTED_MAP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:93837a49c80e47686ec0e4e4fb8b8c5a16c70b20cfe7e9817d17539d4926754f\nUEFSMRUAFWoVNiwVBBUAFQYVBgAANRghAAAAQQIAdgEAASAsBAIBAAAAYQEAAABiFQAVrgEVPiwVBhUAFQYVBgAAVxhBAAAAQRgA9gEARAIAAAAGBQEAAAACAAAAAwAAABUCGXw1ABgNZHVja2RiX3NjaGVtYRUCADUCGAFjFQIVAgA1BBgJa2V5X3ZhbHVlFQQAFQwlABgDa2V5JQAANQIYBXZhbHVlFQIVBgA1BBgEbGlzdBUCABUCJQIYB2VsZW1lbnQlIgAWAhkcGSwmABwVDBkVABk4AWMJa2V5X3ZhbHVlA2tleRUCFgQWjAEWWCYIPBgBYhgBYRYAKAFiGAFhEREAAAAmABwVAhkVABlYAWMJa2V5X3ZhbHVlBXZhbHVlBGxpc3QHZWxlbWVudBUCFgYW0gEWYiZgPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAEREAAAAW3gIWAiYIFroBACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRksHAAAHAAAADgBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "DEEP_NESTING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2b406d98606f098ab4e8f95984405c3c58086574835307ac555917082d24b23d\nUEFSMRUAFaYBFTYsFQQVABUGFQYAAFMYQQAAAEEIAPYBADQCAAAABAYBAAAAAgAAABUCGXw1ABgNZHVja2RiX3NjaGVtYRUCADUCGAFjFQIVBgA1BBgEbGlzdBUCADUCGAdlbGVtZW50FQIANQIYAXgVAhUGADUEGARsaXN0FQIAFQIlAhgHZWxlbWVudCUiABYCGRwZHCYAHBUCGRUAGWgBYwRsaXN0B2VsZW1lbnQBeARsaXN0B2VsZW1lbnQVAhYEFsoBFlomCDwYBAIAAAAYBAEAAAAWACgEAgAAABgEAQAAABERAAAAFsoBFgImCBZaACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAPMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   },
   "advanced_features": {
     "PAGE_INDEX": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ec658494c56977b88e2fe1be482d867b458ea91767be30792a20ac854b33a3fa\n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AAD/AQUBAe35AAENCAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgeeggAEA0QABENCAASDQgAEw0IABQNCAAVDQgAFg0IABcNCAAYDQgAGQ0IABoNCAAbDQgAHA0IAB0NCAAeDQgAHw0IACANCAAhDQgAIg0IACMNCAAkDQgAJQ0IACYNCAAnDQgAKA0IACkNCAAqDQgAKw0IACwNCAAtDQgALg0IAC8NCAAwDQgAMQ0IADINCAAzDQgANA0IADUNCAA2DQgANw0IADgNCAA5DQgAOg0IADsNCAA8DQgAPQ0IAD4NCAA/DQgAQA0IAEENCABCDQgAQw0IAEQNCABFDQgARg0IAEcNCABIDQgASQ0IAEoNCABLDQgATA0IAE0NCABODQgATw0IAFANCABRDQgAUg0IAFMNCABUDQgAVQ0IAFYNCABXDQgAWA0IAFkNCABaDQgAWw0IAFwNCABdDQgAXg0IAF8NCABgDQgAYQ0IAGINCABjDQgAZA0IAGUNCABmDQgAZw0IAGgNCABpDQgAag0IAGsNCABsDQgAbQ0IAG4NCABvDQgAcA0IAHENCAByDQgAcw0IAHQNCAB1DQgAdg0IAHcNCAB4DQgAeQ0IAHoNCAB7DQgAfA0IAH0NCAB+DQgAfw0IAIANCACBDQgAgg0IAIMNCACEDQgAhQ0IAIYNCACHDQgAiA0IAIkNCACKDQgAiw0IAIwNCACNDQgAjg0IAI8NCACQDQgAkQ0IAJINCACTDQgAlA0IAJUNCACWDQgAlw0IAJgNCACZDQgAmg0IAJsNCACcDQgAnQ0IAJ4NCACfDQgAoA0IAKENCACiDQgAow0IAKQNCAClDQgApg0IAKcNCACoDQgAqQ0IAKoNCACrDQgArA0IAK0NCACuDQgArw0IALANCACxDQgAsg0IALMNCAC0DQgAtQ0IALYNCAC3DQgAuA0IALkNCAC6DQgAuw0IALwNCAC9DQgAvg0IAL8NCADADQgAwQ0IAMINCADDDQgAxA0IAMUNCADGDQgAxw0IAMgNCADJDQgAyg0IAMsNCADMDQgAzQ0IAM4NCADPDQgA0A0IANENCADSDQgA0w0IANQNCADVDQgA1g0IANcNCADYDQgA2Q0IANoNCADbDQgA3A0IAN0NCADeDQgA3w0IAOANCADhDQgA4g0IAOMNCADkDQgA5Q0IAOYNCADnDQgA6A0IAOkNCADqDQgA6w0IAOwNCADtDQgA7g0IAO8NCADwDQgA8Q0IAPINCADzDQgA9A0IAPUNCAD2DQgA9w0IAPgNCAD5DQgA+g0IAPsNCAD8DQgA/Q0IAP4NCAD/DQge8Q8EAQIODQgIAAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgADw0IABANCAARDQgAEg0IABMNCAAUDQgAFQ0IABYNCAAXDQgAGA0IABkNCAAaDQgAGw0IABwNCAAdDQgAHg0IAB8NCAAgDQgAIQ0IACINCAAjDQgAJA0IACUNCAAmDQgAJw0IACgNCAApDQgAKg0IACsNCAAsDQgALQ0IAC4NCAAvDQgAMA0IADENCAAyDQgAMw0IADQNCAA1DQgANg0IADcNCAA4DQgAOQ0IADoNCAA7DQgAPA0IAD0NCAA+DQgAPw0IAEANCABBDQgAQg0IAEMNCABEDQgARQ0IAEYNCABHDQgASA0IAEkNCABKDQgASw0IAEwNCABNDQgATg0IAE8NCABQDQgAUQ0IAFINCABTDQgAVA0IAFUNCABWDQgAVw0IAFgNCABZDQgAWg0IAFsNCABcDQgAXQ0IAF4NCABfDQgAYA0IAGENCABiDQgAYw0IAGQNCABlDQgAZg0IAGcNCABoDQgAaQ0IAGoNCABrDQgAbA0IAG0NCABuDQgAbw0IAHANCABxDQgAcg0IAHMNCAB0DQgAdQ0IAHYNCAB3DQgAeA0IAHkNCAB6DQgAew0IAHwNCAB9DQgAfg0IAH8NCACADQgAgQ0IAIINCACDDQgAhA0IAIUNCACGDQgAhw0IAIgNCACJDQgAig0IAIsNCACMDQgAjQ0IAI4NCACPDQgAkA0IAJENCACSDQgAkw0IAJQNCACVDQgAlg0IAJcNCACYDQgAmQ0IAJoNCACbDQgAnA0IAJ0NCACeDQgAnw0IAKANCAChDQgAog0IAKMNCACkDQgApQ0IAKYNCACnDQgAqA0IAKkNCACqDQgAqw0IAKwNCACtDQgArg0IAK8NCACwDQgAsQ0IALINCACzDQgAtA0IALUNCAC2DQgAtw0IALgNCAC5DQgAug0IALsNCAC8DQgAvQ0IAL4NCAC/DQgAwA0IAMENCADCDQgAww0IAMQNCADFDQgAxg0IAMcNCADIDQgAyQ0IAMoNCADLDQgAzA0IAM0NCADODQgAzw0IANANCADRDQgA0g0IANMNCADUDQgA1Q0IANYNCADXDQgA2A0IANkNCADaDQgA2w0IANwNCADdDQgA3g0IAN8NCADgDQgA4Q0IAOINCADjDQgA5A0IAOUNCADmDQgA5w0IAOgNCADpDQgA6g0IAOsNCADsDQgA7Q0IAO4NCADvDQgA8A0IAPENCADyDQgA8w0IAPQNCAD1DQgA9g0IAPcNCAD4DQgA+Q0IAPoNCAD7DQgA/A0IAP0NCAD+DQgA/w0IHukXAAEa8RcAAg0IAAMNCAAEDQgABQ0IAAYNCAAHDQgACA0IAAkNCAAKDQgACw0IAAwNCAANDQgADg0IAA8NCAAQDQgAEQ0IABINCAATDQgAFA0IABUNCAAWDQgAFw0IABgNCAAZDQgAGg0IABsNCAAcDQgAHQ0IAB4NCAAfDQgAIA0IACENCAAiDQgAIw0IACQNCAAlDQgAJg0IACcNCAAoDQgAKQ0IACoNCAArDQgALA0IAC0NCAAuDQgALw0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABADQgAQQ0IAEINCABDDQgARA0IAEUNCABGDQgARw0IAEgNCABJDQgASg0IAEsNCABMDQgATQ0IAE4NCABPDQgAUA0IAFENCABSDQgAUw0IAFQNCABVDQgAVg0IAFcNCABYDQgAWQ0IAFoNCABbDQgAXA0IAF0NCABeDQgAXw0IAGANCABhDQgAYg0IAGMNCABkDQgAZQ0IAGYNCABnDQgAaA0IAGkNCABqDQgAaw0IAGwNCABtDQgAbg0IAG8NCABwDQgAcQ0IAHINCABzDQgAdA0IAHUNCAB2DQgAdw0IAHgNCAB5DQgAeg0IAHsNCAB8DQgAfQ0IAH4NCAB/DQgAgA0IAIENCACCDQgAgw0IAIQNCACFDQgAhg0IAIcNCACIDQgAiQ0IAIoNCACLDQgAjA0IAI0NCACODQgAjw0IAJANCACRDQgAkg0IAJMNCACUDQgAlQ0IAJYNCACXDQgAmA0IAJkNCACaDQgAmw0IAJwNCACdDQgAng0IAJ8NCACgDQgAoQ0IAKINCACjDQgApA0IAKUNCACmDQgApw0IAKgNCACpDQgAqg0IAKsNCACsDQgArQ0IAK4NCACvDQgAsA0IALENCACyDQgAsw0IALQNCAC1DQgAtg0IALcNCAC4DQgAuQ0IALoNCAC7DQgAvA0IAL0NCAC+DQgAvw0IAMANCADBDQgAwg0IAMMNCADEDQgAxQ0IAMYNCADHDQgAyA0IAMkNCADKDQgAyw0IAMwNCADNDQgAzg0IAM8NCADQDQgA0Q0IANINCADTDQgA1A0IANUNCADWDQgA1w0IANgNCADZDQgA2g0IANsNCADcDQgA3Q0IAN4NCADfDQgA4A0IAOENCADiDQgA4w0IAOQNCADlDQg85gMAAAAAAADnAwAAAAAAABUAFeJrFeA+LBXQDxUAFQYVBgAA8TUsAwAAANAPAQEAAAAwAQUAMQEFADIBBQAzAQUANAEFADUBBQA2AQUANwEFADgBBRg5AgAAADEwBQYAMQUGADIFBgAzBQYANAUGADUFBgA2BQYANwUGADgFBgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwANAU8ADQFPAA0BTwANAU8ADQFPAA0BTwANAU8ADQFPAA0BTwANAU8ADUFPAA1BTwANQU8ADUFPAA1BTwANQU8ADUFPAA1BTwANQU8ADUFPAA2BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAQ5OUFVCDEwMAkHADEJBwAyCQcAMwkHADQJBwA1CQcANgkHADcJBwA4CQcJRgAxCUYAMQlGADEJRgAxCUYAMQlGADEJRgAxCUYAMQlGADEJRgAxCUYAMglGADIJRgAyCUYAMglGADIJRgAyCUYAMglGADIJRgAyCUYAMglGADMJRgAzCUYAMwlGADMJRgAzCUYAMwlGADMJRgAzCUYAMwlGADMJRgA0CUYANAlGADQJRgA0CUYANAlGADQJRgA0CUYANAlGADQJRgA0CUYANQlGADUJRgA1CUYANQlGADUJRgA1CUYANQlGADUJRgA1CUYANQlGADYJRgA2CUYANglGADYJRgA2CUYANglGADYJRgA2CUYANglGADYJRgA3CUYANwlGADcJRgA3CUYANwlGADcJRgA3CUYANwlGADcJRgA3CUYAOAlGADgJRgA4CUYAOAlGADgJRgA4CUYAOAlGADgJRgA4CUYAOAlGADkJRgA5CUYAOQlGADkJRgA5CUYAOQlGADkJRgA5CUYAOQlGSbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAQzMWWOADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8JDk5OAMAAAA5OTkVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVBCUCGANjb2wlJAAVDCUCGAdzdHJfY29sJQAAFtAPGRwZLCYAHBUEGRUAGRgDY29sFQIW0A8Wtn0W6EomCDwYCOcDAAAAAAAAGAgAAAAAAAAAABYAKAjnAwAAAAAAABgIAAAAAAAAAAAREQAAACYAHBUMGRUAGRgHc3RyX2NvbBUCFtAPFopsFog/JvBKPBgDOTk5GAEwFgAoAzk5ORgBMBERAAAAFsDpARbQDyYIFvCJAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZLBwAABwAAAD/AAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "BLOOM_FILTER": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d9b302195ff53fd213487092fe75b249e97fdb7fe947a218ca6af055e3abc5c8\n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AAD/AQUBAe35AAENCAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgeeggAEA0QABENCAASDQgAEw0IABQNCAAVDQgAFg0IABcNCAAYDQgAGQ0IABoNCAAbDQgAHA0IAB0NCAAeDQgAHw0IACANCAAhDQgAIg0IACMNCAAkDQgAJQ0IACYNCAAnDQgAKA0IACkNCAAqDQgAKw0IACwNCAAtDQgALg0IAC8NCAAwDQgAMQ0IADINCAAzDQgANA0IADUNCAA2DQgANw0IADgNCAA5DQgAOg0IADsNCAA8DQgAPQ0IAD4NCAA/DQgAQA0IAEENCABCDQgAQw0IAEQNCABFDQgARg0IAEcNCABIDQgASQ0IAEoNCABLDQgATA0IAE0NCABODQgATw0IAFANCABRDQgAUg0IAFMNCABUDQgAVQ0IAFYNCABXDQgAWA0IAFkNCABaDQgAWw0IAFwNCABdDQgAXg0IAF8NCABgDQgAYQ0IAGINCABjDQgAZA0IAGUNCABmDQgAZw0IAGgNCABpDQgAag0IAGsNCABsDQgAbQ0IAG4NCABvDQgAcA0IAHENCAByDQgAcw0IAHQNCAB1DQgAdg0IAHcNCAB4DQgAeQ0IAHoNCAB7DQgAfA0IAH0NCAB+DQgAfw0IAIANCACBDQgAgg0IAIMNCACEDQgAhQ0IAIYNCACHDQgAiA0IAIkNCACKDQgAiw0IAIwNCACNDQgAjg0IAI8NCACQDQgAkQ0IAJINCACTDQgAlA0IAJUNCACWDQgAlw0IAJgNCACZDQgAmg0IAJsNCACcDQgAnQ0IAJ4NCACfDQgAoA0IAKENCACiDQgAow0IAKQNCAClDQgApg0IAKcNCACoDQgAqQ0IAKoNCACrDQgArA0IAK0NCACuDQgArw0IALANCACxDQgAsg0IALMNCAC0DQgAtQ0IALYNCAC3DQgAuA0IALkNCAC6DQgAuw0IALwNCAC9DQgAvg0IAL8NCADADQgAwQ0IAMINCADDDQgAxA0IAMUNCADGDQgAxw0IAMgNCADJDQgAyg0IAMsNCADMDQgAzQ0IAM4NCADPDQgA0A0IANENCADSDQgA0w0IANQNCADVDQgA1g0IANcNCADYDQgA2Q0IANoNCADbDQgA3A0IAN0NCADeDQgA3w0IAOANCADhDQgA4g0IAOMNCADkDQgA5Q0IAOYNCADnDQgA6A0IAOkNCADqDQgA6w0IAOwNCADtDQgA7g0IAO8NCADwDQgA8Q0IAPINCADzDQgA9A0IAPUNCAD2DQgA9w0IAPgNCAD5DQgA+g0IAPsNCAD8DQgA/Q0IAP4NCAD/DQge8Q8EAQIODQgIAAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgADw0IABANCAARDQgAEg0IABMNCAAUDQgAFQ0IABYNCAAXDQgAGA0IABkNCAAaDQgAGw0IABwNCAAdDQgAHg0IAB8NCAAgDQgAIQ0IACINCAAjDQgAJA0IACUNCAAmDQgAJw0IACgNCAApDQgAKg0IACsNCAAsDQgALQ0IAC4NCAAvDQgAMA0IADENCAAyDQgAMw0IADQNCAA1DQgANg0IADcNCAA4DQgAOQ0IADoNCAA7DQgAPA0IAD0NCAA+DQgAPw0IAEANCABBDQgAQg0IAEMNCABEDQgARQ0IAEYNCABHDQgASA0IAEkNCABKDQgASw0IAEwNCABNDQgATg0IAE8NCABQDQgAUQ0IAFINCABTDQgAVA0IAFUNCABWDQgAVw0IAFgNCABZDQgAWg0IAFsNCABcDQgAXQ0IAF4NCABfDQgAYA0IAGENCABiDQgAYw0IAGQNCABlDQgAZg0IAGcNCABoDQgAaQ0IAGoNCABrDQgAbA0IAG0NCABuDQgAbw0IAHANCABxDQgAcg0IAHMNCAB0DQgAdQ0IAHYNCAB3DQgAeA0IAHkNCAB6DQgAew0IAHwNCAB9DQgAfg0IAH8NCACADQgAgQ0IAIINCACDDQgAhA0IAIUNCACGDQgAhw0IAIgNCACJDQgAig0IAIsNCACMDQgAjQ0IAI4NCACPDQgAkA0IAJENCACSDQgAkw0IAJQNCACVDQgAlg0IAJcNCACYDQgAmQ0IAJoNCACbDQgAnA0IAJ0NCACeDQgAnw0IAKANCAChDQgAog0IAKMNCACkDQgApQ0IAKYNCACnDQgAqA0IAKkNCACqDQgAqw0IAKwNCACtDQgArg0IAK8NCACwDQgAsQ0IALINCACzDQgAtA0IALUNCAC2DQgAtw0IALgNCAC5DQgAug0IALsNCAC8DQgAvQ0IAL4NCAC/DQgAwA0IAMENCADCDQgAww0IAMQNCADFDQgAxg0IAMcNCADIDQgAyQ0IAMoNCADLDQgAzA0IAM0NCADODQgAzw0IANANCADRDQgA0g0IANMNCADUDQgA1Q0IANYNCADXDQgA2A0IANkNCADaDQgA2w0IANwNCADdDQgA3g0IAN8NCADgDQgA4Q0IAOINCADjDQgA5A0IAOUNCADmDQgA5w0IAOgNCADpDQgA6g0IAOsNCADsDQgA7Q0IAO4NCADvDQgA8A0IAPENCADyDQgA8w0IAPQNCAD1DQgA9g0IAPcNCAD4DQgA+Q0IAPoNCAD7DQgA/A0IAP0NCAD+DQgA/w0IHukXAAEa8RcAAg0IAAMNCAAEDQgABQ0IAAYNCAAHDQgACA0IAAkNCAAKDQgACw0IAAwNCAANDQgADg0IAA8NCAAQDQgAEQ0IABINCAATDQgAFA0IABUNCAAWDQgAFw0IABgNCAAZDQgAGg0IABsNCAAcDQgAHQ0IAB4NCAAfDQgAIA0IACENCAAiDQgAIw0IACQNCAAlDQgAJg0IACcNCAAoDQgAKQ0IACoNCAArDQgALA0IAC0NCAAuDQgALw0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABADQgAQQ0IAEINCABDDQgARA0IAEUNCABGDQgARw0IAEgNCABJDQgASg0IAEsNCABMDQgATQ0IAE4NCABPDQgAUA0IAFENCABSDQgAUw0IAFQNCABVDQgAVg0IAFcNCABYDQgAWQ0IAFoNCABbDQgAXA0IAF0NCABeDQgAXw0IAGANCABhDQgAYg0IAGMNCABkDQgAZQ0IAGYNCABnDQgAaA0IAGkNCABqDQgAaw0IAGwNCABtDQgAbg0IAG8NCABwDQgAcQ0IAHINCABzDQgAdA0IAHUNCAB2DQgAdw0IAHgNCAB5DQgAeg0IAHsNCAB8DQgAfQ0IAH4NCAB/DQgAgA0IAIENCACCDQgAgw0IAIQNCACFDQgAhg0IAIcNCACIDQgAiQ0IAIoNCACLDQgAjA0IAI0NCACODQgAjw0IAJANCACRDQgAkg0IAJMNCACUDQgAlQ0IAJYNCACXDQgAmA0IAJkNCACaDQgAmw0IAJwNCACdDQgAng0IAJ8NCACgDQgAoQ0IAKINCACjDQgApA0IAKUNCACmDQgApw0IAKgNCACpDQgAqg0IAKsNCACsDQgArQ0IAK4NCACvDQgAsA0IALENCACyDQgAsw0IALQNCAC1DQgAtg0IALcNCAC4DQgAuQ0IALoNCAC7DQgAvA0IAL0NCAC+DQgAvw0IAMANCADBDQgAwg0IAMMNCADEDQgAxQ0IAMYNCADHDQgAyA0IAMkNCADKDQgAyw0IAMwNCADNDQgAzg0IAM8NCADQDQgA0Q0IANINCADTDQgA1A0IANUNCADWDQgA1w0IANgNCADZDQgA2g0IANsNCADcDQgA3Q0IAN4NCADfDQgA4A0IAOENCADiDQgA4w0IAOQNCADlDQg85gMAAAAAAADnAwAAAAAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYA2NvbCUkABbQDxkcGRwmABwVBBkVABkYA2NvbBUCFtAPFrZ9FuhKJgg8GAjnAwAAAAAAABgIAAAAAAAAAAAWACgI5wMAAAAAAAAYCAAAAAAAAAAAEREAAAAWtn0W0A8mCBboSgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACyAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "COLUMN_ENCRYPTION": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 295, in write_encryption\n    con.execute(f\"COPY (SELECT 1 AS col) TO '{p}' (FORMAT PARQUET, ENCRYPTION_CONFIG {{footer_key: 'test_key'}})\")\n_duckdb.Error:  DuckDB currently has a read-only crypto module loaded. Please ensure httpfs is loaded using `LOAD httpfs`, or for DuckDB database files consider READONLY mode. To write an encrypted database or parquet file that is NOT securely encrypted, one can use SET force_mbedtls_unsafe = 'true'.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 298, in read_encryption\n    con.execute(f\"SELECT * FROM read_parquet('{p}', encryption_config={{footer_key: 'test_key'}})\").fetchall()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_duckdb.InvalidInputException: Invalid Input Error: File '/tmp/tmpey73f78l/adv_enc.parquet' too small to be a Parquet file\n\nLINE 1: SELECT * FROM read_parquet('/tmp/tmpey73f78l/adv_enc.parquet', encryption...\n                      ^\n"
     },
     "DATA_PAGE_V2": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:dd0e30559d8281925e9ce7e82d9fdf11a9ce5db019fe971ab76563a7df8712c9\nUEFSMRUAFRQVGCwVAhUAFQYVBgAACiQCAAAAAgEBAAAAFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQIlAhgDY29sJSIAFgIZHBkcJgAcFQIZFQAZGANjb2wVAhYCFjYWOiYIPBgEAQAAABgEAQAAABYAKAQBAAAAGAQBAAAAEREAAAAWNhYCJggWOgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACbAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "STATISTICS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ec658494c56977b88e2fe1be482d867b458ea91767be30792a20ac854b33a3fa\n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AAD/AQUBAe35AAENCAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgeeggAEA0QABENCAASDQgAEw0IABQNCAAVDQgAFg0IABcNCAAYDQgAGQ0IABoNCAAbDQgAHA0IAB0NCAAeDQgAHw0IACANCAAhDQgAIg0IACMNCAAkDQgAJQ0IACYNCAAnDQgAKA0IACkNCAAqDQgAKw0IACwNCAAtDQgALg0IAC8NCAAwDQgAMQ0IADINCAAzDQgANA0IADUNCAA2DQgANw0IADgNCAA5DQgAOg0IADsNCAA8DQgAPQ0IAD4NCAA/DQgAQA0IAEENCABCDQgAQw0IAEQNCABFDQgARg0IAEcNCABIDQgASQ0IAEoNCABLDQgATA0IAE0NCABODQgATw0IAFANCABRDQgAUg0IAFMNCABUDQgAVQ0IAFYNCABXDQgAWA0IAFkNCABaDQgAWw0IAFwNCABdDQgAXg0IAF8NCABgDQgAYQ0IAGINCABjDQgAZA0IAGUNCABmDQgAZw0IAGgNCABpDQgAag0IAGsNCABsDQgAbQ0IAG4NCABvDQgAcA0IAHENCAByDQgAcw0IAHQNCAB1DQgAdg0IAHcNCAB4DQgAeQ0IAHoNCAB7DQgAfA0IAH0NCAB+DQgAfw0IAIANCACBDQgAgg0IAIMNCACEDQgAhQ0IAIYNCACHDQgAiA0IAIkNCACKDQgAiw0IAIwNCACNDQgAjg0IAI8NCACQDQgAkQ0IAJINCACTDQgAlA0IAJUNCACWDQgAlw0IAJgNCACZDQgAmg0IAJsNCACcDQgAnQ0IAJ4NCACfDQgAoA0IAKENCACiDQgAow0IAKQNCAClDQgApg0IAKcNCACoDQgAqQ0IAKoNCACrDQgArA0IAK0NCACuDQgArw0IALANCACxDQgAsg0IALMNCAC0DQgAtQ0IALYNCAC3DQgAuA0IALkNCAC6DQgAuw0IALwNCAC9DQgAvg0IAL8NCADADQgAwQ0IAMINCADDDQgAxA0IAMUNCADGDQgAxw0IAMgNCADJDQgAyg0IAMsNCADMDQgAzQ0IAM4NCADPDQgA0A0IANENCADSDQgA0w0IANQNCADVDQgA1g0IANcNCADYDQgA2Q0IANoNCADbDQgA3A0IAN0NCADeDQgA3w0IAOANCADhDQgA4g0IAOMNCADkDQgA5Q0IAOYNCADnDQgA6A0IAOkNCADqDQgA6w0IAOwNCADtDQgA7g0IAO8NCADwDQgA8Q0IAPINCADzDQgA9A0IAPUNCAD2DQgA9w0IAPgNCAD5DQgA+g0IAPsNCAD8DQgA/Q0IAP4NCAD/DQge8Q8EAQIODQgIAAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgADw0IABANCAARDQgAEg0IABMNCAAUDQgAFQ0IABYNCAAXDQgAGA0IABkNCAAaDQgAGw0IABwNCAAdDQgAHg0IAB8NCAAgDQgAIQ0IACINCAAjDQgAJA0IACUNCAAmDQgAJw0IACgNCAApDQgAKg0IACsNCAAsDQgALQ0IAC4NCAAvDQgAMA0IADENCAAyDQgAMw0IADQNCAA1DQgANg0IADcNCAA4DQgAOQ0IADoNCAA7DQgAPA0IAD0NCAA+DQgAPw0IAEANCABBDQgAQg0IAEMNCABEDQgARQ0IAEYNCABHDQgASA0IAEkNCABKDQgASw0IAEwNCABNDQgATg0IAE8NCABQDQgAUQ0IAFINCABTDQgAVA0IAFUNCABWDQgAVw0IAFgNCABZDQgAWg0IAFsNCABcDQgAXQ0IAF4NCABfDQgAYA0IAGENCABiDQgAYw0IAGQNCABlDQgAZg0IAGcNCABoDQgAaQ0IAGoNCABrDQgAbA0IAG0NCABuDQgAbw0IAHANCABxDQgAcg0IAHMNCAB0DQgAdQ0IAHYNCAB3DQgAeA0IAHkNCAB6DQgAew0IAHwNCAB9DQgAfg0IAH8NCACADQgAgQ0IAIINCACDDQgAhA0IAIUNCACGDQgAhw0IAIgNCACJDQgAig0IAIsNCACMDQgAjQ0IAI4NCACPDQgAkA0IAJENCACSDQgAkw0IAJQNCACVDQgAlg0IAJcNCACYDQgAmQ0IAJoNCACbDQgAnA0IAJ0NCACeDQgAnw0IAKANCAChDQgAog0IAKMNCACkDQgApQ0IAKYNCACnDQgAqA0IAKkNCACqDQgAqw0IAKwNCACtDQgArg0IAK8NCACwDQgAsQ0IALINCACzDQgAtA0IALUNCAC2DQgAtw0IALgNCAC5DQgAug0IALsNCAC8DQgAvQ0IAL4NCAC/DQgAwA0IAMENCADCDQgAww0IAMQNCADFDQgAxg0IAMcNCADIDQgAyQ0IAMoNCADLDQgAzA0IAM0NCADODQgAzw0IANANCADRDQgA0g0IANMNCADUDQgA1Q0IANYNCADXDQgA2A0IANkNCADaDQgA2w0IANwNCADdDQgA3g0IAN8NCADgDQgA4Q0IAOINCADjDQgA5A0IAOUNCADmDQgA5w0IAOgNCADpDQgA6g0IAOsNCADsDQgA7Q0IAO4NCADvDQgA8A0IAPENCADyDQgA8w0IAPQNCAD1DQgA9g0IAPcNCAD4DQgA+Q0IAPoNCAD7DQgA/A0IAP0NCAD+DQgA/w0IHukXAAEa8RcAAg0IAAMNCAAEDQgABQ0IAAYNCAAHDQgACA0IAAkNCAAKDQgACw0IAAwNCAANDQgADg0IAA8NCAAQDQgAEQ0IABINCAATDQgAFA0IABUNCAAWDQgAFw0IABgNCAAZDQgAGg0IABsNCAAcDQgAHQ0IAB4NCAAfDQgAIA0IACENCAAiDQgAIw0IACQNCAAlDQgAJg0IACcNCAAoDQgAKQ0IACoNCAArDQgALA0IAC0NCAAuDQgALw0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABADQgAQQ0IAEINCABDDQgARA0IAEUNCABGDQgARw0IAEgNCABJDQgASg0IAEsNCABMDQgATQ0IAE4NCABPDQgAUA0IAFENCABSDQgAUw0IAFQNCABVDQgAVg0IAFcNCABYDQgAWQ0IAFoNCABbDQgAXA0IAF0NCABeDQgAXw0IAGANCABhDQgAYg0IAGMNCABkDQgAZQ0IAGYNCABnDQgAaA0IAGkNCABqDQgAaw0IAGwNCABtDQgAbg0IAG8NCABwDQgAcQ0IAHINCABzDQgAdA0IAHUNCAB2DQgAdw0IAHgNCAB5DQgAeg0IAHsNCAB8DQgAfQ0IAH4NCAB/DQgAgA0IAIENCACCDQgAgw0IAIQNCACFDQgAhg0IAIcNCACIDQgAiQ0IAIoNCACLDQgAjA0IAI0NCACODQgAjw0IAJANCACRDQgAkg0IAJMNCACUDQgAlQ0IAJYNCACXDQgAmA0IAJkNCACaDQgAmw0IAJwNCACdDQgAng0IAJ8NCACgDQgAoQ0IAKINCACjDQgApA0IAKUNCACmDQgApw0IAKgNCACpDQgAqg0IAKsNCACsDQgArQ0IAK4NCACvDQgAsA0IALENCACyDQgAsw0IALQNCAC1DQgAtg0IALcNCAC4DQgAuQ0IALoNCAC7DQgAvA0IAL0NCAC+DQgAvw0IAMANCADBDQgAwg0IAMMNCADEDQgAxQ0IAMYNCADHDQgAyA0IAMkNCADKDQgAyw0IAMwNCADNDQgAzg0IAM8NCADQDQgA0Q0IANINCADTDQgA1A0IANUNCADWDQgA1w0IANgNCADZDQgA2g0IANsNCADcDQgA3Q0IAN4NCADfDQgA4A0IAOENCADiDQgA4w0IAOQNCADlDQg85gMAAAAAAADnAwAAAAAAABUAFeJrFeA+LBXQDxUAFQYVBgAA8TUsAwAAANAPAQEAAAAwAQUAMQEFADIBBQAzAQUANAEFADUBBQA2AQUANwEFADgBBRg5AgAAADEwBQYAMQUGADIFBgAzBQYANAUGADUFBgA2BQYANwUGADgFBgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwANAU8ADQFPAA0BTwANAU8ADQFPAA0BTwANAU8ADQFPAA0BTwANAU8ADUFPAA1BTwANQU8ADUFPAA1BTwANQU8ADUFPAA1BTwANQU8ADUFPAA2BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAQ5OUFVCDEwMAkHADEJBwAyCQcAMwkHADQJBwA1CQcANgkHADcJBwA4CQcJRgAxCUYAMQlGADEJRgAxCUYAMQlGADEJRgAxCUYAMQlGADEJRgAxCUYAMglGADIJRgAyCUYAMglGADIJRgAyCUYAMglGADIJRgAyCUYAMglGADMJRgAzCUYAMwlGADMJRgAzCUYAMwlGADMJRgAzCUYAMwlGADMJRgA0CUYANAlGADQJRgA0CUYANAlGADQJRgA0CUYANAlGADQJRgA0CUYANQlGADUJRgA1CUYANQlGADUJRgA1CUYANQlGADUJRgA1CUYANQlGADYJRgA2CUYANglGADYJRgA2CUYANglGADYJRgA2CUYANglGADYJRgA3CUYANwlGADcJRgA3CUYANwlGADcJRgA3CUYANwlGADcJRgA3CUYAOAlGADgJRgA4CUYAOAlGADgJRgA4CUYAOAlGADgJRgA4CUYAOAlGADkJRgA5CUYAOQlGADkJRgA5CUYAOQlGADkJRgA5CUYAOQlGSbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAQzMWWOADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8JDk5OAMAAAA5OTkVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVBCUCGANjb2wlJAAVDCUCGAdzdHJfY29sJQAAFtAPGRwZLCYAHBUEGRUAGRgDY29sFQIW0A8Wtn0W6EomCDwYCOcDAAAAAAAAGAgAAAAAAAAAABYAKAjnAwAAAAAAABgIAAAAAAAAAAAREQAAACYAHBUMGRUAGRgHc3RyX2NvbBUCFtAPFopsFog/JvBKPBgDOTk5GAEwFgAoAzk5ORgBMBERAAAAFsDpARbQDyYIFvCJAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZLBwAABwAAAD/AAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "PREDICATE_PUSHDOWN": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d9b302195ff53fd213487092fe75b249e97fdb7fe947a218ca6af055e3abc5c8\n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AAD/AQUBAe35AAENCAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgeeggAEA0QABENCAASDQgAEw0IABQNCAAVDQgAFg0IABcNCAAYDQgAGQ0IABoNCAAbDQgAHA0IAB0NCAAeDQgAHw0IACANCAAhDQgAIg0IACMNCAAkDQgAJQ0IACYNCAAnDQgAKA0IACkNCAAqDQgAKw0IACwNCAAtDQgALg0IAC8NCAAwDQgAMQ0IADINCAAzDQgANA0IADUNCAA2DQgANw0IADgNCAA5DQgAOg0IADsNCAA8DQgAPQ0IAD4NCAA/DQgAQA0IAEENCABCDQgAQw0IAEQNCABFDQgARg0IAEcNCABIDQgASQ0IAEoNCABLDQgATA0IAE0NCABODQgATw0IAFANCABRDQgAUg0IAFMNCABUDQgAVQ0IAFYNCABXDQgAWA0IAFkNCABaDQgAWw0IAFwNCABdDQgAXg0IAF8NCABgDQgAYQ0IAGINCABjDQgAZA0IAGUNCABmDQgAZw0IAGgNCABpDQgAag0IAGsNCABsDQgAbQ0IAG4NCABvDQgAcA0IAHENCAByDQgAcw0IAHQNCAB1DQgAdg0IAHcNCAB4DQgAeQ0IAHoNCAB7DQgAfA0IAH0NCAB+DQgAfw0IAIANCACBDQgAgg0IAIMNCACEDQgAhQ0IAIYNCACHDQgAiA0IAIkNCACKDQgAiw0IAIwNCACNDQgAjg0IAI8NCACQDQgAkQ0IAJINCACTDQgAlA0IAJUNCACWDQgAlw0IAJgNCACZDQgAmg0IAJsNCACcDQgAnQ0IAJ4NCACfDQgAoA0IAKENCACiDQgAow0IAKQNCAClDQgApg0IAKcNCACoDQgAqQ0IAKoNCACrDQgArA0IAK0NCACuDQgArw0IALANCACxDQgAsg0IALMNCAC0DQgAtQ0IALYNCAC3DQgAuA0IALkNCAC6DQgAuw0IALwNCAC9DQgAvg0IAL8NCADADQgAwQ0IAMINCADDDQgAxA0IAMUNCADGDQgAxw0IAMgNCADJDQgAyg0IAMsNCADMDQgAzQ0IAM4NCADPDQgA0A0IANENCADSDQgA0w0IANQNCADVDQgA1g0IANcNCADYDQgA2Q0IANoNCADbDQgA3A0IAN0NCADeDQgA3w0IAOANCADhDQgA4g0IAOMNCADkDQgA5Q0IAOYNCADnDQgA6A0IAOkNCADqDQgA6w0IAOwNCADtDQgA7g0IAO8NCADwDQgA8Q0IAPINCADzDQgA9A0IAPUNCAD2DQgA9w0IAPgNCAD5DQgA+g0IAPsNCAD8DQgA/Q0IAP4NCAD/DQge8Q8EAQIODQgIAAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgADw0IABANCAARDQgAEg0IABMNCAAUDQgAFQ0IABYNCAAXDQgAGA0IABkNCAAaDQgAGw0IABwNCAAdDQgAHg0IAB8NCAAgDQgAIQ0IACINCAAjDQgAJA0IACUNCAAmDQgAJw0IACgNCAApDQgAKg0IACsNCAAsDQgALQ0IAC4NCAAvDQgAMA0IADENCAAyDQgAMw0IADQNCAA1DQgANg0IADcNCAA4DQgAOQ0IADoNCAA7DQgAPA0IAD0NCAA+DQgAPw0IAEANCABBDQgAQg0IAEMNCABEDQgARQ0IAEYNCABHDQgASA0IAEkNCABKDQgASw0IAEwNCABNDQgATg0IAE8NCABQDQgAUQ0IAFINCABTDQgAVA0IAFUNCABWDQgAVw0IAFgNCABZDQgAWg0IAFsNCABcDQgAXQ0IAF4NCABfDQgAYA0IAGENCABiDQgAYw0IAGQNCABlDQgAZg0IAGcNCABoDQgAaQ0IAGoNCABrDQgAbA0IAG0NCABuDQgAbw0IAHANCABxDQgAcg0IAHMNCAB0DQgAdQ0IAHYNCAB3DQgAeA0IAHkNCAB6DQgAew0IAHwNCAB9DQgAfg0IAH8NCACADQgAgQ0IAIINCACDDQgAhA0IAIUNCACGDQgAhw0IAIgNCACJDQgAig0IAIsNCACMDQgAjQ0IAI4NCACPDQgAkA0IAJENCACSDQgAkw0IAJQNCACVDQgAlg0IAJcNCACYDQgAmQ0IAJoNCACbDQgAnA0IAJ0NCACeDQgAnw0IAKANCAChDQgAog0IAKMNCACkDQgApQ0IAKYNCACnDQgAqA0IAKkNCACqDQgAqw0IAKwNCACtDQgArg0IAK8NCACwDQgAsQ0IALINCACzDQgAtA0IALUNCAC2DQgAtw0IALgNCAC5DQgAug0IALsNCAC8DQgAvQ0IAL4NCAC/DQgAwA0IAMENCADCDQgAww0IAMQNCADFDQgAxg0IAMcNCADIDQgAyQ0IAMoNCADLDQgAzA0IAM0NCADODQgAzw0IANANCADRDQgA0g0IANMNCADUDQgA1Q0IANYNCADXDQgA2A0IANkNCADaDQgA2w0IANwNCADdDQgA3g0IAN8NCADgDQgA4Q0IAOINCADjDQgA5A0IAOUNCADmDQgA5w0IAOgNCADpDQgA6g0IAOsNCADsDQgA7Q0IAO4NCADvDQgA8A0IAPENCADyDQgA8w0IAPQNCAD1DQgA9g0IAPcNCAD4DQgA+Q0IAPoNCAD7DQgA/A0IAP0NCAD+DQgA/w0IHukXAAEa8RcAAg0IAAMNCAAEDQgABQ0IAAYNCAAHDQgACA0IAAkNCAAKDQgACw0IAAwNCAANDQgADg0IAA8NCAAQDQgAEQ0IABINCAATDQgAFA0IABUNCAAWDQgAFw0IABgNCAAZDQgAGg0IABsNCAAcDQgAHQ0IAB4NCAAfDQgAIA0IACENCAAiDQgAIw0IACQNCAAlDQgAJg0IACcNCAAoDQgAKQ0IACoNCAArDQgALA0IAC0NCAAuDQgALw0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABADQgAQQ0IAEINCABDDQgARA0IAEUNCABGDQgARw0IAEgNCABJDQgASg0IAEsNCABMDQgATQ0IAE4NCABPDQgAUA0IAFENCABSDQgAUw0IAFQNCABVDQgAVg0IAFcNCABYDQgAWQ0IAFoNCABbDQgAXA0IAF0NCABeDQgAXw0IAGANCABhDQgAYg0IAGMNCABkDQgAZQ0IAGYNCABnDQgAaA0IAGkNCABqDQgAaw0IAGwNCABtDQgAbg0IAG8NCABwDQgAcQ0IAHINCABzDQgAdA0IAHUNCAB2DQgAdw0IAHgNCAB5DQgAeg0IAHsNCAB8DQgAfQ0IAH4NCAB/DQgAgA0IAIENCACCDQgAgw0IAIQNCACFDQgAhg0IAIcNCACIDQgAiQ0IAIoNCACLDQgAjA0IAI0NCACODQgAjw0IAJANCACRDQgAkg0IAJMNCACUDQgAlQ0IAJYNCACXDQgAmA0IAJkNCACaDQgAmw0IAJwNCACdDQgAng0IAJ8NCACgDQgAoQ0IAKINCACjDQgApA0IAKUNCACmDQgApw0IAKgNCACpDQgAqg0IAKsNCACsDQgArQ0IAK4NCACvDQgAsA0IALENCACyDQgAsw0IALQNCAC1DQgAtg0IALcNCAC4DQgAuQ0IALoNCAC7DQgAvA0IAL0NCAC+DQgAvw0IAMANCADBDQgAwg0IAMMNCADEDQgAxQ0IAMYNCADHDQgAyA0IAMkNCADKDQgAyw0IAMwNCADNDQgAzg0IAM8NCADQDQgA0Q0IANINCADTDQgA1A0IANUNCADWDQgA1w0IANgNCADZDQgA2g0IANsNCADcDQgA3Q0IAN4NCADfDQgA4A0IAOENCADiDQgA4w0IAOQNCADlDQg85gMAAAAAAADnAwAAAAAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYA2NvbCUkABbQDxkcGRwmABwVBBkVABkYA2NvbBUCFtAPFrZ9FuhKJgg8GAjnAwAAAAAAABgIAAAAAAAAAAAWACgI5wMAAAAAAAAYCAAAAAAAAAAAEREAAAAWtn0W0A8mCBboSgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACyAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "PROJECTION_PUSHDOWN": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ec658494c56977b88e2fe1be482d867b458ea91767be30792a20ac854b33a3fa\n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AAD/AQUBAe35AAENCAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgeeggAEA0QABENCAASDQgAEw0IABQNCAAVDQgAFg0IABcNCAAYDQgAGQ0IABoNCAAbDQgAHA0IAB0NCAAeDQgAHw0IACANCAAhDQgAIg0IACMNCAAkDQgAJQ0IACYNCAAnDQgAKA0IACkNCAAqDQgAKw0IACwNCAAtDQgALg0IAC8NCAAwDQgAMQ0IADINCAAzDQgANA0IADUNCAA2DQgANw0IADgNCAA5DQgAOg0IADsNCAA8DQgAPQ0IAD4NCAA/DQgAQA0IAEENCABCDQgAQw0IAEQNCABFDQgARg0IAEcNCABIDQgASQ0IAEoNCABLDQgATA0IAE0NCABODQgATw0IAFANCABRDQgAUg0IAFMNCABUDQgAVQ0IAFYNCABXDQgAWA0IAFkNCABaDQgAWw0IAFwNCABdDQgAXg0IAF8NCABgDQgAYQ0IAGINCABjDQgAZA0IAGUNCABmDQgAZw0IAGgNCABpDQgAag0IAGsNCABsDQgAbQ0IAG4NCABvDQgAcA0IAHENCAByDQgAcw0IAHQNCAB1DQgAdg0IAHcNCAB4DQgAeQ0IAHoNCAB7DQgAfA0IAH0NCAB+DQgAfw0IAIANCACBDQgAgg0IAIMNCACEDQgAhQ0IAIYNCACHDQgAiA0IAIkNCACKDQgAiw0IAIwNCACNDQgAjg0IAI8NCACQDQgAkQ0IAJINCACTDQgAlA0IAJUNCACWDQgAlw0IAJgNCACZDQgAmg0IAJsNCACcDQgAnQ0IAJ4NCACfDQgAoA0IAKENCACiDQgAow0IAKQNCAClDQgApg0IAKcNCACoDQgAqQ0IAKoNCACrDQgArA0IAK0NCACuDQgArw0IALANCACxDQgAsg0IALMNCAC0DQgAtQ0IALYNCAC3DQgAuA0IALkNCAC6DQgAuw0IALwNCAC9DQgAvg0IAL8NCADADQgAwQ0IAMINCADDDQgAxA0IAMUNCADGDQgAxw0IAMgNCADJDQgAyg0IAMsNCADMDQgAzQ0IAM4NCADPDQgA0A0IANENCADSDQgA0w0IANQNCADVDQgA1g0IANcNCADYDQgA2Q0IANoNCADbDQgA3A0IAN0NCADeDQgA3w0IAOANCADhDQgA4g0IAOMNCADkDQgA5Q0IAOYNCADnDQgA6A0IAOkNCADqDQgA6w0IAOwNCADtDQgA7g0IAO8NCADwDQgA8Q0IAPINCADzDQgA9A0IAPUNCAD2DQgA9w0IAPgNCAD5DQgA+g0IAPsNCAD8DQgA/Q0IAP4NCAD/DQge8Q8EAQIODQgIAAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgADw0IABANCAARDQgAEg0IABMNCAAUDQgAFQ0IABYNCAAXDQgAGA0IABkNCAAaDQgAGw0IABwNCAAdDQgAHg0IAB8NCAAgDQgAIQ0IACINCAAjDQgAJA0IACUNCAAmDQgAJw0IACgNCAApDQgAKg0IACsNCAAsDQgALQ0IAC4NCAAvDQgAMA0IADENCAAyDQgAMw0IADQNCAA1DQgANg0IADcNCAA4DQgAOQ0IADoNCAA7DQgAPA0IAD0NCAA+DQgAPw0IAEANCABBDQgAQg0IAEMNCABEDQgARQ0IAEYNCABHDQgASA0IAEkNCABKDQgASw0IAEwNCABNDQgATg0IAE8NCABQDQgAUQ0IAFINCABTDQgAVA0IAFUNCABWDQgAVw0IAFgNCABZDQgAWg0IAFsNCABcDQgAXQ0IAF4NCABfDQgAYA0IAGENCABiDQgAYw0IAGQNCABlDQgAZg0IAGcNCABoDQgAaQ0IAGoNCABrDQgAbA0IAG0NCABuDQgAbw0IAHANCABxDQgAcg0IAHMNCAB0DQgAdQ0IAHYNCAB3DQgAeA0IAHkNCAB6DQgAew0IAHwNCAB9DQgAfg0IAH8NCACADQgAgQ0IAIINCACDDQgAhA0IAIUNCACGDQgAhw0IAIgNCACJDQgAig0IAIsNCACMDQgAjQ0IAI4NCACPDQgAkA0IAJENCACSDQgAkw0IAJQNCACVDQgAlg0IAJcNCACYDQgAmQ0IAJoNCACbDQgAnA0IAJ0NCACeDQgAnw0IAKANCAChDQgAog0IAKMNCACkDQgApQ0IAKYNCACnDQgAqA0IAKkNCACqDQgAqw0IAKwNCACtDQgArg0IAK8NCACwDQgAsQ0IALINCACzDQgAtA0IALUNCAC2DQgAtw0IALgNCAC5DQgAug0IALsNCAC8DQgAvQ0IAL4NCAC/DQgAwA0IAMENCADCDQgAww0IAMQNCADFDQgAxg0IAMcNCADIDQgAyQ0IAMoNCADLDQgAzA0IAM0NCADODQgAzw0IANANCADRDQgA0g0IANMNCADUDQgA1Q0IANYNCADXDQgA2A0IANkNCADaDQgA2w0IANwNCADdDQgA3g0IAN8NCADgDQgA4Q0IAOINCADjDQgA5A0IAOUNCADmDQgA5w0IAOgNCADpDQgA6g0IAOsNCADsDQgA7Q0IAO4NCADvDQgA8A0IAPENCADyDQgA8w0IAPQNCAD1DQgA9g0IAPcNCAD4DQgA+Q0IAPoNCAD7DQgA/A0IAP0NCAD+DQgA/w0IHukXAAEa8RcAAg0IAAMNCAAEDQgABQ0IAAYNCAAHDQgACA0IAAkNCAAKDQgACw0IAAwNCAANDQgADg0IAA8NCAAQDQgAEQ0IABINCAATDQgAFA0IABUNCAAWDQgAFw0IABgNCAAZDQgAGg0IABsNCAAcDQgAHQ0IAB4NCAAfDQgAIA0IACENCAAiDQgAIw0IACQNCAAlDQgAJg0IACcNCAAoDQgAKQ0IACoNCAArDQgALA0IAC0NCAAuDQgALw0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABADQgAQQ0IAEINCABDDQgARA0IAEUNCABGDQgARw0IAEgNCABJDQgASg0IAEsNCABMDQgATQ0IAE4NCABPDQgAUA0IAFENCABSDQgAUw0IAFQNCABVDQgAVg0IAFcNCABYDQgAWQ0IAFoNCABbDQgAXA0IAF0NCABeDQgAXw0IAGANCABhDQgAYg0IAGMNCABkDQgAZQ0IAGYNCABnDQgAaA0IAGkNCABqDQgAaw0IAGwNCABtDQgAbg0IAG8NCABwDQgAcQ0IAHINCABzDQgAdA0IAHUNCAB2DQgAdw0IAHgNCAB5DQgAeg0IAHsNCAB8DQgAfQ0IAH4NCAB/DQgAgA0IAIENCACCDQgAgw0IAIQNCACFDQgAhg0IAIcNCACIDQgAiQ0IAIoNCACLDQgAjA0IAI0NCACODQgAjw0IAJANCACRDQgAkg0IAJMNCACUDQgAlQ0IAJYNCACXDQgAmA0IAJkNCACaDQgAmw0IAJwNCACdDQgAng0IAJ8NCACgDQgAoQ0IAKINCACjDQgApA0IAKUNCACmDQgApw0IAKgNCACpDQgAqg0IAKsNCACsDQgArQ0IAK4NCACvDQgAsA0IALENCACyDQgAsw0IALQNCAC1DQgAtg0IALcNCAC4DQgAuQ0IALoNCAC7DQgAvA0IAL0NCAC+DQgAvw0IAMANCADBDQgAwg0IAMMNCADEDQgAxQ0IAMYNCADHDQgAyA0IAMkNCADKDQgAyw0IAMwNCADNDQgAzg0IAM8NCADQDQgA0Q0IANINCADTDQgA1A0IANUNCADWDQgA1w0IANgNCADZDQgA2g0IANsNCADcDQgA3Q0IAN4NCADfDQgA4A0IAOENCADiDQgA4w0IAOQNCADlDQg85gMAAAAAAADnAwAAAAAAABUAFeJrFeA+LBXQDxUAFQYVBgAA8TUsAwAAANAPAQEAAAAwAQUAMQEFADIBBQAzAQUANAEFADUBBQA2AQUANwEFADgBBRg5AgAAADEwBQYAMQUGADIFBgAzBQYANAUGADUFBgA2BQYANwUGADgFBgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAyBTwAMgU8ADIFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwAMwU8ADMFPAAzBTwANAU8ADQFPAA0BTwANAU8ADQFPAA0BTwANAU8ADQFPAA0BTwANAU8ADUFPAA1BTwANQU8ADUFPAA1BTwANQU8ADUFPAA1BTwANQU8ADUFPAA2BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwANgU8ADYFPAA2BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADcFPAA3BTwANwU8ADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA4BTwAOAU8ADgFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAA5BTwAOQU8ADkFPAQ5OUFVCDEwMAkHADEJBwAyCQcAMwkHADQJBwA1CQcANgkHADcJBwA4CQcJRgAxCUYAMQlGADEJRgAxCUYAMQlGADEJRgAxCUYAMQlGADEJRgAxCUYAMglGADIJRgAyCUYAMglGADIJRgAyCUYAMglGADIJRgAyCUYAMglGADMJRgAzCUYAMwlGADMJRgAzCUYAMwlGADMJRgAzCUYAMwlGADMJRgA0CUYANAlGADQJRgA0CUYANAlGADQJRgA0CUYANAlGADQJRgA0CUYANQlGADUJRgA1CUYANQlGADUJRgA1CUYANQlGADUJRgA1CUYANQlGADYJRgA2CUYANglGADYJRgA2CUYANglGADYJRgA2CUYANglGADYJRgA3CUYANwlGADcJRgA3CUYANwlGADcJRgA3CUYANwlGADcJRgA3CUYAOAlGADgJRgA4CUYAOAlGADgJRgA4CUYAOAlGADgJRgA4CUYAOAlGADkJRgA5CUYAOQlGADkJRgA5CUYAOQlGADkJRgA5CUYAOQlGSbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADJJvAAySbwAMkm8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAQzMWWOADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwAM0m8ADNJvAAzSbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADRJvAA0SbwANEm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA1SbwANUm8ADVJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwANkm8ADZJvAA2SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADdJvAA3SbwAN0m8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA4SbwAOEm8ADhJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8ADlJvAA5SbwAOUm8JDk5OAMAAAA5OTkVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVBCUCGANjb2wlJAAVDCUCGAdzdHJfY29sJQAAFtAPGRwZLCYAHBUEGRUAGRgDY29sFQIW0A8Wtn0W6EomCDwYCOcDAAAAAAAAGAgAAAAAAAAAABYAKAjnAwAAAAAAABgIAAAAAAAAAAAREQAAACYAHBUMGRUAGRgHc3RyX2NvbBUCFtAPFopsFog/JvBKPBgDOTk5GAEwFgAoAzk5ORgBMBERAAAAFsDpARbQDyYIFvCJAQAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZLBwAABwAAAD/AAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SCHEMA_EVOLUTION": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:95691ac267837b9bb25d4a6872778167a57a66d58445c1ac4d94535dbbf1e303\nUEFSMRUAFRQVGCwVAhUAFQYVBgAACiQCAAAAAgEBAAAAFQAVFBUYLBUCFQAVBhUGAAAKJAIAAAACAQIAAAAVAhk8NQAYDWR1Y2tkYl9zY2hlbWEVBAAVAiUCGAFhJSIAFQIlAhgBYiUiABYCGRwZLCYAHBUCGRUAGRgBYRUCFgIWNhY6Jgg8GAQBAAAAGAQBAAAAFgAoBAEAAAAYBAEAAAAREQAAACYAHBUCGRUAGRgBYhUCFgIWNhY6JkI8GAQCAAAAGAQCAAAAFgAoBAIAAAAYBAIAAAAREQAAABZsFgImCBZ0ACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRksHAAAHAAAANoAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SIZE_STATISTICS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d9b302195ff53fd213487092fe75b249e97fdb7fe947a218ca6af055e3abc5c8\nUEFSMRUAFY59FcBKLBXQDxUAFQYVBgAAxz4cAwAAANAPAQANAREJAAINEAEfAQEABAEFDAAAAAUBBQwAAAAGAQUMAAAABwEFDAAAAAgBBQwAAAAJAQUMAAAACgEFDAAAAAsBBQwAAAAMAQUMAAAADQEFDAAAAA4BBQwAAAAPAQUMAAAAEAEFDAAAABEBBQwAAAASAQUMAAAAEwEFDAAAABQBBQwAAAAVAQUMAAAAFgEFDAAAABcBBQwAAAAYAQUMAAAAGQEFDAAAABoBBQwAAAAbAQUMAAAAHAEFDAAAAB0BBQwAAAAeAQUMAAAAHwEFDAAAACABBQwAAAAhAQUMAAAAIgEFDAAAACMBBQwAAAAkAQUMAAAAJQEFDAAAACYBBQwAAAAnAQUMAAAAKAEFDAAAACkBBQwAAAAqAQUMAAAAKwEFDAAAACwBBQwAAAAtAQUMAAAALgEFDAAAAC8BBQwAAAAwAQUMAAAAMQEFDAAAADIBBQwAAAAzAQUMAAAANAEFDAAAADUBBQwAAAA2AQUMAAAANwEFDAAAADgBBQwAAAA5AQUMAAAAOgEFDAAAADsBBQwAAAA8AQUMAAAAPQEFDAAAAD4BBQwAAAA/AQUMAAAAQAEFDAAAAEEBBQwAAABCAQUMAAAAQwEFDAAAAEQBBQwAAABFAQUMAAAARgEFDAAAAEcBBQwAAABIAQUMAAAASQEFDAAAAEoBBQwAAABLAQUMAAAATAEFDAAAAE0BBQwAAABOAQUMAAAATwEFDAAAAFABBQwAAABRAQUMAAAAUgEFDAAAAFMBBQwAAABUAQUMAAAAVQEFDAAAAFYBBQwAAABXAQUMAAAAWAEFDAAAAFkBBQwAAABaAQUMAAAAWwEFDAAAAFwBBQwAAABdAQUMAAAAXgEFDAAAAF8BBQwAAABgAQUMAAAAYQEFDAAAAGIBBQwAAABjAQUMAAAAZAEFDAAAAGUBBQwAAABmAQUMAAAAZwEFDAAAAGgBBQwAAABpAQUMAAAAagEFDAAAAGsBBQwAAABsAQUMAAAAbQEFDAAAAG4BBQwAAABvAQUMAAAAcAEFDAAAAHEBBQwAAAByAQUMAAAAcwEFDAAAAHQBBQwAAAB1AQUMAAAAdgEFDAAAAHcBBQwAAAB4AQUMAAAAeQEFDAAAAHoBBQwAAAB7AQUMAAAAfAEFDAAAAH0BBQwAAAB+AQUMAAAAfwEFDAAAAIABBQwAAACBAQUMAAAAggEFDAAAAIMBBQwAAACEAQUMAAAAhQEFDAAAAIYBBQwAAACHAQUMAAAAiAEFDAAAAIkBBQwAAACKAQUMAAAAiwEFDAAAAIwBBQwAAACNAQUMAAAAjgEFDAAAAI8BBQwAAACQAQUMAAAAkQEFDAAAAJIBBQwAAACTAQUMAAAAlAEFDAAAAJUBBQwAAACWAQUMAAAAlwEFDAAAAJgBBQwAAACZAQUMAAAAmgEFDAAAAJsBBQwAAACcAQUMAAAAnQEFDAAAAJ4BBQwAAACfAQUMAAAAoAEFDAAAAKEBBQwAAACiAQUMAAAAowEFDAAAAKQBBQwAAAClAQUMAAAApgEFDAAAAKcBBQwAAACoAQUMAAAAqQEFDAAAAKoBBQwAAACrAQUMAAAArAEFDAAAAK0BBQwAAACuAQUMAAAArwEFDAAAALABBQwAAACxAQUMAAAAsgEFDAAAALMBBQwAAAC0AQUMAAAAtQEFDAAAALYBBQwAAAC3AQUMAAAAuAEFDAAAALkBBQwAAAC6AQUMAAAAuwEFDAAAALwBBQwAAAC9AQUMAAAAvgEFDAAAAL8BBQwAAADAAQUMAAAAwQEFDAAAAMIBBQwAAADDAQUMAAAAxAEFDAAAAMUBBQwAAADGAQUMAAAAxwEFDAAAAMgBBQwAAADJAQUMAAAAygEFDAAAAMsBBQwAAADMAQUMAAAAzQEFDAAAAM4BBQwAAADPAQXBgwEFDAAAANEBBQwAAADSAQUMAAAA0wEFDAAAANQBBQwAAADVAQUMAAAA1gEFDAAAANcBBQwAAADYAQUMAAAA2QEFDAAAANoBBQwAAADbAQUMAAAA3AEFDAAAAN0BBQwAAADeAQUMAAAA3wEFDAAAAOABBQwAAADhAQUMAAAA4gEFDAAAAOMBBQwAAADkAQUMAAAA5QEFDAAAAOYBBQwAAADnAQUMAAAA6AEFDAAAAOkBBQwAAADqAQUMAAAA6wEFDAAAAOwBBQwAAADtAQUMAAAA7gEFDAAAAO8BBQwAAADwAQUMAAAA8QEFDAAAAPIBBQwAAADzAQUMAAAA9AEFDAAAAPUBBQwAAAD2AQUMAAAA9wEFDAAAAPgBBQwAAAD5AQUMAAAA+gEFDAAAAPsBBQwAAAD8AQUMAAAA/QEFDAAAAP4BBQwAAAD/AQUBAe35AAENCAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgeeggAEA0QABENCAASDQgAEw0IABQNCAAVDQgAFg0IABcNCAAYDQgAGQ0IABoNCAAbDQgAHA0IAB0NCAAeDQgAHw0IACANCAAhDQgAIg0IACMNCAAkDQgAJQ0IACYNCAAnDQgAKA0IACkNCAAqDQgAKw0IACwNCAAtDQgALg0IAC8NCAAwDQgAMQ0IADINCAAzDQgANA0IADUNCAA2DQgANw0IADgNCAA5DQgAOg0IADsNCAA8DQgAPQ0IAD4NCAA/DQgAQA0IAEENCABCDQgAQw0IAEQNCABFDQgARg0IAEcNCABIDQgASQ0IAEoNCABLDQgATA0IAE0NCABODQgATw0IAFANCABRDQgAUg0IAFMNCABUDQgAVQ0IAFYNCABXDQgAWA0IAFkNCABaDQgAWw0IAFwNCABdDQgAXg0IAF8NCABgDQgAYQ0IAGINCABjDQgAZA0IAGUNCABmDQgAZw0IAGgNCABpDQgAag0IAGsNCABsDQgAbQ0IAG4NCABvDQgAcA0IAHENCAByDQgAcw0IAHQNCAB1DQgAdg0IAHcNCAB4DQgAeQ0IAHoNCAB7DQgAfA0IAH0NCAB+DQgAfw0IAIANCACBDQgAgg0IAIMNCACEDQgAhQ0IAIYNCACHDQgAiA0IAIkNCACKDQgAiw0IAIwNCACNDQgAjg0IAI8NCACQDQgAkQ0IAJINCACTDQgAlA0IAJUNCACWDQgAlw0IAJgNCACZDQgAmg0IAJsNCACcDQgAnQ0IAJ4NCACfDQgAoA0IAKENCACiDQgAow0IAKQNCAClDQgApg0IAKcNCACoDQgAqQ0IAKoNCACrDQgArA0IAK0NCACuDQgArw0IALANCACxDQgAsg0IALMNCAC0DQgAtQ0IALYNCAC3DQgAuA0IALkNCAC6DQgAuw0IALwNCAC9DQgAvg0IAL8NCADADQgAwQ0IAMINCADDDQgAxA0IAMUNCADGDQgAxw0IAMgNCADJDQgAyg0IAMsNCADMDQgAzQ0IAM4NCADPDQgA0A0IANENCADSDQgA0w0IANQNCADVDQgA1g0IANcNCADYDQgA2Q0IANoNCADbDQgA3A0IAN0NCADeDQgA3w0IAOANCADhDQgA4g0IAOMNCADkDQgA5Q0IAOYNCADnDQgA6A0IAOkNCADqDQgA6w0IAOwNCADtDQgA7g0IAO8NCADwDQgA8Q0IAPINCADzDQgA9A0IAPUNCAD2DQgA9w0IAPgNCAD5DQgA+g0IAPsNCAD8DQgA/Q0IAP4NCAD/DQge8Q8EAQIODQgIAAACDQgAAw0IAAQNCAAFDQgABg0IAAcNCAAIDQgACQ0IAAoNCAALDQgADA0IAA0NCAAODQgADw0IABANCAARDQgAEg0IABMNCAAUDQgAFQ0IABYNCAAXDQgAGA0IABkNCAAaDQgAGw0IABwNCAAdDQgAHg0IAB8NCAAgDQgAIQ0IACINCAAjDQgAJA0IACUNCAAmDQgAJw0IACgNCAApDQgAKg0IACsNCAAsDQgALQ0IAC4NCAAvDQgAMA0IADENCAAyDQgAMw0IADQNCAA1DQgANg0IADcNCAA4DQgAOQ0IADoNCAA7DQgAPA0IAD0NCAA+DQgAPw0IAEANCABBDQgAQg0IAEMNCABEDQgARQ0IAEYNCABHDQgASA0IAEkNCABKDQgASw0IAEwNCABNDQgATg0IAE8NCABQDQgAUQ0IAFINCABTDQgAVA0IAFUNCABWDQgAVw0IAFgNCABZDQgAWg0IAFsNCABcDQgAXQ0IAF4NCABfDQgAYA0IAGENCABiDQgAYw0IAGQNCABlDQgAZg0IAGcNCABoDQgAaQ0IAGoNCABrDQgAbA0IAG0NCABuDQgAbw0IAHANCABxDQgAcg0IAHMNCAB0DQgAdQ0IAHYNCAB3DQgAeA0IAHkNCAB6DQgAew0IAHwNCAB9DQgAfg0IAH8NCACADQgAgQ0IAIINCACDDQgAhA0IAIUNCACGDQgAhw0IAIgNCACJDQgAig0IAIsNCACMDQgAjQ0IAI4NCACPDQgAkA0IAJENCACSDQgAkw0IAJQNCACVDQgAlg0IAJcNCACYDQgAmQ0IAJoNCACbDQgAnA0IAJ0NCACeDQgAnw0IAKANCAChDQgAog0IAKMNCACkDQgApQ0IAKYNCACnDQgAqA0IAKkNCACqDQgAqw0IAKwNCACtDQgArg0IAK8NCACwDQgAsQ0IALINCACzDQgAtA0IALUNCAC2DQgAtw0IALgNCAC5DQgAug0IALsNCAC8DQgAvQ0IAL4NCAC/DQgAwA0IAMENCADCDQgAww0IAMQNCADFDQgAxg0IAMcNCADIDQgAyQ0IAMoNCADLDQgAzA0IAM0NCADODQgAzw0IANANCADRDQgA0g0IANMNCADUDQgA1Q0IANYNCADXDQgA2A0IANkNCADaDQgA2w0IANwNCADdDQgA3g0IAN8NCADgDQgA4Q0IAOINCADjDQgA5A0IAOUNCADmDQgA5w0IAOgNCADpDQgA6g0IAOsNCADsDQgA7Q0IAO4NCADvDQgA8A0IAPENCADyDQgA8w0IAPQNCAD1DQgA9g0IAPcNCAD4DQgA+Q0IAPoNCAD7DQgA/A0IAP0NCAD+DQgA/w0IHukXAAEa8RcAAg0IAAMNCAAEDQgABQ0IAAYNCAAHDQgACA0IAAkNCAAKDQgACw0IAAwNCAANDQgADg0IAA8NCAAQDQgAEQ0IABINCAATDQgAFA0IABUNCAAWDQgAFw0IABgNCAAZDQgAGg0IABsNCAAcDQgAHQ0IAB4NCAAfDQgAIA0IACENCAAiDQgAIw0IACQNCAAlDQgAJg0IACcNCAAoDQgAKQ0IACoNCAArDQgALA0IAC0NCAAuDQgALw0IADANCAAxDQgAMg0IADMNCAA0DQgANQ0IADYNCAA3DQgAOA0IADkNCAA6DQgAOw0IADwNCAA9DQgAPg0IAD8NCABADQgAQQ0IAEINCABDDQgARA0IAEUNCABGDQgARw0IAEgNCABJDQgASg0IAEsNCABMDQgATQ0IAE4NCABPDQgAUA0IAFENCABSDQgAUw0IAFQNCABVDQgAVg0IAFcNCABYDQgAWQ0IAFoNCABbDQgAXA0IAF0NCABeDQgAXw0IAGANCABhDQgAYg0IAGMNCABkDQgAZQ0IAGYNCABnDQgAaA0IAGkNCABqDQgAaw0IAGwNCABtDQgAbg0IAG8NCABwDQgAcQ0IAHINCABzDQgAdA0IAHUNCAB2DQgAdw0IAHgNCAB5DQgAeg0IAHsNCAB8DQgAfQ0IAH4NCAB/DQgAgA0IAIENCACCDQgAgw0IAIQNCACFDQgAhg0IAIcNCACIDQgAiQ0IAIoNCACLDQgAjA0IAI0NCACODQgAjw0IAJANCACRDQgAkg0IAJMNCACUDQgAlQ0IAJYNCACXDQgAmA0IAJkNCACaDQgAmw0IAJwNCACdDQgAng0IAJ8NCACgDQgAoQ0IAKINCACjDQgApA0IAKUNCACmDQgApw0IAKgNCACpDQgAqg0IAKsNCACsDQgArQ0IAK4NCACvDQgAsA0IALENCACyDQgAsw0IALQNCAC1DQgAtg0IALcNCAC4DQgAuQ0IALoNCAC7DQgAvA0IAL0NCAC+DQgAvw0IAMANCADBDQgAwg0IAMMNCADEDQgAxQ0IAMYNCADHDQgAyA0IAMkNCADKDQgAyw0IAMwNCADNDQgAzg0IAM8NCADQDQgA0Q0IANINCADTDQgA1A0IANUNCADWDQgA1w0IANgNCADZDQgA2g0IANsNCADcDQgA3Q0IAN4NCADfDQgA4A0IAOENCADiDQgA4w0IAOQNCADlDQg85gMAAAAAAADnAwAAAAAAABUCGSw1ABgNZHVja2RiX3NjaGVtYRUCABUEJQIYA2NvbCUkABbQDxkcGRwmABwVBBkVABkYA2NvbBUCFtAPFrZ9FuhKJgg8GAjnAwAAAAAAABgIAAAAAAAAAAAWACgI5wMAAAAAAAAYCAAAAAAAAAAAEREAAAAWtn0W0A8mCBboSgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAACyAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "PAGE_CRC32": {
       "write": false,

@@ -4,307 +4,379 @@
   "compression": {
     "NONE": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "SNAPPY": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "GZIP": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "BROTLI": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZO": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZ4": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZ4_RAW": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "ZSTD": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     }
   },
   "encoding": {
     "PLAIN": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "RLE_DICTIONARY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "RLE": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "BIT_PACKED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "DELTA_BINARY_PACKED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "BYTE_STREAM_SPLIT": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "BYTE_STREAM_SPLIT_EXTENDED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     }
   },
   "logical_types": {
     "STRING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:18faa9d381e64f0874d7159416912a6506370f3c6b8b5dfdf57759a3eec24223\nUEFSMRUGFRIVElwVAhUAFQIVABUAFQASHBgFaGVsbG8YBWhlbGxvFgAWAhgFaGVsbG8YBWhlbGxvAAAABQAAAGhlbGxvFQwZJQYAGRgBYxUAFgIWggEWggEmCDwYBWhlbGxvGAVoZWxsbxYAFgIYBWhlbGxvGAVoZWxsbwAAKRgFaGVsbG8ZGAVoZWxsbwAZHBYIFYIBFgAAABUCGSxIBHJvb3QVAgAVDCUAGAFjJQAAFgIZHBkcJooBHBUMGSUGABkYAWMVABYCFoIBFoIBJgg8GAVoZWxsbxgFaGVsbG8WABYCGAVoZWxsbxgFaGVsbG8AABaeAhUWFvwBFSIAFvQBFgIAGQwYD0Bkc25wL3BhcnF1ZXRqcwB/AAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "DATE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ea7693d54c87f395605987beef512bd1dbf568a58e11e7fc480d924e2a851b06\nUEFSMRUGFQgVCFwVAhUAFQIVABUAFQASHBgEC00AABgEC00AABYAFgIYBAtNAAAYBAtNAAAAAAALTQAAFQIZJQYAGRgBYxUAFgIWcBZwJgg8GAQLTQAAGAQLTQAAFgAWAhgEC00AABgEC00AAAAAKRgEC00AABkYBAtNAAAAGRwWCBVwFgAAABUCGSxIBHJvb3QVAgAVAiUAGAFjJQwAFgIZHBkcJngcFQIZJQYAGRgBYxUAFgIWcBZwJgg8GAQLTQAAGAQLTQAAFgAWAhgEC00AABgEC00AAAAAFvwBFRQW3gEVHgAW1gEWAgAZDBgPQGRzbnAvcGFycXVldGpzAHgAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_MILLIS": {
       "write": false,
@@ -320,11 +392,15 @@
     },
     "TIMESTAMP_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:1b317b14d5f38afe221a7ebf9f1254672790d02a7646e087b763a7a4aa94597a\nUEFSMRUGFRAVEFwVAhUAFQIVABUAFQASHBgIAPRRwowBAAAYCAD0UcKMAQAAFgAWAhgIAPRRwowBAAAYCAD0UcKMAQAAAAAAAPRRwowBAAAVBBklBgAZGAFjFQAWAhaYARaYASYIPBgIAPRRwowBAAAYCAD0UcKMAQAAFgAWAhgIAPRRwowBAAAYCAD0UcKMAQAAAAApGAgA9FHCjAEAABkYCAD0UcKMAQAAABkcFggVmAEWAAAAFQIZLEgEcm9vdBUCABUEJQAYAWMlEgAWAhkcGRwmoAEcFQQZJQYAGRgBYxUAFgIWmAEWmAEmCDwYCAD0UcKMAQAAGAgA9FHCjAEAABYAFgIYCAD0UcKMAQAAGAgA9FHCjAEAAAAAFtgCFRYWqgIVLgAWogIWAgAZDBgPQGRzbnAvcGFycXVldGpzAIsAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d4e3f73946ec90a406bf4d8ade67c160277b3edf0640052d5fe9badb88925c91\nUEFSMRUGFRAVEFwVAhUAFQIVABUAFQASHBgIACAhENcNBgAYCAAgIRDXDQYAFgAWAhgIACAhENcNBgAYCAAgIRDXDQYAAAAAACAhENcNBgAVBBklBgAZGAFjFQAWAhaYARaYASYIPBgIACAhENcNBgAYCAAgIRDXDQYAFgAWAhgIACAhENcNBgAYCAAgIRDXDQYAAAApGAgAICEQ1w0GABkYCAAgIRDXDQYAABkcFggVmAEWAAAAFQIZLEgEcm9vdBUCABUEJQAYAWMlFAAWAhkcGRwmoAEcFQQZJQYAGRgBYxUAFgIWmAEWmAEmCDwYCAAgIRDXDQYAGAgAICEQ1w0GABYAFgIYCAAgIRDXDQYAGAgAICEQ1w0GAAAAFtgCFRYWqgIVLgAWogIWAgAZDBgPQGRzbnAvcGFycXVldGpzAIsAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_NANOS": {
       "write": false,
@@ -344,7 +420,9 @@
     },
     "JSON": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:83c51b2f65fb36bc603fcc064c327a4d2fbdf2d813e80962a1a7bd743a6314c2\nUEFSMRUGFSIVIlwVAhUAFQIVABUAFQASHBgNeyJrZXkiOiJ2YWwifRgNeyJrZXkiOiJ2YWwifRYAFgIYDXsia2V5IjoidmFsIn0YDXsia2V5IjoidmFsIn0AAAANAAAAeyJrZXkiOiJ2YWwifRUMGSUGABkYAWMVABYCFtIBFtIBJgg8GA17ImtleSI6InZhbCJ9GA17ImtleSI6InZhbCJ9FgAWAhgNeyJrZXkiOiJ2YWwifRgNeyJrZXkiOiJ2YWwifQAAKRgNeyJrZXkiOiJ2YWwifRkYDXsia2V5IjoidmFsIn0AGRwWCBXSARYAAAAVAhksSARyb290FQIAFQwlABgBYyUAABYCGRwZHCbaARwVDBklBgAZGAFjFQAWAhbSARbSASYIPBgNeyJrZXkiOiJ2YWwifRgNeyJrZXkiOiJ2YWwifRYAFgIYDXsia2V5IjoidmFsIn0YDXsia2V5IjoidmFsIn0AABbOAxUWFowDFUIAFoQDFgIAGQwYD0Bkc25wL3BhcnF1ZXRqcwCfAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "FLOAT16": {
       "write": false,
@@ -408,11 +486,13 @@
   "advanced_features": {
     "STATISTICS": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "PAGE_INDEX": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "BLOOM_FILTER": {
       "write": false,
@@ -420,7 +500,8 @@
     },
     "DATA_PAGE_V2": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "COLUMN_ENCRYPTION": {
       "write": false,
@@ -428,7 +509,8 @@
     },
     "SIZE_STATISTICS": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "PAGE_CRC32": {
       "write": false,
@@ -440,7 +522,8 @@
     },
     "PROJECTION_PUSHDOWN": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "SCHEMA_EVOLUTION": {
       "write": false,

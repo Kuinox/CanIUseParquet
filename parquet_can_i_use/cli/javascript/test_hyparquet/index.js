@@ -171,7 +171,12 @@ async function main() {
       await writer.close();
       const { ok: readOk, log: readLog } = await testRead(path);
       const entry = { write: false, read: readOk };
-      if (readLog) entry.read_log = readLog;
+      if (readOk) {
+        const pl = readProofLog();
+        if (pl) entry.read_log = pl;
+      } else if (readLog) {
+        entry.read_log = readLog;
+      }
       results.compression[name] = entry;
     } catch (e) {
       results.compression[name] = { write: false, read: false, write_log: e?.stack || String(e) };
@@ -199,13 +204,18 @@ async function main() {
     basicPath = null;
     basicReadResult = { ok: false, log: e?.stack || String(e) };
   }
+  const basicReadProofLog = basicReadResult.ok ? readProofLog() : null;
 
   for (const enc of encodings) {
     results.encoding[enc] = {};
     for (const ptype of encodingTypes) {
       // hyparquet reads all standard encodings; report read based on basic file read
       const entry = { write: false, read: basicReadResult.ok };
-      if (basicReadResult.log) entry.read_log = basicReadResult.log;
+      if (basicReadResult.ok && basicReadProofLog) {
+        entry.read_log = basicReadProofLog;
+      } else if (basicReadResult.log) {
+        entry.read_log = basicReadResult.log;
+      }
       results.encoding[enc][ptype] = entry;
     }
   }
@@ -271,11 +281,15 @@ async function main() {
   // Test reading statistics, page index from a basic file
   // basicReadResult is already populated from the encoding section above
   const advReadOk = basicReadResult.ok;
-  const advReadLog = basicReadResult.log;
+  const advReadLog = basicReadResult.ok ? readProofLog() : basicReadResult.log;
 
   function advEntry(read) {
     const e = { write: false, read };
-    if (!read && advReadLog) e.read_log = advReadLog;
+    if (read && advReadLog) {
+      e.read_log = advReadLog;
+    } else if (!read && advReadLog) {
+      e.read_log = advReadLog;
+    }
     return e;
   }
 
