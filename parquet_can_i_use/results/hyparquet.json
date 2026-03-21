@@ -175,129 +175,123 @@
     "BIT_PACKED": {
       "INT32": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false
       },
       "INT64": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false
       },
       "FLOAT": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false
       },
       "DOUBLE": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false
       },
       "BOOLEAN": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false
       }
     },
     "DELTA_BINARY_PACKED": {
       "INT32": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BINARY_PACKED\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "INT64": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BINARY_PACKED\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "FLOAT": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BINARY_PACKED\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "DOUBLE": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BINARY_PACKED\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BINARY_PACKED\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BINARY_PACKED\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_LENGTH_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "INT64": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_LENGTH_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "FLOAT": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_LENGTH_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "DOUBLE": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_LENGTH_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_LENGTH_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_LENGTH_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       }
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "INT64": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "FLOAT": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "DOUBLE": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+        "read": false,
+        "read_log": "Error: parquet unsupported encoding: DELTA_BYTE_ARRAY\n    at readDataPage (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/datapage.js:53:11)\n    at readColumn (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/column.js:46:64)\n    at file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:157:24\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async Promise.all (index 0)\n    at async readRowGroup (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:189:3)\n    at async parquetRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/node_modules/hyparquet/src/read.js:55:25)\n    at async testRead (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:96:5)\n    at async testReadFixture (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:112:40)\n    at async main (file:///home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/javascript/test_hyparquet/index.js:245:23)"
       }
     },
     "BYTE_STREAM_SPLIT": {
@@ -380,15 +374,18 @@
     },
     "TIME_MILLIS": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_MICROS": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_NANOS": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_MILLIS": {
       "write": true,
@@ -404,19 +401,23 @@
     },
     "TIMESTAMP_NANOS": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "INT96": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "DECIMAL": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "UUID": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "JSON": {
       "write": true,
@@ -426,23 +427,28 @@
     },
     "FLOAT16": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "ENUM": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "BSON": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "INTERVAL": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "UNKNOWN": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "VARIANT": {
       "write": false,
@@ -460,27 +466,33 @@
   "nested_types": {
     "LIST": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "MAP": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "STRUCT": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "NESTED_LIST": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "NESTED_MAP": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "DEEP_NESTING": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     }
   },
   "advanced_features": {
@@ -494,18 +506,10 @@
       "read": true,
       "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
-    "BLOOM_FILTER": {
-      "write": false,
-      "read": false
-    },
     "DATA_PAGE_V2": {
       "write": false,
       "read": true,
       "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
-    },
-    "COLUMN_ENCRYPTION": {
-      "write": false,
-      "read": false
     },
     "SIZE_STATISTICS": {
       "write": false,
@@ -514,16 +518,26 @@
     },
     "PAGE_CRC32": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "PREDICATE_PUSHDOWN": {
       "write": false,
-      "read": false
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "PROJECTION_PUSHDOWN": {
       "write": false,
       "read": true,
       "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "BLOOM_FILTER": {
+      "write": false,
+      "read": false
+    },
+    "COLUMN_ENCRYPTION": {
+      "write": false,
+      "read": false
     },
     "SCHEMA_EVOLUTION": {
       "write": false,
