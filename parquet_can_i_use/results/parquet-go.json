@@ -2,7 +2,9 @@
   "advanced_features": {
     "BLOOM_FILTER": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:78c75278e53c8056236f82410e84d141821fc1cf6fa51a67ab38f6e8ec038446\nUEFSMRVAHBwAABwcAAAcHAAAACQABAAAAAAMAECAAAUCAACAAACEACBAAAAAUAIAOAAAFQYVGBUYFdn1/vEJTBUGFQAVBhUAFQAVABIAAAEAAAACAAAAAwAAABkSABkYBAEAAAAZGAQDAAAAFQAZFgAAGRwWZhVQFgAAABUEGSxICVNpbXBsZVJvdxUCABUCFUAVABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGRUAGRgDY29sFQAWBhZQFlAmZjxYBAMAAAAYBAEAAAAAGRwVBhUAFQIAFggAFuQBFRQWtgEVLgAWUBYGGQwWCBZQABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAtgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "COLUMN_ENCRYPTION": {
       "write": false,
@@ -14,7 +16,9 @@
     },
     "PAGE_INDEX": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2fadc527231fbdbfb19259df6b152575ef12c86f26d7ee6f6931f376957ad514\nUEFSMRUGFRgVGBXZ9f7xCUwVBhUAFQYVABUAFQASAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVUBYAAAAVBBksSAlTaW1wbGVSb3cVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUAFgYWUBZQJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "PREDICATE_PUSHDOWN": {
       "write": false,
@@ -22,7 +26,9 @@
     },
     "PROJECTION_PUSHDOWN": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:5a6a9eb33d7e5e453337fe0e8188ee59b945f640f84a48f0043b6e1524957846\nUEFSMRUGFRAVEBX43Yg4TBUEFQAVBBUAFQAVABIAAAEAAAACAAAAFQYVEBUQFdKNyLkFTBUEFQAVBBUAFQAVABIAAAoAAAAUAAAAGRIAGRgEAQAAABkYBAIAAAAVABkWAAAZEgAZGAQKAAAAGRgEFAAAABUAGRYAABkcFggVRhYAAAAZHBZOFUgWAAAAFQQZPEgLTXVsdGlDb2xSb3cVBAAVAhVAFQAYBWNvbF9hJSJMrBMgEQAAABUCFUAVABgFY29sX2IlIkysEyARAAAAFgQZHBksJgAcFQIZFQAZGAVjb2xfYRUAFgQWRhZGJgg8WAQCAAAAGAQBAAAAABkcFQYVABUCAAAW8gEVFBaWARUuACYAHBUCGRUAGRgFY29sX2IVABYEFkgWSCZOPFgEFAAAABgECgAAAAAZHBUGFQAVAgAAFoYCFRQWxAEVLgAWjgEWBBkMFggWjgEAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZLBwAABwAAAATAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "SCHEMA_EVOLUTION": {
       "write": false,
@@ -30,41 +36,59 @@
     },
     "STATISTICS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2fadc527231fbdbfb19259df6b152575ef12c86f26d7ee6f6931f376957ad514\nUEFSMRUGFRgVGBXZ9f7xCUwVBhUAFQYVABUAFQASAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVUBYAAAAVBBksSAlTaW1wbGVSb3cVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUAFgYWUBZQJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     }
   },
   "compression": {
     "BROTLI": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "brotli not supported",
+      "read_log": "brotli not supported"
     },
     "GZIP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:4201b303a73f373a9284f45211bd96aefff64c072b9753493a189c91a9ba636c\nUEFSMRUGFRgVShXc0KWNCEwVBhUAFQYVABUAFQARAAAfiwgAAAluiAD/AAwA8/8BAAAAAgAAAAMAAAADAJMi4LAMAAAAGRIAGRgEAQAAABkYBAMAAAAVABkWAAAZHBYIFYIBFgAAABUEGSxICVNpbXBsZVJvdxUCABUCFUAVABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGRUAGRgDY29sFQQWBhZQFoIBJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWuAEVFhaKARUuABZQFgYZDBYIFoIBABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAtgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZ4": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2fadc527231fbdbfb19259df6b152575ef12c86f26d7ee6f6931f376957ad514\nUEFSMRUGFRgVGBXZ9f7xCUwVBhUAFQYVABUAFQASAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVUBYAAAAVBBksSAlTaW1wbGVSb3cVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUAFgYWUBZQJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZ4_RAW": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2fadc527231fbdbfb19259df6b152575ef12c86f26d7ee6f6931f376957ad514\nUEFSMRUGFRgVGBXZ9f7xCUwVBhUAFQYVABUAFQASAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVUBYAAAAVBBksSAlTaW1wbGVSb3cVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUAFgYWUBZQJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZO": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "lzo not supported",
+      "read_log": "lzo not supported"
     },
     "NONE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2fadc527231fbdbfb19259df6b152575ef12c86f26d7ee6f6931f376957ad514\nUEFSMRUGFRgVGBXZ9f7xCUwVBhUAFQYVABUAFQASAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVUBYAAAAVBBksSAlTaW1wbGVSb3cVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUAFgYWUBZQJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "SNAPPY": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:0aa693805a531d4f824df3ca404ab803b602e343dca9048b02f3652c1b66ab43\nUEFSMRUGFRgVHBWw+P+bA0wVBhUAFQYVABUAFQARAAAMLAEAAAACAAAAAwAAABkSABkYBAEAAAAZGAQDAAAAFQAZFgAAGRwWCBVUFgAAABUEGSxICVNpbXBsZVJvdxUCABUCFUAVABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGRUAGRgDY29sFQIWBhZQFlQmCDxYBAMAAAAYBAEAAAAAGRwVBhUAFQIAABaKARUUFlwVLgAWUBYGGQwWCBZUABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAswAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "ZSTD": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:915901792afb68791eaaa0d5a44ef07fa7bfbb9233cdc3c9b2c36d1e8f79b805\nUEFSMRUGFRgVKhWR65r8DkwVBhUAFQYVABUAFQARAAAotS/9AABhAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVYhYAAAAVBBksSAlTaW1wbGVSb3cVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUMFgYWUBZiJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWmAEVFBZqFS4AFlAWBhkMFggWYgAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     }
   },
   "encoding": {
@@ -97,209 +121,305 @@
     "BYTE_STREAM_SPLIT": {
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type BOOLEAN",
+        "read_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type BOOLEAN"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type BYTE_ARRAY",
+        "read_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type BYTE_ARRAY"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4192b82f7518f378b505eb889dbb3c4e724a08fbaaee26f9e7d627a9167cda94\nUEFSMRUGFTAVMBWjoNXYBEwVBhUAFQYVEhUAFQASAAAAAAAAAAAAAAAAAAAAAAAAAADwAAg/QEAZEgAZGAgAAAAAAADwPxkYCAAAAAAAAAhAFQAZFgAAGRwWCBVoFgAAABUEGSxIABUCABUKFYABFQAYA2NvbAAWBhkcGRwmABwVChkVEhkYA2NvbBUAFgYWaBZoJgg8WAgAAAAAAAAIQBgIAAAAAAAA8D8AGRwVBhUSFQIAABauARUUFnAVPgAWaBYGGQwWCBZoABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAqgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:80ea776b31cbef849427db497561320e8ffee7e6ba36a91ba5bdb88d2b7ba400\nUEFSMRUGFRgVGBXkmpn+CkwVBhUAFQYVEhUAFQASAAAAAAAAAACAAEA/QEAZEgAZGAQAAIA/GRgEAABAQBUAGRYAABkcFggVUBYAAAAVBBksSAAVAgAVCBVAFQAYA2NvbAAWBhkcGRwmABwVCBkVEhkYA2NvbBUAFgYWUBZQJgg8WAQAAEBAGAQAAIA/ABkcFQYVEhUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAKEAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type INT32",
+        "read_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type INT32"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type INT64",
+        "read_log": "panic: cannot apply BYTE_STREAM_SPLIT to node of type INT64"
       }
     },
     "DELTA_BINARY_PACKED": {
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type BOOLEAN",
+        "read_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type BOOLEAN"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type BYTE_ARRAY",
+        "read_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type BYTE_ARRAY"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type DOUBLE",
+        "read_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type DOUBLE"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type FLOAT",
+        "read_log": "panic: cannot apply DELTA_BINARY_PACKED to node of type FLOAT"
       },
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:ed6e02fd4087dd818c02dcec58d4879b9fb80e243693d5d8b41ba5fd2e6b512a\nUEFSMRUGFSwVLBX2tIbiCkwVBhUAFQYVChUAFQASAACAAQQDAgUDAAAAJAAAAAAAAAAAAAAAGRIAGRgEAQAAABkYBAMAAAAVABkWAAAZHBYIFWQWAAAAFQQZLEgAFQIAFQIVQBUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZFQoZGANjb2wVABYGFmQWZCYIPFgEAwAAABgEAQAAAAAZHBUGFQoVAgAAFpoBFRQWbBUuABZkFgYZDBYIFmQAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAACqAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:be892f8d9b959ca50ce3b1a2271a8431e9351e9410215db31a81aea9d7942e56\nUEFSMRUGFSwVLBX2tIbiCkwVBhUAFQYVChUAFQASAACAAQQDAgUDAAAAJAAAAAAAAAAAAAAAGRIAGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUAGRYAABkcFggVZBYAAAAVBBksSAAVAgAVBBWAARUAGANjb2wlJEysE0ARAAAAFgYZHBkcJgAcFQQZFQoZGANjb2wVABYGFmQWZCYIPFgIAwAAAAAAAAAYCAEAAAAAAAAAABkcFQYVChUCAAAWqgEVFBZsFT4AFmQWBhkMFggWZAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALMAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "DELTA_BYTE_ARRAY": {
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type BOOLEAN",
+        "read_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type BOOLEAN"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:bff4512ada081d077252bb0b32f954caba48296b34a64366ef56a82aac809e9e\nUEFSMRUGFTYVNhWpn7bJD0wVBhUAFQYVDhUAFQASAACAAQQDAAAAAAAAgAEEAwIBAQAAAAMAAAABAgMZEgAZGAEBGRgBAxUAGRYAABkcFggVbhYAAAAVBBksSAAVAgAVDCUAGANjb2wlAEwcAAAAFgYZHBkcJgAcFQwZFQ4ZGANjb2wVABYGFm4WbiYIPFgBAxgBAQAZHBUGFQ4VAgAAFpgBFRQWdhUiABZuFgYZDBYIFm4AGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAACfAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type DOUBLE",
+        "read_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type DOUBLE"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type FLOAT",
+        "read_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type FLOAT"
       },
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type INT32",
+        "read_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type INT32"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type INT64",
+        "read_log": "panic: cannot apply DELTA_BYTE_ARRAY to node of type INT64"
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type BOOLEAN",
+        "read_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type BOOLEAN"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:e0add7b91304dab0ed06274a828071382d1bf91e4d435feeabe43461535f0192\nUEFSMRUGFSIVIhXrx9vYDkwVBhUAFQYVDBUAFQASAACAAQQDAgEBAAAAAwAAAAECAxkSABkYAQEZGAEDFQAZFgAAGRwWCBVaFgAAABUEGSxIABUCABUMJQAYA2NvbCUATBwAAAAWBhkcGRwmABwVDBkVDBkYA2NvbBUAFgYWWhZaJgg8WAEDGAEBABkcFQYVDBUCAAAWhAEVFBZiFSIAFloWBhkMFggWWgAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAJ8AAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type DOUBLE",
+        "read_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type DOUBLE"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type FLOAT",
+        "read_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type FLOAT"
       },
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type INT32",
+        "read_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type INT32"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type INT64",
+        "read_log": "panic: cannot apply DELTA_LENGTH_BYTE_ARRAY to node of type INT64"
       }
     },
     "PLAIN": {
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:87457d9be7f8639366501a5f6c2d72a13a0dbbd279410b85ba1a0ea7d40894b8\nUEFSMRUGFQIVAhX7k7/ZC0wVBhUAFQYVABUAFQASAAAFGRIAGRgBABkYAQEVABkWAAAZHBYIFToWAAAAFQQZLEgAFQIAFQAVAhUAGANjb2wAFgYZHBkcJgAcFQAZFQAZGANjb2wVABYGFjoWOiYIPFgBARgBAAAZHBUGFQAVAgAAFmQVFBZCFSIAFjoWBhkMFggWOgAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAJoAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:11c4b4bd3b7466b3a72a7f65f88ccbe9504f9cbc3aa226326924242983e50f04\nUEFSMRUGFR4VHhWfqNLjCkwVBhUAFQYVABUAFQASAAABAAAAAQEAAAACAQAAAAMZEgAZGAEBGRgBAxUAGRYAABkcFggVVhYAAAAVBBksSAAVAgAVDCUAGANjb2wlAEwcAAAAFgYZHBkcJgAcFQwZFQAZGANjb2wVABYGFlYWViYIPFgBAxgBAQAZHBUGFQAVAgAAFoABFRQWXhUiABZWFgYZDBYIFlYAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAACfAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:1578b8bbf949d35ca440668bf5ac2215ea95c948d7627172b65ad41aed3fbad8\nUEFSMRUGFTAVMBXIoK+yC0wVBhUAFQYVABUAFQASAAAAAAAAAADwPwAAAAAAAABAAAAAAAAACEAZEgAZGAgAAAAAAADwPxkYCAAAAAAAAAhAFQAZFgAAGRwWCBVoFgAAABUEGSxIABUCABUKFYABFQAYA2NvbAAWBhkcGRwmABwVChkVABkYA2NvbBUAFgYWaBZoJgg8WAgAAAAAAAAIQBgIAAAAAAAA8D8AGRwVBhUAFQIAABauARUUFnAVPgAWaBYGGQwWCBZoABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAqgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:7a13a82a0c2d37ecb6e9c8d65c9788e04db4a6ffdc8ea05b9684622b81a4dac6\nUEFSMRUGFRgVGBWdpYvfCUwVBhUAFQYVABUAFQASAAAAAIA/AAAAQAAAQEAZEgAZGAQAAIA/GRgEAABAQBUAGRYAABkcFggVUBYAAAAVBBksSAAVAgAVCBVAFQAYA2NvbAAWBhkcGRwmABwVCBkVABkYA2NvbBUAFgYWUBZQJgg8WAQAAEBAGAQAAIA/ABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAKEAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:8cc5b18412a2a01ed0f37989ae22bba5b9d23f7ef5dc8c12578718c4fa3f9251\nUEFSMRUGFRgVGBXZ9f7xCUwVBhUAFQYVABUAFQASAAABAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVUBYAAAAVBBksSAAVAgAVAhVAFQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhkVABkYA2NvbBUAFgYWUBZQJgg8WAQDAAAAGAQBAAAAABkcFQYVABUCAAAWhgEVFBZYFS4AFlAWBhkMFggWUAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAKoAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4ba82ff41329b1b0f00385079c04e62a817ba348349d32bb7120586c8513e270\nUEFSMRUGFTAVMBWOtty8BUwVBhUAFQYVABUAFQASAAABAAAAAAAAAAIAAAAAAAAAAwAAAAAAAAAZEgAZGAgBAAAAAAAAABkYCAMAAAAAAAAAFQAZFgAAGRwWCBVoFgAAABUEGSxIABUCABUEFYABFQAYA2NvbCUkTKwTQBEAAAAWBhkcGRwmABwVBBkVABkYA2NvbBUAFgYWaBZoJgg8WAgDAAAAAAAAABgIAQAAAAAAAAAAGRwVBhUAFQIAABauARUUFnAVPgAWaBYGGQwWCBZoABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAswAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "PLAIN_DICTIONARY": {
       "BOOLEAN": {
         "write": true,
-        "read": false
+        "read": false,
+        "write_log": "sha256:73ba073f9e50f862a8db0bbb712d616c1999aad84673afa8d7fe97d4504e0d2d\nUEFSMRUEFQIVAhXCuuTABzwVBBUAAAACFQYVGBUYFcq154wLTBUGFQAVBhUEFQAVABIAAAEAAAAAAAAAAQAAABkSABkYAQAZGAEBFQAZFgAAGRwWMBVQFgAAABUEGSxIABUCABUAFQIVABgDY29sABYGGRwZHCYAHBUAGSUABBkYA2NvbBUAFgYWeBZ4JjAmCBxYAQEYAQAAGSwVBBUAFQIAFQYVBBUCAAAWogEVFBaAARUiABZ4FgYZDBYIFngAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAACmAAAAUEFSMQ==",
+        "read_log": "decoding page 0 of column \"col\": RLE_DICTIONARY: decoding run-length block of 0 values: unexpected EOF"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:328084387c3070a7935cf4cdff806395af794f21a8a7055068687e9d4d303dcb\nUEFSMRUEFR4VHhWfqNLjCjwVBhUAAAABAAAAAQEAAAACAQAAAAMVBhUYFRgV9Lmw1wNMFQYVABUGFQQVABUAEgAAAAAAAAEAAAACAAAAGRIAGRgBARkYAQMVABkWAAAZHBZMFVAWAAAAFQQZLEgAFQIAFQwlABgDY29sJQBMHAAAABYGGRwZHCYAHBUMGSUABBkYA2NvbBUAFgYWlAEWlAEmTCYIHFgBAxgBAQAZLBUEFQAVAgAVBhUEFQIAABa+ARUUFpwBFSIAFpQBFgYZDBYIFpQBABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAArgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:a9b9caaaa02693cadd6c2c8ef26f6f47fe333d7dbb875adbb1f3493d708af2bc\nUEFSMRUEFTAVMBXIoK+yCzwVBhUAAAAAAAAAAADwPwAAAAAAAABAAAAAAAAACEAVBhUYFRgV9Lmw1wNMFQYVABUGFQQVABUAEgAAAAAAAAEAAAACAAAAGRIAGRgIAAAAAAAA8D8ZGAgAAAAAAAAIQBUAGRYAABkcFl4VUBYAAAAVBBksSAAVAgAVChWAARUAGANjb2wAFgYZHBkcJgAcFQoZJQAEGRgDY29sFQAWBhamARamASZeJggcWAgAAAAAAAAIQBgIAAAAAAAA8D8AGSwVBBUAFQIAFQYVBBUCAAAW7AEVFBauARU+ABamARYGGQwWCBamAQAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALkAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:22bb247eea5b4e445e66c9bb163541b3c0f73507613ae4c9232618a5e9b218b3\nUEFSMRUEFRgVGBWdpYvfCTwVBhUAAAAAAIA/AAAAQAAAQEAVBhUYFRgV9Lmw1wNMFQYVABUGFQQVABUAEgAAAAAAAAEAAAACAAAAGRIAGRgEAACAPxkYBAAAQEAVABkWAAAZHBZGFVAWAAAAFQQZLEgAFQIAFQgVQBUAGANjb2wAFgYZHBkcJgAcFQgZJQAEGRgDY29sFQAWBhaOARaOASZGJggcWAQAAEBAGAQAAIA/ABksFQQVABUCABUGFQQVAgAAFsQBFRQWlgEVLgAWjgEWBhkMFggWjgEAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAACwAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4a40757929b0e1a8fc53c8d592494e8e3f6512a282a6a7590420ed8bcf639ff4\nUEFSMRUEFRgVGBXZ9f7xCTwVBhUAAAABAAAAAgAAAAMAAAAVBhUYFRgV9Lmw1wNMFQYVABUGFQQVABUAEgAAAAAAAAEAAAACAAAAGRIAGRgEAQAAABkYBAMAAAAVABkWAAAZHBZGFVAWAAAAFQQZLEgAFQIAFQIVQBUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZJQAEGRgDY29sFQAWBhaOARaOASZGJggcWAQDAAAAGAQBAAAAABksFQQVABUCABUGFQQVAgAAFsQBFRQWlgEVLgAWjgEWBhkMFggWjgEAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAAC5AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:6d0c98b4662727fe4dc31ca92fcdef803ed525bb26cf1c1263319dc952bf3f44\nUEFSMRUEFTAVMBWOtty8BTwVBhUAAAABAAAAAAAAAAIAAAAAAAAAAwAAAAAAAAAVBhUYFRgV9Lmw1wNMFQYVABUGFQQVABUAEgAAAAAAAAEAAAACAAAAGRIAGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUAGRYAABkcFl4VUBYAAAAVBBksSAAVAgAVBBWAARUAGANjb2wlJEysE0ARAAAAFgYZHBkcJgAcFQQZJQAEGRgDY29sFQAWBhamARamASZeJggcWAgDAAAAAAAAABgIAQAAAAAAAAAAGSwVBBUAFQIAFQYVBBUCAAAW7AEVFBauARU+ABamARYGGQwWCBamAQAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAMIAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "RLE": {
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:058c4d4f050985f91b9a441d71d2870d415fd771404bd813d1d7a3ff4b1a61eb\nUEFSMRUGFQwVDBW34JKLC0wVBhUAFQYVBhUAFQASAAACAAAAAwUZEgAZGAEAGRgBARUAGRYAABkcFggVRBYAAAAVBBksSAAVAgAVABUCFQAYA2NvbAAWBhkcGRwmABwVABkVBhkYA2NvbBUAFgYWRBZEJgg8WAEBGAEAABkcFQYVBhUCAAAWbhUUFkwVIgAWRBYGGQwWCBZEABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAmgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply RLE to node of type BYTE_ARRAY",
+        "read_log": "panic: cannot apply RLE to node of type BYTE_ARRAY"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply RLE to node of type DOUBLE",
+        "read_log": "panic: cannot apply RLE to node of type DOUBLE"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply RLE to node of type FLOAT",
+        "read_log": "panic: cannot apply RLE to node of type FLOAT"
       },
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "encoding parquet data page: RLE: cannot encode INT32 with invalid bit-width=0",
+        "read_log": "panic: reading magic header of parquet file: EOF"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "panic: cannot apply RLE to node of type INT64",
+        "read_log": "panic: cannot apply RLE to node of type INT64"
       }
     },
     "RLE_DICTIONARY": {
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:531b6ccc4e4c0dbfee83d90b307b7beeb9145b3deb2d2c5ddad093d002ef533c\nUEFSMRUEFQIVAhXCuuTABzwVBBUAAAACFQYVDhUOFaPkobcLTBUGFQAVBhUQFQAVABIAAAECAQIAAgEZEgAZGAEAGRgBARUAGRYAABkcFjAVRhYAAAAVBBksSAAVAgAVABUCFQAYA2NvbAAWBhkcGRwmABwVABklABAZGANjb2wVABYGFm4WbiYwJggcWAEBGAEAABksFQQVABUCABUGFRAVAgAAFpgBFRQWdhUiABZuFgYZDBYIFm4AGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAAClAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:ddac6a51b518bbd28b715b1a7ff643d3ffec93dba4f60d681f4890364d35e6f9\nUEFSMRUEFR4VHhWfqNLjCjwVBhUAAAABAAAAAQEAAAACAQAAAAMVBhUOFQ4VnLnGjAZMFQYVABUGFRAVABUAEgAAAgIAAgECAhkSABkYAQEZGAEDFQAZFgAAGRwWTBVGFgAAABUEGSxIABUCABUMJQAYA2NvbCUATBwAAAAWBhkcGRwmABwVDBklABAZGANjb2wVABYGFooBFooBJkwmCBxYAQMYAQEAGSwVBBUAFQIAFQYVEBUCAAAWtAEVFBaSARUiABaKARYGGQwWCBaKAQAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAK4AAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:35cb5ca6a5c85163a8bf1959d99c9635443743b61f84483196870f9051081947\nUEFSMRUEFTAVMBXIoK+yCzwVBhUAAAAAAAAAAADwPwAAAAAAAABAAAAAAAAACEAVBhUOFQ4VnLnGjAZMFQYVABUGFRAVABUAEgAAAgIAAgECAhkSABkYCAAAAAAAAPA/GRgIAAAAAAAACEAVABkWAAAZHBZeFUYWAAAAFQQZLEgAFQIAFQoVgAEVABgDY29sABYGGRwZHCYAHBUKGSUAEBkYA2NvbBUAFgYWnAEWnAEmXiYIHFgIAAAAAAAACEAYCAAAAAAAAPA/ABksFQQVABUCABUGFRAVAgAAFuIBFRQWpAEVPgAWnAEWBhkMFggWnAEAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAAC5AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:8c5e0205fea108f646fa6e46aecda289d59b00507c64235371be83126af46494\nUEFSMRUEFRgVGBWdpYvfCTwVBhUAAAAAAIA/AAAAQAAAQEAVBhUOFQ4VnLnGjAZMFQYVABUGFRAVABUAEgAAAgIAAgECAhkSABkYBAAAgD8ZGAQAAEBAFQAZFgAAGRwWRhVGFgAAABUEGSxIABUCABUIFUAVABgDY29sABYGGRwZHCYAHBUIGSUAEBkYA2NvbBUAFgYWhAEWhAEmRiYIHFgEAABAQBgEAACAPwAZLBUEFQAVAgAVBhUQFQIAABa6ARUUFowBFS4AFoQBFgYZDBYIFoQBABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAsAAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:bd91955cfdb6392982aead3c2d6a2de5aaca1991ce45dd398b20a687f64c4759\nUEFSMRUEFRgVGBXZ9f7xCTwVBhUAAAABAAAAAgAAAAMAAAAVBhUOFQ4VnLnGjAZMFQYVABUGFRAVABUAEgAAAgIAAgECAhkSABkYBAEAAAAZGAQDAAAAFQAZFgAAGRwWRhVGFgAAABUEGSxIABUCABUCFUAVABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGSUAEBkYA2NvbBUAFgYWhAEWhAEmRiYIHFgEAwAAABgEAQAAAAAZLBUEFQAVAgAVBhUQFQIAABa6ARUUFowBFS4AFoQBFgYZDBYIFoQBABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAuQAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4f2a3b7d18bc6424005674b2f9d5428e4d70733e91371dde80aeda70799842af\nUEFSMRUEFTAVMBWOtty8BTwVBhUAAAABAAAAAAAAAAIAAAAAAAAAAwAAAAAAAAAVBhUOFQ4VnLnGjAZMFQYVABUGFRAVABUAEgAAAgIAAgECAhkSABkYCAEAAAAAAAAAGRgIAwAAAAAAAAAVABkWAAAZHBZeFUYWAAAAFQQZLEgAFQIAFQQVgAEVABgDY29sJSRMrBNAEQAAABYGGRwZHCYAHBUEGSUAEBkYA2NvbBUAFgYWnAEWnAEmXiYIHFgIAwAAAAAAAAAYCAEAAAAAAAAAABksFQQVABUCABUGFRAVAgAAFuIBFRQWpAEVPgAWnAEWBhkMFggWnAEAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAADCAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     }
   },
@@ -310,11 +430,15 @@
     },
     "DATE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ae0f249c755a1f63bd310f2ba4ce9fe5f8f567ecabb326e2d5bfd2bdcecc6a6b\nUEFSMRUGFQgVCBWVl+yRC0wVAhUAFQIVABUAFQASAADESAAAGRIAGRgExEgAABkYBMRIAAAVABkWAAAZHBYIFUAWAAAAFQQZLEgAFQIAFQIVQBUAGANjb2wlDExsAAAAFgIZHBkcJgAcFQIZFQAZGANjb2wVABYCFkAWQCYIPFgExEgAABgExEgAAAAZHBUGFQAVAgAAFnYVFBZIFS4AFkAWAhkMFggWQAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAAKYAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "DECIMAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:c0a7af38f11665123cdafe6b44fee228ff443d4bff89ba88f87b051db1b066d3\nUEFSMRUGFQgVCBWxyZv/DkwVAhUAFQIVABUAFQASAAA5MAAAGRIAGRgEOTAAABkYBDkwAAAVABkWAAAZHBYIFUAWAAAAFQQZLEgAFQIAFQIVQBUAGANjb2wlChUEFRQsXBUEFRQAAAAWAhkcGRwmABwVAhkVABkYA2NvbBUAFgIWQBZAJgg8WAQ5MAAAGAQ5MAAAABkcFQYVABUCAAAWdhUUFkgVLgAWQBYCGQwWCBZAABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAArgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "ENUM": {
       "write": false,
@@ -338,15 +462,21 @@
     },
     "STRING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:866902338a52c8b6868f538add84084fd2a8448dc9758742b6efc9b8c15fae41\nUEFSMRUGFRQVFBWOioCWDEwVAhUAFQIVDBUAFQASAACAAQQBCmhlbGxvGRIAGRgFaGVsbG8ZGAVoZWxsbxUAGRYAABkcFggVTBYAAAAVBBksSAlTdHJpbmdSb3cVAgAVDCUAGANjb2wlAEwcAAAAFgIZHBkcJgAcFQwZFQwZGANjb2wVABYCFkwWTCYIPFgFaGVsbG8YBWhlbGxvABkcFQYVDBUCAAAWhgEVFBZUFTIAFkwWAhkMFggWTAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALAAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:708d29a033d887b40dcad7c9fd9b01e0116dfeeebcac9842d2ab553fcf07ea87\nUEFSMRUGFRAVEBWCvsDPB0wVAhUAFQIVABUAFQASAAAAQB4YJAoGABkSABkYCABAHhgkCgYAGRgIAEAeGCQKBgAVABkWAAAZHBYIFUgWAAAAFQQZLEgAFQIAFQQVgAEVABgDY29sJRRMjBEcLAAAAAAAFgIZHBkcJgAcFQQZFQAZGANjb2wVABYCFkgWSCYIPFgIAEAeGCQKBgAYCABAHhgkCgYAABkcFQYVABUCAAAWjgEVFBZQFT4AFkgWAhkMFggWSAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALUAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:7af0c37df759ca7dd963a3c6cbd37e6448920b7ca939f079291d96413877b73f\nUEFSMRUGFRAVEBXFsJTNBkwVAhUAFQIVABUAFQASAAAAaOXPiwEAABkSABkYCABo5c+LAQAAGRgIAGjlz4sBAAAVABkWAAAZHBYIFUgWAAAAFQQZLEgAFQIAFQQVgAEVABgDY29sJRJMjBEcHAAAAAAAFgIZHBkcJgAcFQQZFQAZGANjb2wVABYCFkgWSCYIPFgIAGjlz4sBAAAYCABo5c+LAQAAABkcFQYVABUCAAAWjgEVFBZQFT4AFkgWAhkMFggWSAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALUAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_NANOS": {
       "write": false,
@@ -354,11 +484,15 @@
     },
     "TIME_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ffe28700d4f4a11bf287649a0b85236cb53e8b2ceefa1506565d76241a133015\nUEFSMRUGFRAVEBWAmI64CUwVAhUAFQIVABUAFQASAAAApJPWAAAAABkSABkYCACkk9YAAAAAGRgIAKST1gAAAAAVABkWAAAZHBYIFUgWAAAAFQQZLEgAFQIAFQQVgAEVABgDY29sJRBMfBEcLAAAAAAAFgIZHBkcJgAcFQQZFQAZGANjb2wVABYCFkgWSCYIPFgIAKST1gAAAAAYCACkk9YAAAAAABkcFQYVABUCAAAWjgEVFBZQFT4AFkgWAhkMFggWSAAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRkcHAAAALUAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:aaee3db47986ddfe8bb3b3c4e2fa2e63584965b24ef14e6989c0f512a9a6bfed\nUEFSMRUGFQgVCBWP6JeYA0wVAhUAFQIVABUAFQASAACA7jYAGRIAGRgEgO42ABkYBIDuNgAVABkWAAAZHBYIFUAWAAAAFQQZLEgAFQIAFQIVQBUAGANjb2wlDkx8ERwcAAAAAAAWAhkcGRwmABwVAhkVABkYA2NvbBUAFgIWQBZAJgg8WASA7jYAGASA7jYAABkcFQYVABUCAAAWdhUUFkgVLgAWQBYCGQwWCBZAABkMGDdnaXRodWIuY29tL3BhcnF1ZXQtZ28vcGFycXVldC1nbyB2ZXJzaW9uIDAuMjQuMChidWlsZCApGRwcAAAAqwAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_NANOS": {
       "write": false,
@@ -376,11 +510,15 @@
     },
     "LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:65a8fb5b588cf6d8760d091957ab04dc96997d8f27147a01300c0e3b4b7a654f\nUEFSMRUGFSQVJBWj6t3pA0wVBhUAFQIVABUEFQgSAAACAAQBBgEBAAAAAgAAAAMAAAAZEgAZGAQBAAAAGRgEAwAAABUAGRYAABkcFggVXBYAAAAVBBksSAlOZXN0ZWRSb3cVAgAVAhVAFQQYA2NvbCUiTKwTIBEAAAAWAhkcGRwmABwVAhklAAYZGANjb2wVABYGFlwWXCYIPFgEAwAAABgEAQAAAAAZHBUGFQAVAgAAFpIBFRQWZBUuABZcFgIZDBYIFlwAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZHBwAAAC0AAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "MAP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:0eddd95456eabdec0e2e4c6282e972b804d83632548d5216253e2733a7bbd429\nUEFSMRUGFRQVFBXz4I2SC0wVAhUAFQIVDBUEFQQSAAACAAIBgAEEAQJhFQYVEBUQFeug5o4CTBUCFQAVAhUAFQQVBBIAAAIAAgEBAAAAGRIAGRgBYRkYAWEVABkWAAAZEgAZGAQBAAAAGRgEAQAAABUAGRYAABkcFggVTBYAAAAZHBZUFUgWAAAAFQQZXEgGTWFwUm93FQIANQAYA2NvbBUCFQJMLAAAADUEGAlrZXlfdmFsdWUVBAAVDCUAGANrZXklAEwcAAAAFQIVQBUAGAV2YWx1ZSUiTKwTIBEAAAAWAhkcGSwmABwVDBklBgwZOANjb2wJa2V5X3ZhbHVlA2tleRUAFgIWTBZMJgg8WAFhGAFhABkcFQYVDBUCAAAW7AEVFBacARUiACYAHBUCGSUABhk4A2NvbAlrZXlfdmFsdWUFdmFsdWUVABYCFkgWSCZUPFgEAQAAABgEAQAAAAAZHBUGFQAVAgAAFoACFRQWvgEVLgAWlAEWAhkMFggWlAEAGQwYN2dpdGh1Yi5jb20vcGFycXVldC1nby9wYXJxdWV0LWdvIHZlcnNpb24gMC4yNC4wKGJ1aWxkICkZLBwAABwAAAA9AQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "NESTED_LIST": {
       "write": false,
@@ -392,7 +530,9 @@
     },
     "STRUCT": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d9785675011727ccf00d6990f183407f183f0611a3e0c2d64bbbc523c321c6cc\nUEFSMRUGFQgVCBWNnrrgDEwVAhUAFQIVABUAFQASAAABAAAAFQYVCBUIFdGhl8sOTBUCFQAVAhUAFQAVABIAAAIAAAAZEgAZGAQBAAAAGRgEAQAAABUAGRYAABkSABkYBAIAAAAZGAQCAAAAFQAZFgAAGRwWCBVAFgAAABkcFkgVQBYAAAAVBBlMSAlTdHJ1Y3RSb3cVAgA1ABgDY29sFQQAFQIVQBUAGAF4JSJMrBMgEQAAABUCFUAVABgBeSUiTKwTIBEAAAAWAhkcGSwmABwVAhkVABkoA2NvbAF4FQAWAhZAFkAmCDxYBAEAAAAYBAEAAAAAGRwVBhUAFQIAABbkARUUFogBFS4AJgAcFQIZFQAZKANjb2wBeRUAFgIWQBZAJkg8WAQCAAAAGAQCAAAAABkcFQYVABUCAAAW+AEVFBa2ARUuABaAARYCGQwWCBaAAQAZDBg3Z2l0aHViLmNvbS9wYXJxdWV0LWdvL3BhcnF1ZXQtZ28gdmVyc2lvbiAwLjI0LjAoYnVpbGQgKRksHAAAHAAAABMBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     }
   },
   "tool": "parquet-go",

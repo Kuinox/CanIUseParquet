@@ -677,8 +677,54 @@ fn main() {
         )
     });
 
-    nested_types.insert("DEEP_NESTING".into(), json!({"write": true, "read": true})); // If nested list works, deep nesting works
-    nested_types.insert("NESTED_MAP".into(), json!({"write": true, "read": true}));
+    nested_types.insert("DEEP_NESTING".into(), {
+        let wf = tmpdir.path().join("nt_deep.parquet");
+        test_rw_with_proof(
+            || {
+                // Deep nesting: list of structs
+                let inner_values = Int32Array::from(vec![1, 2, 3, 4]);
+                let inner_offsets = OffsetBuffer::new(vec![0, 2, 4].into());
+                let inner_list = ListArray::new(Arc::new(Field::new_list_field(DataType::Int32, false)), inner_offsets, Arc::new(inner_values), None);
+                let schema = Schema::new(vec![Field::new("c", inner_list.data_type().clone(), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(inner_list)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "nt_deep", &batch, props)
+            },
+            || read_parquet(&tmpdir, "nt_deep"),
+            Some(&wf),
+            proof_path,
+        )
+    });
+    nested_types.insert("NESTED_MAP".into(), {
+        let wf = tmpdir.path().join("nt_nested_map.parquet");
+        test_rw_with_proof(
+            || {
+                // Nested map: map<string, map<string, int32>>
+                let inner_keys = StringArray::from(vec!["ik"]);
+                let inner_vals = Int32Array::from(vec![42]);
+                let inner_entry_struct = StructArray::from(vec![
+                    (Arc::new(Field::new("key", DataType::Utf8, false)), Arc::new(inner_keys) as Arc<dyn Array>),
+                    (Arc::new(Field::new("value", DataType::Int32, true)), Arc::new(inner_vals) as Arc<dyn Array>),
+                ]);
+                let inner_offsets = OffsetBuffer::new(vec![0, 1].into());
+                let inner_map = MapArray::new(Arc::new(Field::new("entries", inner_entry_struct.data_type().clone(), false)), inner_offsets, inner_entry_struct, None, false);
+                let outer_keys = StringArray::from(vec!["ok"]);
+                let outer_entry_struct = StructArray::from(vec![
+                    (Arc::new(Field::new("key", DataType::Utf8, false)), Arc::new(outer_keys) as Arc<dyn Array>),
+                    (Arc::new(Field::new("value", inner_map.data_type().clone(), true)), Arc::new(inner_map) as Arc<dyn Array>),
+                ]);
+                let outer_offsets = OffsetBuffer::new(vec![0, 1].into());
+                let outer_map = MapArray::new(Arc::new(Field::new("entries", outer_entry_struct.data_type().clone(), false)), outer_offsets, outer_entry_struct, None, false);
+                let schema = Schema::new(vec![Field::new("c", outer_map.data_type().clone(), false)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(outer_map)])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "nt_nested_map", &batch, props)
+            },
+            || read_parquet(&tmpdir, "nt_nested_map"),
+            Some(&wf),
+            proof_path,
+        )
+    });
 
     results.insert("nested_types".into(), Value::Object(nested_types));
 
@@ -773,8 +819,55 @@ fn main() {
         )
     });
 
-    advanced.insert("PREDICATE_PUSHDOWN".into(), json!({"write": true, "read": true}));
-    advanced.insert("PROJECTION_PUSHDOWN".into(), json!({"write": true, "read": true}));
+    advanced.insert("PREDICATE_PUSHDOWN".into(), {
+        let wf = tmpdir.path().join("adv_pred.parquet");
+        test_rw_with_proof(
+            || {
+                let batch = make_simple_batch();
+                write_parquet(&tmpdir, "adv_pred", &batch, WriterProperties::builder().build())
+            },
+            || {
+                // Read only the first row group (simulates predicate pushdown / row-group skipping)
+                let path = tmpdir.path().join("adv_pred.parquet");
+                let file = File::open(&path)?;
+                let builder = ParquetRecordBatchReaderBuilder::try_new(file)?;
+                let reader = builder.with_row_groups(vec![0]).build()?;
+                for batch in reader { batch?; }
+                Ok(())
+            },
+            Some(&wf),
+            proof_path,
+        )
+    });
+    advanced.insert("PROJECTION_PUSHDOWN".into(), {
+        let wf = tmpdir.path().join("adv_proj.parquet");
+        test_rw_with_proof(
+            || {
+                // Write a file with two columns
+                let schema = Schema::new(vec![
+                    Field::new("a", DataType::Int32, false),
+                    Field::new("b", DataType::Int32, false),
+                ]);
+                let batch = RecordBatch::try_new(
+                    Arc::new(schema),
+                    vec![Arc::new(Int32Array::from(vec![1, 2, 3])), Arc::new(Int32Array::from(vec![4, 5, 6]))],
+                )?;
+                write_parquet(&tmpdir, "adv_proj", &batch, WriterProperties::builder().build())
+            },
+            || {
+                // Read only the first column (projection pushdown)
+                let path = tmpdir.path().join("adv_proj.parquet");
+                let file = File::open(&path)?;
+                let builder = ParquetRecordBatchReaderBuilder::try_new(file)?;
+                let projection = parquet::arrow::ProjectionMask::leaves(builder.parquet_schema(), vec![0]);
+                let reader = builder.with_projection(projection).build()?;
+                for batch in reader { batch?; }
+                Ok(())
+            },
+            Some(&wf),
+            proof_path,
+        )
+    });
     advanced.insert("SCHEMA_EVOLUTION".into(), json!({"write": false, "read": false}));
 
     results.insert("advanced_features".into(), Value::Object(advanced));

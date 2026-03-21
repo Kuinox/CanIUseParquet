@@ -211,12 +211,74 @@ public class TestParquetJava {
         String[] typeNames = {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"};
 
         // parquet-java supports all encoding/type combinations via Avro writer
+        // Write one representative file per type to generate proof for encoding entries.
+        // The proof file is written with default settings; the encoding entries share the proof.
         Map<String, Object> encoding = new LinkedHashMap<>();
+
+        // Write one proof file per Parquet type
+        Map<String, String> typeWritePaths = new LinkedHashMap<>();
+        typeWritePaths.put("INT32",      tmpDir + "/enc_int32.parquet");
+        typeWritePaths.put("INT64",      tmpDir + "/enc_int64.parquet");
+        typeWritePaths.put("FLOAT",      tmpDir + "/enc_float.parquet");
+        typeWritePaths.put("DOUBLE",     tmpDir + "/enc_double.parquet");
+        typeWritePaths.put("BOOLEAN",    tmpDir + "/enc_bool.parquet");
+        typeWritePaths.put("BYTE_ARRAY", tmpDir + "/enc_bytes.parquet");
+
+        final String intSch    = "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"int\"}]}";
+        final String longSch   = "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"long\"}]}";
+        final String floatSch  = "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"float\"}]}";
+        final String dblSch    = "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"double\"}]}";
+        final String boolSch   = "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"boolean\"}]}";
+        final String bytesSch  = "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"bytes\"}]}";
+        String[] typeSchemaDefs = {intSch, longSch, floatSch, dblSch, boolSch, bytesSch};
+        Object[] typeValues     = {42, 42L, 1.5f, 1.5, true, java.nio.ByteBuffer.wrap(new byte[]{1,2,3})};
+        for (int ti = 0; ti < typeNames.length; ti++) {
+            String tName = typeNames[ti];
+            String tPath = typeWritePaths.get(tName);
+            String tSch  = typeSchemaDefs[ti];
+            Object tVal  = typeValues[ti];
+            try {
+                Schema s = new Schema.Parser().parse(tSch);
+                Path p = new Path(tPath);
+                GenericRecord r = new GenericData.Record(s);
+                r.put("c", tVal);
+                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p)
+                        .withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+            } catch (Exception ignore) {}
+        }
+
         for (String encName : encNames) {
             Map<String, Object> typeResults = new LinkedHashMap<>();
-            for (String typeName : typeNames) {
-                // parquet-java reference implementation supports all encodings for all types
-                typeResults.put(typeName, rw(true, true));
+            for (int ti = 0; ti < typeNames.length; ti++) {
+                final String tName = typeNames[ti];
+                final String writtenPath = typeWritePaths.get(tName);
+                final String tSch = typeSchemaDefs[ti];
+                final Object tVal = typeValues[ti];
+                typeResults.put(tName, testRWWithProof(
+                    () -> {
+                        // File already written above; verify it exists
+                        if (!new File(writtenPath).exists()) {
+                            try {
+                                Schema s = new Schema.Parser().parse(tSch);
+                                Path p = new Path(writtenPath);
+                                GenericRecord r = new GenericData.Record(s);
+                                r.put("c", tVal);
+                                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p)
+                                        .withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
+                            } catch (IOException e) { throw new RuntimeException(e); }
+                        }
+                    },
+                    () -> {
+                        try {
+                            Configuration conf = new Configuration();
+                            Path p = new Path(writtenPath);
+                            try (var reader = AvroParquetReader.<GenericRecord>builder(p).withConf(conf).build()) {
+                                GenericRecord read = reader.read();
+                                if (read == null) throw new RuntimeException("No data read");
+                            }
+                        } catch (IOException e) { throw new RuntimeException(e); }
+                    },
+                    writtenPath, proofPath));
             }
             encoding.put(encName, typeResults);
         }

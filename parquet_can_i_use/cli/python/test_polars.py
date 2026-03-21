@@ -106,7 +106,12 @@ def main():
                 read_ok, _ = test_feature("read", lambda p=str(fixture_path): pl.read_parquet(p))
             else:
                 read_ok = False
-            results["compression"][codec_name] = {"write": False, "read": read_ok}
+            entry = {"write": False, "read": read_ok}
+            if read_ok:
+                rl = _read_proof_log()
+                if rl:
+                    entry["read_log"] = rl
+            results["compression"][codec_name] = entry
         else:
             write_path = os.path.join(tmpdir, f"comp_{codec_name}.parquet")
             read_path = str(fixture_path) if fixture_path.exists() else write_path

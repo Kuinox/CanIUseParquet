@@ -1,422 +1,616 @@
 {
   "tool": "fastparquet",
-  "version": "2025.12.0",
+  "version": "2026.3.0",
   "compression": {
     "NONE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:836428b8223815321d69d034eae2efc5816427c50ae3d3edb63e816559ff95a2\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVBBWAARUCGANjb2wAFgYZHBkcJggcFQQZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgDAAAAAAAAABgIAQAAAAAAAAAWAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAF0CAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SNAPPY": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:81a67fead2cbfcb853f21da867bc6a53efafae439d0a250b0ed3be2bd2773d95\nUEFSMRUAFUwVQiwVBhUAFQYVCAAAJhwCAAAABgEBAAkBAQ4BATwDAAAAAAAAAAAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQQVgAEVAhgDY29sABYGGRwZHCYIHBUEGRUAGRgDY29sFQIWBhZuFmQZABYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAAGRwVABUAFQIAAAAWbhYGABkcGAZwYW5kYXMYuwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJpbnQ2NCIsICJwYW5kYXNfdHlwZSI6ICJpbnQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBdAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "GZIP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:32eb0bd17cc15db5d8efd3c1426ab265be432e3ab09a3cf88355223cb31184c3\nUEFSMRUAFUwVRiwVBhUAFQYVCAAAH4sIAAAAAAAA/2NiYGBgY2RkgAAmKM3MgAoAJm1PtCYAAAAVAhksSAZzY2hlbWEVAgAVBBWAARUCGANjb2wAFgYZHBkcJggcFQQZFQAZGANjb2wVBBYGFm4WaBkAFgg8GAgDAAAAAAAAABgIAQAAAAAAAAAWAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAF0CAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "BROTLI": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:4867f45a68083a9c4d4c7c55bfa2e8ee5901f6d1489beec47bb6cebe555232a4\nUEFSMRUAFUwVIiwVBhUAFQYVCAAAGyUA+IdxbJSIKgz44gmggAEVAhksSAZzY2hlbWEVAgAVBBWAARUCGANjb2wAFgYZHBkcJggcFQQZFQAZGANjb2wVCBYGFm4WRBkAFgg8GAgDAAAAAAAAABgIAQAAAAAAAAAWAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAF0CAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "LZO": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 105, in write_codec\n    fastparquet.write(p, d, compression=c)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 647, in write_column\n    bdata = compress_data(bdata, compression)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/compression.py\", line 91, in compress_data\n    raise RuntimeError(\"Compression '%s' not available.  Options: %s\" %\nRuntimeError: Compression 'LZO' not available.  Options: ['BROTLI', 'GZIP', 'LZ4', 'LZ4_RAW', 'SNAPPY', 'UNCOMPRESSED', 'ZSTD']\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 107, in read_codec\n    fastparquet.ParquetFile(p).to_pandas()\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 790, in to_pandas\n    self.read_row_group_file(rg, columns, categories, index,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 388, in read_row_group_file\n    core.read_row_group(\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/core.py\", line 644, in read_row_group\n    read_row_group_arrays(file, rg, columns, categories, schema_helper,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/core.py\", line 615, in read_row_group_arrays\n    read_col(column, schema_helper, file, use_cat=name+'-catdef' in out,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/core.py\", line 519, in read_col\n    defi, rep, val = read_data_page(infile, schema_helper, ph, cmd,\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/core.py\", line 113, in read_data_page\n    raw_bytes = _read_page(f, header, metadata)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/core.py\", line 20, in _read_page\n    raw_bytes = decompress_data(\n                ^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/compression.py\", line 105, in decompress_data\n    raise RuntimeError(\nRuntimeError: Decompression 'LZO' not available.  Options: ['BROTLI', 'GZIP', 'LZ4', 'LZ4_RAW', 'SNAPPY', 'UNCOMPRESSED', 'ZSTD']\n"
     },
     "LZ4": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:6c3b0cca59bd1c2abba7903e203fad925116eba294c72881a9aa72ae5b8d51c0\nUEFSMRUAFUwVQiwVBhUAFQYVCAAAggIAAAAGAQEAAQAADgAAAgAQAwUAsAAAAAAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQQVgAEVAhgDY29sABYGGRwZHCYIHBUEGRUAGRgDY29sFQoWBhZuFmQZABYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAAGRwVABUAFQIAAAAWbhYGABkcGAZwYW5kYXMYuwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJpbnQ2NCIsICJwYW5kYXNfdHlwZSI6ICJpbnQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBdAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "LZ4_RAW": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:acf76d942efda4a48a96476cece786b279de4b44f948c6a91e4b0ce953312c03\nUEFSMRUAFUwVQiwVBhUAFQYVCAAAggIAAAAGAQEAAQAADgAAAgAQAwUAsAAAAAAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQQVgAEVAhgDY29sABYGGRwZHCYIHBUEGRUAGRgDY29sFQ4WBhZuFmQZABYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAAGRwVABUAFQIAAAAWbhYGABkcGAZwYW5kYXMYuwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJpbnQ2NCIsICJwYW5kYXNfdHlwZSI6ICJpbnQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBdAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "ZSTD": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:a9d3d6ca3ec4752225be6dd6671eea0c7412f43cf9833199b6a8bb8d58b0a6b6\nUEFSMRUAFUwVPCwVBhUAFQYVCAAAKLUv/SAmrQAAYAIAAAAGAQEAAgADAAMQABJjPHABFQIZLEgGc2NoZW1hFQIAFQQVgAEVAhgDY29sABYGGRwZHCYIHBUEGRUAGRgDY29sFQwWBhZuFl4ZABYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAAGRwVABUAFQIAAAAWbhYGABkcGAZwYW5kYXMYuwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJpbnQ2NCIsICJwYW5kYXNfdHlwZSI6ICJpbnQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBdAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   },
   "encoding": {
     "PLAIN": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:9df6ab8517944c22183a969b76f3b2b7c7242e2d082c174eba46a4cb4ad58acf\nUEFSMRUAFTQVNCwVBhUAFQYVCAAAAgAAAAYBAQAAAAIAAAADAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVAhVAFQIYA2NvbAAWBhkcGRwmCBwVAhkVABkYA2NvbBUAFgYWVhZWGQAWCDwYBAMAAAAYBAEAAAAWAAAZHBUAFQAVAgAAABZWFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDMyIiwgInBhbmRhc190eXBlIjogImludDMyIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAFQCAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:836428b8223815321d69d034eae2efc5816427c50ae3d3edb63e816559ff95a2\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVBBWAARUCGANjb2wAFgYZHBkcJggcFQQZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgDAAAAAAAAABgIAQAAAAAAAAAWAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAF0CAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4d8762abde89f0f0b9553f1610e42ef5771baacc2b2ca420723b261f70abb453\nUEFSMRUAFTQVNCwVBhUAFQYVCAAAAgAAAAYBAACAPwAAAEAAAEBAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVCBVAFQIYA2NvbAAWBhkcGRwmCBwVCBkVABkYA2NvbBUAFgYWVhZWGQAWCDwYBAAAQEAYBAAAgD8WAAAZHBUAFQAVAgAAABZWFgYAGRwYBnBhbmRhcxi/A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImZsb2F0MzIiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQzMiJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBYAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:547cb6de269220149e14bebd260a5b39b26362804da80b044d041a74685956e9\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVChWAARUCGANjb2wAFgYZHBkcJggcFQoZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgAAAAAAAAIQBgIAAAAAAAA8D8WAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi/A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImZsb2F0NjQiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBhAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:c8cc2d18a4cb80539edd64666c481a5fa7c9e566783701c70c81ecf7535c9a47\nUEFSMRUAFR4VHiwVBhUAFQYVCAAAAgAAAAYBBQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQAVAhUCGANjb2wAFgYZHBkcJggcFQAZFQAZGANjb2wVABYGFkAWQBkAFgg8NgAAGRwVABUAFQIAAAAWQBYGABkcGAZwYW5kYXMYuQN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJib29sIiwgInBhbmRhc190eXBlIjogImJvb2wifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogM31dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkARgIAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:3aef49336e38da992ae51c6e895d04166f75fa6dc6bf74ca6c1eed9bdb8e9a2b\nUEFSMRUAFVAVUCwVBhUAFQYVCAAAAgAAAAYBBQAAAGhlbGxvBQAAAHdvcmxkBAAAAHRlc3QAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUMJQIYA2NvbAAWBhkcGRwmCBwVDBkVABkYA2NvbBUAFgYWchZyGQAWCDw2AAAZHBUAFQAVAgAAABZyFgYAGRwYBnBhbmRhcxi8A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogIm9iamVjdCIsICJwYW5kYXNfdHlwZSI6ICJieXRlcyJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBHAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:9df6ab8517944c22183a969b76f3b2b7c7242e2d082c174eba46a4cb4ad58acf\nUEFSMRUAFTQVNCwVBhUAFQYVCAAAAgAAAAYBAQAAAAIAAAADAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVAhVAFQIYA2NvbAAWBhkcGRwmCBwVAhkVABkYA2NvbBUAFgYWVhZWGQAWCDwYBAMAAAAYBAEAAAAWAAAZHBUAFQAVAgAAABZWFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDMyIiwgInBhbmRhc190eXBlIjogImludDMyIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAFQCAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:836428b8223815321d69d034eae2efc5816427c50ae3d3edb63e816559ff95a2\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVBBWAARUCGANjb2wAFgYZHBkcJggcFQQZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgDAAAAAAAAABgIAQAAAAAAAAAWAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAF0CAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4d8762abde89f0f0b9553f1610e42ef5771baacc2b2ca420723b261f70abb453\nUEFSMRUAFTQVNCwVBhUAFQYVCAAAAgAAAAYBAACAPwAAAEAAAEBAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVCBVAFQIYA2NvbAAWBhkcGRwmCBwVCBkVABkYA2NvbBUAFgYWVhZWGQAWCDwYBAAAQEAYBAAAgD8WAAAZHBUAFQAVAgAAABZWFgYAGRwYBnBhbmRhcxi/A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImZsb2F0MzIiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQzMiJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBYAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:547cb6de269220149e14bebd260a5b39b26362804da80b044d041a74685956e9\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVChWAARUCGANjb2wAFgYZHBkcJggcFQoZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgAAAAAAAAIQBgIAAAAAAAA8D8WAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi/A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImZsb2F0NjQiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBhAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:c8cc2d18a4cb80539edd64666c481a5fa7c9e566783701c70c81ecf7535c9a47\nUEFSMRUAFR4VHiwVBhUAFQYVCAAAAgAAAAYBBQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQAVAhUCGANjb2wAFgYZHBkcJggcFQAZFQAZGANjb2wVABYGFkAWQBkAFgg8NgAAGRwVABUAFQIAAAAWQBYGABkcGAZwYW5kYXMYuQN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJib29sIiwgInBhbmRhc190eXBlIjogImJvb2wifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogM31dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkARgIAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:3aef49336e38da992ae51c6e895d04166f75fa6dc6bf74ca6c1eed9bdb8e9a2b\nUEFSMRUAFVAVUCwVBhUAFQYVCAAAAgAAAAYBBQAAAGhlbGxvBQAAAHdvcmxkBAAAAHRlc3QAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUMJQIYA2NvbAAWBhkcGRwmCBwVDBkVABkYA2NvbBUAFgYWchZyGQAWCDw2AAAZHBUAFQAVAgAAABZyFgYAGRwYBnBhbmRhcxi8A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogIm9iamVjdCIsICJwYW5kYXNfdHlwZSI6ICJieXRlcyJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBHAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "RLE_DICTIONARY": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:9df6ab8517944c22183a969b76f3b2b7c7242e2d082c174eba46a4cb4ad58acf\nUEFSMRUAFTQVNCwVBhUAFQYVCAAAAgAAAAYBAQAAAAIAAAADAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVAhVAFQIYA2NvbAAWBhkcGRwmCBwVAhkVABkYA2NvbBUAFgYWVhZWGQAWCDwYBAMAAAAYBAEAAAAWAAAZHBUAFQAVAgAAABZWFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDMyIiwgInBhbmRhc190eXBlIjogImludDMyIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAFQCAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:836428b8223815321d69d034eae2efc5816427c50ae3d3edb63e816559ff95a2\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVBBWAARUCGANjb2wAFgYZHBkcJggcFQQZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgDAAAAAAAAABgIAQAAAAAAAAAWAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDN9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAF0CAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:4d8762abde89f0f0b9553f1610e42ef5771baacc2b2ca420723b261f70abb453\nUEFSMRUAFTQVNCwVBhUAFQYVCAAAAgAAAAYBAACAPwAAAEAAAEBAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVCBVAFQIYA2NvbAAWBhkcGRwmCBwVCBkVABkYA2NvbBUAFgYWVhZWGQAWCDwYBAAAQEAYBAAAgD8WAAAZHBUAFQAVAgAAABZWFgYAGRwYBnBhbmRhcxi/A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImZsb2F0MzIiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQzMiJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBYAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:547cb6de269220149e14bebd260a5b39b26362804da80b044d041a74685956e9\nUEFSMRUAFUwVTCwVBhUAFQYVCAAAAgAAAAYBAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVChWAARUCGANjb2wAFgYZHBkcJggcFQoZFQAZGANjb2wVABYGFm4WbhkAFgg8GAgAAAAAAAAIQBgIAAAAAAAA8D8WAAAZHBUAFQAVAgAAABZuFgYAGRwYBnBhbmRhcxi/A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogImZsb2F0NjQiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBhAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:c8cc2d18a4cb80539edd64666c481a5fa7c9e566783701c70c81ecf7535c9a47\nUEFSMRUAFR4VHiwVBhUAFQYVCAAAAgAAAAYBBQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQAVAhUCGANjb2wAFgYZHBkcJggcFQAZFQAZGANjb2wVABYGFkAWQBkAFgg8NgAAGRwVABUAFQIAAAAWQBYGABkcGAZwYW5kYXMYuQN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJib29sIiwgInBhbmRhc190eXBlIjogImJvb2wifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogM31dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkARgIAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:3aef49336e38da992ae51c6e895d04166f75fa6dc6bf74ca6c1eed9bdb8e9a2b\nUEFSMRUAFVAVUCwVBhUAFQYVCAAAAgAAAAYBBQAAAGhlbGxvBQAAAHdvcmxkBAAAAHRlc3QAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUMJQIYA2NvbAAWBhkcGRwmCBwVDBkVABkYA2NvbBUAFgYWchZyGQAWCDw2AAAZHBUAFQAVAgAAABZyFgYAGRwYBnBhbmRhcxi8A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImNvbCIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImNvbCIsICJudW1weV90eXBlIjogIm9iamVjdCIsICJwYW5kYXNfdHlwZSI6ICJieXRlcyJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAzfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBHAgAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "RLE": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet RLE only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_RLE_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet RLE only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_RLE_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet RLE only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_RLE_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet RLE only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_RLE_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:c8cc2d18a4cb80539edd64666c481a5fa7c9e566783701c70c81ecf7535c9a47\nUEFSMRUAFR4VHiwVBhUAFQYVCAAAAgAAAAYBBQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQAVAhUCGANjb2wAFgYZHBkcJggcFQAZFQAZGANjb2wVABYGFkAWQBkAFgg8NgAAGRwVABUAFQIAAAAWQBYGABkcGAZwYW5kYXMYuQN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJib29sIiwgInBhbmRhc190eXBlIjogImJvb2wifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogM31dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkARgIAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet RLE only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_RLE_BYTE_ARRAY.parquet\n"
       }
     },
     "BIT_PACKED": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet BIT_PACKED only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BIT_PACKED_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet BIT_PACKED only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BIT_PACKED_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet BIT_PACKED only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BIT_PACKED_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet BIT_PACKED only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BIT_PACKED_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:c8cc2d18a4cb80539edd64666c481a5fa7c9e566783701c70c81ecf7535c9a47\nUEFSMRUAFR4VHiwVBhUAFQYVCAAAAgAAAAYBBQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQAVAhUCGANjb2wAFgYZHBkcJggcFQAZFQAZGANjb2wVABYGFkAWQBkAFgg8NgAAGRwVABUAFQIAAAAWQBYGABkcGAZwYW5kYXMYuQN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjb2wiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjb2wiLCAibnVtcHlfdHlwZSI6ICJib29sIiwgInBhbmRhc190eXBlIjogImJvb2wifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogM31dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkARgIAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 143, in write_enc\n    raise NotImplementedError(f\"fastparquet {e} only for BOOLEAN\")\nNotImplementedError: fastparquet BIT_PACKED only for BOOLEAN\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BIT_PACKED_BYTE_ARRAY.parquet\n"
       }
     },
     "DELTA_BINARY_PACKED": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BINARY_PACKED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BINARY_PACKED_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BINARY_PACKED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BINARY_PACKED_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BINARY_PACKED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BINARY_PACKED_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BINARY_PACKED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BINARY_PACKED_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BINARY_PACKED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BINARY_PACKED_BOOLEAN.parquet\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BINARY_PACKED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BINARY_PACKED_BYTE_ARRAY.parquet\n"
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_LENGTH_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_LENGTH_BYTE_ARRAY_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_LENGTH_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_LENGTH_BYTE_ARRAY_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_LENGTH_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_LENGTH_BYTE_ARRAY_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_LENGTH_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_LENGTH_BYTE_ARRAY_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_LENGTH_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_LENGTH_BYTE_ARRAY_BOOLEAN.parquet\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_LENGTH_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_LENGTH_BYTE_ARRAY_BYTE_ARRAY.parquet\n"
       }
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BYTE_ARRAY_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BYTE_ARRAY_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BYTE_ARRAY_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BYTE_ARRAY_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BYTE_ARRAY_BOOLEAN.parquet\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support DELTA_BYTE_ARRAY encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_DELTA_BYTE_ARRAY_BYTE_ARRAY.parquet\n"
       }
     },
     "BYTE_STREAM_SPLIT": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_BOOLEAN.parquet\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_BYTE_ARRAY.parquet\n"
       }
     },
     "BYTE_STREAM_SPLIT_EXTENDED": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT_EXTENDED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_EXTENDED_INT32.parquet\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT_EXTENDED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_EXTENDED_INT64.parquet\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT_EXTENDED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_EXTENDED_FLOAT.parquet\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT_EXTENDED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_EXTENDED_DOUBLE.parquet\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT_EXTENDED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_EXTENDED_BOOLEAN.parquet\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 145, in write_enc\n    raise NotImplementedError(f\"fastparquet does not support {e} encoding\")\nNotImplementedError: fastparquet does not support BYTE_STREAM_SPLIT_EXTENDED encoding\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 147, in read_enc\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/enc_BYTE_STREAM_SPLIT_EXTENDED_BYTE_ARRAY.parquet\n"
       }
     }
   },
   "logical_types": {
     "STRING": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 635, in write_column\n    repetition_data, definition_data, encode[encoding](data, selement), 8 * b'\\x00'\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"c\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 210, in _parse_header\n    f.seek(-8, 2)\nOSError: [Errno 22] Invalid argument\n"
     },
     "DATE": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1323, in write\n    fmd = make_metadata(data, has_nulls=has_nulls, ignore_columns=ignore,\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 919, in make_metadata\n    se, type = find_type(data[column], fixed_text=fixed,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 122, in find_type\n    object_encoding = infer_object_encoding(data)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 372, in infer_object_encoding\n    raise ValueError(\"Can't infer object conversion type: %s\" % data)\nValueError: Can't infer object conversion type: 0    2024-01-01\nName: c, dtype: object\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_DATE.parquet\n"
     },
     "TIME_MILLIS": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1323, in write\n    fmd = make_metadata(data, has_nulls=has_nulls, ignore_columns=ignore,\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 919, in make_metadata\n    se, type = find_type(data[column], fixed_text=fixed,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 122, in find_type\n    object_encoding = infer_object_encoding(data)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 372, in infer_object_encoding\n    raise ValueError(\"Can't infer object conversion type: %s\" % data)\nValueError: Can't infer object conversion type: 0    12:00:00\nName: c, dtype: object\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_TIME_MILLIS.parquet\n"
     },
     "TIME_MICROS": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1323, in write\n    fmd = make_metadata(data, has_nulls=has_nulls, ignore_columns=ignore,\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 919, in make_metadata\n    se, type = find_type(data[column], fixed_text=fixed,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 122, in find_type\n    object_encoding = infer_object_encoding(data)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 372, in infer_object_encoding\n    raise ValueError(\"Can't infer object conversion type: %s\" % data)\nValueError: Can't infer object conversion type: 0    12:00:00\nName: c, dtype: object\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_TIME_MICROS.parquet\n"
     },
     "TIME_NANOS": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1323, in write\n    fmd = make_metadata(data, has_nulls=has_nulls, ignore_columns=ignore,\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 919, in make_metadata\n    se, type = find_type(data[column], fixed_text=fixed,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 122, in find_type\n    object_encoding = infer_object_encoding(data)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 372, in infer_object_encoding\n    raise ValueError(\"Can't infer object conversion type: %s\" % data)\nValueError: Can't infer object conversion type: 0    12:00:00.000123\nName: c, dtype: object\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_TIME_NANOS.parquet\n"
     },
     "TIMESTAMP_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:721f2ad97a24fdc24961cdc1a68cd60ca03ca50963f4525f5905b2b1398cb671\nUEFSMRUAFSwVLCwVAhUAFQYVCAAAAgAAAAIBACAhENcNBgAAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUEJQIYAWMlFEyMEhwsAAAAAAAWAhkcGRwmCBwVBBkVABkYAWMVABYCFk4WThkAFgg8GAgAICEQ1w0GABgIACAhENcNBgAWAAAZHBUAFQAVAgAAABZOFgIAGRwYBnBhbmRhcxjDA3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAiZGF0ZXRpbWU2NFt1c10iLCAicGFuZGFzX3R5cGUiOiAiZGF0ZXRpbWUifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogMX1dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkAaQIAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:721f2ad97a24fdc24961cdc1a68cd60ca03ca50963f4525f5905b2b1398cb671\nUEFSMRUAFSwVLCwVAhUAFQYVCAAAAgAAAAIBACAhENcNBgAAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUEJQIYAWMlFEyMEhwsAAAAAAAWAhkcGRwmCBwVBBkVABkYAWMVABYCFk4WThkAFgg8GAgAICEQ1w0GABgIACAhENcNBgAWAAAZHBUAFQAVAgAAABZOFgIAGRwYBnBhbmRhcxjDA3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAiZGF0ZXRpbWU2NFt1c10iLCAicGFuZGFzX3R5cGUiOiAiZGF0ZXRpbWUifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogMX1dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkAaQIAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_NANOS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:721f2ad97a24fdc24961cdc1a68cd60ca03ca50963f4525f5905b2b1398cb671\nUEFSMRUAFSwVLCwVAhUAFQYVCAAAAgAAAAIBACAhENcNBgAAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUEJQIYAWMlFEyMEhwsAAAAAAAWAhkcGRwmCBwVBBkVABkYAWMVABYCFk4WThkAFgg8GAgAICEQ1w0GABgIACAhENcNBgAWAAAZHBUAFQAVAgAAABZOFgIAGRwYBnBhbmRhcxjDA3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAiZGF0ZXRpbWU2NFt1c10iLCAicGFuZGFzX3R5cGUiOiAiZGF0ZXRpbWUifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogMX1dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkAaQIAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "INT96": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:58f9b3b9127a92691c2ca9605ddff1c18b12cfcfc3f044632d29ef8ac7ae5bf7\nUEFSMRUAFTQVNCwVAhUAFQYVCAAAAgAAAAIBACBER9A4AACfPSUAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVBiUCGAFjABYCGRwZHCYIHBUGGRUAGRgBYxUAFgIWVhZWGQAWCDwYDAAgREfQOAAAnz0lABgMACBER9A4AACfPSUAFgAAGRwVABUAFQIAAAAWVhYCABkcGAZwYW5kYXMYwwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYyIsICJudW1weV90eXBlIjogImRhdGV0aW1lNjRbdXNdIiwgInBhbmRhc190eXBlIjogImRhdGV0aW1lIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDF9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAGYCAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "DECIMAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:1d2f366079096f687a10f4391ed1c5758ba67d47524958264c2e18846ed76842\nUEFSMRUAFSwVLCwVAhUAFQYVCAAAAgAAAAIBzczMzMzcXkAAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUKFYABFQIYAWMAFgIZHBkcJggcFQoZFQAZGAFjFQAWAhZOFk4ZABYIPBgIzczMzMzcXkAYCM3MzMzM3F5AFgAAGRwVABUAFQIAAAAWThYCABkcGAZwYW5kYXMYuwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYyIsICJudW1weV90eXBlIjogImZsb2F0NjQiLCAicGFuZGFzX3R5cGUiOiAiZmxvYXQ2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAxfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBZAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UUID": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 635, in write_column\n    repetition_data, definition_data, encode[encoding](data, selement), 8 * b'\\x00'\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"c\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 210, in _parse_header\n    f.seek(-8, 2)\nOSError: [Errno 22] Invalid argument\n"
     },
     "JSON": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 635, in write_column\n    repetition_data, definition_data, encode[encoding](data, selement), 8 * b'\\x00'\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"c\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 210, in _parse_header\n    f.seek(-8, 2)\nOSError: [Errno 22] Invalid argument\n"
     },
     "FLOAT16": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:209c313173838838a0b4ab9562ef9dc3d1573e797ebd17ca5e24de45741849c9\nUEFSMRUAFSQVJCwVAhUAFQYVCAAAAgAAAAIBAACAPwAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQgVIBUCGAFjABYCGRwZHCYIHBUIGRUAGRgBYxUAFgIWRhZGGQAWCDwYBAAAgD8YBAAAgD8WAAAZHBUAFQAVAgAAABZGFgIAGRwYBnBhbmRhcxi7A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAiZmxvYXQxNiIsICJwYW5kYXNfdHlwZSI6ICJmbG9hdDE2In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDF9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAFACAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "ENUM": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 188, in write_lt\n    fastparquet.write(p, df, **kwargs)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 607, in write_column\n    bdata = encode['PLAIN'](pd.Series(data.cat.categories), selement)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"None\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 210, in _parse_header\n    f.seek(-8, 2)\nOSError: [Errno 22] Invalid argument\n"
     },
     "BSON": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:191772a6c79c5a1e097e0c94719c6b86ebfc63ec056fe1484db8dac94a787cb5\nUEFSMRUAFS4VLiwVAhUAFQYVCAAAAgAAAAIBBQAAAAUAAAAAAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVDCUCGAFjABYCGRwZHCYIHBUMGRUAGRgBYxUAFgIWUBZQGQAWCDw2AAAZHBUAFQAVAgAAABZQFgIAGRwYBnBhbmRhcxi4A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAib2JqZWN0IiwgInBhbmRhc190eXBlIjogImJ5dGVzIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDF9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAD8CAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "INTERVAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:3940fd5045bd1629e9ba40313a04dd2aab624540b86eb2a563d4547ddab99c8c\nUEFSMRUAFSwVLCwVAhUAFQYVCAAAAgAAAAIBAGDXHRQAAAAAAAAAAAAAABUCGSxIBnNjaGVtYRUCABUEJQIYAWMlEAAWAhkcGRwmCBwVBBkVABkYAWMVABYCFk4WThkAFgg8NgAAGRwVABUAFQIAAAAWThYCABkcGAZwYW5kYXMYxwN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYyIsICJudW1weV90eXBlIjogInRpbWVkZWx0YTY0W3VzXSIsICJwYW5kYXNfdHlwZSI6ICJ0aW1lZGVsdGE2NCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAxfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBQAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UNKNOWN": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 184, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 173, in fn\n    raise NotImplementedError(f\"{name} not supported by fastparquet\")\nNotImplementedError: UNKNOWN not supported by fastparquet\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_UNKNOWN.parquet\n"
     },
     "VARIANT": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 184, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 173, in fn\n    raise NotImplementedError(f\"{name} not supported by fastparquet\")\nNotImplementedError: VARIANT not supported by fastparquet\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_VARIANT.parquet\n"
     },
     "GEOMETRY": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 184, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 173, in fn\n    raise NotImplementedError(f\"{name} not supported by fastparquet\")\nNotImplementedError: GEOMETRY not supported by fastparquet\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_GEOMETRY.parquet\n"
     },
     "GEOGRAPHY": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 184, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 173, in fn\n    raise NotImplementedError(f\"{name} not supported by fastparquet\")\nNotImplementedError: GEOGRAPHY not supported by fastparquet\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 190, in read_lt\n    fastparquet.ParquetFile(p).to_pandas()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 178, in __init__\n    raise FileNotFoundError(fn)\nFileNotFoundError: /tmp/tmpzbxpueak/lt_GEOGRAPHY.parquet\n"
     }
   },
   "nested_types": {
     "LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:29da99583545032ebf710a2eb50406e5f191affdf6a69bab54139041c47bbfea\nUEFSMRUAFTwVPCwVBBUAFQYVCAAAAgAAAAQBBQAAAFsxLDJdAwAAAFszXQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQwlAhgBYyUmABYEGRwZHCYIHBUMGRUAGRgBYxUAFgQWXhZeGQAWCDw2AAAZHBUAFQAVAgAAABZeFgQAGRwYBnBhbmRhcxi4A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAib2JqZWN0IiwgInBhbmRhc190eXBlIjogIm1peGVkIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDJ9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAEECAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "MAP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:67821524440d691d6d8f33579ea49cea2d0a5f840dfcad391ff6cb3872eb0522\nUEFSMRUAFUgVSCwVBBUAFQYVCAAAAgAAAAQBBwAAAHsiYSI6MX0HAAAAeyJiIjoyfQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQwlAhgBYyUmABYEGRwZHCYIHBUMGRUAGRgBYxUAFgQWahZqGQAWCDw2AAAZHBUAFQAVAgAAABZqFgQAGRwYBnBhbmRhcxi4A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAib2JqZWN0IiwgInBhbmRhc190eXBlIjogIm1peGVkIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDJ9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAEECAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "STRUCT": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:27303abd21c4232e8c395eead72d979ffa80a6e98ca551a042c76d4d05f580a6\nUEFSMRUAFT4VPiwVAhUAFQYVCAAAAgAAAAIBDQAAAHsieCI6MSwieSI6Mn0AAAAAAAAAABUCGSxIBnNjaGVtYRUCABUMJQIYAWMlJgAWAhkcGRwmCBwVDBkVABkYAWMVABYCFmAWYBkAFgg8NgAAGRwVABUAFQIAAAAWYBYCABkcGAZwYW5kYXMYuAN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYyIsICJudW1weV90eXBlIjogIm9iamVjdCIsICJwYW5kYXNfdHlwZSI6ICJtaXhlZCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAxfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBBAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "NESTED_LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d463e5c2c7c889aa79922a0f2b0dc233f7d92b7d2859ca60d3bd36ead62b6f2d\nUEFSMRUAFUwVTCwVBBUAFQYVCAAAAgAAAAQBCwAAAFtbMSwyXSxbM11dBQAAAFtbNF1dAAAAAAAAAAAVAhksSAZzY2hlbWEVAgAVDCUCGAFjJSYAFgQZHBkcJggcFQwZFQAZGAFjFQAWBBZuFm4ZABYIPDYAABkcFQAVABUCAAAAFm4WBAAZHBgGcGFuZGFzGLgDeyJjb2x1bW5faW5kZXhlcyI6IFt7ImZpZWxkX25hbWUiOiBudWxsLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6IG51bGwsICJudW1weV90eXBlIjogInN0ciIsICJwYW5kYXNfdHlwZSI6ICJtaXhlZC1pbnRlZ2VyIn1dLCAiY29sdW1ucyI6IFt7ImZpZWxkX25hbWUiOiAiYyIsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogImMiLCAibnVtcHlfdHlwZSI6ICJvYmplY3QiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQifV0sICJjcmVhdG9yIjogeyJsaWJyYXJ5IjogImZhc3RwYXJxdWV0IiwgInZlcnNpb24iOiAiMjAyNi4zLjAifSwgImluZGV4X2NvbHVtbnMiOiBbeyJraW5kIjogInJhbmdlIiwgIm5hbWUiOiBudWxsLCAic3RhcnQiOiAwLCAic3RlcCI6IDEsICJzdG9wIjogMn1dLCAicGFuZGFzX3ZlcnNpb24iOiAiMy4wLjEiLCAicGFydGl0aW9uX2NvbHVtbnMiOiBbXX0AGC1mYXN0cGFycXVldC1weXRob24gdmVyc2lvbiAyMDI2LjMuMCAoYnVpbGQgMCkAQQIAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "NESTED_MAP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:65249d470623bde6e89b889d1768cf68b92e39e02b0ca8ceb91a1d806bb10705\nUEFSMRUAFWAVYCwVBBUAFQYVCAAAAgAAAAQBDQAAAHsiYSI6eyJ4IjoxfX0NAAAAeyJiIjp7InkiOjJ9fQAAAAAAAAAAFQIZLEgGc2NoZW1hFQIAFQwlAhgBYyUmABYEGRwZHCYIHBUMGRUAGRgBYxUAFgQWggEWggEZABYIPDYAABkcFQAVABUCAAAAFoIBFgQAGRwYBnBhbmRhcxi4A3siY29sdW1uX2luZGV4ZXMiOiBbeyJmaWVsZF9uYW1lIjogbnVsbCwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiBudWxsLCAibnVtcHlfdHlwZSI6ICJzdHIiLCAicGFuZGFzX3R5cGUiOiAibWl4ZWQtaW50ZWdlciJ9XSwgImNvbHVtbnMiOiBbeyJmaWVsZF9uYW1lIjogImMiLCAibWV0YWRhdGEiOiBudWxsLCAibmFtZSI6ICJjIiwgIm51bXB5X3R5cGUiOiAib2JqZWN0IiwgInBhbmRhc190eXBlIjogIm1peGVkIn1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDJ9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAEQCAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "DEEP_NESTING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:2b93ddd523d21b1848a2bb187c93555bff5bbd629e9da10bc44d10c78e8c87d4\nUEFSMRUAFT4VPiwVAhUAFQYVCAAAAgAAAAIBDQAAAFt7IngiOlsxLDJdfV0AAAAAAAAAABUCGSxIBnNjaGVtYRUCABUMJQIYAWMlJgAWAhkcGRwmCBwVDBkVABkYAWMVABYCFmAWYBkAFgg8NgAAGRwVABUAFQIAAAAWYBYCABkcGAZwYW5kYXMYuAN7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJjIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYyIsICJudW1weV90eXBlIjogIm9iamVjdCIsICJwYW5kYXNfdHlwZSI6ICJtaXhlZCJ9XSwgImNyZWF0b3IiOiB7ImxpYnJhcnkiOiAiZmFzdHBhcnF1ZXQiLCAidmVyc2lvbiI6ICIyMDI2LjMuMCJ9LCAiaW5kZXhfY29sdW1ucyI6IFt7ImtpbmQiOiAicmFuZ2UiLCAibmFtZSI6IG51bGwsICJzdGFydCI6IDAsICJzdGVwIjogMSwgInN0b3AiOiAxfV0sICJwYW5kYXNfdmVyc2lvbiI6ICIzLjAuMSIsICJwYXJ0aXRpb25fY29sdW1ucyI6IFtdfQAYLWZhc3RwYXJxdWV0LXB5dGhvbiB2ZXJzaW9uIDIwMjYuMy4wIChidWlsZCAwKQBBAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   },
   "advanced_features": {
     "STATISTICS": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 216, in write_statistics\n    fastparquet.write(p, df)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 635, in write_column\n    repetition_data, definition_data, encode[encoding](data, selement), 8 * b'\\x00'\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"str_col\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 224, in read_statistics\n    pf = fastparquet.ParquetFile(p)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 225, in _parse_header\n    for rg in fmd[4]:\nTypeError: 'NoneType' object is not iterable\n"
     },
     "PREDICATE_PUSHDOWN": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 230, in write_predicate_pushdown\n    fastparquet.write(p, df)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 635, in write_column\n    repetition_data, definition_data, encode[encoding](data, selement), 8 * b'\\x00'\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"str_col\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 233, in read_predicate_pushdown\n    pf = fastparquet.ParquetFile(p)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 225, in _parse_header\n    for rg in fmd[4]:\nTypeError: 'NoneType' object is not iterable\n"
     },
     "PROJECTION_PUSHDOWN": {
-      "write": true,
-      "read": true
+      "write": false,
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 290, in convert\n    out = array_encode_utf8(data)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"fastparquet/speedups.pyx\", line 42, in fastparquet.speedups.array_encode_utf8\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/series.py\", line 901, in __array__\n    arr = np.array(values, dtype=dtype, copy=copy)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py\", line 857, in __array__\n    raise ValueError(\nValueError: Unable to avoid copy while creating an array as requested.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 239, in write_projection_pushdown\n    fastparquet.write(p, df)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1340, in write\n    write_simple(filename, data, fmd,\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 1001, in write_simple\n    write_to_file(f)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 985, in write_to_file\n    rg = make_row_group(f, row_group, fmd.schema,\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 802, in make_row_group\n    chunk = write_column(f, coldata, column,\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 635, in write_column\n    repetition_data, definition_data, encode[encoding](data, selement), 8 * b'\\x00'\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 388, in encode_plain\n    out = convert(data, se)\n          ^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/writer.py\", line 298, in convert\n    raise ValueError('Error converting column \"%s\" to bytes using '\nValueError: Error converting column \"str_col\" to bytes using encoding UTF8. Original error: Unable to avoid copy while creating an array as requested.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 242, in read_projection_pushdown\n    pf = fastparquet.ParquetFile(p)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 144, in __init__\n    self._parse_header(f, verify)\n  File \"/home/runner/.local/lib/python3.12/site-packages/fastparquet/api.py\", line 225, in _parse_header\n    for rg in fmd[4]:\nTypeError: 'NoneType' object is not iterable\n"
     },
     "PAGE_INDEX": {
       "write": false,
@@ -432,11 +626,15 @@
     },
     "DATA_PAGE_V2": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 253, in write_data_page_v2\n    raise NotImplementedError(\"fastparquet does not support Data Page V2\")\nNotImplementedError: fastparquet does not support Data Page V2\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_fastparquet.py\", line 255, in read_data_page_v2\n    raise NotImplementedError(\"fastparquet does not support Data Page V2\")\nNotImplementedError: fastparquet does not support Data Page V2\n"
     },
     "SCHEMA_EVOLUTION": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:9724d8981aade9df9d0853f90e4e0bada66bc90eb2c9158b0b7acb9ffb4af3fa\nUEFSMRUAFTwVPCwVBBUAFQYVCAAAAgAAAAQBAQAAAAAAAAACAAAAAAAAAAAAAAAAAAAAFQAVPBU8LBUEFQAVBhUIAAACAAAABAEDAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAVAhk8SAZzY2hlbWEVBAAVBBWAARUCGAFhABUEFYABFQIYAWIAFgQZHBksJggcFQQZFQAZGAFhFQAWBBZeFl4ZABYIPBgIAgAAAAAAAAAYCAEAAAAAAAAAFgAAGRwVABUAFQIAAAAmZhwVBBkVABkYAWIVABYEFl4WXhkAFmY8GAgEAAAAAAAAABgIAwAAAAAAAAAWAAAZHBUAFQAVAgAAABa8ARYEABkcGAZwYW5kYXMYmgR7ImNvbHVtbl9pbmRleGVzIjogW3siZmllbGRfbmFtZSI6IG51bGwsICJtZXRhZGF0YSI6IG51bGwsICJuYW1lIjogbnVsbCwgIm51bXB5X3R5cGUiOiAic3RyIiwgInBhbmRhc190eXBlIjogIm1peGVkLWludGVnZXIifV0sICJjb2x1bW5zIjogW3siZmllbGRfbmFtZSI6ICJhIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYSIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In0sIHsiZmllbGRfbmFtZSI6ICJiIiwgIm1ldGFkYXRhIjogbnVsbCwgIm5hbWUiOiAiYiIsICJudW1weV90eXBlIjogImludDY0IiwgInBhbmRhc190eXBlIjogImludDY0In1dLCAiY3JlYXRvciI6IHsibGlicmFyeSI6ICJmYXN0cGFycXVldCIsICJ2ZXJzaW9uIjogIjIwMjYuMy4wIn0sICJpbmRleF9jb2x1bW5zIjogW3sia2luZCI6ICJyYW5nZSIsICJuYW1lIjogbnVsbCwgInN0YXJ0IjogMCwgInN0ZXAiOiAxLCAic3RvcCI6IDJ9XSwgInBhbmRhc192ZXJzaW9uIjogIjMuMC4xIiwgInBhcnRpdGlvbl9jb2x1bW5zIjogW119ABgtZmFzdHBhcnF1ZXQtcHl0aG9uIHZlcnNpb24gMjAyNi4zLjAgKGJ1aWxkIDApAP8CAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SIZE_STATISTICS": {
       "write": false,

@@ -1,22 +1,30 @@
 {
   "tool": "Polars",
-  "version": "1.38.1",
+  "version": "1.39.3",
   "compression": {
     "NONE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:6274221988b35d2ef7bd54eb9973329fdedd1207adf977b1b3375e5d5a92d719\nUEFSMRUEFTAVMEwVBhUAAAABAAAAAAAAAAIAAAAAAAAAAwAAAAAAAAAVABUUFRQsFQYVEBUGFQYcNgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAAAIAAAAGAQIDJAAVBBk1AAYQGRgDY29sFQAWBhawARawASZSJggcNgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAGRECGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUAGRYAABkcFlIVZhYAAAAVAhksSARyb290FQIAFQQlAhgDY29sABYGGRwZHCaCAhwVBBk1AAYQGRgDY29sFQAWBhawARawASZSJggcNgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAFt4CFRQWoAIVPgAWsAEWBiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRisAS8vLy8vM2dBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVDQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUFRQUFBQWdBQ1FBRUFBZ0FBd0FBQUdOdmJBQT0AGAZQb2xhcnMZHBwAAAA7AQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SNAPPY": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:4bf7c65badd6e5f0cf9393497b89106fbb4500135a9b26dbc7d4c63049cb36a5\nUEFSMRUEFTAVLkwVBhUAAAAYBAEACQE8AgAAAAAAAAADAAAAAAAAABUAFRQVGCwVBhUQFQYVBhw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAACiQCAAAABgECAyQAFQQZNQAGEBkYA2NvbBUCFgYWsAEWsgEmUCYIHDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAABkRAhkYCAEAAAAAAAAAGRgIAwAAAAAAAAAVABkWAAAZHBZQFWoWAAAAFQIZLEgEcm9vdBUCABUEJQIYA2NvbAAWBhkcGRwmggIcFQQZNQAGEBkYA2NvbBUCFgYWsAEWsgEmUCYIHDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAABbgAhUUFqICFT4AFrABFgYmCBayARQAABkcGAxBUlJPVzpzY2hlbWEYrAEvLy8vLzNnQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBRUFBQUFFQUFBQTdQLy8vemdBQUFBZ0FBQUFHQUFBQUFFQ0FBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUFQvLy85QUFBQUFBUUFBQUFnQUNRQUVBQWdBQXdBQUFHTnZiQUE9ABgGUG9sYXJzGRwcAAAAOwEAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "GZIP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:115f318c0d7ee40094604e7b7958aae67e8e9f65de17567c3ae0d5d97a41e246\nUEFSMRUEFTAVOEwVBhUAAAAfiwgAAAAAAAD/Y2SAACYozQylAYeNyysYAAAAFQAVFBU8LBUGFRAVBhUGHDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAAAfiwgAAAAAAAD/Y2JgYGBjZGJWYQAAkuXhVQoAAAAVBBk1AAYQGRgDY29sFQQWBhawARbgASZaJggcNgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAGRECGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUAGRYAABkcFloVjgEWAAAAFQIZLEgEcm9vdBUCABUEJQIYA2NvbAAWBhkcGRwmugIcFQQZNQAGEBkYA2NvbBUEFgYWsAEW4AEmWiYIHDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAABaOAxUWFtACFT4AFrABFgYmCBbgARQAABkcGAxBUlJPVzpzY2hlbWEYrAEvLy8vLzNnQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBRUFBQUFFQUFBQTdQLy8vemdBQUFBZ0FBQUFHQUFBQUFFQ0FBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUFQvLy85QUFBQUFBUUFBQUFnQUNRQUVBQWdBQXdBQUFHTnZiQUE9ABgGUG9sYXJzGRwcAAAAOwEAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "BROTLI": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:72fc644df1b711962ec416af15ca82347f73d1f8a8935146e851aeccb883b3d1\nUEFSMRUEFTAVOEwVBhUAAACLCwAAoAECBAbCYFwNTuOgOBvABThcwg5wgAEDFQAVFBUcLBUGFRAVBhUGHDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAACLBIACAAAABgECAyQAAxUEGTUABhAZGANjb2wVCBYGFrABFsABJlomCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAZEQIZGAgBAAAAAAAAABkYCAMAAAAAAAAAFQAZFgAAGRwWWhVuFgAAABUCGSxIBHJvb3QVAgAVBCUCGANjb2wAFgYZHBkcJpoCHBUEGTUABhAZGANjb2wVCBYGFrABFsABJlomCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAW7gIVFBawAhU+ABawARYGJggWwAEUAAAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3pnQUFBQWdBQUFBR0FBQUFBRUNBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVBULy8vOUFBQUFBQVFBQUFBZ0FDUUFFQUFnQUF3QUFBR052YkFBPQAYBlBvbGFycxkcHAAAADsBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "LZO": {
       "write": false,
@@ -24,399 +32,582 @@
     },
     "LZ4": {
       "write": false,
-      "read": true
+      "read": true,
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "LZ4_RAW": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:7f0695810b8b028bc8137b84a4270fdb215ba66fcfdf765d983a54e2d3158139\nUEFSMRUEFTAVJkwVBhUAAAAiAQABABICBwCQAAMAAAAAAAAAFQAVFBUWLBUGFRAVBhUGHDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAACgAgAAAAYBAgMkABUEGTUABhAZGANjb2wVDhYGFrABFqgBJkgmCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAZEQIZGAgBAAAAAAAAABkYCAMAAAAAAAAAFQAZFgAAGRwWSBVoFgAAABUCGSxIBHJvb3QVAgAVBCUCGANjb2wAFgYZHBkcJvABHBUEGTUABhAZGANjb2wVDhYGFrABFqgBJkgmCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAW1gIVFBaYAhU+ABawARYGJggWqAEUAAAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3pnQUFBQWdBQUFBR0FBQUFBRUNBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVBULy8vOUFBQUFBQVFBQUFBZ0FDUUFFQUFnQUF3QUFBR052YkFBPQAYBlBvbGFycxkcHAAAADsBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "ZSTD": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:d4de2b46e667e3a69eb621c0de91cb66e893f8e376cc575e69a68869d11c38e8\nUEFSMRUEFTAVOkwVBhUAAAAotS/9IBilAABgAQACAAMAAAAAAAAAAgBg4AFgARUAFRQVJiwVBhUQFQYVBhw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAKUQAAAgAAAAYBAgMkABUEGTUABhAZGANjb2wVDBYGFrABFswBJlwmCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAZEQIZGAgBAAAAAAAAABkYCAMAAAAAAAAAFQAZFgAAGRwWXBV4FgAAABUCGSxIBHJvb3QVAgAVBCUCGANjb2wAFgYZHBkcJqgCHBUEGTUABhAZGANjb2wVDBYGFrABFswBJlwmCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAW+gIVFBa8AhU+ABawARYGJggWzAEUAAAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3pnQUFBQWdBQUFBR0FBQUFBRUNBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVBULy8vOUFBQUFBQVFBQUFBZ0FDUUFFQUFnQUF3QUFBR052YkFBPQAYBlBvbGFycxkcHAAAADsBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   },
   "encoding": {
     "PLAIN": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:717a850fb7d99ab288d9917a5fb079c023f889e54d967a51a5ceb3b10f88e928\nUEFSMRUAFSQVNiwVBhUAFQYVBhw2ACgEAABAQBgEAACAPwAAACi1L/0gEpEAAAIAAAAGAQAAgD8AAABAAABAQBUIGSUABhkYA2NvbBUMFgYWZhZ4Jgg8NgAoBAAAQEAYBAAAgD8AABkRAhkYBAAAgD8ZGAQAAEBAFQAZFgAAGRwWCBV4FgAAABUCGSxIBHJvb3QVAgAVCCUCGANjb2wAFgYZHBkcJoABHBUIGSUABhkYA2NvbBUMFgYWZhZ4Jgg8NgAoBAAAQEAYBAAAgD8AABb8ARUUFs4BFS4AFmYWBiYIFngUAAAZHBgMQVJST1c6c2NoZW1hGKABLy8vLy8zQUFBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3pBQUFBQWdBQUFBR0FBQUFBRURBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVByLy8vOEJBQVlBQmdBRUFBTUFBQUJqYjJ3QQAYBlBvbGFycxkcHAAAACABAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:806ebefe4ec76ebfdb6f9a31ddde01e871ebf8285398749c8a1dbda0d2e1032c\nUEFSMRUAFTwVRiwVBhUAFQYVBhw2ACgIAAAAAAAACEAYCAAAAAAAAPA/AAAAKLUv/SAe1QAAmAIAAAAGAQDwPwBAAAAAAAAACEACAGDGBYwVChklAAYZGANjb2wVDBYGFo4BFpgBJgg8NgAoCAAAAAAAAAhAGAgAAAAAAADwPwAAGRECGRgIAAAAAAAA8D8ZGAgAAAAAAAAIQBUAGRYAABkcFggVmAEWAAAAFQIZLEgEcm9vdBUCABUKJQIYA2NvbAAWBhkcGRwmoAEcFQoZJQAGGRgDY29sFQwWBhaOARaYASYIPDYAKAgAAAAAAAAIQBgIAAAAAAAA8D8AABbAAhUWFoICFT4AFo4BFgYmCBaYARQAABkcGAxBUlJPVzpzY2hlbWEYoAEvLy8vLzNBQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBRUFBQUFFQUFBQTdQLy8vekFBQUFBZ0FBQUFHQUFBQUFFREFBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUHIvLy84Q0FBWUFCZ0FFQUFNQUFBQmpiMndBABgGUG9sYXJzGRwcAAAALAEAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:48a0729cd81a57d4af80f049b7c9bc99590730172d6670b5aff649d5466ddd2b\nUEFSMRUAFQ4VICwVBhUAFQYVBhw2ACgBARgBAAAAACi1L/0gBzkAAAIAAAAGAQUVABklAAYZGANjb2wVDBYGFkQWViYIPDYAKAEBGAEAAAAZEQIZGAEAGRgBARUAGRYAABkcFggVVhYAAAAVAhksSARyb290FQIAFQAlAhgDY29sABYGGRwZHCZeHBUAGSUABhkYA2NvbBUMFgYWRBZWJgg8NgAoAQEYAQAAABbCARUUFqABFSIAFkQWBiYIFlYUAAAZHBgMQVJST1c6c2NoZW1hGJwBLy8vLy8yd0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3l3QUFBQWdBQUFBR0FBQUFBRUdBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVB6Ly8vOEVBQVFBQXdBQUFHTnZiQUE9ABgGUG9sYXJzGRwcAAAAFQEAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "PLAIN_DICTIONARY": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN_DICTIONARY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN_DICTIONARY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN_DICTIONARY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN_DICTIONARY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN_DICTIONARY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write PLAIN_DICTIONARY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "RLE_DICTIONARY": {
       "INT32": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:a0fcc8951938440bdc9a9bdb7ad936d2ed99ee95044d7c148df38173d700f1da\nUEFSMRUEFRgVKkwVBhUAAAAotS/9IAxhAAABAAAAAgAAAAMAAAAVABUUFSYsFQYVEBUGFQYcNgAoBAMAAAAYBAEAAAAAAAAotS/9IApRAAACAAAABgECAyQAFQIZNQAGEBkYA2NvbBUMFgYWiAEWrAEmTCYIHDYAKAQDAAAAGAQBAAAAAAAZEQIZGAQBAAAAGRgEAwAAABUAGRYAABkcFkwVaBYAAAAVAhksSARyb290FQIAFQIlAhgDY29sABYGGRwZHCb4ARwVAhk1AAYQGRgDY29sFQwWBhaIARasASZMJggcNgAoBAMAAAAYBAEAAAAAABa6AhUUFowCFS4AFogBFgYmCBasARQAABkcGAxBUlJPVzpzY2hlbWEYrAEvLy8vLzNnQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBRUFBQUFFQUFBQTdQLy8vemdBQUFBZ0FBQUFHQUFBQUFFQ0FBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUFQvLy84Z0FBQUFBUUFBQUFnQUNRQUVBQWdBQXdBQUFHTnZiQUE9ABgGUG9sYXJzGRwcAAAAMwEAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:d4de2b46e667e3a69eb621c0de91cb66e893f8e376cc575e69a68869d11c38e8\nUEFSMRUEFTAVOkwVBhUAAAAotS/9IBilAABgAQACAAMAAAAAAAAAAgBg4AFgARUAFRQVJiwVBhUQFQYVBhw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAKUQAAAgAAAAYBAgMkABUEGTUABhAZGANjb2wVDBYGFrABFswBJlwmCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAZEQIZGAgBAAAAAAAAABkYCAMAAAAAAAAAFQAZFgAAGRwWXBV4FgAAABUCGSxIBHJvb3QVAgAVBCUCGANjb2wAFgYZHBkcJqgCHBUEGTUABhAZGANjb2wVDBYGFrABFswBJlwmCBw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAW+gIVFBa8AhU+ABawARYGJggWzAEUAAAZHBgMQVJST1c6c2NoZW1hGKwBLy8vLy8zZ0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3pnQUFBQWdBQUFBR0FBQUFBRUNBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVBULy8vOUFBQUFBQVFBQUFBZ0FDUUFFQUFnQUF3QUFBR052YkFBPQAYBlBvbGFycxkcHAAAADsBAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE_DICTIONARY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE_DICTIONARY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE_DICTIONARY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
-        "read": true
+        "read": true,
+        "write_log": "sha256:dc1dce5765dbc69c65fd9f21d3c46d83655db18ec6fa870ef20e92adb6bca234\nUEFSMRUEFTQVRkwVBhUAAAAotS/9IBrRAAAFAAAAaGVsbG8FAAAAd29ybGQEAAAAdGVzdBUAFRQVJiwVBhUQFQYVBhw2ACgFd29ybGQYBWhlbGxvAAAAKLUv/SAKUQAAAgAAAAYBAgMkABUMGTUABhAZGANjb2wVDBYGFqgBFswBJmgmCBw2ACgFd29ybGQYBWhlbGxvAAAZEQIZGAVoZWxsbxkYBXdvcmxkFQAZFgAAGRwWaBVsFgAAABUCGSxIBHJvb3QVAgAVDCUCGANjb2wAFgYZHBkcJrQCHBUMGTUABhAZGANjb2wVDBYGFqgBFswBJmgmCBw2ACgFd29ybGQYBWhlbGxvAAAW4gIVFBawAhUyABaoARYGJggWzAEUAAAZHBgMQVJST1c6c2NoZW1hGJwBLy8vLy8yd0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3l3QUFBQWdBQUFBR0FBQUFBRVRBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVB6Ly8vOEVBQVFBQXdBQUFHTnZiQUE9ABgGUG9sYXJzGRwcAAAAJQEAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "RLE": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: RLE only supports BOOLEAN\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: RLE only supports BOOLEAN\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: RLE only supports BOOLEAN\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: RLE only supports BOOLEAN\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write RLE encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: RLE only supports BOOLEAN\n"
       }
     },
     "BIT_PACKED": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BIT_PACKED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 272, in read_enc\n    raise NotImplementedError(f\"No pyarrow encoding mapping for {en}\")\nNotImplementedError: No pyarrow encoding mapping for BIT_PACKED\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BIT_PACKED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 272, in read_enc\n    raise NotImplementedError(f\"No pyarrow encoding mapping for {en}\")\nNotImplementedError: No pyarrow encoding mapping for BIT_PACKED\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BIT_PACKED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 272, in read_enc\n    raise NotImplementedError(f\"No pyarrow encoding mapping for {en}\")\nNotImplementedError: No pyarrow encoding mapping for BIT_PACKED\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BIT_PACKED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 272, in read_enc\n    raise NotImplementedError(f\"No pyarrow encoding mapping for {en}\")\nNotImplementedError: No pyarrow encoding mapping for BIT_PACKED\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BIT_PACKED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 272, in read_enc\n    raise NotImplementedError(f\"No pyarrow encoding mapping for {en}\")\nNotImplementedError: No pyarrow encoding mapping for BIT_PACKED\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BIT_PACKED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 272, in read_enc\n    raise NotImplementedError(f\"No pyarrow encoding mapping for {en}\")\nNotImplementedError: No pyarrow encoding mapping for BIT_PACKED\n"
       }
     },
     "DELTA_BINARY_PACKED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BINARY_PACKED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BINARY_PACKED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BINARY_PACKED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BINARY_PACKED encoder only supports INT32 and INT64\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BINARY_PACKED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BINARY_PACKED encoder only supports INT32 and INT64\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BINARY_PACKED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BINARY_PACKED encoder only supports INT32 and INT64\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BINARY_PACKED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BINARY_PACKED encoder only supports INT32 and INT64\n"
       }
     },
     "DELTA_LENGTH_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_LENGTH_BYTE_ARRAY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_LENGTH_BYTE_ARRAY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_LENGTH_BYTE_ARRAY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_LENGTH_BYTE_ARRAY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_LENGTH_BYTE_ARRAY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_LENGTH_BYTE_ARRAY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "DELTA_BYTE_ARRAY": {
       "INT32": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BYTE_ARRAY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY\n"
       },
       "INT64": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BYTE_ARRAY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY\n"
       },
       "FLOAT": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BYTE_ARRAY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY\n"
       },
       "DOUBLE": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BYTE_ARRAY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY\n"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BYTE_ARRAY encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write DELTA_BYTE_ARRAY encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       }
     },
     "BYTE_STREAM_SPLIT": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: BYTE_STREAM_SPLIT only supports FLOAT, DOUBLE, INT32, INT64 and FIXED_LEN_BYTE_ARRAY\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: BYTE_STREAM_SPLIT only supports FLOAT, DOUBLE, INT32, INT64 and FIXED_LEN_BYTE_ARRAY\n"
       }
     },
     "BYTE_STREAM_SPLIT_EXTENDED": {
       "INT32": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT_EXTENDED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "INT64": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT_EXTENDED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "FLOAT": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT_EXTENDED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "DOUBLE": {
         "write": false,
-        "read": true
+        "read": true,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT_EXTENDED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
       },
       "BOOLEAN": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT_EXTENDED encoding; actual encodings: {'PLAIN'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: BYTE_STREAM_SPLIT only supports FLOAT, DOUBLE, INT32, INT64 and FIXED_LEN_BYTE_ARRAY\n"
       },
       "BYTE_ARRAY": {
         "write": false,
-        "read": false
+        "read": false,
+        "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 262, in write_enc\n    raise ValueError(\nValueError: Polars did not write BYTE_STREAM_SPLIT_EXTENDED encoding; actual encodings: {'RLE_DICTIONARY'}\n",
+        "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 277, in read_enc\n    _pq.write_table(\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 2015, in write_table\n    writer.write_table(table, row_group_size=row_group_size)\n  File \"/home/runner/.local/lib/python3.12/site-packages/pyarrow/parquet/core.py\", line 1180, in write_table\n    self.writer.write_table(table, row_group_size=row_group_size)\n  File \"pyarrow/_parquet.pyx\", line 2397, in pyarrow._parquet.ParquetWriter.write_table\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\nOSError: BYTE_STREAM_SPLIT only supports FLOAT, DOUBLE, INT32, INT64 and FIXED_LEN_BYTE_ARRAY\n"
       }
     }
   },
   "logical_types": {
     "STRING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:c2261053135881576835e7a6cc7ee1177e3b412c7830ded8d18cbd469862e308\nUEFSMRUEFRIVJEwVAhUAAAAotS/9IAlJAAAFAAAAaGVsbG8VABUQFSIsFQIVEBUGFQYcNgAoBWhlbGxvGAVoZWxsbwAAACi1L/0gCEEAAAIAAAACAQADFQwZNQAGEBkYAWMVDBYCFoIBFqYBJkYmCBw2ACgFaGVsbG8YBWhlbGxvAAAZEQIZGAVoZWxsbxkYBWhlbGxvFQAZFgAAGRwWRhVoFgAAABUCGSxIBHJvb3QVAgAVDCUCGAFjJQBMHAAAABYCGRwZHCbsARwVDBk1AAYQGRgBYxUMFgIWggEWpgEmRiYIHDYAKAVoZWxsbxgFaGVsbG8AABa4AhUUFoYCFTIAFoIBFgImCBamARQAABkcGAxBUlJPVzpzY2hlbWEYmAEvLy8vLzJvQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBRUFBQUFFQUFBQTdQLy8veXdBQUFBZ0FBQUFHQUFBQUFFVUFBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUHovLy84RUFBUUFBUUFBQUdNQQAYBlBvbGFycxkcHAAAACMBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "DATE": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:a6c776ee569e35ca231933fdf994f20f5ed01eb1b48bff7451cb2d9a8279788d\nUEFSMRUEFQgVGkwVAhUAAAAotS/9IAQhAAALTQAAFQAVEBUiLBUCFRAVBhUGHDYAKAQLTQAAGAQLTQAAAAAAKLUv/SAIQQAAAgAAAAIBAAMVAhk1AAYQGRgBYxUMFgIWdBaYASY8JggcNgAoBAtNAAAYBAtNAAAAABkRAhkYBAtNAAAZGAQLTQAAFQAZFgAAGRwWPBVkFgAAABUCGSxIBHJvb3QVAgAVAiUCGAFjJQxMbAAAABYCGRwZHCbUARwVAhk1AAYQGRgBYxUMFgIWdBaYASY8JggcNgAoBAtNAAAYBAtNAAAAABagAhUUFvIBFS4AFnQWAiYIFpgBFAAAGRwYDEFSUk9XOnNjaGVtYRigAS8vLy8vMjRBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96QUFBQUFnQUFBQUdBQUFBQUVJQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQci8vLzhBQUFZQUJnQUVBQUVBQUFCakFBPT0AGAZQb2xhcnMZHBwAAAAnAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIME_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:5d9e9120a7f4295fd8bf8c8e485cdab8fe8842bd7266e1e9cf0c2985777648dd\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAAgKdISicAABUAFRAVIiwVAhUQFQYVBhw2ACgIAICnSEonAAAYCACAp0hKJwAAAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgAgKdISicAABgIAICnSEonAAAAABkRAhkYCACAp0hKJwAAGRgIAICnSEonAAAVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWNsfBIcPAAAAAAAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCACAp0hKJwAAGAgAgKdISicAAAAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRioAS8vLy8vM1lBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVKQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUF3QUFBQWdBQ2dBSUFBUUFBUUFBQUdNQQAYBlBvbGFycxkcHAAAADwBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIME_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:5d9e9120a7f4295fd8bf8c8e485cdab8fe8842bd7266e1e9cf0c2985777648dd\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAAgKdISicAABUAFRAVIiwVAhUQFQYVBhw2ACgIAICnSEonAAAYCACAp0hKJwAAAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgAgKdISicAABgIAICnSEonAAAAABkRAhkYCACAp0hKJwAAGRgIAICnSEonAAAVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWNsfBIcPAAAAAAAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCACAp0hKJwAAGAgAgKdISicAAAAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRioAS8vLy8vM1lBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVKQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUF3QUFBQWdBQ2dBSUFBUUFBUUFBQUdNQQAYBlBvbGFycxkcHAAAADwBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIME_NANOS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:5d9e9120a7f4295fd8bf8c8e485cdab8fe8842bd7266e1e9cf0c2985777648dd\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAAgKdISicAABUAFRAVIiwVAhUQFQYVBhw2ACgIAICnSEonAAAYCACAp0hKJwAAAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgAgKdISicAABgIAICnSEonAAAAABkRAhkYCACAp0hKJwAAGRgIAICnSEonAAAVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWNsfBIcPAAAAAAAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCACAp0hKJwAAGAgAgKdISicAAAAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRioAS8vLy8vM1lBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVKQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUF3QUFBQWdBQ2dBSUFBUUFBUUFBQUdNQQAYBlBvbGFycxkcHAAAADwBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_MILLIS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:ddb932fc2321269e65829aef444a2e4911f2ec1ed96302b5855264c6ed4dc986\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAA9FHCjAEAABUAFRAVIiwVAhUQFQYVBhw2ACgIAPRRwowBAAAYCAD0UcKMAQAAAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgA9FHCjAEAABgIAPRRwowBAAAAABkRAhkYCAD0UcKMAQAAGRgIAPRRwowBAAAVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWNsjBIcHAAAAAAAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCAD0UcKMAQAAGAgA9FHCjAEAAAAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRigAS8vLy8vMjRBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96QUFBQUFnQUFBQUdBQUFBQUVLQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQci8vLzhCQUFZQUJnQUVBQUVBQUFCakFBPT0AGAZQb2xhcnMZHBwAAAA0AQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_MICROS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:54e6ebbb358d7fc3fbbb696318b33e09e244e2e26c5c1c3344027d3d0d0388b6\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAAICEQ1w0GABUAFRAVIiwVAhUQFQYVBhw2ACgIACAhENcNBgAYCAAgIRDXDQYAAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgAICEQ1w0GABgIACAhENcNBgAAABkRAhkYCAAgIRDXDQYAGRgIACAhENcNBgAVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWNsjBIcLAAAAAAAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCAAgIRDXDQYAGAgAICEQ1w0GAAAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRigAS8vLy8vMjRBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96QUFBQUFnQUFBQUdBQUFBQUVLQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQci8vLzhDQUFZQUJnQUVBQUVBQUFCakFBPT0AGAZQb2xhcnMZHBwAAAA0AQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "TIMESTAMP_NANOS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:06cde0bd6a2b0ac525885a6fa27eab47ebe38fbd991450938fff16a281a2f0a6\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAAAGUBFxCmFxUAFRAVIiwVAhUQFQYVBhw2ACgIAABlARcQphcYCAAAZQEXEKYXAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgAAGUBFxCmFxgIAABlARcQphcAABkRAhkYCAAAZQEXEKYXGRgIAABlARcQphcVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWNsjBIcPAAAAAAAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCAAAZQEXEKYXGAgAAGUBFxCmFwAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRigAS8vLy8vMjRBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96QUFBQUFnQUFBQUdBQUFBQUVLQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQci8vLzhEQUFZQUJnQUVBQUVBQUFCakFBPT0AGAZQb2xhcnMZHBwAAAA0AQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "INT96": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 330, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 300, in <lambda>\n    lt_tests[\"INT96\"] = lambda: (_ for _ in ()).throw(NotImplementedError(\"Polars does not write INT96\"))\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 300, in <genexpr>\n    lt_tests[\"INT96\"] = lambda: (_ for _ in ()).throw(NotImplementedError(\"Polars does not write INT96\"))\nNotImplementedError: Polars does not write INT96\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 333, in read_lt\n    pl.read_parquet(p)\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/io/parquet/functions.py\", line 293, in read_parquet\n    return lf.collect()\n           ^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 97, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/opt_flags.py\", line 326, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/frame.py\", line 2464, in collect\n    return wrap_df(ldf.collect(engine, callback))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: No such file or directory (os error 2): /tmp/tmp1p132jf3/lt_INT96.parquet\n"
     },
     "DECIMAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:93f238876f9bd0ceae4dcd688c3a9476ab7afd2cb2dc823aff5974071e2e3071\nUEFSMRUAFRwVLiwVAhUAFQYVBhw2ACgIOTAAAAAAAAAYCDkwAAAAAAAAAAAAKLUv/SAOcQAAAgAAAAIBOTAAAAAAAAAVBBklAAYZGAFjFQwWAhZuFoABJgg8NgAoCDkwAAAAAAAAGAg5MAAAAAAAAAAAGRECGRgIOTAAAAAAAAAZGAg5MAAAAAAAABUAGRYAABkcFggVgAEWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWMlChUEFRQsXBUEFRQAAAAWAhkcGRwmiAEcFQQZJQAGGRgBYxUMFgIWbhaAASYIPDYAKAg5MAAAAAAAABgIOTAAAAAAAAAAABaiAhUWFuQBFT4AFm4WAiYIFoABFAAAGRwYDEFSUk9XOnNjaGVtYRioAS8vLy8vM1lBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVIQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzhLQUFBQUFnQUFBQWdBREFBRUFBZ0FBUUFBQUdNQQAYBlBvbGFycxkcHAAAADwBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UUID": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:bfe6c048b4d655b713400e37361d2c5136b1b331bd5439abc9b6e5e801d5a15f\nUEFSMRUEFVAVYkwVAhUAAAAotS/9IChBAQAkAAAANTUwZTg0MDAtZTI5Yi00MWQ0LWE3MTYtNDQ2NjU1NDQwMDAwFQAVEBUiLBUCFRAVBhUGHDYAKCQ1NTBlODQwMC1lMjliLTQxZDQtYTcxNi00NDY2NTU0NDAwMDAYJDU1MGU4NDAwLWUyOWItNDFkNC1hNzE2LTQ0NjY1NTQ0MDAwMAAAACi1L/0gCEEAAAIAAAACAQADFQwZNQAGEBkYAWMVDBYCFrwCFuACJoQBJggcNgAoJDU1MGU4NDAwLWUyOWItNDFkNC1hNzE2LTQ0NjY1NTQ0MDAwMBgkNTUwZTg0MDAtZTI5Yi00MWQ0LWE3MTYtNDQ2NjU1NDQwMDAwAAAZEQIZGCQ1NTBlODQwMC1lMjliLTQxZDQtYTcxNi00NDY2NTU0NDAwMDAZGCQ1NTBlODQwMC1lMjliLTQxZDQtYTcxNi00NDY2NTU0NDAwMDAVABkWAAAZHBaEARXkARYAAAAVAhksSARyb290FQIAFQwlAhgBYyUATBwAAAAWAhkcGRwm5AMcFQwZNQAGEBkYAWMVDBYCFrwCFuACJoQBJggcNgAoJDU1MGU4NDAwLWUyOWItNDFkNC1hNzE2LTQ0NjY1NTQ0MDAwMBgkNTUwZTg0MDAtZTI5Yi00MWQ0LWE3MTYtNDQ2NjU1NDQwMDAwAAAW7AUVGBa+BBWuAQAWvAIWAiYIFuACFAAAGRwYDEFSUk9XOnNjaGVtYRiYAS8vLy8vMm9BQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy95d0FBQUFnQUFBQUdBQUFBQUVVQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQei8vLzhFQUFRQUFRQUFBR01BABgGUG9sYXJzGRwcAAAAYwEAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "JSON": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:db6a49d232f902734a3d61509826b8361d5416c08a83a045597778e62582441a\nUEFSMRUEFSIVNEwVAhUAAAAotS/9IBGJAAANAAAAeyJrZXkiOiJ2YWwifRUAFRAVIiwVAhUQFQYVBhw2ACgNeyJrZXkiOiJ2YWwifRgNeyJrZXkiOiJ2YWwifQAAACi1L/0gCEEAAAIAAAACAQADFQwZNQAGEBkYAWMVDBYCFrIBFtYBJlYmCBw2ACgNeyJrZXkiOiJ2YWwifRgNeyJrZXkiOiJ2YWwifQAAGRECGRgNeyJrZXkiOiJ2YWwifRkYDXsia2V5IjoidmFsIn0VABkWAAAZHBZWFYgBFgAAABUCGSxIBHJvb3QVAgAVDCUCGAFjJQBMHAAAABYCGRwZHCasAhwVDBk1AAYQGRgBYxUMFgIWsgEW1gEmViYIHDYAKA17ImtleSI6InZhbCJ9GA17ImtleSI6InZhbCJ9AAAWqAMVFhbWAhVSABayARYCJggW1gEUAAAZHBgMQVJST1c6c2NoZW1hGJgBLy8vLy8yb0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3l3QUFBQWdBQUFBR0FBQUFBRVVBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVB6Ly8vOEVBQVFBQVFBQUFHTUEAGAZQb2xhcnMZHBwAAAAzAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "FLOAT16": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:684b0939848d1b720e1f91a88705e356b40480f02f034c1e407b59b73f7835c0\nUEFSMRUAFRQVJiwVAhUAFQYVBhw2ACgEAACAPxgEAACAPwAAACi1L/0gClEAAAIAAAACAQAAgD8VCBklAAYZGAFjFQwWAhZWFmgmCDw2ACgEAACAPxgEAACAPwAAGRECGRgEAACAPxkYBAAAgD8VABkWAAAZHBYIFWgWAAAAFQIZLEgEcm9vdBUCABUIJQIYAWMAFgIZHBkcJnAcFQgZJQAGGRgBYxUMFgIWVhZoJgg8NgAoBAAAgD8YBAAAgD8AABboARUUFroBFS4AFlYWAiYIFmgUAAAZHBgMQVJST1c6c2NoZW1hGKABLy8vLy8yNEFBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3pBQUFBQWdBQUFBR0FBQUFBRURBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVByLy8vOEJBQVlBQmdBRUFBRUFBQUJqQUE9PQAYBlBvbGFycxkcHAAAABsBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "ENUM": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:f0e4d0e1d91a985fa9beb5d31f644017017014309f6d85c1256e2f33180fc6a8\nUEFSMRUEFRQVJkwVBBUAAAAotS/9IApRAAABAAAAQQEAAABCFQAVEhUkLBUGFRAVBhUGHDYAKAFCGAFBAAAAKLUv/SAJSQAAAgAAAAYBAQMCFQwZNQAGEBkYAWMVDBYGFnYWmgEmSCYIHDYAKAFCGAFBAAAZEQIZGAFBGRgBQhUAGRYAABkcFkgVWhYAAAAVAhksSARyb290FQIAFQwlAhgBYyUATBwAAAAWBhkcGRwm4gEcFQwZNQAGEBkYAWMVDBYGFnYWmgEmSCYIHDYAKAFCGAFBAAAWigIVFBboARUiABZ2FgYmCBaaARQAABkcGAxBUlJPVzpzY2hlbWEYoAIvLy8vLzg0QUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUFkUC8vL3dRQUFBQUJBQUFBQkFBQUFPYi8vLytZQUFBQWpBQUFBR2dBQUFCZ0FBQUFHQUFBQUFFVUVnQWFBQVFBR0FBWkFBZ0FEQUFRQUJRQUFRQUFBQVFBQUFEMC8vLy9JQUFBQUF3QUFBQUlBQXdBQkFBSUFBZ0FBQUF3T3pBN2RUTXlPd0FBQUFBUUFBQUFYMUJNWDBOQlZFVkhUMUpKUTBGTU1nQUFBQUFBQUFBQStQLy8vd3dBQUFBSUFBZ0FBQUFFQVBiLy8vOGdBQUFBQUFBR0FBZ0FCQUQ4Ly8vL0JBQUVBQUVBQUFCakFBPT0AGAZQb2xhcnMZHBwAAAChAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "BSON": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:da41bd1dc44c4d350d6d594542e95cd7759e1229f99ebdd0c3ff5437e84faa98\nUEFSMRUEFRIVJEwVAhUAAAAotS/9IAlJAAAFAAAABQAAAAAVABUQFSIsFQIVEBUGFQYcNgAoBQUAAAAAGAUFAAAAAAAAACi1L/0gCEEAAAIAAAACAQADFQwZNQAGEBkYAWMVDBYCFoIBFqYBJkYmCBw2ACgFBQAAAAAYBQUAAAAAAAAZEQIZGAUFAAAAABkYBQUAAAAAFQAZFgAAGRwWRhVoFgAAABUCGSxIBHJvb3QVAgAVDCUCGAFjABYCGRwZHCbsARwVDBk1AAYQGRgBYxUMFgIWggEWpgEmRiYIHDYAKAUFAAAAABgFBQAAAAAAABa4AhUUFoYCFTIAFoIBFgImCBamARQAABkcGAxBUlJPVzpzY2hlbWEYmAEvLy8vLzJvQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBRUFBQUFFQUFBQTdQLy8veXdBQUFBZ0FBQUFHQUFBQUFFVEFBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUHovLy84RUFBUUFBUUFBQUdNQQAYBlBvbGFycxkcHAAAAB0BAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "INTERVAL": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:0aad302e1cd40b6fe6df72af599e558bed868232a7bd62bce11bcc6a5324b4df\nUEFSMRUEFRAVIkwVAhUAAAAotS/9IAhBAAAAYNcdFAAAABUAFRAVIiwVAhUQFQYVBhw2ACgIAGDXHRQAAAAYCABg1x0UAAAAAAAAKLUv/SAIQQAAAgAAAAIBAAMVBBk1AAYQGRgBYxUMFgIWjAEWsAEmRCYIHDYAKAgAYNcdFAAAABgIAGDXHRQAAAAAABkRAhkYCABg1x0UAAAAGRgIAGDXHRQAAAAVABkWAAAZHBZEFXQWAAAAFQIZLEgEcm9vdBUCABUEJQIYAWMAFgIZHBkcJvQBHBUEGTUABhAZGAFjFQwWAhaMARawASZEJggcNgAoCABg1x0UAAAAGAgAYNcdFAAAAAAAFtoCFRQWnAIVPgAWjAEWAiYIFrABFAAAGRwYDEFSUk9XOnNjaGVtYRigAS8vLy8vMjRBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBN1AvLy96QUFBQUFnQUFBQUdBQUFBQUVTQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQci8vLzhDQUFZQUJnQUVBQUVBQUFCakFBPT0AGAZQb2xhcnMZHBwAAAArAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UNKNOWN": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:787e5633a76d50011d0de68e54e416e3743508eced9840305ff75c3f11bc9e89\nUEFSMRUAFQwVHiwVAhUAFQYVBhw2AgAAACi1L/0gBjEAAAIAAAADABUCGSUABhkYAWMVDBYCFjYWSCYIPDYCAAAZEQEZGAEAGRgBABUAGRYCABkcFggVSBYAAAAVAhksSARyb290FQIAFQIlAhgBY2y8AAAAFgIZHBkcJlAcFQIZJQAGGRgBYxUMFgIWNhZIJgg8NgIAABakARUUFoIBFSIAFjYWAiYIFkgUAAAZHBgMQVJST1c6c2NoZW1hGJgBLy8vLy8yb0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUE3UC8vL3l3QUFBQWdBQUFBR0FBQUFBRUJBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVB6Ly8vOEVBQVFBQVFBQUFHTUEAGAZQb2xhcnMZHBwAAAALAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "VARIANT": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 330, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 314, in _pl_variant\n    raise NotImplementedError(\"VARIANT not yet supported in Polars\")\nNotImplementedError: VARIANT not yet supported in Polars\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 333, in read_lt\n    pl.read_parquet(p)\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/io/parquet/functions.py\", line 293, in read_parquet\n    return lf.collect()\n           ^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 97, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/opt_flags.py\", line 326, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/frame.py\", line 2464, in collect\n    return wrap_df(ldf.collect(engine, callback))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: No such file or directory (os error 2): /tmp/tmp1p132jf3/lt_VARIANT.parquet\n"
     },
     "GEOMETRY": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 330, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 319, in _pl_geometry\n    raise NotImplementedError(\"GEOMETRY not yet supported in Polars\")\nNotImplementedError: GEOMETRY not yet supported in Polars\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 333, in read_lt\n    pl.read_parquet(p)\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/io/parquet/functions.py\", line 293, in read_parquet\n    return lf.collect()\n           ^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 97, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/opt_flags.py\", line 326, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/frame.py\", line 2464, in collect\n    return wrap_df(ldf.collect(engine, callback))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: No such file or directory (os error 2): /tmp/tmp1p132jf3/lt_GEOMETRY.parquet\n"
     },
     "GEOGRAPHY": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 330, in write_lt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 324, in _pl_geography\n    raise NotImplementedError(\"GEOGRAPHY not yet supported in Polars\")\nNotImplementedError: GEOGRAPHY not yet supported in Polars\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 333, in read_lt\n    pl.read_parquet(p)\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/io/parquet/functions.py\", line 293, in read_parquet\n    return lf.collect()\n           ^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 97, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/opt_flags.py\", line 326, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/frame.py\", line 2464, in collect\n    return wrap_df(ldf.collect(engine, callback))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: No such file or directory (os error 2): /tmp/tmp1p132jf3/lt_GEOGRAPHY.parquet\n"
     }
   },
   "nested_types": {
     "LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:bc4a655353b9eac1e08466467a2169eaef0a981dfb364808330878dcae255b43\nUEFSMRUAFUoVUCwVBhUAFQYVBhw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAl/QAAqAIAAAADAgM/AAEAAgADAAAAAAAAAAMAYGDckATFCBUEGSUABhk4AWMEbGlzdAdlbGVtZW50FQwWBhacARaiASYIPDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAABkRAhkYCAEAAAAAAAAAGRgIAwAAAAAAAAAVABkWAAAZHBYIFaIBFgAAABUCGUxIBHJvb3QVAgA1AhgBYxUCFQZMPAAAADUEGARsaXN0FQIAFQQlAhgHZWxlbWVudAAWBBkcGRwmqgEcFQQZJQAGGTgBYwRsaXN0B2VsZW1lbnQVDBYGFpwBFqIBJgg8NgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAFuACFRYWogIVPgAWnAEWBCYIFqIBFAAAGRwYDEFSUk9XOnNjaGVtYRjoAS8vLy8vNllBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBMFAvLy8yZ0FBQUJjQUFBQUNBQUFBQUVWQUFBQkFBQUFCQUFBQU96Ly8vODRBQUFBSUFBQUFCZ0FBQUFCQWdBQUVBQVNBQVFBRUFBUkFBZ0FBQUFNQUFBQUFBRDAvLy8vUUFBQUFBRUFBQUFJQUFrQUJBQUlBQVFBQUFCcGRHVnRBQUFBQVB6Ly8vOEVBQVFBQVFBQUFHTUEAGAZQb2xhcnMZHBwAAACcAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "MAP": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:7c65472975ac4503f6bbfcba1931c106789122da711a691e70ce241cea6fd9f9\nUEFSMRUAFR4VMCwVBBUAFQYVBhw2AigIAQAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAPeQAAAwAAAAMGAAEAAAAAAAAAFQQZJQAGGSgBYwFhFQwWBBZwFoIBJgg8NgIoCAEAAAAAAAAAGAgBAAAAAAAAAAAAGRECGRgIAQAAAAAAAAAZGAgBAAAAAAAAABUAGRYCABkcFggVggEWAAAAFQIZPEgEcm9vdBUCADUCGAFjFQIAFQQlAhgBYQAWBBkcGRwmigEcFQQZJQAGGSgBYwFhFQwWBBZwFoIBJgg8NgIoCAEAAAAAAAAAGAgBAAAAAAAAAAAAFqgCFRYW6gEVPgAWcBYEJggWggEUAAAZHBgMQVJST1c6c2NoZW1hGOQBLy8vLy82SUFBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUVBQUFBRUFBQUEwUC8vLzJRQUFBQllBQUFBQ0FBQUFBRU5BQUFCQUFBQUJBQUFBT3ovLy84NEFBQUFJQUFBQUJnQUFBQUJBZ0FBRUFBU0FBUUFFQUFSQUFnQUFBQU1BQUFBQUFEMC8vLy9RQUFBQUFFQUFBQUlBQWtBQkFBSUFBRUFBQUJoQUFBQS9QLy8vd1FBQkFBQkFBQUFZd0E9ABgGUG9sYXJzGRwcAAAAdAEAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "STRUCT": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:f8c54f25cfb978a07fe064998494c6f7734127f0270f197230e78692bcc1b6d1\nUEFSMRUAFS4VQCwVBBUAFQYVBhw2ACgIAwAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAXuQAAAwAAAAMKAAEAAAAAAAAAAwAAAAAAAAAVBBklAAYZKAFjAXgVDBYEFoABFpIBJgg8NgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAFQAVLhVALBUEFQAVBhUGHDYAKAgEAAAAAAAAABgIAgAAAAAAAAAAAAAotS/9IBe5AAADAAAAAwoAAgAAAAAAAAAEAAAAAAAAABUEGSUABhkoAWMBeRUMFgQWgAEWkgEm/AE8NgAoCAQAAAAAAAAAGAgCAAAAAAAAAAAAGRECGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUAGRYAABkRAhkYCAIAAAAAAAAAGRgIBAAAAAAAAAAVABkWAAAZHBYIFZIBFgAAABkcFvwBFZIBFgAAABUCGUxIBHJvb3QVAgA1AhgBYxUEABUEJQIYAXgAFQQlAhgBeQAWBBkcGSwmmgEcFQQZJQAGGSgBYwF4FQwWBBaAARaSASYIPDYAKAgDAAAAAAAAABgIAQAAAAAAAAAAABbuBBUWFvIDFT4AJo4DHBUEGSUABhkoAWMBeRUMFgQWgAEWkgEm/AE8NgAoCAQAAAAAAAAAGAgCAAAAAAAAAAAAFoQFFRgWsAQVPgAWgAIWBCYIFqQCFAAAGRwYDEFSUk9XOnNjaGVtYRikAi8vLy8vOUlBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBb1AvLy81UUFBQUNJQUFBQUNBQUFBQUVOQUFBQ0FBQUFOQUFBQUFRQUFBREEvLy8vSUFBQUFCQUFBQUFJQUFBQUFRSUFBQUFBQUFDNC8vLy9RQUFBQUFFQUFBQUJBQUFBZVFBQUFPei8vLzg0QUFBQUlBQUFBQmdBQUFBQkFnQUFFQUFTQUFRQUVBQVJBQWdBQUFBTUFBQUFBQUQwLy8vL1FBQUFBQUVBQUFBSUFBa0FCQUFJQUFFQUFBQjRBQUFBL1AvLy93UUFCQUFCQUFBQVl3QT0AGAZQb2xhcnMZLBwAABwAAAACAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "NESTED_LIST": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:7ea77a99c5e7d2799f3e069bc70b6960a39bc11a2441768cd5e7a41413e8ab9c\nUEFSMRUAFV4VXCwVCBUAFQYVBhw2ACgIBAAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAvLQEAyAMAAAADGAAEbQsAAQACAAMABAAAAAAAAAAEAGBgMDButILCBRUEGSUABhlYAWMEbGlzdAdlbGVtZW50BGxpc3QHZWxlbWVudBUMFggWsAEWrgEmCDw2ACgIBAAAAAAAAAAYCAEAAAAAAAAAAAAZEQIZGAgBAAAAAAAAABkYCAQAAAAAAAAAFQAZFgAAGRwWCBWuARYAAAAVAhlsSARyb290FQIANQIYAWMVAhUGTDwAAAA1BBgEbGlzdBUCADUCGAdlbGVtZW50FQIVBkw8AAAANQQYBGxpc3QVAgAVBCUCGAdlbGVtZW50ABYEGRwZHCa2ARwVBBklAAYZWAFjBGxpc3QHZWxlbWVudARsaXN0B2VsZW1lbnQVDBYIFrABFq4BJgg8NgAoCAQAAAAAAAAAGAgBAAAAAAAAAAAAFoYDFRYWyAIVPgAWsAEWBCYIFq4BFAAAGRwYDEFSUk9XOnNjaGVtYRiUAi8vLy8vOFlBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBdFAvLy80Z0FBQUI4QUFBQUNBQUFBQUVWQUFBQkFBQUFCQUFBQU5ELy8vOVlBQUFBVUFBQUFBZ0FBQUFCRlFBQUFRQUFBQVFBQUFEcy8vLy9QQUFBQUNBQUFBQVlBQUFBQVFJQUFCQUFFZ0FFQUJBQUVRQUlBQUFBREFBQUFBQUE5UC8vLzBBQUFBQUJBQUFBQ0FBSkFBUUFDQURzLy8vL0JBQUFBR2wwWlcwQUFBQUEvUC8vL3dRQUJBQUJBQUFBWXdBPQAYBlBvbGFycxkcHAAAAPQBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "NESTED_MAP": {
       "write": false,
-      "read": false
+      "read": false,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/construction/series.py\", line 355, in _construct_series_with_fallbacks\n    return constructor(name, values, strict)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'int' object cannot be cast as 'str'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 348, in write_nt\n    df = mk()\n         ^^^^\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 342, in <lambda>\n    nt_tests[\"NESTED_MAP\"] = lambda: pl.DataFrame({\"c\": [[(\"a\", 1), (\"b\", 2)]]}).cast({\"c\": pl.List(pl.Struct({\"key\": pl.String, \"value\": pl.Int64}))})\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/dataframe/frame.py\", line 400, in __init__\n    self._df = dict_to_pydf(\n               ^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/construction/dataframe.py\", line 161, in dict_to_pydf\n    for s in _expand_dict_values(\n             ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/construction/dataframe.py\", line 394, in _expand_dict_values\n    updated_data[name] = pl.Series(\n                         ^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/series/series.py\", line 311, in __init__\n    self._s = sequence_to_pyseries(\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/construction/series.py\", line 291, in sequence_to_pyseries\n    return PySeries.new_from_any_values(name, values, strict=strict)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/series/series.py\", line 311, in __init__\n    self._s = sequence_to_pyseries(\n              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/construction/series.py\", line 340, in sequence_to_pyseries\n    return _construct_series_with_fallbacks(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/construction/series.py\", line 368, in _construct_series_with_fallbacks\n    return PySeries.new_from_any_values(name, values, strict=strict)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: unexpected value while building Series of type String; found value of type Int64: 1\n\nHint: Try setting `strict=False` to allow passing data with mixed types.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_polars.py\", line 351, in read_nt\n    pl.read_parquet(p)\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 128, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/io/parquet/functions.py\", line 293, in read_parquet\n    return lf.collect()\n           ^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/_utils/deprecation.py\", line 97, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/opt_flags.py\", line 326, in wrapper\n    return function(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/.local/lib/python3.12/site-packages/polars/lazyframe/frame.py\", line 2464, in collect\n    return wrap_df(ldf.collect(engine, callback))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: No such file or directory (os error 2): /tmp/tmp1p132jf3/nt_NESTED_MAP.parquet\n"
     },
     "DEEP_NESTING": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:b1d0a7218cc748371519d8d819b68b0586768b04d91a692403175d09a454b9dc\nUEFSMRUAFT4VUCwVBBUAFQYVBhw2ACgIAgAAAAAAAAAYCAEAAAAAAAAAAAAAKLUv/SAf+QAAAwAAAAMIAAQAAAADNgAAAQAAAAAAAAACAAAAAAAAABUEGSUABhloAWMEbGlzdAdlbGVtZW50AXgEbGlzdAdlbGVtZW50FQwWBBaQARaiASYIPDYAKAgCAAAAAAAAABgIAQAAAAAAAAAAABkRAhkYCAEAAAAAAAAAGRgIAgAAAAAAAAAVABkWAAAZHBYIFaIBFgAAABUCGXxIBHJvb3QVAgA1AhgBYxUCFQZMPAAAADUEGARsaXN0FQIANQIYB2VsZW1lbnQVAgA1AhgBeBUCFQZMPAAAADUEGARsaXN0FQIAFQQlAhgHZWxlbWVudAAWAhkcGRwmqgEcFQQZJQAGGWgBYwRsaXN0B2VsZW1lbnQBeARsaXN0B2VsZW1lbnQVDBYEFpABFqIBJgg8NgAoCAIAAAAAAAAAGAgBAAAAAAAAAAAAFv4CFRYWwAIVPgAWkAEWAiYIFqIBFAAAGRwYDEFSUk9XOnNjaGVtYRjIAi8vLy8vKzRBQUFBRUFBQUE4di8vL3hRQUFBQUVBQUVBQUFBS0FBc0FDQUFLQUFRQStQLy8vd3dBQUFBSUFBZ0FBQUFFQUFFQUFBQUVBQUFBbVAvLy83QUFBQUNrQUFBQUNBQUFBQUVWQUFBQkFBQUFCQUFBQUxULy8vK0FBQUFBZUFBQUFBZ0FBQUFCRFFBQUFRQUFBQVFBQUFEUS8vLy9XQUFBQUZBQUFBQUlBQUFBQVJVQUFBRUFBQUFFQUFBQTdQLy8vMGdBQUFBZ0FBQUFHQUFBQUFFQ0FBQVFBQklBQkFBUUFCRUFDQUFBQUF3QUFBQUFBUFQvLy85QUFBQUFBUUFBQUFnQUNRQUVBQWdBNFAvLy93RUFBQUI0QUFBQTdQLy8vd1FBQUFCcGRHVnRBQUFBQVB6Ly8vOEVBQVFBQVFBQUFHTUEAGAZQb2xhcnMZHBwAAAAyAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   },
   "advanced_features": {
     "STATISTICS": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:47c1b17754a8e3cf861c064bca787a42cbd9e04d1c8827fb84688153a9a50c0d\n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xxx01GHHHXjkoccefPThxx+ABCLIIIQUYsghiCSiyCKMNOLII5BEIskklFRiySWYZKLJJpx04sknoIQiyiiklGLKKaikosoqrLTiyiuwxCLLLLTUYsstuOSiyy689OLLL8AEI8wwxBRjzDHIJKPMMsw048wz0EQjzTTUVGPNNdhko8023HTjzTfghCPOOOSUY8456KSjzjrstOPOO/DEI8889NRjzz345KPPPvz0488/AAUk0EAEFWTQQQglpNBCDDXk0EMQRSTRRBRVZNFFGGWk0UYcdeTRRyCFJNJIJJVk0kkopaTSSiy15NJLMMUk00w01WTTTTjlpNNOPPXk009ABSXUUEQVZdRRSCWl1FJMNeXUU1BFJdVUVFVl1VVYZaXVVlx15dVXYIUl1lhklWXWWWilpdZabLXl1ltwxSXXXHTVZdddeOWl11589eXXX4AFJthghBVm2GGIJabYYow15thjkEUm2WSUVWbZZZhlptlmnHXm2WeghSbaaKSVZtppqKWm2mqstebaa7DFJttstNVm22245abbbrz15ttvwAUn3HDEFWfcccglp9xyzDXn3HPQRSfddNRVZ9112GWn3Xbcdefdd+CFJ9545JVn3nnopafeeuy159578MUn33z01Wffffjlp99+/PXn338ABijggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDTWaOONOOao44489ujjj0AGKeSQRBZp5JFIJqnkkkw26eSTUEYp5ZRUVmnllVhmqeWWXHbp5ZdghinmmGSWaeaZaKap5ppstunmm3DGKeecdNZp55145qnnnnz26eefgAYq6KCEFmrooYgmquiijDbq6KOQRirppJRWaumlmGaq6aacdurpp6CGKuqopJZq6qmopqrqqqy26uqrsMYq66y01mrrrbjmquuuvPbq66/ABivssMQWa+yxyCar7LLMNuvss9BGK+201FZr7bXYZqvtttx26+234IYr7rjklmvuueimq+667Lbr7rvwxivvvPTWa++9+Oar77789uvvvwAHLPDABBds8MEIJ6zwwgw37PDDEEcs8cQUV2zxxRhnrPHGHHfs8ccghyzyyCSXbPLJKKes8sost+zyyzDHLPPMNNds880456zzzjz37PPPQAct9NBEF2300UgnrfTSTDft9NNQRy311FRXbfXVWGet9dZcd+3112CHLfbYZJdt9tlop6322my37fbbcMct99x012333XjnrffefPft99+ABy744IQXbvjhiCeu+OKMN+7445BHLvnklFdu+eWYZ6755px37vnnoIcu+uikl2766ainrvrqrLfu+uuwxy777LTXbvvtuOeu++689+7778AHL/zwxBdv/PHIJ6/88sw37/zz0Ecv/fTUV2/99dhnr/323Hfv/ffghy/++OSXb/75FQQZNQAGEBkYA2NvbBUMFtAPFtCRARauLSbyGCYIHDYAKAjnAwAAAAAAABgIAAAAAAAAAAAAABUAFaKqARXACSwV0A8VABUGFQYcNgAoB3ZhbF85OTkYBXZhbF8wAAAAKLUv/WCRKbUSAPpATAcYsBcKHQzDMNjG6mDwkmRKKaX0BhhixsS2ggBiAGIASZIkSZIkSZLk4XJKGPzhckoYxMPllDDww+WUMOjD5ZQw4MPllDDYw+WUMNDD5ZQwyMPllDAID5dTwmAQCjxcTgmDP1xOCYN4uJwSBn64nBIGfbicEgZ8uJwSBnu4nBIGericEgZ5uJwSBoHAw+WUMDiQAIECAAAADAhgYAEAAAAEBNu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdskSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkKUmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEkStm3btm3btm3btm3btm3bttu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bduWJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJLdt27Zt2xb//////////////////////////////////////////////////0dERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERE2LZt27Zt27Zt27Zt27Zt27Zt27ZtO4PnqBKAX/sd8le2AxIYwYDxBwsCIAACIIAACIAACEAABCAAAhAAARAAAeSf0AVtARO98IUvfMEXvvB9Irs0FPZCJ5qc7wtdSNwWH7rQicjiQxc6EVl86EInIosPutCJyOJDFzoRWXzoQiciiw9dqHmikRAwTdM0TdNv6tCkbQUVDBklAAYZGAdzdHJfY29sFQwW0A8W9KoBFpIKJqQuPDYAKAd2YWxfOTk5GAV2YWxfMAAAGRECGRgIAAAAAAAAAAAZGAjnAwAAAAAAABUAGRYAABkRAhkYBXZhbF8wGRgHdmFsXzk5ORUAGRYAABkcFvIYFcQUFgAAABkcFqQuFZIKFgAAABUCGTxIBHJvb3QVBAAVBCUCGANjb2wAFQwlAhgHc3RyX2NvbCUATBwAAAAW0A8ZHBksJqBGHBUEGTUABhAZGANjb2wVDBbQDxbQkQEWri0m8hgmCBw2ACgI5wMAAAAAAAAYCAAAAAAAAAAAAAAWkjoVGBaeORU+ACa2OBwVDBklAAYZGAdzdHJfY29sFQwW0A8W9KoBFpIKJqQuPDYAKAd2YWxfOTk5GAV2YWxfMAAAFqo6FRgW3DkVNgAWxLwCFtAPJggWwDcUAAAZHBgMQVJST1c6c2NoZW1hGOwBLy8vLy82Z0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUlBQUFBMEFBQUFCQUFBQU1ELy8vOGNBQUFBRUFBQUFBZ0FBQUFCRkFBQUFBQUFBUHovLy84RUFBUUFCd0FBQUhOMGNsOWpiMndBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVDQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUFRQUFBQWdBQ1FBRUFBZ0FBd0FBQUdOdmJBQT0AGAZQb2xhcnMZLBwAABwAAADbAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "PREDICATE_PUSHDOWN": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:47c1b17754a8e3cf861c064bca787a42cbd9e04d1c8827fb84688153a9a50c0d\n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xxx01GHHHXjkoccefPThxx+ABCLIIIQUYsghiCSiyCKMNOLII5BEIskklFRiySWYZKLJJpx04sknoIQiyiiklGLKKaikosoqrLTiyiuwxCLLLLTUYsstuOSiyy689OLLL8AEI8wwxBRjzDHIJKPMMsw048wz0EQjzTTUVGPNNdhko8023HTjzTfghCPOOOSUY8456KSjzjrstOPOO/DEI8889NRjzz345KPPPvz0488/AAUk0EAEFWTQQQglpNBCDDXk0EMQRSTRRBRVZNFFGGWk0UYcdeTRRyCFJNJIJJVk0kkopaTSSiy15NJLMMUk00w01WTTTTjlpNNOPPXk009ABSXUUEQVZdRRSCWl1FJMNeXUU1BFJdVUVFVl1VVYZaXVVlx15dVXYIUl1lhklWXWWWilpdZabLXl1ltwxSXXXHTVZdddeOWl11589eXXX4AFJthghBVm2GGIJabYYow15thjkEUm2WSUVWbZZZhlptlmnHXm2WeghSbaaKSVZtppqKWm2mqstebaa7DFJttstNVm22245abbbrz15ttvwAUn3HDEFWfcccglp9xyzDXn3HPQRSfddNRVZ9112GWn3Xbcdefdd+CFJ9545JVn3nnopafeeuy159578MUn33z01Wffffjlp99+/PXn338ABijggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDTWaOONOOao44489ujjj0AGKeSQRBZp5JFIJqnkkkw26eSTUEYp5ZRUVmnllVhmqeWWXHbp5ZdghinmmGSWaeaZaKap5ppstunmm3DGKeecdNZp55145qnnnnz26eefgAYq6KCEFmrooYgmquiijDbq6KOQRirppJRWaumlmGaq6aacdurpp6CGKuqopJZq6qmopqrqqqy26uqrsMYq66y01mrrrbjmquuuvPbq66/ABivssMQWa+yxyCar7LLMNuvss9BGK+201FZr7bXYZqvtttx26+234IYr7rjklmvuueimq+667Lbr7rvwxivvvPTWa++9+Oar77789uvvvwAHLPDABBds8MEIJ6zwwgw37PDDEEcs8cQUV2zxxRhnrPHGHHfs8ccghyzyyCSXbPLJKKes8sost+zyyzDHLPPMNNds880456zzzjz37PPPQAct9NBEF2300UgnrfTSTDft9NNQRy311FRXbfXVWGet9dZcd+3112CHLfbYZJdt9tlop6322my37fbbcMct99x012333XjnrffefPft99+ABy744IQXbvjhiCeu+OKMN+7445BHLvnklFdu+eWYZ6755px37vnnoIcu+uikl2766ainrvrqrLfu+uuwxy777LTXbvvtuOeu++689+7778AHL/zwxBdv/PHIJ6/88sw37/zz0Ecv/fTUV2/99dhnr/323Hfv/ffghy/++OSXb/75FQQZNQAGEBkYA2NvbBUMFtAPFtCRARauLSbyGCYIHDYAKAjnAwAAAAAAABgIAAAAAAAAAAAAABUAFaKqARXACSwV0A8VABUGFQYcNgAoB3ZhbF85OTkYBXZhbF8wAAAAKLUv/WCRKbUSAPpATAcYsBcKHQzDMNjG6mDwkmRKKaX0BhhixsS2ggBiAGIASZIkSZIkSZLk4XJKGPzhckoYxMPllDDww+WUMOjD5ZQw4MPllDDYw+WUMNDD5ZQwyMPllDAID5dTwmAQCjxcTgmDP1xOCYN4uJwSBn64nBIGfbicEgZ8uJwSBnu4nBIGericEgZ5uJwSBoHAw+WUMDiQAIECAAAADAhgYAEAAAAEBNu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdskSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkKUmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEkStm3btm3btm3btm3btm3bttu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bduWJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJLdt27Zt2xb//////////////////////////////////////////////////0dERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERE2LZt27Zt27Zt27Zt27Zt27Zt27ZtO4PnqBKAX/sd8le2AxIYwYDxBwsCIAACIIAACIAACEAABCAAAhAAARAAAeSf0AVtARO98IUvfMEXvvB9Irs0FPZCJ5qc7wtdSNwWH7rQicjiQxc6EVl86EInIosPutCJyOJDFzoRWXzoQiciiw9dqHmikRAwTdM0TdNv6tCkbQUVDBklAAYZGAdzdHJfY29sFQwW0A8W9KoBFpIKJqQuPDYAKAd2YWxfOTk5GAV2YWxfMAAAGRECGRgIAAAAAAAAAAAZGAjnAwAAAAAAABUAGRYAABkRAhkYBXZhbF8wGRgHdmFsXzk5ORUAGRYAABkcFvIYFcQUFgAAABkcFqQuFZIKFgAAABUCGTxIBHJvb3QVBAAVBCUCGANjb2wAFQwlAhgHc3RyX2NvbCUATBwAAAAW0A8ZHBksJqBGHBUEGTUABhAZGANjb2wVDBbQDxbQkQEWri0m8hgmCBw2ACgI5wMAAAAAAAAYCAAAAAAAAAAAAAAWkjoVGBaeORU+ACa2OBwVDBklAAYZGAdzdHJfY29sFQwW0A8W9KoBFpIKJqQuPDYAKAd2YWxfOTk5GAV2YWxfMAAAFqo6FRgW3DkVNgAWxLwCFtAPJggWwDcUAAAZHBgMQVJST1c6c2NoZW1hGOwBLy8vLy82Z0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUlBQUFBMEFBQUFCQUFBQU1ELy8vOGNBQUFBRUFBQUFBZ0FBQUFCRkFBQUFBQUFBUHovLy84RUFBUUFCd0FBQUhOMGNsOWpiMndBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVDQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUFRQUFBQWdBQ1FBRUFBZ0FBd0FBQUdOdmJBQT0AGAZQb2xhcnMZLBwAABwAAADbAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "PROJECTION_PUSHDOWN": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:47c1b17754a8e3cf861c064bca787a42cbd9e04d1c8827fb84688153a9a50c0d\n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xxx01GHHHXjkoccefPThxx+ABCLIIIQUYsghiCSiyCKMNOLII5BEIskklFRiySWYZKLJJpx04sknoIQiyiiklGLKKaikosoqrLTiyiuwxCLLLLTUYsstuOSiyy689OLLL8AEI8wwxBRjzDHIJKPMMsw048wz0EQjzTTUVGPNNdhko8023HTjzTfghCPOOOSUY8456KSjzjrstOPOO/DEI8889NRjzz345KPPPvz0488/AAUk0EAEFWTQQQglpNBCDDXk0EMQRSTRRBRVZNFFGGWk0UYcdeTRRyCFJNJIJJVk0kkopaTSSiy15NJLMMUk00w01WTTTTjlpNNOPPXk009ABSXUUEQVZdRRSCWl1FJMNeXUU1BFJdVUVFVl1VVYZaXVVlx15dVXYIUl1lhklWXWWWilpdZabLXl1ltwxSXXXHTVZdddeOWl11589eXXX4AFJthghBVm2GGIJabYYow15thjkEUm2WSUVWbZZZhlptlmnHXm2WeghSbaaKSVZtppqKWm2mqstebaa7DFJttstNVm22245abbbrz15ttvwAUn3HDEFWfcccglp9xyzDXn3HPQRSfddNRVZ9112GWn3Xbcdefdd+CFJ9545JVn3nnopafeeuy159578MUn33z01Wffffjlp99+/PXn338ABijggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDTWaOONOOao44489ujjj0AGKeSQRBZp5JFIJqnkkkw26eSTUEYp5ZRUVmnllVhmqeWWXHbp5ZdghinmmGSWaeaZaKap5ppstunmm3DGKeecdNZp55145qnnnnz26eefgAYq6KCEFmrooYgmquiijDbq6KOQRirppJRWaumlmGaq6aacdurpp6CGKuqopJZq6qmopqrqqqy26uqrsMYq66y01mrrrbjmquuuvPbq66/ABivssMQWa+yxyCar7LLMNuvss9BGK+201FZr7bXYZqvtttx26+234IYr7rjklmvuueimq+667Lbr7rvwxivvvPTWa++9+Oar77789uvvvwAHLPDABBds8MEIJ6zwwgw37PDDEEcs8cQUV2zxxRhnrPHGHHfs8ccghyzyyCSXbPLJKKes8sost+zyyzDHLPPMNNds880456zzzjz37PPPQAct9NBEF2300UgnrfTSTDft9NNQRy311FRXbfXVWGet9dZcd+3112CHLfbYZJdt9tlop6322my37fbbcMct99x012333XjnrffefPft99+ABy744IQXbvjhiCeu+OKMN+7445BHLvnklFdu+eWYZ6755px37vnnoIcu+uikl2766ainrvrqrLfu+uuwxy777LTXbvvtuOeu++689+7778AHL/zwxBdv/PHIJ6/88sw37/zz0Ecv/fTUV2/99dhnr/323Hfv/ffghy/++OSXb/75FQQZNQAGEBkYA2NvbBUMFtAPFtCRARauLSbyGCYIHDYAKAjnAwAAAAAAABgIAAAAAAAAAAAAABUAFaKqARXACSwV0A8VABUGFQYcNgAoB3ZhbF85OTkYBXZhbF8wAAAAKLUv/WCRKbUSAPpATAcYsBcKHQzDMNjG6mDwkmRKKaX0BhhixsS2ggBiAGIASZIkSZIkSZLk4XJKGPzhckoYxMPllDDww+WUMOjD5ZQw4MPllDDYw+WUMNDD5ZQwyMPllDAID5dTwmAQCjxcTgmDP1xOCYN4uJwSBn64nBIGfbicEgZ8uJwSBnu4nBIGericEgZ5uJwSBoHAw+WUMDiQAIECAAAADAhgYAEAAAAEBNu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdskSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkKUmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEkStm3btm3btm3btm3btm3bttu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bdu2bduWJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJLdt27Zt2xb//////////////////////////////////////////////////0dERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERE2LZt27Zt27Zt27Zt27Zt27Zt27ZtO4PnqBKAX/sd8le2AxIYwYDxBwsCIAACIIAACIAACEAABCAAAhAAARAAAeSf0AVtARO98IUvfMEXvvB9Irs0FPZCJ5qc7wtdSNwWH7rQicjiQxc6EVl86EInIosPutCJyOJDFzoRWXzoQiciiw9dqHmikRAwTdM0TdNv6tCkbQUVDBklAAYZGAdzdHJfY29sFQwW0A8W9KoBFpIKJqQuPDYAKAd2YWxfOTk5GAV2YWxfMAAAGRECGRgIAAAAAAAAAAAZGAjnAwAAAAAAABUAGRYAABkRAhkYBXZhbF8wGRgHdmFsXzk5ORUAGRYAABkcFvIYFcQUFgAAABkcFqQuFZIKFgAAABUCGTxIBHJvb3QVBAAVBCUCGANjb2wAFQwlAhgHc3RyX2NvbCUATBwAAAAW0A8ZHBksJqBGHBUEGTUABhAZGANjb2wVDBbQDxbQkQEWri0m8hgmCBw2ACgI5wMAAAAAAAAYCAAAAAAAAAAAAAAWkjoVGBaeORU+ACa2OBwVDBklAAYZGAdzdHJfY29sFQwW0A8W9KoBFpIKJqQuPDYAKAd2YWxfOTk5GAV2YWxfMAAAFqo6FRgW3DkVNgAWxLwCFtAPJggWwDcUAAAZHBgMQVJST1c6c2NoZW1hGOwBLy8vLy82Z0FBQUFFQUFBQTh2Ly8veFFBQUFBRUFBRUFBQUFLQUFzQUNBQUtBQVFBK1AvLy93d0FBQUFJQUFnQUFBQUVBQUlBQUFBMEFBQUFCQUFBQU1ELy8vOGNBQUFBRUFBQUFBZ0FBQUFCRkFBQUFBQUFBUHovLy84RUFBUUFCd0FBQUhOMGNsOWpiMndBN1AvLy96Z0FBQUFnQUFBQUdBQUFBQUVDQUFBUUFCSUFCQUFRQUJFQUNBQUFBQXdBQUFBQUFQVC8vLzlBQUFBQUFRQUFBQWdBQ1FBRUFBZ0FBd0FBQUdOdmJBQT0AGAZQb2xhcnMZLBwAABwAAADbAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "PAGE_INDEX": {
       "write": false,
@@ -432,7 +623,9 @@
     },
     "DATA_PAGE_V2": {
       "write": true,
-      "read": true
+      "read": true,
+      "write_log": "sha256:23bef044a14bf13c641ebb447ee96892339d266420e1a1401435ba5652a3e48c\n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kZKTlJWWl5iZmpucnZ6foKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr/AwcLDxMXGx8jJysusra6vFQAV5gMV+AMsFZgDFRAVBhUGHDYAKAjnAwAAAAAAABgIAAAAAAAAAAAAAAAotS/9IPOZBwADAAAAmAMBCTXMmjl7Bi2atGnUqlm7hi2btm3cunn7Bi6cuHHkypk7hy6dunXs2rl7By+evHn06tm7hy+fvn38+vn7BzCgwIEECxo8iDChwoUMGzp8CDGixIkUK1q8iDGjxo0cO3r8CDKkyJEkS5o8iTKlypUsW7p8CTOmzJk0a9q8iTOnzp08e/r8CTSo0KFEixo9ijSp0qVMmzp9CjWq1KlUq1q9ijWr1q1cu3r9Cjas2LFky5o9izat2rVs27p9Czeu3Ll069q9izev3r18+/r9Cziw4MGECxs+jDix4sWMGzt+DDmy5MmUK1u+jDev3r0VABWaBBWuBCwVmAMVEBUGFQYcNgAoCOcDAAAAAAAAGAgAAAAAAAAAAAAAACi1L/1gDQBpCAADAAAAmAMBCjWYZabZZpx15tlnoIUm2miklWbaaailptpqrLXm2muwxSbbbLTVZtttuOWm22689ebbb8AFJ9xwxBVn3HHIJafccsw159xz0EUn3XTUVWfdddhlp9123HXn3XfghSfeeOSVZ9556KWn3nrstefee/DFJ9989NVn33345afffvz1599/AAYo4IAEFmjggQgmqOCCDDbo4IMQRijhhBRWaOGFGGao4YYcdujhhyCGKOKIJJZo4okopqjiiiy26OKLMMYo44w01mjjjTjmqOOOPPbo449ABinkkEQWaeSRSCap5JJMNunkk1BGKeWUVFZp5ZVYZqnlllx26eWXYIYp5phEFmnkkRUAFZoEFa4ELBWYAxUQFQYVBhw2ACgI5wMAAAAAAAAYCAAAAAAAAAAAAAAAKLUv/WANAGkIAAMAAACYAwEKNWSWaeaZaKap5ppstunmm3DGKeecdNZp55145qnnnnz26eefgAYq6KCEFmrooYgmquiijDbq6KOQRirppJRWaumlmGaq6aacdurpp6CGKuqopJZq6qmopqrqqqy26uqrsMYq66y01mrrrbjmquuuvPbq66/ABivssMQWa+yxyCar7LLMNuvss9BGK+201FZr7bXYZqvtttx26+234IYr7rjklmvuueimq+667Lbr7rvwxivvvPTWa++9+Oar77789uvvvwAHLPDABBds8MEIJ6zwwgw37PDDEEcs8cQUV2zxxRhnrPHGHHfs8ccghyzyyCSXbPLJKKes8sost+zyyxBHLPHEFQAV3gMV8AMsFfACFRAVBhUGHDYAKAjnAwAAAAAAABgIAAAAAAAAAAAAAAAotS/9IO95BwADAAAA8AIBCi8wxyzzzDTXbPPNOOes88489+zzz0AHLfTQRBdt9NFIJ6300kw37fTTUEct9dRUV2311VhnrfXWXHft9ddghy322GSXbfbZaKet9tpst+3223DHLffcdNdt991456333nz37fffgAcu+OCEF2744YgnrvjijDfu+OOQRy755JRXbvnlmGeu+eacd+7556CHLvropJdu+umop6766qy37vrrsMcu++y012777bjnrvvuvPfu++/ABy/88MQXb/zxyCev/PLMN+/889BHL/301Fdv/fXYZ6/99tx37/334Icv/vjkl2/++RUEGTUABhAZGANjb2wVDBbQDxaClAEWqjAm8hgmCBw2ACgI5wMAAAAAAAAYCAAAAAAAAAAAAAAVABXKChXaASwViAEVABUGFQYcNgAoBXZhbF85GAV2YWxfMAAAACi1L/1gpQEdAwCihRAUsCVtLOisbDC4Vnb3TikzEDZNiAxnRXfHEs+K7k4lnhXdHUo8K7o7TzwrujtOPCu6OyUSz4ruThEACERkGGMgIkJDqBGQe/8M4NcQRqAPkThuhxogot6imlSf3RmoUhUVABWmCxXqASwViAEVABUGFQYcNgAoBnZhbF85ORgHdmFsXzEwMAAAACi1L/1g0wFdAwDSBREUsCVtLOisbDC4VnZ37zQz52BNiAxFc3cSz4rm7hPPiuauE8+K5m5NJJ4Vzd1MPCuau5h4VjR3L9GKAEAgIsMYAxERAkOoEYC3/Q7g1xBGjPcB53n2mft7Xz7NZDjDR/gKGF88ZGmqAhUAFeYLFdQBLBWIARUAFQYVBhw2ACgHdmFsXzIwMxgHdmFsXzEzNgAAACi1L/1g8wEFAwDShRATsCVtLOikGpIYVnZ37zQzB2tFZHO3TzwrmruZeFY0dzHxrGjuXuJZ0dy1xLOiuVuJZ0VzlxLPxkNBAEREGCMgIkFDqBGQn/0z4NcQTpAPSBOckMc+UpGH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X2NvbBUMFtAPFsS1ARb4IiagMTw2ACgHdmFsXzk5ORgFdmFsXzAAABlRAgICAgIZWAgAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAAAgAAAAAAAAAABlYCOcDAAAAAAAACOcDAAAAAAAACOcDAAAAAAAACOcDAAAAAAAACOcDAAAAAAAAFQAZVgAAAAAAABnxDwICAgICAgICAgICAgICAhn4DwV2YWxfMAd2YWxfMTAwB3ZhbF8xMzYHdmFsXzIwNAd2YWxfMjcyB3ZhbF8zNDAHdmFsXzQwOAd2YWxfNDc2B3ZhbF81NDQHdmFsXzYxMgd2YWxfNjgwB3ZhbF83NDgHdmFsXzgxNgd2YWxfODg0B3ZhbF85NTIZ+A8FdmFsXzkGdmFsXzk5B3ZhbF8yMDMHdmFsXzI3MQd2YWxfMzM5B3ZhbF80MDcHdmFsXzQ3NQd2YWxfNTQzB3ZhbF82MTEHdmFsXzY3OQd2YWxfNzQ3B3ZhbF84MTUHdmFsXzg4Mwd2YWxfOTUxB3ZhbF85OTkVABn2DwAAAAAAAAAAAAAAAAAAAAAZXBbyGBWcBBYAABaOHRXQBBaYAwAW3iEVhgUWsAYAFuQmFYYFFsgJABbqKxXIBBbgDAAAGfwPFqAxFaYCFgAAFsYzFbwCFogBABaCNhWoAhaQAgAWqjgVpAIWmAMAFs46FaYCFqAEABb0PBWmAhaoBQAWmj8VpAIWsAYAFr5BFagCFrgHABbmQxWoAhbACAAWjkYVoAIWyAkAFq5IFaYCFtAKABbUShWoAhbYCwAW/EwVpAIW4AwAFqBPFagCFugNABbIURXQAhbwDgAAFQIZPEgEcm9vdBUEABUEJQIYA2NvbAAVDCUCGAdzdHJfY29sJQBMHAAAABbQDxkcGSwmnEkcFQQZNQAGEBkYA2NvbBUMFtAPFoKUARaqMCbyGCYIHDYAKAjnAwAAAAAAABgIAAAAAAAAAAAAABaOWxVoFoBVFd4BACaYVBwVDBklAAYZGAdzdHJfY29sFQwW0A8WxLUBFvgiJqAxPDYAKAd2YWxfOTk5GAV2YWxfMAAAFvZbFbICFt5WFbAEABbGyQIW0A8mCBaiUxQAABkcGAxBUlJPVzpzY2hlbWEY7AEvLy8vLzZnQUFBQUVBQUFBOHYvLy94UUFBQUFFQUFFQUFBQUtBQXNBQ0FBS0FBUUErUC8vL3d3QUFBQUlBQWdBQUFBRUFBSUFBQUEwQUFBQUJBQUFBTUQvLy84Y0FBQUFFQUFBQUFnQUFBQUJGQUFBQUFBQUFQei8vLzhFQUFRQUJ3QUFBSE4wY2w5amIyd0E3UC8vL3pnQUFBQWdBQUFBR0FBQUFBRUNBQUFRQUJJQUJBQVFBQkVBQ0FBQUFBd0FBQUFBQVBULy8vOUFBQUFBQVFBQUFBZ0FDUUFFQUFnQUF3QUFBR052YkFBPQAYBlBvbGFycxksHAAAHAAAAN4BAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "SCHEMA_EVOLUTION": {
       "write": false,

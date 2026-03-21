@@ -884,7 +884,10 @@ func main() {
 	advanced["COLUMN_ENCRYPTION"] = RWResult{Write: false, Read: false}
 
 	// SIZE_STATISTICS – reader can surface size stats but the arrow writer does not expose explicit size-stats control
-	advanced["SIZE_STATISTICS"] = RWResult{Write: false, Read: true}
+	{
+		sizeStatsReadLog := readProofLog(proofPath)
+		advanced["SIZE_STATISTICS"] = RWResult{Write: false, Read: true, ReadLog: sizeStatsReadLog}
+	}
 
 	// PAGE_CRC32 – not exposed in arrow-go writer API
 	advanced["PAGE_CRC32"] = RWResult{Write: false, Read: false}

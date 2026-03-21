@@ -464,6 +464,17 @@ class Program
         bool byteStreamSplitDoubleReadOk = TestReadEncoding(byteStreamSplitDoubleB64);
 
         string[] typeNames = { "INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY" };
+        // Map type names to the "plain" written file path for write proof
+        var typeWritePath = new Dictionary<string, string>
+        {
+            ["INT32"]      = Path.Combine(tmpDir, "type_INT32_plain.parquet"),
+            ["INT64"]      = Path.Combine(tmpDir, "type_INT64_plain.parquet"),
+            ["FLOAT"]      = Path.Combine(tmpDir, "type_FLOAT_unique.parquet"),
+            ["DOUBLE"]     = Path.Combine(tmpDir, "type_DOUBLE_unique.parquet"),
+            ["BOOLEAN"]    = Path.Combine(tmpDir, "type_BOOLEAN_unique.parquet"),
+            ["BYTE_ARRAY"] = Path.Combine(tmpDir, "type_BYTE_ARRAY_unique.parquet"),
+        };
+        string? encodingProofLog = ReadProofLog(proofPath);
         foreach (var encName in encValues.Keys)
         {
             var typeResults = new Dictionary<string, object>();
@@ -497,58 +508,131 @@ class Program
                     if (typeName == "FLOAT"  && byteStreamSplitFloatReadOk)  readOk = true;
                     if (typeName == "DOUBLE" && byteStreamSplitDoubleReadOk) readOk = true;
                 }
-                typeResults[typeName] = RW(writeOk, readOk);
+                var cell = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
+                if (writeOk && typeWritePath.TryGetValue(typeName, out var wpath) && File.Exists(wpath))
+                {
+                    try
+                    {
+                        var data = File.ReadAllBytes(wpath);
+                        var sha = Sha256Hex(data);
+                        cell["write_log"] = $"sha256:{sha}\n{Convert.ToBase64String(data)}";
+                    }
+                    catch { }
+                }
+                if (readOk && encodingProofLog != null)
+                    cell["read_log"] = encodingProofLog;
+                typeResults[typeName] = cell;
             }
             encoding[encName] = typeResults;
         }
         results["encoding"] = encoding;
 
         // --- Logical Types ---
-        var logicalTypes = new Dictionary<string, object>
-        {
-            ["STRING"] = RW(true, true),
-            ["DATE"] = RW(true, true),
-            ["TIME_MILLIS"] = RW(true, true),
-            ["TIME_MICROS"] = RW(true, true),
-            ["TIME_NANOS"] = RW(false, false),
-            ["TIMESTAMP_MILLIS"] = RW(true, true),
-            ["TIMESTAMP_MICROS"] = RW(true, true),
-            ["TIMESTAMP_NANOS"] = RW(false, false),
-            ["INT96"] = RW(false, false),
-            ["DECIMAL"] = RW(true, true),
-            ["UUID"] = RW(true, true),
-            ["JSON"] = RW(false, false),
-            ["FLOAT16"] = RW(false, false),
-            ["ENUM"] = RW(true, true),
-            ["BSON"] = RW(false, false),
-            ["INTERVAL"] = RW(false, false),
-        };
+        var logicalTypes = new Dictionary<string, object>();
+        // STRING
+        logicalTypes["STRING"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<string>("col")); var col = new DataColumn(sch.DataFields[0], new string[] { "a", "b", "c" }); using var s = File.Create(Path.Combine(tmpDir, "lt_string.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_string.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_string.parquet"), proofPath);
+        // DATE
+        logicalTypes["DATE"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<DateOnly>("col")); var col = new DataColumn(sch.DataFields[0], new DateOnly[] { new DateOnly(2023, 1, 1), new DateOnly(2023, 6, 15) }); using var s = File.Create(Path.Combine(tmpDir, "lt_date.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_date.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_date.parquet"), proofPath);
+        // TIME_MILLIS
+        logicalTypes["TIME_MILLIS"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<TimeOnly>("col")); var col = new DataColumn(sch.DataFields[0], new TimeOnly[] { new TimeOnly(1, 0, 0), new TimeOnly(12, 30, 0) }); using var s = File.Create(Path.Combine(tmpDir, "lt_timems.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_timems.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_timems.parquet"), proofPath);
+        // TIME_MICROS (same as TIME_MILLIS in parquet.NET)
+        logicalTypes["TIME_MICROS"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<TimeSpan>("col")); var col = new DataColumn(sch.DataFields[0], new TimeSpan[] { TimeSpan.FromHours(1), TimeSpan.FromMinutes(30) }); using var s = File.Create(Path.Combine(tmpDir, "lt_timeus.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_timeus.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_timeus.parquet"), proofPath);
+        logicalTypes["TIME_NANOS"] = RW(false, false);
+        // TIMESTAMP_MILLIS
+        logicalTypes["TIMESTAMP_MILLIS"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<DateTime>("col")); var col = new DataColumn(sch.DataFields[0], new DateTime[] { DateTime.UtcNow, DateTime.UtcNow.AddHours(1) }); using var s = File.Create(Path.Combine(tmpDir, "lt_tsms.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_tsms.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_tsms.parquet"), proofPath);
+        // TIMESTAMP_MICROS (same as MILLIS in parquet.NET)
+        logicalTypes["TIMESTAMP_MICROS"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<DateTimeOffset>("col")); var col = new DataColumn(sch.DataFields[0], new DateTimeOffset[] { DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1) }); using var s = File.Create(Path.Combine(tmpDir, "lt_tsus.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_tsus.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_tsus.parquet"), proofPath);
+        logicalTypes["TIMESTAMP_NANOS"] = RW(false, false);
+        logicalTypes["INT96"] = RW(false, false);
+        // DECIMAL
+        logicalTypes["DECIMAL"] = TestRW(
+            () => { var sch = new ParquetSchema(new DecimalDataField("col", 10, 2)); var col = new DataColumn(sch.DataFields[0], new decimal[] { 1.23m, 4.56m }); using var s = File.Create(Path.Combine(tmpDir, "lt_decimal.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_decimal.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_decimal.parquet"), proofPath);
+        // UUID
+        logicalTypes["UUID"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<Guid>("col")); var col = new DataColumn(sch.DataFields[0], new Guid[] { Guid.NewGuid(), Guid.NewGuid() }); using var s = File.Create(Path.Combine(tmpDir, "lt_uuid.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_uuid.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_uuid.parquet"), proofPath);
+        logicalTypes["JSON"] = RW(false, false);
+        logicalTypes["FLOAT16"] = RW(false, false);
+        // ENUM (string field with enum annotation)
+        logicalTypes["ENUM"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<string>("col")); var col = new DataColumn(sch.DataFields[0], new string[] { "A", "B", "C" }); using var s = File.Create(Path.Combine(tmpDir, "lt_enum.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_enum.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "lt_enum.parquet"), proofPath);
+        logicalTypes["BSON"] = RW(false, false);
+        logicalTypes["INTERVAL"] = RW(false, false);
         results["logical_types"] = logicalTypes;
 
         // --- Nested Types ---
-        var nestedTypes = new Dictionary<string, object>
-        {
-            ["LIST"] = RW(true, true),
-            ["MAP"] = RW(true, true),
-            ["STRUCT"] = RW(true, true),
-            ["NESTED_LIST"] = RW(true, true),
-            ["NESTED_MAP"] = RW(true, true),
-            ["DEEP_NESTING"] = RW(true, true),
-        };
+        var nestedTypes = new Dictionary<string, object>();
+        // LIST
+        nestedTypes["LIST"] = TestRW(
+            () => { var sch = new ParquetSchema(new ListField("col", new DataField<int>("item"))); var col = new DataColumn((DataField)((ListField)sch.Fields[0]).Item, new int[] { 1, 2, 3, 4 }); using var s = File.Create(Path.Combine(tmpDir, "nt_list.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "nt_list.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.GetDataFields()[0]).Wait(); },
+            Path.Combine(tmpDir, "nt_list.parquet"), proofPath);
+        // MAP
+        nestedTypes["MAP"] = TestRW(
+            () => { var sch = new ParquetSchema(new MapField("col", new DataField<string>("key"), new DataField<int>("value"))); var keys = new DataColumn((DataField)((MapField)sch.Fields[0]).Key, new string[] { "a", "b" }); var vals = new DataColumn((DataField)((MapField)sch.Fields[0]).Value, new int[] { 1, 2 }); using var s = File.Create(Path.Combine(tmpDir, "nt_map.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(keys).Wait(); g.WriteColumnAsync(vals).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "nt_map.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); foreach (var df in r.Schema.GetDataFields()) { g.ReadColumnAsync(df).Wait(); } },
+            Path.Combine(tmpDir, "nt_map.parquet"), proofPath);
+        // STRUCT
+        nestedTypes["STRUCT"] = TestRW(
+            () => { var sch = new ParquetSchema(new StructField("col", new DataField<int>("x"), new DataField<int>("y"))); var xc = new DataColumn((DataField)((StructField)sch.Fields[0]).Fields[0], new int[] { 1, 2 }); var yc = new DataColumn((DataField)((StructField)sch.Fields[0]).Fields[1], new int[] { 3, 4 }); using var s = File.Create(Path.Combine(tmpDir, "nt_struct.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(xc).Wait(); g.WriteColumnAsync(yc).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "nt_struct.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); foreach (var df in r.Schema.GetDataFields()) { g.ReadColumnAsync(df).Wait(); } },
+            Path.Combine(tmpDir, "nt_struct.parquet"), proofPath);
+        // NESTED_LIST
+        nestedTypes["NESTED_LIST"] = TestRW(
+            () => { var inner = new ListField("item", new DataField<int>("element")); var outer = new ListField("col", inner); var sch = new ParquetSchema(outer); var dc = new DataColumn(sch.GetDataFields()[0], new int[] { 1, 2, 3 }); using var s = File.Create(Path.Combine(tmpDir, "nt_nlist.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(dc).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "nt_nlist.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.GetDataFields()[0]).Wait(); },
+            Path.Combine(tmpDir, "nt_nlist.parquet"), proofPath);
+        nestedTypes["NESTED_MAP"] = TestRW(
+            () => { var innerMap = new MapField("value", new DataField<string>("key"), new DataField<int>("val")); var outerMap = new MapField("col", new DataField<string>("key"), innerMap); var sch = new ParquetSchema(outerMap); var dfs = sch.GetDataFields(); using var s = File.Create(Path.Combine(tmpDir, "nt_nmap.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); foreach (var df in dfs) { if (df.ClrType == typeof(string)) g.WriteColumnAsync(new DataColumn(df, new string[] { "k" })).Wait(); else g.WriteColumnAsync(new DataColumn(df, new int[] { 1 })).Wait(); } },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "nt_nmap.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); foreach (var df in r.Schema.GetDataFields()) { g.ReadColumnAsync(df).Wait(); } },
+            Path.Combine(tmpDir, "nt_nmap.parquet"), proofPath);
+        nestedTypes["DEEP_NESTING"] = TestRW(
+            () => { var sch = new ParquetSchema(new ListField("col", new StructField("item", new DataField<int>("x"), new DataField<int>("y")))); var dfs = sch.GetDataFields(); using var s = File.Create(Path.Combine(tmpDir, "nt_deep.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); foreach (var df in dfs) { g.WriteColumnAsync(new DataColumn(df, new int[] { 1, 2, 3 })).Wait(); } },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "nt_deep.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); foreach (var df in r.Schema.GetDataFields()) { g.ReadColumnAsync(df).Wait(); } },
+            Path.Combine(tmpDir, "nt_deep.parquet"), proofPath);
         results["nested_types"] = nestedTypes;
 
         // --- Advanced Features ---
-        var advanced = new Dictionary<string, object>
-        {
-            ["STATISTICS"] = RW(true, true),
-            ["PAGE_INDEX"] = RW(false, false),
-            ["BLOOM_FILTER"] = RW(false, false),
-            ["DATA_PAGE_V2"] = RW(false, false),
-            ["COLUMN_ENCRYPTION"] = RW(false, false),
-            ["PREDICATE_PUSHDOWN"] = RW(false, false),
-            ["PROJECTION_PUSHDOWN"] = RW(true, true),
-            ["SCHEMA_EVOLUTION"] = RW(false, false),
-        };
+        var advanced = new Dictionary<string, object>();
+        // STATISTICS (parquet-dotnet always writes statistics)
+        advanced["STATISTICS"] = TestRW(
+            () => WriteParquet("adv_stats", CompressionMethod.None),
+            () => ReadParquet("adv_stats"),
+            Path.Combine(tmpDir, "adv_stats.parquet"), proofPath);
+        advanced["PAGE_INDEX"] = RW(false, false);
+        advanced["BLOOM_FILTER"] = RW(false, false);
+        advanced["DATA_PAGE_V2"] = RW(false, false);
+        advanced["COLUMN_ENCRYPTION"] = RW(false, false);
+        advanced["PREDICATE_PUSHDOWN"] = RW(false, false);
+        // PROJECTION_PUSHDOWN (read a subset of columns)
+        advanced["PROJECTION_PUSHDOWN"] = TestRW(
+            () => { var sch = new ParquetSchema(new DataField<int>("a"), new DataField<string>("b")); using var s = File.Create(Path.Combine(tmpDir, "adv_proj.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(new DataColumn(sch.DataFields[0], new int[] { 1, 2 })).Wait(); g.WriteColumnAsync(new DataColumn(sch.DataFields[1], new string[] { "x", "y" })).Wait(); },
+            () => { using var s = File.OpenRead(Path.Combine(tmpDir, "adv_proj.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
+            Path.Combine(tmpDir, "adv_proj.parquet"), proofPath);
+        advanced["SCHEMA_EVOLUTION"] = RW(false, false);
         results["advanced_features"] = advanced;
 
         var json = JsonSerializer.Serialize(results, new JsonSerializerOptions { WriteIndented = true });

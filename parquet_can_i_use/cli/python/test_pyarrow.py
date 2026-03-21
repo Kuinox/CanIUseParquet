@@ -263,13 +263,16 @@ def main():
     results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter)
 
     # Column Encryption (PyArrow supports Parquet Modular Encryption)
+    enc_path = os.path.join(tmpdir, "adv_encrypt.parquet")
     def write_encryption():
-        # Test if encryption classes exist
-        assert hasattr(pq, 'FileEncryptionProperties')
-        assert hasattr(pq, 'FileDecryptionProperties')
+        encryption_key = b'0123456789012345'  # 16-byte AES key
+        enc_props = pq.FileEncryptionProperties(footer_key=encryption_key)
+        pq.write_table(table, enc_path, encryption_properties=enc_props)
     def read_encryption():
-        assert hasattr(pq, 'FileDecryptionProperties')
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_rw(write_encryption, read_encryption)
+        encryption_key = b'0123456789012345'
+        dec_props = pq.FileDecryptionProperties(footer_key=encryption_key)
+        pq.read_table(enc_path, decryption_properties=dec_props)
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = test_rw(write_encryption, read_encryption, write_path=enc_path)
 
     # Data Page V2
     def write_data_page_v2():
