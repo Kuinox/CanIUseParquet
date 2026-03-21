@@ -325,7 +325,7 @@ def main():
         p2 = os.path.join(tmpdir, "adv_schema2.parquet")
         ds = pq.ParquetDataset([p1, p2])
         ds.read()
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution)
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution, write_path=os.path.join(tmpdir, "adv_schema1.parquet"))
 
     # Size Statistics (Parquet format 2.10.0, Arrow 14+)
     # Arrow C++ writes size_statistics in column metadata automatically in newer versions.

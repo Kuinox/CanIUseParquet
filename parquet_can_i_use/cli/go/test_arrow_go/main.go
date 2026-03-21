@@ -650,7 +650,7 @@ func main() {
 	// UNKNOWN – null type; parquet does not have a native null column type
 	logicalTypes["UNKNOWN"] = RWResult{Write: false, Read: false}
 
-	// VARIANT – not supported in arrow-go 18.3.0
+	// VARIANT – not supported in arrow-go v18.3.0 (the version used here)
 	logicalTypes["VARIANT"] = RWResult{Write: false, Read: false}
 
 	// GEOMETRY / GEOGRAPHY – not supported

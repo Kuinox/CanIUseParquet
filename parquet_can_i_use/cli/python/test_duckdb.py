@@ -270,24 +270,16 @@ def main():
         results["nested_types"][type_name] = test_rw(write_nt, read_nt, write_path=path)
 
     # --- Advanced Features ---
-    # Create a shared data file used by several read-side tests.  Wrap in
-    # try/except so that a SQL syntax change in very old DuckDB versions cannot
-    # crash the whole script and suppress all results.
-    try:
-        data_path = os.path.join(tmpdir, "adv_data.parquet")
+    def write_page_index():
+        p = os.path.join(tmpdir, "adv_page_index.parquet")
         con.execute(
             f"COPY (SELECT i AS col, CAST(i AS VARCHAR) AS str_col "
-            f"FROM range(1000) t(i)) TO '{data_path}' (FORMAT PARQUET)"
+            f"FROM range(1000) t(i)) TO '{p}' (FORMAT PARQUET)"
         )
-    except Exception:
-        data_path = None
-
-    def write_page_index():
-        pass  # DuckDB always writes page index metadata
     def read_page_index():
-        # DuckDB reads page index from parquet files
-        con.execute(f"SELECT * FROM parquet_metadata('{data_path}')").fetchall()
-    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
+        p = os.path.join(tmpdir, "adv_page_index.parquet")
+        con.execute(f"SELECT * FROM parquet_metadata('{p}')").fetchall()
+    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index, write_path=os.path.join(tmpdir, "adv_page_index.parquet"))
 
     def write_bloom_filter():
         p = os.path.join(tmpdir, "adv_bloom.parquet")
@@ -315,22 +307,36 @@ def main():
     results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2.parquet"))
 
     def write_statistics():
-        pass  # DuckDB always writes statistics
+        p = os.path.join(tmpdir, "adv_stats.parquet")
+        con.execute(
+            f"COPY (SELECT i AS col, CAST(i AS VARCHAR) AS str_col "
+            f"FROM range(1000) t(i)) TO '{p}' (FORMAT PARQUET)"
+        )
     def read_statistics():
-        con.execute(f"SELECT * FROM parquet_metadata('{data_path}')").fetchall()
-    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
+        p = os.path.join(tmpdir, "adv_stats.parquet")
+        con.execute(f"SELECT * FROM parquet_metadata('{p}')").fetchall()
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics, write_path=os.path.join(tmpdir, "adv_stats.parquet"))
 
     def write_predicate_pushdown():
-        pass  # DuckDB supports predicate pushdown automatically
+        p = os.path.join(tmpdir, "adv_pred.parquet")
+        con.execute(
+            f"COPY (SELECT i AS col FROM range(1000) t(i)) TO '{p}' (FORMAT PARQUET)"
+        )
     def read_predicate_pushdown():
-        con.execute(f"SELECT * FROM read_parquet('{data_path}') WHERE col > 500").fetchall()
-    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown)
+        p = os.path.join(tmpdir, "adv_pred.parquet")
+        con.execute(f"SELECT * FROM read_parquet('{p}') WHERE col > 500").fetchall()
+    results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(write_predicate_pushdown, read_predicate_pushdown, write_path=os.path.join(tmpdir, "adv_pred.parquet"))
 
     def write_projection_pushdown():
-        pass  # DuckDB supports projection pushdown automatically
+        p = os.path.join(tmpdir, "adv_proj.parquet")
+        con.execute(
+            f"COPY (SELECT i AS col, CAST(i AS VARCHAR) AS str_col "
+            f"FROM range(1000) t(i)) TO '{p}' (FORMAT PARQUET)"
+        )
     def read_projection_pushdown():
-        con.execute(f"SELECT col FROM read_parquet('{data_path}')").fetchall()
-    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown)
+        p = os.path.join(tmpdir, "adv_proj.parquet")
+        con.execute(f"SELECT col FROM read_parquet('{p}')").fetchall()
+    results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj.parquet"))
 
     def write_schema_evolution():
         p1 = os.path.join(tmpdir, "adv_se1.parquet")
@@ -345,11 +351,15 @@ def main():
 
     # Size Statistics (Parquet format 2.10.0) - DuckDB reads size_statistics metadata
     def write_size_statistics():
-        pass  # DuckDB writes size statistics by default in newer versions
+        p = os.path.join(tmpdir, "adv_size_stats.parquet")
+        con.execute(
+            f"COPY (SELECT i AS col FROM range(1000) t(i)) TO '{p}' (FORMAT PARQUET)"
+        )
     def read_size_statistics():
-        rows = con.execute(f"SELECT * FROM parquet_metadata('{data_path}')").fetchall()
+        p = os.path.join(tmpdir, "adv_size_stats.parquet")
+        rows = con.execute(f"SELECT * FROM parquet_metadata('{p}')").fetchall()
         assert len(rows) > 0
-    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics)
+    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics, write_path=os.path.join(tmpdir, "adv_size_stats.parquet"))
 
     # Page CRC32 checksum - DuckDB does not write page checksums
     results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}

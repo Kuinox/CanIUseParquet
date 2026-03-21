@@ -75,11 +75,24 @@ def main():
     def test_rw(write_fn, read_fn, write_path=None):
         write_ok, write_log = test_feature(write_fn)
         read_ok, read_log = test_feature(read_fn)
-        if write_ok and write_path and os.path.exists(write_path):
-            with open(write_path, "rb") as f:
-                data = f.read()
-            sha = hashlib.sha256(data).hexdigest()
-            write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+        if write_ok and write_path:
+            # Spark writes directories with part files; find the first .parquet file
+            actual_path = write_path
+            if os.path.isdir(write_path):
+                for f in sorted(os.listdir(write_path)):
+                    if f.endswith(".parquet"):
+                        actual_path = os.path.join(write_path, f)
+                        break
+                else:
+                    actual_path = None
+            if actual_path and os.path.isfile(actual_path):
+                try:
+                    with open(actual_path, "rb") as f:
+                        data = f.read()
+                    sha = hashlib.sha256(data).hexdigest()
+                    write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
+                except Exception:
+                    pass
         if read_ok:
             read_log = _read_proof_log()
         result = {"write": write_ok, "read": read_ok}
@@ -130,7 +143,7 @@ def main():
         def read_comp(p=read_path):
             spark.read.parquet(p).collect()
 
-        results["compression"][codec_name] = test_rw(write_comp, read_comp)
+        results["compression"][codec_name] = test_rw(write_comp, read_comp, write_path=write_path)
 
     # --- Encoding × Type matrix ---
     # PySpark does not expose per-column encoding control; Spark uses its own default
@@ -171,7 +184,7 @@ def main():
         def read_lt(p=path):
             spark.read.parquet(p).collect()
 
-        return test_rw(write_lt, read_lt)
+        return test_rw(write_lt, read_lt, write_path=path)
 
     results["logical_types"]["STRING"] = lt_test(
         [T.StructField("c", T.StringType())], [("hello",)], "string")
@@ -244,7 +257,7 @@ def main():
     def read_interval():
         spark.read.parquet(os.path.join(tmpdir, "lt_interval")).collect()
 
-    results["logical_types"]["INTERVAL"] = test_rw(write_interval, read_interval)
+    results["logical_types"]["INTERVAL"] = test_rw(write_interval, read_interval, write_path=os.path.join(tmpdir, "lt_interval"))
 
     # --- Nested Types ---
     nested_tests = [
@@ -273,7 +286,7 @@ def main():
         def read_nt(p=path):
             spark.read.parquet(p).collect()
 
-        results["nested_types"][nt_name] = test_rw(write_nt, read_nt)
+        results["nested_types"][nt_name] = test_rw(write_nt, read_nt, write_path=path)
 
     # --- Advanced Features ---
     adv_schema = T.StructType([
@@ -281,15 +294,15 @@ def main():
         T.StructField("str_col", T.StringType()),
     ])
     adv_rows = [(i, f"val_{i}") for i in range(100)]
-    adv_path = os.path.join(tmpdir, "adv_data")
-    spark.createDataFrame(adv_rows, adv_schema).write.mode("overwrite").parquet(adv_path)
 
     # STATISTICS: Spark writes column statistics by default
     def write_statistics():
-        pass  # Written as part of adv_data above
+        p = os.path.join(tmpdir, "adv_stats")
+        spark.createDataFrame(adv_rows, adv_schema).write.mode("overwrite").parquet(p)
     def read_statistics():
-        spark.read.parquet(adv_path).collect()
-    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics)
+        p = os.path.join(tmpdir, "adv_stats")
+        spark.read.parquet(p).collect()
+    results["advanced_features"]["STATISTICS"] = test_rw(write_statistics, read_statistics, write_path=os.path.join(tmpdir, "adv_stats"))
 
     # PAGE_INDEX: supported in Spark 3.1+ (parquet page index)
     def write_page_index():
@@ -298,7 +311,7 @@ def main():
     def read_page_index():
         p = os.path.join(tmpdir, "adv_page_index")
         spark.read.parquet(p).collect()
-    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
+    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index, write_path=os.path.join(tmpdir, "adv_page_index"))
 
     # BLOOM_FILTER: supported via spark.sql.parquet.bloom.filter.enabled (Spark 3.1+)
     def write_bloom_filter():
@@ -310,7 +323,7 @@ def main():
     def read_bloom_filter():
         p = os.path.join(tmpdir, "adv_bloom")
         spark.read.parquet(p).collect()
-    results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter)
+    results["advanced_features"]["BLOOM_FILTER"] = test_rw(write_bloom_filter, read_bloom_filter, write_path=os.path.join(tmpdir, "adv_bloom"))
 
     # DATA_PAGE_V2: Spark can write and read data page v2
     def write_data_page_v2():
@@ -322,26 +335,30 @@ def main():
     def read_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2")
         spark.read.parquet(p).collect()
-    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2)
+    results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2"))
 
     # COLUMN_ENCRYPTION: Parquet modular encryption is not supported in open-source PySpark
     results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
 
     # PREDICATE_PUSHDOWN: Spark supports predicate pushdown by default
     def write_predicate_pushdown():
-        pass  # Written as part of adv_data above
+        p = os.path.join(tmpdir, "adv_pred")
+        spark.createDataFrame(adv_rows, adv_schema).write.mode("overwrite").parquet(p)
     def read_predicate_pushdown():
-        spark.read.parquet(adv_path).filter("col > 50").collect()
+        p = os.path.join(tmpdir, "adv_pred")
+        spark.read.parquet(p).filter("col > 50").collect()
     results["advanced_features"]["PREDICATE_PUSHDOWN"] = test_rw(
-        write_predicate_pushdown, read_predicate_pushdown)
+        write_predicate_pushdown, read_predicate_pushdown, write_path=os.path.join(tmpdir, "adv_pred"))
 
     # PROJECTION_PUSHDOWN: Spark reads only requested columns
     def write_projection_pushdown():
-        pass  # Written as part of adv_data above
+        p = os.path.join(tmpdir, "adv_proj")
+        spark.createDataFrame(adv_rows, adv_schema).write.mode("overwrite").parquet(p)
     def read_projection_pushdown():
-        spark.read.parquet(adv_path).select("col").collect()
+        p = os.path.join(tmpdir, "adv_proj")
+        spark.read.parquet(p).select("col").collect()
     results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(
-        write_projection_pushdown, read_projection_pushdown)
+        write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj"))
 
     # SCHEMA_EVOLUTION: Spark supports mergeSchema option
     def write_schema_evolution():
@@ -354,7 +371,7 @@ def main():
         p2 = os.path.join(tmpdir, "adv_se2")
         spark.read.option("mergeSchema", "true").parquet(p1, p2).collect()
     results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(
-        write_schema_evolution, read_schema_evolution)
+        write_schema_evolution, read_schema_evolution, write_path=os.path.join(tmpdir, "adv_se1"))
 
     spark.stop()
     print(json.dumps(results, indent=2))
