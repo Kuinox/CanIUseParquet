@@ -3,6 +3,7 @@
 
 import base64
 import hashlib
+import inspect
 import json
 import os
 import sys
@@ -29,6 +30,24 @@ def test_rw(write_fn, read_fn, write_path=None):
     if read_log:
         result["read_log"] = read_log
     return result
+
+def _not_supported_result(reason=None):
+    """Return a result for a feature explicitly not supported, with source code as proof."""
+    frame = inspect.currentframe().f_back
+    filename = frame.f_code.co_filename
+    lineno = frame.f_lineno
+    try:
+        with open(filename) as f:
+            source_lines = f.readlines()
+        start = max(0, lineno - 4)
+        end = min(len(source_lines), lineno + 1)
+        source = "".join(source_lines[start:end]).rstrip()
+        log = f"Source proof (line {lineno}):\n{source}"
+    except Exception:
+        log = f"Not supported (at {filename}:{lineno})"
+    if reason:
+        log = f"{reason}\n{log}"
+    return {"write": False, "read": False, "write_log": log, "read_log": log}
 
 def main():
     try:
@@ -245,9 +264,9 @@ def main():
     results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj.parquet"))
 
     # Features fastparquet doesn't support
-    results["advanced_features"]["PAGE_INDEX"] = {"write": False, "read": False}
-    results["advanced_features"]["BLOOM_FILTER"] = {"write": False, "read": False}
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
+    results["advanced_features"]["PAGE_INDEX"] = _not_supported_result("fastparquet does not support PAGE_INDEX")
+    results["advanced_features"]["BLOOM_FILTER"] = _not_supported_result("fastparquet does not support BLOOM_FILTER")
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = _not_supported_result("fastparquet does not support COLUMN_ENCRYPTION")
 
     def write_data_page_v2():
         raise NotImplementedError("fastparquet does not support Data Page V2")
@@ -270,10 +289,10 @@ def main():
     results["advanced_features"]["SCHEMA_EVOLUTION"] = test_rw(write_schema_evolution, read_schema_evolution, write_path=os.path.join(tmpdir, "adv_se1.parquet"))
 
     # Size Statistics (Parquet format 2.10.0) - not supported by fastparquet
-    results["advanced_features"]["SIZE_STATISTICS"] = {"write": False, "read": False}
+    results["advanced_features"]["SIZE_STATISTICS"] = _not_supported_result("fastparquet does not support SIZE_STATISTICS")
 
     # Page CRC32 checksum - not supported by fastparquet
-    results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}
+    results["advanced_features"]["PAGE_CRC32"] = _not_supported_result("fastparquet does not support PAGE_CRC32")
 
     print(json.dumps(results, indent=2))
 

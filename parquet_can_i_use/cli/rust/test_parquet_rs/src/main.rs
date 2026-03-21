@@ -142,6 +142,13 @@ where
     test_rw_with_proof(write_fn, read_fn, None, None)
 }
 
+/// Return a JSON result for a feature that is explicitly not supported in both read and write.
+/// The same reason string is used for both write_log and read_log because the feature is
+/// unsupported in both directions. If separate messages are needed, construct the JSON directly.
+fn not_supported(reason: &str) -> Value {
+    json!({"write": false, "read": false, "write_log": reason, "read_log": reason})
+}
+
 fn make_simple_batch() -> RecordBatch {
     let schema = Schema::new(vec![Field::new("col", DataType::Int32, false)]);
     RecordBatch::try_new(
@@ -604,7 +611,7 @@ fn main() {
     });
 
     // INT96 - parquet-rs can read but doesn't write INT96 by default
-    logical_types.insert("INT96".into(), json!({"write": false, "read": false}));
+    logical_types.insert("INT96".into(), not_supported("INT96 is not supported for writing by parquet-rs; INT96 is a deprecated legacy timestamp format"));
 
     // JSON, BSON, ENUM, INTERVAL, FLOAT16 - test as binary/string
     logical_types.insert("JSON".into(), {
@@ -693,9 +700,9 @@ fn main() {
     });
 
     // VARIANT, GEOMETRY, GEOGRAPHY - not yet supported in parquet-rs v55
-    logical_types.insert("VARIANT".into(), json!({"write": false, "read": false}));
-    logical_types.insert("GEOMETRY".into(), json!({"write": false, "read": false}));
-    logical_types.insert("GEOGRAPHY".into(), json!({"write": false, "read": false}));
+    logical_types.insert("VARIANT".into(), not_supported("VARIANT logical type is not yet supported in parquet-rs"));
+    logical_types.insert("GEOMETRY".into(), not_supported("GEOMETRY logical type is not yet supported in parquet-rs"));
+    logical_types.insert("GEOGRAPHY".into(), not_supported("GEOGRAPHY logical type is not yet supported in parquet-rs"));
 
     results.insert("logical_types".into(), Value::Object(logical_types));
 
@@ -919,7 +926,7 @@ fn main() {
     // Column Encryption: parquet-rs v55 supports encryption but requires the
     // `encryption` feature which adds AES-GCM dependencies not included in this build.
     // Mark as not supported for this build configuration.
-    advanced.insert("COLUMN_ENCRYPTION".into(), json!({"write": false, "read": false}));
+    advanced.insert("COLUMN_ENCRYPTION".into(), not_supported("COLUMN_ENCRYPTION requires the 'encryption' feature flag in parquet-rs (adds AES-GCM dependencies not included in this build)"));
 
     advanced.insert("PREDICATE_PUSHDOWN".into(), {
         let wf = tmpdir.path().join("adv_pred.parquet");
@@ -970,7 +977,7 @@ fn main() {
             proof_path,
         )
     });
-    advanced.insert("SCHEMA_EVOLUTION".into(), json!({"write": false, "read": false}));
+    advanced.insert("SCHEMA_EVOLUTION".into(), not_supported("SCHEMA_EVOLUTION is not supported in a single write/read cycle in parquet-rs"));
 
     // Size Statistics: written automatically by parquet-rs when page-level statistics
     // are enabled. Verify that the column metadata includes level histograms (part of

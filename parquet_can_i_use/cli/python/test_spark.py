@@ -3,6 +3,7 @@
 
 import base64
 import hashlib
+import inspect
 import json
 import logging
 import os
@@ -32,6 +33,25 @@ def test_rw(write_fn, read_fn, write_path=None):
     if read_log:
         result["read_log"] = read_log
     return result
+
+
+def _not_supported_result(reason=None):
+    """Return a result for a feature explicitly not supported, with source code as proof."""
+    frame = inspect.currentframe().f_back
+    filename = frame.f_code.co_filename
+    lineno = frame.f_lineno
+    try:
+        with open(filename) as f:
+            source_lines = f.readlines()
+        start = max(0, lineno - 4)
+        end = min(len(source_lines), lineno + 1)
+        source = "".join(source_lines[start:end]).rstrip()
+        log = f"Source proof (line {lineno}):\n{source}"
+    except Exception:
+        log = f"Not supported (at {filename}:{lineno})"
+    if reason:
+        log = f"{reason}\n{log}"
+    return {"write": False, "read": False, "write_log": log, "read_log": log}
 
 
 def main():
@@ -193,9 +213,9 @@ def main():
         [T.StructField("c", T.DateType())], [(datetime.date(2024, 1, 1),)], "date")
 
     # TIME: Spark has no native time-only type; stored as LongType (ms/us from midnight)
-    results["logical_types"]["TIME_MILLIS"] = {"write": False, "read": False}
-    results["logical_types"]["TIME_MICROS"] = {"write": False, "read": False}
-    results["logical_types"]["TIME_NANOS"] = {"write": False, "read": False}
+    results["logical_types"]["TIME_MILLIS"] = _not_supported_result("Spark has no native time-only type; TIME_MILLIS is not supported")
+    results["logical_types"]["TIME_MICROS"] = _not_supported_result("Spark has no native time-only type; TIME_MICROS is not supported")
+    results["logical_types"]["TIME_NANOS"] = _not_supported_result("Spark has no native time-only type; TIME_NANOS is not supported")
 
     # TIMESTAMP: default encoding depends on Spark version
     results["logical_types"]["TIMESTAMP_MILLIS"] = lt_test(
@@ -210,7 +230,7 @@ def main():
 
     # TIMESTAMP_NANOS: PySpark's outputTimestampType only supports INT96, TIMESTAMP_MILLIS,
     # and TIMESTAMP_MICROS. Nanosecond precision is not available as a write option.
-    results["logical_types"]["TIMESTAMP_NANOS"] = {"write": False, "read": False}
+    results["logical_types"]["TIMESTAMP_NANOS"] = _not_supported_result("PySpark's outputTimestampType does not support TIMESTAMP_NANOS")
 
     # INT96 (legacy timestamp format)
     results["logical_types"]["INT96"] = lt_test(
@@ -233,7 +253,7 @@ def main():
         [('{"key":"val"}',)], "json")
 
     # FLOAT16: not supported in Spark
-    results["logical_types"]["FLOAT16"] = {"write": False, "read": False}
+    results["logical_types"]["FLOAT16"] = _not_supported_result("Spark does not support FLOAT16")
 
     # ENUM: no native enum type; stored as string
     results["logical_types"]["ENUM"] = lt_test(
@@ -338,7 +358,7 @@ def main():
     results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2"))
 
     # COLUMN_ENCRYPTION: Parquet modular encryption is not supported in open-source PySpark
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = _not_supported_result("Parquet modular encryption is not supported in open-source PySpark")
 
     # PREDICATE_PUSHDOWN: Spark supports predicate pushdown by default
     def write_predicate_pushdown():

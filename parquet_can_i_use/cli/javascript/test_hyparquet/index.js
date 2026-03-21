@@ -107,7 +107,10 @@ async function testRead(filePath) {
  */
 async function testReadFixture(fixturePath, proofLog) {
   if (!fixturePath || !existsSync(fixturePath)) {
-    return { write: false, read: false };
+    const reason = fixturePath
+      ? `Fixture file not found: ${fixturePath}`
+      : 'No fixture path provided for this feature';
+    return { write: false, read: false, write_log: reason, read_log: reason };
   }
   const { ok: readOk, log: readLog } = await testRead(fixturePath);
   const entry = { write: false, read: readOk };
@@ -117,6 +120,14 @@ async function testReadFixture(fixturePath, proofLog) {
     entry.read_log = readLog;
   }
   return entry;
+}
+
+/**
+ * Return a result object for a feature that is explicitly not supported.
+ * Includes a reason as both write_log and read_log.
+ */
+function notSupported(reason) {
+  return { write: false, read: false, write_log: reason, read_log: reason };
 }
 
 async function writeAndRead(schema, rows) {
@@ -269,9 +280,9 @@ async function main() {
     BSON:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_BSON.parquet') : null, proofLogForRead),
     INTERVAL:         async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INTERVAL.parquet') : null, proofLogForRead),
     UNKNOWN:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UNKNOWN.parquet') : null, proofLogForRead),
-    VARIANT:          async () => ({ write: false, read: false }),
-    GEOMETRY:         async () => ({ write: false, read: false }),
-    GEOGRAPHY:        async () => ({ write: false, read: false }),
+    VARIANT:          async () => notSupported('VARIANT logical type is not supported by hyparquet'),
+    GEOMETRY:         async () => notSupported('GEOMETRY logical type is not supported by hyparquet'),
+    GEOGRAPHY:        async () => notSupported('GEOGRAPHY logical type is not supported by hyparquet'),
   };
 
   for (const [name, testFn] of Object.entries(logicalTypeTests)) {
@@ -307,9 +318,9 @@ async function main() {
   }
 
   // Features that require write-side capabilities not testable via read-only fixtures:
-  results.advanced_features.BLOOM_FILTER = { write: false, read: false };
-  results.advanced_features.COLUMN_ENCRYPTION = { write: false, read: false };
-  results.advanced_features.SCHEMA_EVOLUTION = { write: false, read: false };
+  results.advanced_features.BLOOM_FILTER = notSupported('BLOOM_FILTER requires write-side capability not available in hyparquet (read-only library)');
+  results.advanced_features.COLUMN_ENCRYPTION = notSupported('COLUMN_ENCRYPTION is not supported by hyparquet');
+  results.advanced_features.SCHEMA_EVOLUTION = notSupported('SCHEMA_EVOLUTION requires write-side capability not available in hyparquet (read-only library)');
 
   process.stdout.write(JSON.stringify(results, null, 2) + '\n');
 }

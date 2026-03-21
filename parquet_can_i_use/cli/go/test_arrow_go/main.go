@@ -53,6 +53,11 @@ func testRW(writeFn func() error, readFn func() error) RWResult {
 	}
 }
 
+func notSupported(reason string) RWResult {
+	log := reason
+	return RWResult{Write: false, Read: false, WriteLog: &log, ReadLog: &log}
+}
+
 func sha256Hex(data []byte) string {
 	h := sha256.Sum256(data)
 	return fmt.Sprintf("%x", h)
@@ -385,8 +390,8 @@ func main() {
 		)
 	}
 	// LZ4 (deprecated) and LZO not commonly supported
-	compression["LZ4"] = RWResult{Write: false, Read: false}
-	compression["LZO"] = RWResult{Write: false, Read: false}
+	compression["LZ4"] = notSupported("LZ4 (deprecated format) is not supported by arrow-go")
+	compression["LZO"] = notSupported("LZO compression is not supported by arrow-go")
 	results["compression"] = compression
 
 	// --- Encoding × Type matrix ---
@@ -409,7 +414,7 @@ func main() {
 			props := makeEncodingProps(eName)
 			if props == nil {
 				// BIT_PACKED or unknown encoding — not supported
-				typeResults[typeName] = RWResult{Write: false, Read: false}
+				typeResults[typeName] = notSupported(fmt.Sprintf("%s encoding is not supported by arrow-go (makeEncodingProps returned nil)", eName))
 				continue
 			}
 			wPath := filepath.Join(tmpdir, fmt.Sprintf("enc_%s_%s.parquet", eName, tName))
@@ -508,7 +513,7 @@ func main() {
 	}
 
 	// TIME_NANOS – not representable as a parquet logical type via arrow-go
-	logicalTypes["TIME_NANOS"] = RWResult{Write: false, Read: false}
+	logicalTypes["TIME_NANOS"] = notSupported("TIME_NANOS is not representable as a parquet logical type via arrow-go")
 
 	// TIMESTAMP_MILLIS
 	{
@@ -771,11 +776,11 @@ func main() {
 	}
 
 	// VARIANT – not supported in arrow-go v18.3.0 (the version used here)
-	logicalTypes["VARIANT"] = RWResult{Write: false, Read: false}
+	logicalTypes["VARIANT"] = notSupported("VARIANT logical type is not supported in arrow-go")
 
 	// GEOMETRY / GEOGRAPHY – not supported
-	logicalTypes["GEOMETRY"] = RWResult{Write: false, Read: false}
-	logicalTypes["GEOGRAPHY"] = RWResult{Write: false, Read: false}
+	logicalTypes["GEOMETRY"] = notSupported("GEOMETRY logical type is not supported in arrow-go")
+	logicalTypes["GEOGRAPHY"] = notSupported("GEOGRAPHY logical type is not supported in arrow-go")
 
 	results["logical_types"] = logicalTypes
 
@@ -1001,7 +1006,7 @@ func main() {
 	}
 
 	// COLUMN_ENCRYPTION – requires key management infrastructure; not supported without setup
-	advanced["COLUMN_ENCRYPTION"] = RWResult{Write: false, Read: false}
+	advanced["COLUMN_ENCRYPTION"] = notSupported("COLUMN_ENCRYPTION requires key management infrastructure; not supported in arrow-go without setup")
 
 	// SIZE_STATISTICS – reader can surface size stats but the arrow writer does not expose explicit size-stats control
 	{
@@ -1108,7 +1113,7 @@ func main() {
 	}
 
 	// SCHEMA_EVOLUTION – not supported in a single write/read cycle
-	advanced["SCHEMA_EVOLUTION"] = RWResult{Write: false, Read: false}
+	advanced["SCHEMA_EVOLUTION"] = notSupported("SCHEMA_EVOLUTION is not supported in a single write/read cycle in arrow-go")
 
 	results["advanced_features"] = advanced
 
