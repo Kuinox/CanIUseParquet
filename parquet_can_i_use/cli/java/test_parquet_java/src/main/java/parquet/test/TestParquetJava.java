@@ -144,6 +144,15 @@ public class TestParquetJava {
         return result;
     }
 
+    static Map<String, Object> notSupported(String reason) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("write", false);
+        result.put("read", false);
+        result.put("write_log", reason);
+        result.put("read_log", reason);
+        return result;
+    }
+
     static Schema simpleSchema() {
         return new Schema.Parser().parse(
             "{\"type\":\"record\",\"name\":\"Test\",\"fields\":[{\"name\":\"col\",\"type\":\"int\"}]}"
@@ -521,9 +530,9 @@ public class TestParquetJava {
             } catch (Exception e) { throw new RuntimeException(e); } },
             () -> { try { readParquetGroup("lt_unknown"); } catch (IOException e) { throw new RuntimeException(e); } },
             tmpDir + "/lt_unknown.parquet", proofPath));
-        logicalTypes.put("VARIANT", rw(false, false));
-        logicalTypes.put("GEOMETRY", rw(false, false));
-        logicalTypes.put("GEOGRAPHY", rw(false, false));
+        logicalTypes.put("VARIANT", notSupported("VARIANT logical type is not supported by parquet-java"));
+        logicalTypes.put("GEOMETRY", notSupported("GEOMETRY logical type is not supported by parquet-java"));
+        logicalTypes.put("GEOGRAPHY", notSupported("GEOGRAPHY logical type is not supported by parquet-java"));
         results.put("logical_types", logicalTypes);
 
         // --- Nested Types ---
@@ -616,7 +625,7 @@ public class TestParquetJava {
             } catch (IOException e) { throw new RuntimeException(e); } },
             () -> { try { readParquet("adv_v2"); } catch (IOException e) { throw new RuntimeException(e); } },
             tmpDir + "/adv_v2.parquet", proofPath));
-        advanced.put("COLUMN_ENCRYPTION", rw(false, false));
+        advanced.put("COLUMN_ENCRYPTION", notSupported("COLUMN_ENCRYPTION requires key management infrastructure; not supported in open-source parquet-java build"));
         advanced.put("PREDICATE_PUSHDOWN", testRWWithProof(
             () -> { try { writeParquet("adv_pred", CompressionCodecName.UNCOMPRESSED); } catch (IOException e) { throw new RuntimeException(e); } },
             () -> { try { readParquet("adv_pred"); } catch (IOException e) { throw new RuntimeException(e); } },

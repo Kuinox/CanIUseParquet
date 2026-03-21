@@ -98,6 +98,9 @@ class Program
     static Dictionary<string, object> RW(bool write, bool read) =>
         new Dictionary<string, object> { ["write"] = write, ["read"] = read };
 
+    static Dictionary<string, object> NotSupported(string reason) =>
+        new Dictionary<string, object> { ["write"] = false, ["read"] = false, ["write_log"] = reason, ["read_log"] = reason };
+
     static void WriteParquet(string name, CompressionMethod compression)
     {
         Directory.CreateDirectory(tmpDir);
@@ -564,7 +567,7 @@ class Program
             () => { var sch = new ParquetSchema(new DataField<TimeSpan>("col")); var col = new DataColumn(sch.DataFields[0], new TimeSpan[] { TimeSpan.FromHours(1), TimeSpan.FromMinutes(30) }); using var s = File.Create(Path.Combine(tmpDir, "lt_timeus.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
             () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_timeus.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
             Path.Combine(tmpDir, "lt_timeus.parquet"), proofPath);
-        logicalTypes["TIME_NANOS"] = RW(false, false);
+        logicalTypes["TIME_NANOS"] = NotSupported("TIME_NANOS is not supported by parquet-dotnet; no nanosecond time precision available");
         // TIMESTAMP_MILLIS
         logicalTypes["TIMESTAMP_MILLIS"] = TestRW(
             () => { var sch = new ParquetSchema(new DataField<DateTime>("col")); var col = new DataColumn(sch.DataFields[0], new DateTime[] { DateTime.UtcNow, DateTime.UtcNow.AddHours(1) }); using var s = File.Create(Path.Combine(tmpDir, "lt_tsms.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
@@ -575,8 +578,8 @@ class Program
             () => { var sch = new ParquetSchema(new DataField<DateTimeOffset>("col")); var col = new DataColumn(sch.DataFields[0], new DateTimeOffset[] { DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1) }); using var s = File.Create(Path.Combine(tmpDir, "lt_tsus.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
             () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_tsus.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
             Path.Combine(tmpDir, "lt_tsus.parquet"), proofPath);
-        logicalTypes["TIMESTAMP_NANOS"] = RW(false, false);
-        logicalTypes["INT96"] = RW(false, false);
+        logicalTypes["TIMESTAMP_NANOS"] = NotSupported("TIMESTAMP_NANOS is not supported by parquet-dotnet; no nanosecond timestamp precision available");
+        logicalTypes["INT96"] = NotSupported("INT96 is not supported by parquet-dotnet; INT96 is a deprecated legacy timestamp format");
         // DECIMAL
         logicalTypes["DECIMAL"] = TestRW(
             () => { var sch = new ParquetSchema(new DecimalDataField("col", 10, 2)); var col = new DataColumn(sch.DataFields[0], new decimal[] { 1.23m, 4.56m }); using var s = File.Create(Path.Combine(tmpDir, "lt_decimal.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
@@ -587,15 +590,15 @@ class Program
             () => { var sch = new ParquetSchema(new DataField<Guid>("col")); var col = new DataColumn(sch.DataFields[0], new Guid[] { Guid.NewGuid(), Guid.NewGuid() }); using var s = File.Create(Path.Combine(tmpDir, "lt_uuid.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
             () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_uuid.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
             Path.Combine(tmpDir, "lt_uuid.parquet"), proofPath);
-        logicalTypes["JSON"] = RW(false, false);
-        logicalTypes["FLOAT16"] = RW(false, false);
+        logicalTypes["JSON"] = NotSupported("JSON logical type is not supported by parquet-dotnet");
+        logicalTypes["FLOAT16"] = NotSupported("FLOAT16 logical type is not supported by parquet-dotnet");
         // ENUM (string field with enum annotation)
         logicalTypes["ENUM"] = TestRW(
             () => { var sch = new ParquetSchema(new DataField<string>("col")); var col = new DataColumn(sch.DataFields[0], new string[] { "A", "B", "C" }); using var s = File.Create(Path.Combine(tmpDir, "lt_enum.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(col).Wait(); },
             () => { using var s = File.OpenRead(Path.Combine(tmpDir, "lt_enum.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
             Path.Combine(tmpDir, "lt_enum.parquet"), proofPath);
-        logicalTypes["BSON"] = RW(false, false);
-        logicalTypes["INTERVAL"] = RW(false, false);
+        logicalTypes["BSON"] = NotSupported("BSON logical type is not supported by parquet-dotnet");
+        logicalTypes["INTERVAL"] = NotSupported("INTERVAL logical type is not supported by parquet-dotnet");
         results["logical_types"] = logicalTypes;
 
         // --- Nested Types ---
@@ -637,17 +640,17 @@ class Program
             () => WriteParquet("adv_stats", CompressionMethod.None),
             () => ReadParquet("adv_stats"),
             Path.Combine(tmpDir, "adv_stats.parquet"), proofPath);
-        advanced["PAGE_INDEX"] = RW(false, false);
-        advanced["BLOOM_FILTER"] = RW(false, false);
-        advanced["DATA_PAGE_V2"] = RW(false, false);
-        advanced["COLUMN_ENCRYPTION"] = RW(false, false);
-        advanced["PREDICATE_PUSHDOWN"] = RW(false, false);
+        advanced["PAGE_INDEX"] = NotSupported("PAGE_INDEX is not supported by parquet-dotnet");
+        advanced["BLOOM_FILTER"] = NotSupported("BLOOM_FILTER is not supported by parquet-dotnet");
+        advanced["DATA_PAGE_V2"] = NotSupported("DATA_PAGE_V2 is not supported by parquet-dotnet");
+        advanced["COLUMN_ENCRYPTION"] = NotSupported("COLUMN_ENCRYPTION is not supported by parquet-dotnet");
+        advanced["PREDICATE_PUSHDOWN"] = NotSupported("PREDICATE_PUSHDOWN is not supported by parquet-dotnet");
         // PROJECTION_PUSHDOWN (read a subset of columns)
         advanced["PROJECTION_PUSHDOWN"] = TestRW(
             () => { var sch = new ParquetSchema(new DataField<int>("a"), new DataField<string>("b")); using var s = File.Create(Path.Combine(tmpDir, "adv_proj.parquet")); using var w = ParquetWriter.CreateAsync(sch, s).Result; using var g = w.CreateRowGroup(); g.WriteColumnAsync(new DataColumn(sch.DataFields[0], new int[] { 1, 2 })).Wait(); g.WriteColumnAsync(new DataColumn(sch.DataFields[1], new string[] { "x", "y" })).Wait(); },
             () => { using var s = File.OpenRead(Path.Combine(tmpDir, "adv_proj.parquet")); using var r = ParquetReader.CreateAsync(s).Result; using var g = r.OpenRowGroupReader(0); g.ReadColumnAsync(r.Schema.DataFields[0]).Wait(); },
             Path.Combine(tmpDir, "adv_proj.parquet"), proofPath);
-        advanced["SCHEMA_EVOLUTION"] = RW(false, false);
+        advanced["SCHEMA_EVOLUTION"] = NotSupported("SCHEMA_EVOLUTION is not supported by parquet-dotnet");
         results["advanced_features"] = advanced;
 
         var json = JsonSerializer.Serialize(results, new JsonSerializerOptions { WriteIndented = true });

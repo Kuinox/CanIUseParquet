@@ -88,6 +88,11 @@ func testRW(writeFn func() error, readFn func() error) RWResult {
 	}
 }
 
+func notSupported(reason string) RWResult {
+	log := reason
+	return RWResult{Write: false, Read: false, WriteLog: &log, ReadLog: &log}
+}
+
 func sha256Hex(data []byte) string {
 	h := sha256.Sum256(data)
 	return fmt.Sprintf("%x", h)
@@ -523,7 +528,7 @@ func main() {
 			e := enc
 			if e == nil {
 				// BIT_PACKED: deprecated / not implemented
-				typeResults[typeName] = RWResult{Write: false, Read: false}
+				typeResults[typeName] = notSupported("BIT_PACKED encoding is deprecated and not implemented in parquet-go (enc is nil in encObjects map)")
 				continue
 			}
 			wPath := filepath.Join(tmpdir, fmt.Sprintf("enc_%s_%s.parquet", eName, tName))
@@ -582,7 +587,7 @@ func main() {
 		filepath.Join(tmpdir, "lt_time_micros.parquet"),
 		proofPath,
 	)
-	logicalTypes["TIME_NANOS"] = RWResult{Write: false, Read: false}
+	logicalTypes["TIME_NANOS"] = notSupported("TIME_NANOS is not supported by parquet-go; no Nanosecond time logical type available")
 	logicalTypes["TIMESTAMP_MILLIS"] = testRWWithProof(
 		func() error {
 			return writeLogicParquet(tmpdir, "lt_ts_millis", parquet.Timestamp(parquet.Millisecond),
@@ -605,8 +610,8 @@ func main() {
 		filepath.Join(tmpdir, "lt_ts_micros.parquet"),
 		proofPath,
 	)
-	logicalTypes["TIMESTAMP_NANOS"] = RWResult{Write: false, Read: false}
-	logicalTypes["INT96"] = RWResult{Write: false, Read: false}
+	logicalTypes["TIMESTAMP_NANOS"] = notSupported("TIMESTAMP_NANOS is not supported by parquet-go; no Nanosecond timestamp logical type available")
+	logicalTypes["INT96"] = notSupported("INT96 is not supported by parquet-go; INT96 is a deprecated legacy timestamp format")
 	logicalTypes["DECIMAL"] = testRWWithProof(
 		func() error {
 			return writeLogicParquet(tmpdir, "lt_decimal", parquet.Decimal(2, 10, parquet.Int32Type),
@@ -618,16 +623,16 @@ func main() {
 		filepath.Join(tmpdir, "lt_decimal.parquet"),
 		proofPath,
 	)
-	logicalTypes["UUID"] = RWResult{Write: false, Read: false}
-	logicalTypes["JSON"] = RWResult{Write: false, Read: false}
-	logicalTypes["FLOAT16"] = RWResult{Write: false, Read: false}
-	logicalTypes["ENUM"] = RWResult{Write: false, Read: false}
-	logicalTypes["BSON"] = RWResult{Write: false, Read: false}
-	logicalTypes["INTERVAL"] = RWResult{Write: false, Read: false}
-	logicalTypes["UNKNOWN"] = RWResult{Write: false, Read: false}
-	logicalTypes["VARIANT"] = RWResult{Write: false, Read: false}
-	logicalTypes["GEOMETRY"] = RWResult{Write: false, Read: false}
-	logicalTypes["GEOGRAPHY"] = RWResult{Write: false, Read: false}
+	logicalTypes["UUID"] = notSupported("UUID logical type is not supported by parquet-go")
+	logicalTypes["JSON"] = notSupported("JSON logical type is not supported by parquet-go")
+	logicalTypes["FLOAT16"] = notSupported("FLOAT16 logical type is not supported by parquet-go")
+	logicalTypes["ENUM"] = notSupported("ENUM logical type is not supported by parquet-go")
+	logicalTypes["BSON"] = notSupported("BSON logical type is not supported by parquet-go")
+	logicalTypes["INTERVAL"] = notSupported("INTERVAL logical type is not supported by parquet-go")
+	logicalTypes["UNKNOWN"] = notSupported("UNKNOWN logical type is not supported by parquet-go")
+	logicalTypes["VARIANT"] = notSupported("VARIANT logical type is not supported by parquet-go")
+	logicalTypes["GEOMETRY"] = notSupported("GEOMETRY logical type is not supported by parquet-go")
+	logicalTypes["GEOGRAPHY"] = notSupported("GEOGRAPHY logical type is not supported by parquet-go")
 	results["logical_types"] = logicalTypes
 
 	// --- Nested Types ---
@@ -657,9 +662,9 @@ func main() {
 		filepath.Join(tmpdir, "nt_map.parquet"),
 		proofPath,
 	)
-	nestedTypes["NESTED_LIST"] = RWResult{Write: false, Read: false}
-	nestedTypes["NESTED_MAP"] = RWResult{Write: false, Read: false}
-	nestedTypes["DEEP_NESTING"] = RWResult{Write: false, Read: false}
+	nestedTypes["NESTED_LIST"] = notSupported("NESTED_LIST is not supported by parquet-go")
+	nestedTypes["NESTED_MAP"] = notSupported("NESTED_MAP is not supported by parquet-go")
+	nestedTypes["DEEP_NESTING"] = notSupported("DEEP_NESTING is not supported by parquet-go")
 	results["nested_types"] = nestedTypes
 
 	// --- Advanced Features ---
@@ -687,9 +692,9 @@ func main() {
 		filepath.Join(tmpdir, "adv_bloom.parquet"),
 		proofPath,
 	)
-	advanced["DATA_PAGE_V2"] = RWResult{Write: false, Read: false}
-	advanced["COLUMN_ENCRYPTION"] = RWResult{Write: false, Read: false}
-	advanced["PREDICATE_PUSHDOWN"] = RWResult{Write: false, Read: false}
+	advanced["DATA_PAGE_V2"] = notSupported("DATA_PAGE_V2 is not supported by parquet-go")
+	advanced["COLUMN_ENCRYPTION"] = notSupported("COLUMN_ENCRYPTION is not supported by parquet-go")
+	advanced["PREDICATE_PUSHDOWN"] = notSupported("PREDICATE_PUSHDOWN is not supported by parquet-go")
 	advanced["PROJECTION_PUSHDOWN"] = testRWWithProof(
 		func() error {
 			multiRows := []MultiColRow{{ColA: 1, ColB: 10}, {ColA: 2, ColB: 20}}
@@ -699,7 +704,7 @@ func main() {
 		filepath.Join(tmpdir, "adv_proj.parquet"),
 		proofPath,
 	)
-	advanced["SCHEMA_EVOLUTION"] = RWResult{Write: false, Read: false}
+	advanced["SCHEMA_EVOLUTION"] = notSupported("SCHEMA_EVOLUTION is not supported by parquet-go")
 
 	// SIZE_STATISTICS: parquet-go does not expose explicit size-statistics control.
 	// Test read support using the pre-generated fixture.

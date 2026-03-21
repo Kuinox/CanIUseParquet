@@ -140,6 +140,15 @@ public class TestTrino {
         return result;
     }
 
+    static Map<String, Object> notSupported(String reason) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("write", false);
+        result.put("read", false);
+        result.put("write_log", reason);
+        result.put("read_log", reason);
+        return result;
+    }
+
     static Schema simpleSchema() {
         return new Schema.Parser().parse(
             "{\"type\":\"record\",\"name\":\"Test\",\"fields\":[{\"name\":\"col\",\"type\":\"int\"}]}"
@@ -216,9 +225,9 @@ public class TestTrino {
             () -> { try { readParquet("comp_gzip"); } catch (IOException e) { throw new RuntimeException(e); } },
             tmpDir + "/comp_gzip.parquet", proofPath));
         // BROTLI: not supported by Trino connectors
-        compression.put("BROTLI", rw(false, false));
+        compression.put("BROTLI", notSupported("BROTLI compression is not supported by Trino connectors"));
         // LZO: not supported by Trino
-        compression.put("LZO", rw(false, false));
+        compression.put("LZO", notSupported("LZO compression is not supported by Trino"));
         compression.put("LZ4", testRWWithProof(
             () -> { try { writeParquet("comp_lz4", CompressionCodecName.LZ4); } catch (IOException e) { throw new RuntimeException(e); } },
             () -> { try { readParquet("comp_lz4"); } catch (IOException e) { throw new RuntimeException(e); } },
@@ -275,12 +284,12 @@ public class TestTrino {
         logicalTypes.put("UUID", rw(true, true));
         logicalTypes.put("JSON", rw(true, true));
         // FLOAT16: no native FLOAT16 / REAL(16) SQL type in Trino
-        logicalTypes.put("FLOAT16", rw(false, false));
+        logicalTypes.put("FLOAT16", notSupported("FLOAT16 has no native SQL type in Trino"));
         logicalTypes.put("ENUM", rw(true, true));
         // BSON: no native BSON SQL type; stored as VARBINARY
-        logicalTypes.put("BSON", rw(false, false));
+        logicalTypes.put("BSON", notSupported("BSON has no native SQL type in Trino; stored as VARBINARY but logical type annotation is not written"));
         // INTERVAL: Trino INTERVAL type does not map directly to Parquet INTERVAL
-        logicalTypes.put("INTERVAL", rw(false, false));
+        logicalTypes.put("INTERVAL", notSupported("Trino INTERVAL type does not map directly to Parquet INTERVAL logical type"));
         results.put("logical_types", logicalTypes);
 
         // --- Nested Types ---

@@ -157,6 +157,9 @@ class Program
     static Dictionary<string, object> RW(bool write, bool read) =>
         new Dictionary<string, object> { ["write"] = write, ["read"] = read };
 
+    static Dictionary<string, object> NotSupported(string reason) =>
+        new Dictionary<string, object> { ["write"] = false, ["read"] = false, ["write_log"] = reason, ["read_log"] = reason };
+
     static string TmpPath(string name) => Path.Combine(tmpDir, name + ".parquet");
 
     // --- Helpers ---
@@ -280,7 +283,7 @@ class Program
         // PLAIN_DICTIONARY (deprecated legacy)
         {
             var t = new Dictionary<string, object>();
-            foreach (var tn in typeNames) t[tn] = RW(false, false);
+            foreach (var tn in typeNames) t[tn] = NotSupported("PLAIN_DICTIONARY is a deprecated legacy encoding not supported for writing by parquet-sharp");
             encoding["PLAIN_DICTIONARY"] = t;
         }
         // RLE_DICTIONARY
@@ -309,7 +312,7 @@ class Program
         // BIT_PACKED (deprecated)
         {
             var t = new Dictionary<string, object>();
-            foreach (var tn in typeNames) t[tn] = RW(false, false);
+            foreach (var tn in typeNames) t[tn] = NotSupported("BIT_PACKED is a deprecated encoding not supported by parquet-sharp");
             encoding["BIT_PACKED"] = t;
         }
         // DELTA_BINARY_PACKED
@@ -684,7 +687,7 @@ class Program
         }
 
         // INTERVAL (deprecated; parquet-cpp rejects INTERVAL for FIXED_LEN_BYTE_ARRAY)
-        logicalTypes["INTERVAL"] = RW(false, false);
+        logicalTypes["INTERVAL"] = NotSupported("INTERVAL logical type is not supported by parquet-sharp (parquet-cpp rejects INTERVAL for FIXED_LEN_BYTE_ARRAY)");
 
         results["logical_types"] = logicalTypes;
 
@@ -921,10 +924,10 @@ class Program
         }
 
         // BLOOM_FILTER (not available in ParquetSharp currently)
-        advanced["BLOOM_FILTER"] = RW(false, false);
+        advanced["BLOOM_FILTER"] = NotSupported("BLOOM_FILTER is not currently available in ParquetSharp");
 
         // DATA_PAGE_V2 (ParquetDataPageVersion not available in this version)
-        advanced["DATA_PAGE_V2"] = RW(false, false);
+        advanced["DATA_PAGE_V2"] = NotSupported("DATA_PAGE_V2 (ParquetDataPageVersion) is not available in this version of ParquetSharp");
 
         // COLUMN_ENCRYPTION (requires AES key setup)
         {
@@ -966,7 +969,7 @@ class Program
         }
 
         // PREDICATE_PUSHDOWN (row group filtering based on statistics)
-        advanced["PREDICATE_PUSHDOWN"] = RW(false, false);
+        advanced["PREDICATE_PUSHDOWN"] = NotSupported("PREDICATE_PUSHDOWN (row group filtering) is not supported by ParquetSharp");
 
         // PROJECTION_PUSHDOWN (reading a subset of columns)
         {

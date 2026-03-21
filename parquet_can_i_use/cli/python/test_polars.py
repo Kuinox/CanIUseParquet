@@ -3,6 +3,7 @@
 
 import base64
 import hashlib
+import inspect
 import json
 import os
 import sys
@@ -29,6 +30,24 @@ def test_rw(write_fn, read_fn, write_path=None):
     if read_log:
         result["read_log"] = read_log
     return result
+
+def _not_supported_result(reason=None):
+    """Return a result for a feature explicitly not supported, with source code as proof."""
+    frame = inspect.currentframe().f_back
+    filename = frame.f_code.co_filename
+    lineno = frame.f_lineno
+    try:
+        with open(filename) as f:
+            source_lines = f.readlines()
+        start = max(0, lineno - 4)
+        end = min(len(source_lines), lineno + 1)
+        source = "".join(source_lines[start:end]).rstrip()
+        log = f"Source proof (line {lineno}):\n{source}"
+    except Exception:
+        log = f"Not supported (at {filename}:{lineno})"
+    if reason:
+        log = f"{reason}\n{log}"
+    return {"write": False, "read": False, "write_log": log, "read_log": log}
 
 def main():
     try:
@@ -102,11 +121,27 @@ def main():
         fixture_path = FIXTURES_DIR / "compression" / f"comp_{codec_name}.parquet"
         if codec_val is None:
             # Cannot write this codec; try reading from fixture to detect read-only support.
+            # Capture the codec map source as proof that this codec is mapped to None.
+            _frame = inspect.currentframe()
+            _filename = _frame.f_code.co_filename
+            try:
+                with open(_filename) as _f:
+                    _src = _f.readlines()
+                # Find the codec dict definition (a few lines above) to show as proof
+                _lineno = _frame.f_lineno
+                _start = max(0, _lineno - 20)
+                _codec_src = "".join(_src[_start:_lineno]).rstrip()
+                write_log = (
+                    f"Codec '{codec_name}' is not supported for writing "
+                    f"(mapped to None in codec map).\nSource proof:\n{_codec_src}"
+                )
+            except Exception:
+                write_log = f"Codec '{codec_name}' is not supported for writing (mapped to None in codec map)"
             if fixture_path.exists():
                 read_ok, _ = test_feature("read", lambda p=str(fixture_path): pl.read_parquet(p))
             else:
                 read_ok = False
-            entry = {"write": False, "read": read_ok}
+            entry = {"write": False, "read": read_ok, "write_log": write_log}
             if read_ok:
                 rl = _read_proof_log()
                 if rl:
@@ -387,8 +422,8 @@ def main():
             raise FileNotFoundError(f"PAGE_INDEX fixture not found: {fixture}")
         pl.read_parquet(str(fixture))
     results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
-    results["advanced_features"]["BLOOM_FILTER"] = {"write": False, "read": False}
-    results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
+    results["advanced_features"]["BLOOM_FILTER"] = _not_supported_result("Polars does not expose BLOOM_FILTER write or read control")
+    results["advanced_features"]["COLUMN_ENCRYPTION"] = _not_supported_result("Polars does not support COLUMN_ENCRYPTION")
 
     def write_data_page_v2():
         p = os.path.join(tmpdir, "adv_v2.parquet")
@@ -398,7 +433,7 @@ def main():
         pl.read_parquet(p)
     results["advanced_features"]["DATA_PAGE_V2"] = test_rw(write_data_page_v2, read_data_page_v2, write_path=os.path.join(tmpdir, "adv_v2.parquet"))
 
-    results["advanced_features"]["SCHEMA_EVOLUTION"] = {"write": False, "read": False}
+    results["advanced_features"]["SCHEMA_EVOLUTION"] = _not_supported_result("Polars does not support SCHEMA_EVOLUTION")
 
     # Size Statistics (Parquet format 2.10.0) - test read support using fixture.
     def write_size_statistics():
