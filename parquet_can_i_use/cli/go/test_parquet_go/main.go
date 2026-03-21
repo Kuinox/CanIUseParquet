@@ -236,8 +236,8 @@ func testRWWithProof(writeFn func() error, readFn func() error, writePath string
 			writeLog = &msg
 		}
 	}
-	if readOk && proofPath != "" {
-		readLog = readProofLog(proofPath)
+	if readOk && writePath != "" {
+		readLog = readProofLog(writePath)
 	}
 	return RWResult{
 		Write:    writeOk,
