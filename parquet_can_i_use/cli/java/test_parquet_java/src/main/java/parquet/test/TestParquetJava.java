@@ -126,8 +126,8 @@ public class TestParquetJava {
             } catch (Exception ignored) {}
         }
         String readLog = readResult.log;
-        if (readResult.ok && proofPath != null) {
-            readLog = readProofLog(proofPath);
+        if (readResult.ok && writePath != null) {
+            readLog = readProofLog(writePath);
         }
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("write", writeResult.ok);

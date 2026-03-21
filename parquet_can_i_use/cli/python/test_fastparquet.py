@@ -11,7 +11,7 @@ import tempfile
 import traceback
 from pathlib import Path
 
-PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
+
 
 def test_feature(name, fn):
     try:
@@ -56,19 +56,19 @@ def main():
         print(json.dumps({"error": "fastparquet not installed"}))
         sys.exit(1)
 
-    def _read_proof_log():
+    def _read_proof_log(path):
         try:
-            if not PROOF_FIXTURE.exists():
+            if not path or not Path(path).exists():
                 return None
-            proof_data = PROOF_FIXTURE.read_bytes()
+            proof_data = Path(path).read_bytes()
             sha = hashlib.sha256(proof_data).hexdigest()
-            df = fastparquet.ParquetFile(str(PROOF_FIXTURE)).to_pandas()
+            df = fastparquet.ParquetFile(str(path)).to_pandas()
             values = {c: df[c].tolist() for c in df.columns}
             return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
         except Exception as e:
             return f"proof_read_error:{e}"
 
-    def test_rw(write_fn, read_fn, write_path=None):
+    def test_rw(write_fn, read_fn, write_path=None, read_path=None):
         write_ok, write_log = test_feature("write", write_fn)
         read_ok, read_log = test_feature("read", read_fn)
         if write_ok and write_path and os.path.exists(write_path):
@@ -77,7 +77,7 @@ def main():
             sha = hashlib.sha256(data).hexdigest()
             write_log = f"sha256:{sha}\n{base64.b64encode(data).decode()}"
         if read_ok:
-            read_log = _read_proof_log()
+            read_log = _read_proof_log(read_path or write_path)
         result = {"write": write_ok, "read": read_ok}
         if write_log:
             result["write_log"] = write_log
@@ -124,7 +124,7 @@ def main():
                 fastparquet.write(p, d, compression=c)
         def read_codec(p=read_path):
             fastparquet.ParquetFile(p).to_pandas()
-        results["compression"][codec_name] = test_rw(write_codec, read_codec, write_path=write_path)
+        results["compression"][codec_name] = test_rw(write_codec, read_codec, write_path=write_path, read_path=read_path)
 
     # --- Encoding × Type matrix ---
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]

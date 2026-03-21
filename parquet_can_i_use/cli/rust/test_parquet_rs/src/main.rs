@@ -78,7 +78,6 @@ fn test_rw_with_proof<W, R>(
     write_fn: W,
     read_fn: R,
     write_path: Option<&Path>,
-    proof_path: Option<&Path>,
 ) -> Value
 where
     W: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
@@ -105,7 +104,7 @@ where
     };
 
     let read_log = if read_ok {
-        if let Some(proof) = proof_path {
+        if let Some(proof) = write_path {
             match std::fs::read(proof) {
                 Ok(data) => {
                     let sha = sha256_hex(&data);
@@ -139,7 +138,7 @@ where
     W: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
     R: FnOnce() -> Result<(), Box<dyn std::error::Error>>,
 {
-    test_rw_with_proof(write_fn, read_fn, None, None)
+    test_rw_with_proof(write_fn, read_fn, None)
 }
 
 /// Return a JSON result for a feature that is explicitly not supported in both read and write.
@@ -289,12 +288,6 @@ fn main() {
     let tmpdir = TempDir::new().unwrap();
     let fixtures_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("..").join("..").join("..").join("fixtures");
-    let proof_fixture_path = fixtures_dir.join("proof").join("proof.parquet");
-    let proof_path: Option<&std::path::Path> = if proof_fixture_path.exists() {
-        Some(proof_fixture_path.as_path())
-    } else {
-        None
-    };
     let mut results = Map::new();
 
     results.insert("tool".into(), json!("parquet-rs"));
@@ -326,7 +319,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, &format!("comp_{n}")),
             Some(&write_file),
-            proof_path,
         );
         let _ = props;
         let _ = batch;
@@ -344,7 +336,6 @@ fn main() {
         },
         || read_parquet(&tmpdir, "comp_LZO"),
         Some(&lzo_write_file),
-        proof_path,
     );
     compression.insert("LZO".into(), lzo_result);
     results.insert("compression".into(), Value::Object(compression));
@@ -428,7 +419,6 @@ fn main() {
                 },
                 || read_parquet(&tmpdir, &format!("enc_{enc_name}_{ptype}")),
                 Some(&enc_write_file),
-                proof_path,
             );
             type_results.insert(ptype.to_string(), result);
         }
@@ -460,7 +450,6 @@ fn main() {
                 },
                 || read_parquet(&tmpdir, &format!("enc_BYTE_STREAM_SPLIT_EXTENDED_{ptype}")),
                 Some(&enc_write_file),
-                proof_path,
             );
             type_results.insert(ptype.to_string(), result);
         }
@@ -484,7 +473,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_string"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -500,7 +488,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_date"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -516,7 +503,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_time_ms"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -532,7 +518,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_time_us"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -548,7 +533,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_time_ns"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -574,7 +558,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, &format!("lt_ts_{name}")),
             Some(&ts_write_file),
-            proof_path,
         ));
     }
 
@@ -590,7 +573,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_decimal"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -606,7 +588,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_uuid"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -625,7 +606,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_json"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -640,7 +620,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_float16"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -655,7 +634,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_enum"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -665,7 +643,6 @@ fn main() {
             || write_bson_parquet(&tmpdir.path().join("lt_bson.parquet")),
             || read_parquet(&tmpdir, "lt_bson"),
             Some(&wf),
-            proof_path,
         )
     });
     logical_types.insert("INTERVAL".into(), {
@@ -679,7 +656,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_interval"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -695,7 +671,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "lt_unknown"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -724,7 +699,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "nt_list"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -746,7 +720,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "nt_struct"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -775,7 +748,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "nt_map"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -795,7 +767,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "nt_nested_list"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -814,7 +785,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "nt_deep"),
             Some(&wf),
-            proof_path,
         )
     });
     nested_types.insert("NESTED_MAP".into(), {
@@ -844,7 +814,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "nt_nested_map"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -866,7 +835,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "adv_stats"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -884,7 +852,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "adv_page_idx"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -901,7 +868,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "adv_bloom"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -919,7 +885,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "adv_v2"),
             Some(&wf),
-            proof_path,
         )
     });
 
@@ -945,7 +910,6 @@ fn main() {
                 Ok(())
             },
             Some(&wf),
-            proof_path,
         )
     });
     advanced.insert("PROJECTION_PUSHDOWN".into(), {
@@ -974,7 +938,6 @@ fn main() {
                 Ok(())
             },
             Some(&wf),
-            proof_path,
         )
     });
     advanced.insert("SCHEMA_EVOLUTION".into(), not_supported("SCHEMA_EVOLUTION is not supported in a single write/read cycle in parquet-rs"));
@@ -1013,7 +976,6 @@ fn main() {
             },
             || read_parquet(&tmpdir, "adv_size_stats"),
             Some(&wf),
-            proof_path,
         )
     });
 

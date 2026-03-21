@@ -88,7 +88,7 @@ class Program
             }
             catch { }
         }
-        if (readOk) readLog = ReadProofLog(proofPath);
+        if (readOk) readLog = ReadProofLog(writePath);
         var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
         if (writeLog != null) result["write_log"] = writeLog;
         if (readLog != null) result["read_log"] = readLog;
@@ -492,7 +492,6 @@ class Program
             ["BOOLEAN"]    = Path.Combine(tmpDir, "type_BOOLEAN_unique.parquet"),
             ["BYTE_ARRAY"] = Path.Combine(tmpDir, "type_BYTE_ARRAY_unique.parquet"),
         };
-        string? encodingProofLog = ReadProofLog(proofPath);
         foreach (var encName in encValues.Keys)
         {
             var typeResults = new Dictionary<string, object>();
@@ -537,8 +536,12 @@ class Program
                     }
                     catch { }
                 }
-                if (readOk && encodingProofLog != null)
-                    cell["read_log"] = encodingProofLog;
+                if (readOk && typeWritePath.TryGetValue(typeName, out var rpath))
+                {
+                    var encodingReadProofLog = ReadProofLog(File.Exists(rpath) ? rpath : null);
+                    if (encodingReadProofLog != null)
+                        cell["read_log"] = encodingReadProofLog;
+                }
                 typeResults[typeName] = cell;
             }
             encoding[encName] = typeResults;

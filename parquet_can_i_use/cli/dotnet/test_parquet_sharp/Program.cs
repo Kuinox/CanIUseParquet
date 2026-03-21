@@ -147,7 +147,7 @@ class Program
             }
             catch { }
         }
-        if (readOk) readLog = ReadProofLog(proofPath);
+        if (readOk) readLog = ReadProofLog(writePath);
         var result = new Dictionary<string, object> { ["write"] = writeOk, ["read"] = readOk };
         if (writeLog != null) result["write_log"] = writeLog;
         if (readLog != null) result["read_log"] = readLog;

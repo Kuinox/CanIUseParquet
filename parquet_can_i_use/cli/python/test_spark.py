@@ -12,7 +12,7 @@ import tempfile
 import traceback
 from pathlib import Path
 
-PROOF_FIXTURE = Path(__file__).parent.parent.parent / "fixtures" / "proof" / "proof.parquet"
+
 
 
 def test_feature(fn):
@@ -79,20 +79,31 @@ def main():
     )
     spark.sparkContext.setLogLevel("ERROR")
 
-    def _read_proof_log():
+    def _read_proof_log(path):
         try:
-            if not PROOF_FIXTURE.exists():
+            if not path:
                 return None
-            proof_data = PROOF_FIXTURE.read_bytes()
+            # Spark may write a directory with part files; find the first .parquet file
+            actual_path = path
+            if os.path.isdir(path):
+                for f in sorted(os.listdir(path)):
+                    if f.endswith(".parquet"):
+                        actual_path = os.path.join(path, f)
+                        break
+                else:
+                    return None
+            if not os.path.isfile(actual_path):
+                return None
+            proof_data = Path(actual_path).read_bytes()
             sha = hashlib.sha256(proof_data).hexdigest()
-            df = spark.read.parquet(str(PROOF_FIXTURE))
+            df = spark.read.parquet(str(actual_path))
             rows = df.collect()
             values = {c: [getattr(r, c) for r in rows] for c in df.columns}
             return f"proof_sha256:{sha}\nvalues:{json.dumps(values)}"
         except Exception as e:
             return f"proof_read_error:{e}"
 
-    def test_rw(write_fn, read_fn, write_path=None):
+    def test_rw(write_fn, read_fn, write_path=None, read_path=None):
         write_ok, write_log = test_feature(write_fn)
         read_ok, read_log = test_feature(read_fn)
         if write_ok and write_path:
@@ -114,7 +125,7 @@ def main():
                 except Exception:
                     pass
         if read_ok:
-            read_log = _read_proof_log()
+            read_log = _read_proof_log(read_path or write_path)
         result = {"write": write_ok, "read": read_ok}
         if write_log:
             result["write_log"] = write_log
@@ -163,7 +174,7 @@ def main():
         def read_comp(p=read_path):
             spark.read.parquet(p).collect()
 
-        results["compression"][codec_name] = test_rw(write_comp, read_comp, write_path=write_path)
+        results["compression"][codec_name] = test_rw(write_comp, read_comp, write_path=write_path, read_path=read_path)
 
     # --- Encoding × Type matrix ---
     # PySpark does not expose per-column encoding control; Spark uses its own default
