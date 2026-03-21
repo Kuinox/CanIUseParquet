@@ -505,22 +505,21 @@ public class TestParquetJava {
             tmpDir + "/lt_interval.parquet", proofPath));
         logicalTypes.put("UNKNOWN", testRWWithProof(
             () -> { try {
-                // UNKNOWN (always-null) type: Avro null column
-                Schema s = new Schema.Parser().parse(
-                    "{\"type\":\"record\",\"name\":\"T\",\"fields\":[{\"name\":\"c\",\"type\":\"null\"}]}");
+                // UNKNOWN (always-null) type: use optional INT32 column with all-null values
+                MessageType schema = Types.buildMessage()
+                    .optional(PrimitiveTypeName.INT32)
+                    .named("c")
+                .named("T");
                 Path p = new Path(tmpDir + "/lt_unknown.parquet");
-                GenericRecord r = new GenericData.Record(s);
-                r.put("c", null);
-                try (ParquetWriter<GenericRecord> w = AvroParquetWriter.<GenericRecord>builder(p)
-                        .withSchema(s).withConf(new Configuration()).build()) { w.write(r); }
-            } catch (IOException e) { throw new RuntimeException(e); } },
-            () -> { try {
-                Path p = new Path(tmpDir + "/lt_unknown.parquet");
+                SimpleGroupFactory groupFactory = new SimpleGroupFactory(schema);
                 Configuration conf = new Configuration();
-                try (var reader = AvroParquetReader.<GenericRecord>builder(p).withConf(conf).build()) {
-                    reader.read(); // may return null for null-only schemas
+                try (ParquetWriter<Group> w = ExampleParquetWriter.builder(p).withType(schema).withConf(conf).build()) {
+                    Group g = groupFactory.newGroup();
+                    // Don't add any value for "c" — parquet-java treats absent optional fields as null
+                    w.write(g);
                 }
-            } catch (IOException e) { throw new RuntimeException(e); } },
+            } catch (Exception e) { throw new RuntimeException(e); } },
+            () -> { try { readParquetGroup("lt_unknown"); } catch (IOException e) { throw new RuntimeException(e); } },
             tmpDir + "/lt_unknown.parquet", proofPath));
         logicalTypes.put("VARIANT", rw(false, false));
         logicalTypes.put("GEOMETRY", rw(false, false));

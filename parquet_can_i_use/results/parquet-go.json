@@ -14,6 +14,11 @@
       "write": false,
       "read": false
     },
+    "PAGE_CRC32": {
+      "write": false,
+      "read": true,
+      "write_log": "parquet-go does not write page CRC32 checksums"
+    },
     "PAGE_INDEX": {
       "write": true,
       "read": true,
@@ -33,6 +38,11 @@
     "SCHEMA_EVOLUTION": {
       "write": false,
       "read": false
+    },
+    "SIZE_STATISTICS": {
+      "write": false,
+      "read": true,
+      "write_log": "parquet-go does not expose SIZE_STATISTICS write control"
     },
     "STATISTICS": {
       "write": true,
@@ -448,6 +458,14 @@
       "write": false,
       "read": false
     },
+    "GEOGRAPHY": {
+      "write": false,
+      "read": false
+    },
+    "GEOMETRY": {
+      "write": false,
+      "read": false
+    },
     "INT96": {
       "write": false,
       "read": false
@@ -498,7 +516,15 @@
       "write": false,
       "read": false
     },
+    "UNKNOWN": {
+      "write": false,
+      "read": false
+    },
     "UUID": {
+      "write": false,
+      "read": false
+    },
+    "VARIANT": {
       "write": false,
       "read": false
     }
