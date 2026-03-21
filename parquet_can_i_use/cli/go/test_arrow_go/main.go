@@ -79,6 +79,56 @@ func findProofPath() string {
 	return ""
 }
 
+func readProofValues(proofPath string) (string, error) {
+	reader, err := file.OpenParquetFile(proofPath, false)
+	if err != nil {
+		return "", err
+	}
+	defer reader.Close()
+	arrowReader, err := pqarrow.NewFileReader(reader, pqarrow.ArrowReadProperties{}, memory.DefaultAllocator)
+	if err != nil {
+		return "", err
+	}
+	tbl, err := arrowReader.ReadTable(context.Background())
+	if err != nil {
+		return "", err
+	}
+	defer tbl.Release()
+	schema := tbl.Schema()
+	result := make(map[string]interface{})
+	for i := 0; i < int(schema.NumFields()); i++ {
+		field := schema.Field(i)
+		col := tbl.Column(i)
+		var vals []interface{}
+		for _, chunk := range col.Data().Chunks() {
+			for j := 0; j < chunk.Len(); j++ {
+				switch arr := chunk.(type) {
+				case *array.Int32:
+					vals = append(vals, arr.Value(j))
+				case *array.Int64:
+					vals = append(vals, arr.Value(j))
+				case *array.Float32:
+					vals = append(vals, arr.Value(j))
+				case *array.Float64:
+					vals = append(vals, arr.Value(j))
+				case *array.Boolean:
+					vals = append(vals, arr.Value(j))
+				case *array.String:
+					vals = append(vals, arr.Value(j))
+				default:
+					vals = append(vals, fmt.Sprintf("%T", chunk))
+				}
+			}
+		}
+		result[field.Name] = vals
+	}
+	b, err := json.Marshal(result)
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
+}
+
 func readProofLog(proofPath string) *string {
 	data, err := os.ReadFile(proofPath)
 	if err != nil {
@@ -86,7 +136,12 @@ func readProofLog(proofPath string) *string {
 		return &msg
 	}
 	sha := sha256Hex(data)
-	msg := fmt.Sprintf("proof_sha256:%s\nvalues:{\"probe_int\":[1337]}", sha)
+	values, err := readProofValues(proofPath)
+	if err != nil {
+		msg := fmt.Sprintf("proof_sha256:%s\nproof_read_error:%v", sha, err)
+		return &msg
+	}
+	msg := fmt.Sprintf("proof_sha256:%s\nvalues:%s", sha, values)
 	return &msg
 }
 

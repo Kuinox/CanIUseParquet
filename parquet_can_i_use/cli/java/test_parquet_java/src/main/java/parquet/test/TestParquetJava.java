@@ -87,7 +87,19 @@ public class TestParquetJava {
         try {
             byte[] data = Files.readAllBytes(java.nio.file.Paths.get(proofPath));
             String sha = sha256Hex(data);
-            return "proof_sha256:" + sha + "\nvalues:{\"probe_int\":[1337]}";
+            Map<String, java.util.List<Object>> values = new LinkedHashMap<>();
+            Path path = new Path(proofPath);
+            Configuration conf = new Configuration();
+            try (var reader = AvroParquetReader.<GenericRecord>builder(path).withConf(conf).build()) {
+                GenericRecord record;
+                while ((record = reader.read()) != null) {
+                    for (Schema.Field field : record.getSchema().getFields()) {
+                        values.computeIfAbsent(field.name(), k -> new java.util.ArrayList<>())
+                              .add(record.get(field.name()));
+                    }
+                }
+            }
+            return "proof_sha256:" + sha + "\nvalues:" + new Gson().toJson(values);
         } catch (Exception e) {
             return "proof_read_error:" + e.getMessage();
         }

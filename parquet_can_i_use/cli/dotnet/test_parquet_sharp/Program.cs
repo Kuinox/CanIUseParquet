@@ -53,7 +53,81 @@ class Program
         {
             var data = File.ReadAllBytes(proofPath);
             var sha = Sha256Hex(data);
-            return $"proof_sha256:{sha}\nvalues:{{\"probe_int\":[1337]}}";
+            using var reader = new ParquetFileReader(proofPath);
+            var fileMetadata = reader.FileMetaData;
+            var values = new Dictionary<string, List<object?>>();
+            for (int rg = 0; rg < fileMetadata.NumRowGroups; rg++)
+            {
+                using var rowGroup = reader.RowGroup(rg);
+                long numRows = rowGroup.MetaData.NumRows;
+                int numCols = fileMetadata.Schema.NumColumns;
+                for (int c = 0; c < numCols; c++)
+                {
+                    var colDescr = fileMetadata.Schema.Column(c);
+                    string colName = colDescr.Name;
+                    if (!values.ContainsKey(colName))
+                        values[colName] = new List<object?>();
+                    using var colReader = rowGroup.Column(c);
+                    switch (colDescr.PhysicalType)
+                    {
+                        case PhysicalType.Int32:
+                            try {
+                                foreach (var v in colReader.LogicalReader<int>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            } catch (InvalidCastException) {
+                                using var nullableColReader = rowGroup.Column(c);
+                                foreach (var v in nullableColReader.LogicalReader<int?>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            }
+                            break;
+                        case PhysicalType.Int64:
+                            try {
+                                foreach (var v in colReader.LogicalReader<long>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            } catch (InvalidCastException) {
+                                using var nullableColReader = rowGroup.Column(c);
+                                foreach (var v in nullableColReader.LogicalReader<long?>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            }
+                            break;
+                        case PhysicalType.Float:
+                            try {
+                                foreach (var v in colReader.LogicalReader<float>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            } catch (InvalidCastException) {
+                                using var nullableColReader = rowGroup.Column(c);
+                                foreach (var v in nullableColReader.LogicalReader<float?>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            }
+                            break;
+                        case PhysicalType.Double:
+                            try {
+                                foreach (var v in colReader.LogicalReader<double>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            } catch (InvalidCastException) {
+                                using var nullableColReader = rowGroup.Column(c);
+                                foreach (var v in nullableColReader.LogicalReader<double?>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            }
+                            break;
+                        case PhysicalType.Boolean:
+                            try {
+                                foreach (var v in colReader.LogicalReader<bool>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            } catch (InvalidCastException) {
+                                using var nullableColReader = rowGroup.Column(c);
+                                foreach (var v in nullableColReader.LogicalReader<bool?>().ReadAll((int)numRows))
+                                    values[colName].Add(v);
+                            }
+                            break;
+                        default:
+                            values[colName].Add($"unsupported:{colDescr.PhysicalType}");
+                            break;
+                    }
+                }
+            }
+            reader.Close();
+            return $"proof_sha256:{sha}\nvalues:{JsonSerializer.Serialize(values)}";
         }
         catch (Exception e) { return $"proof_read_error:{e.Message}"; }
     }

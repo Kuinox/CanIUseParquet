@@ -114,6 +114,75 @@ func findProofPath() string {
 	return ""
 }
 
+func readProofValues(proofPath string) (string, error) {
+	f, err := os.Open(proofPath)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+	info, err := f.Stat()
+	if err != nil {
+		return "", err
+	}
+	pf, err := parquet.OpenFile(f, info.Size())
+	if err != nil {
+		return "", err
+	}
+	fields := pf.Schema().Fields()
+	colNames := make([]string, len(fields))
+	for i, field := range fields {
+		colNames[i] = field.Name()
+	}
+	colValues := make([][]interface{}, len(fields))
+	for i := range colValues {
+		colValues[i] = []interface{}{}
+	}
+	reader := parquet.NewReader(pf)
+	defer reader.Close()
+	buf := make([]parquet.Row, 128)
+	for {
+		n, err := reader.ReadRows(buf)
+		for i := 0; i < n; i++ {
+			for j, v := range buf[i] {
+				if j >= len(colValues) {
+					break
+				}
+				switch v.Kind() {
+				case parquet.Int32:
+					colValues[j] = append(colValues[j], v.Int32())
+				case parquet.Int64:
+					colValues[j] = append(colValues[j], v.Int64())
+				case parquet.Float:
+					colValues[j] = append(colValues[j], v.Float())
+				case parquet.Double:
+					colValues[j] = append(colValues[j], v.Double())
+				case parquet.Boolean:
+					colValues[j] = append(colValues[j], v.Boolean())
+				case parquet.ByteArray:
+					colValues[j] = append(colValues[j], string(v.ByteArray()))
+				default:
+					colValues[j] = append(colValues[j], fmt.Sprintf("%v", v))
+				}
+			}
+		}
+		if err == io.EOF || n == 0 {
+			break
+		}
+		if err != nil {
+			return "", err
+		}
+	}
+	result := make(map[string]interface{})
+	for i, name := range colNames {
+		result[name] = colValues[i]
+	}
+	b, err := json.Marshal(result)
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
+}
+
 func readProofLog(proofPath string) *string {
 	data, err := os.ReadFile(proofPath)
 	if err != nil {
@@ -121,7 +190,12 @@ func readProofLog(proofPath string) *string {
 		return &msg
 	}
 	sha := sha256Hex(data)
-	msg := fmt.Sprintf("proof_sha256:%s\nvalues:{\"probe_int\":[1337]}", sha)
+	values, err := readProofValues(proofPath)
+	if err != nil {
+		msg := fmt.Sprintf("proof_sha256:%s\nproof_read_error:%v", sha, err)
+		return &msg
+	}
+	msg := fmt.Sprintf("proof_sha256:%s\nvalues:%s", sha, values)
 	return &msg
 }
 
