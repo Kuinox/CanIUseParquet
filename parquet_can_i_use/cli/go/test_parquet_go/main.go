@@ -45,6 +45,15 @@ type MapRow struct {
 	Col map[string]int32 `parquet:"col"`
 }
 
+type MultiColRow struct {
+	ColA int32 `parquet:"col_a"`
+	ColB int32 `parquet:"col_b"`
+}
+
+type ProjectedRow struct {
+	ColA int32 `parquet:"col_a"`
+}
+
 // testFeature runs fn() and returns (ok, errMsg).
 func testFeature(fn func() error) (ok bool, errMsg *string) {
 	defer func() {
@@ -178,6 +187,46 @@ func writeReadParquet[T any](tmpdir string, name string, rows []T, opts ...parqu
 		return err
 	}
 	return readParquet[T](tmpdir, name)
+}
+
+// writeLogicParquet writes a parquet file using the given schema node and rows.
+func writeLogicParquet(tmpdir, name string, node parquet.Node, rows []parquet.Row) error {
+	schema := parquet.NewSchema("", parquet.Group{"col": node})
+	path := filepath.Join(tmpdir, name+".parquet")
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	writer := parquet.NewWriter(f, schema)
+	if _, err := writer.WriteRows(rows); err != nil {
+		writer.Close()
+		f.Close()
+		return err
+	}
+	if err := writer.Close(); err != nil {
+		f.Close()
+		return err
+	}
+	return f.Close()
+}
+
+// readLogicParquet reads a parquet file using the given schema node.
+func readLogicParquet(tmpdir, name string, node parquet.Node) error {
+	schema := parquet.NewSchema("", parquet.Group{"col": node})
+	path := filepath.Join(tmpdir, name+".parquet")
+	rf, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer rf.Close()
+	reader := parquet.NewReader(rf, schema)
+	defer reader.Close()
+	buf := make([]parquet.Row, 3)
+	_, err = reader.ReadRows(buf)
+	if err != nil && err != io.EOF {
+		return err
+	}
+	return nil
 }
 
 // makeTypedNode returns a parquet.Node for the given physical type name.
@@ -406,15 +455,73 @@ func main() {
 		filepath.Join(tmpdir, "lt_string.parquet"),
 		proofPath,
 	)
-	logicalTypes["DATE"] = RWResult{Write: true, Read: true}
-	logicalTypes["TIME_MILLIS"] = RWResult{Write: true, Read: true}
-	logicalTypes["TIME_MICROS"] = RWResult{Write: true, Read: true}
+	logicalTypes["DATE"] = testRWWithProof(
+		func() error {
+			return writeLogicParquet(tmpdir, "lt_date", parquet.Date(),
+				[]parquet.Row{{parquet.ValueOf(int32(18628))}})
+		},
+		func() error { return readLogicParquet(tmpdir, "lt_date", parquet.Date()) },
+		filepath.Join(tmpdir, "lt_date.parquet"),
+		proofPath,
+	)
+	logicalTypes["TIME_MILLIS"] = testRWWithProof(
+		func() error {
+			return writeLogicParquet(tmpdir, "lt_time_millis", parquet.Time(parquet.Millisecond),
+				[]parquet.Row{{parquet.ValueOf(int32(3600000))}})
+		},
+		func() error {
+			return readLogicParquet(tmpdir, "lt_time_millis", parquet.Time(parquet.Millisecond))
+		},
+		filepath.Join(tmpdir, "lt_time_millis.parquet"),
+		proofPath,
+	)
+	logicalTypes["TIME_MICROS"] = testRWWithProof(
+		func() error {
+			return writeLogicParquet(tmpdir, "lt_time_micros", parquet.Time(parquet.Microsecond),
+				[]parquet.Row{{parquet.ValueOf(int64(3600000000))}})
+		},
+		func() error {
+			return readLogicParquet(tmpdir, "lt_time_micros", parquet.Time(parquet.Microsecond))
+		},
+		filepath.Join(tmpdir, "lt_time_micros.parquet"),
+		proofPath,
+	)
 	logicalTypes["TIME_NANOS"] = RWResult{Write: false, Read: false}
-	logicalTypes["TIMESTAMP_MILLIS"] = RWResult{Write: true, Read: true}
-	logicalTypes["TIMESTAMP_MICROS"] = RWResult{Write: true, Read: true}
+	logicalTypes["TIMESTAMP_MILLIS"] = testRWWithProof(
+		func() error {
+			return writeLogicParquet(tmpdir, "lt_ts_millis", parquet.Timestamp(parquet.Millisecond),
+				[]parquet.Row{{parquet.ValueOf(int64(1700000000000))}})
+		},
+		func() error {
+			return readLogicParquet(tmpdir, "lt_ts_millis", parquet.Timestamp(parquet.Millisecond))
+		},
+		filepath.Join(tmpdir, "lt_ts_millis.parquet"),
+		proofPath,
+	)
+	logicalTypes["TIMESTAMP_MICROS"] = testRWWithProof(
+		func() error {
+			return writeLogicParquet(tmpdir, "lt_ts_micros", parquet.Timestamp(parquet.Microsecond),
+				[]parquet.Row{{parquet.ValueOf(int64(1700000000000000))}})
+		},
+		func() error {
+			return readLogicParquet(tmpdir, "lt_ts_micros", parquet.Timestamp(parquet.Microsecond))
+		},
+		filepath.Join(tmpdir, "lt_ts_micros.parquet"),
+		proofPath,
+	)
 	logicalTypes["TIMESTAMP_NANOS"] = RWResult{Write: false, Read: false}
 	logicalTypes["INT96"] = RWResult{Write: false, Read: false}
-	logicalTypes["DECIMAL"] = RWResult{Write: true, Read: true}
+	logicalTypes["DECIMAL"] = testRWWithProof(
+		func() error {
+			return writeLogicParquet(tmpdir, "lt_decimal", parquet.Decimal(2, 10, parquet.Int32Type),
+				[]parquet.Row{{parquet.ValueOf(int32(12345))}})
+		},
+		func() error {
+			return readLogicParquet(tmpdir, "lt_decimal", parquet.Decimal(2, 10, parquet.Int32Type))
+		},
+		filepath.Join(tmpdir, "lt_decimal.parquet"),
+		proofPath,
+	)
 	logicalTypes["UUID"] = RWResult{Write: false, Read: false}
 	logicalTypes["JSON"] = RWResult{Write: false, Read: false}
 	logicalTypes["FLOAT16"] = RWResult{Write: false, Read: false}
@@ -456,16 +563,43 @@ func main() {
 	results["nested_types"] = nestedTypes
 
 	// --- Advanced Features ---
-	advanced := map[string]interface{}{
-		"STATISTICS":          RWResult{Write: true, Read: true},
-		"PAGE_INDEX":          RWResult{Write: true, Read: true},
-		"BLOOM_FILTER":        RWResult{Write: true, Read: true},
-		"DATA_PAGE_V2":        RWResult{Write: false, Read: false},
-		"COLUMN_ENCRYPTION":   RWResult{Write: false, Read: false},
-		"PREDICATE_PUSHDOWN":  RWResult{Write: false, Read: false},
-		"PROJECTION_PUSHDOWN": RWResult{Write: true, Read: true},
-		"SCHEMA_EVOLUTION":    RWResult{Write: false, Read: false},
-	}
+	advRows := []SimpleRow{{Col: 1}, {Col: 2}, {Col: 3}}
+	advanced := map[string]interface{}{}
+
+	advanced["STATISTICS"] = testRWWithProof(
+		func() error { return writeParquet(tmpdir, "adv_stats", advRows) },
+		func() error { return readParquet[SimpleRow](tmpdir, "adv_stats") },
+		filepath.Join(tmpdir, "adv_stats.parquet"),
+		proofPath,
+	)
+	advanced["PAGE_INDEX"] = testRWWithProof(
+		func() error { return writeParquet(tmpdir, "adv_pageidx", advRows) },
+		func() error { return readParquet[SimpleRow](tmpdir, "adv_pageidx") },
+		filepath.Join(tmpdir, "adv_pageidx.parquet"),
+		proofPath,
+	)
+	advanced["BLOOM_FILTER"] = testRWWithProof(
+		func() error {
+			return writeParquet(tmpdir, "adv_bloom", advRows,
+				parquet.BloomFilters(parquet.SplitBlockFilter(10, "col")))
+		},
+		func() error { return readParquet[SimpleRow](tmpdir, "adv_bloom") },
+		filepath.Join(tmpdir, "adv_bloom.parquet"),
+		proofPath,
+	)
+	advanced["DATA_PAGE_V2"] = RWResult{Write: false, Read: false}
+	advanced["COLUMN_ENCRYPTION"] = RWResult{Write: false, Read: false}
+	advanced["PREDICATE_PUSHDOWN"] = RWResult{Write: false, Read: false}
+	advanced["PROJECTION_PUSHDOWN"] = testRWWithProof(
+		func() error {
+			multiRows := []MultiColRow{{ColA: 1, ColB: 10}, {ColA: 2, ColB: 20}}
+			return writeParquet(tmpdir, "adv_proj", multiRows)
+		},
+		func() error { return readParquet[ProjectedRow](tmpdir, "adv_proj") },
+		filepath.Join(tmpdir, "adv_proj.parquet"),
+		proofPath,
+	)
+	advanced["SCHEMA_EVOLUTION"] = RWResult{Write: false, Read: false}
 	results["advanced_features"] = advanced
 
 	out, _ := json.MarshalIndent(results, "", "  ")
