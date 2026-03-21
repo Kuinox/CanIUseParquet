@@ -142,6 +142,9 @@ where
     test_rw_with_proof(write_fn, read_fn, None, None)
 }
 
+/// Return a JSON result for a feature that is explicitly not supported in both read and write.
+/// The same reason string is used for both write_log and read_log because the feature is
+/// unsupported in both directions. If separate messages are needed, construct the JSON directly.
 fn not_supported(reason: &str) -> Value {
     json!({"write": false, "read": false, "write_log": reason, "read_log": reason})
 }

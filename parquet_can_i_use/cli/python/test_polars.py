@@ -34,6 +34,13 @@ def test_rw(write_fn, read_fn, write_path=None):
 def _not_supported_result(reason=None):
     """Return a result for a feature explicitly not supported, with source code as proof."""
     frame = inspect.currentframe().f_back
+    log = _make_not_supported_log(reason, frame)
+    return {"write": False, "read": False, "write_log": log, "read_log": log}
+
+def _make_not_supported_log(reason=None, frame=None):
+    """Return a log string for a feature that is explicitly not supported, with source code proof."""
+    if frame is None:
+        frame = inspect.currentframe().f_back
     filename = frame.f_code.co_filename
     lineno = frame.f_lineno
     try:
@@ -47,7 +54,7 @@ def _not_supported_result(reason=None):
         log = f"Not supported (at {filename}:{lineno})"
     if reason:
         log = f"{reason}\n{log}"
-    return {"write": False, "read": False, "write_log": log, "read_log": log}
+    return log
 
 def main():
     try:
@@ -121,22 +128,12 @@ def main():
         fixture_path = FIXTURES_DIR / "compression" / f"comp_{codec_name}.parquet"
         if codec_val is None:
             # Cannot write this codec; try reading from fixture to detect read-only support.
-            # Capture the codec map source as proof that this codec is mapped to None.
-            _frame = inspect.currentframe()
-            _filename = _frame.f_code.co_filename
-            try:
-                with open(_filename) as _f:
-                    _src = _f.readlines()
-                # Find the codec dict definition (a few lines above) to show as proof
-                _lineno = _frame.f_lineno
-                _start = max(0, _lineno - 20)
-                _codec_src = "".join(_src[_start:_lineno]).rstrip()
-                write_log = (
-                    f"Codec '{codec_name}' is not supported for writing "
-                    f"(mapped to None in codec map).\nSource proof:\n{_codec_src}"
-                )
-            except Exception:
-                write_log = f"Codec '{codec_name}' is not supported for writing (mapped to None in codec map)"
+            # Use _make_not_supported_log to capture the codec map (defined a few lines above)
+            # as source proof that this codec is mapped to None.
+            write_log = _make_not_supported_log(
+                f"Codec '{codec_name}' is not supported for writing (mapped to None in the codec map)",
+                inspect.currentframe(),
+            )
             if fixture_path.exists():
                 read_ok, _ = test_feature("read", lambda p=str(fixture_path): pl.read_parquet(p))
             else:
