@@ -5,7 +5,12 @@ use parquet::arrow::arrow_reader::ParquetRecordBatchReaderBuilder;
 use parquet::arrow::ArrowWriter;
 use parquet::basic::Compression;
 use parquet::basic::Encoding;
+use parquet::basic::LogicalType;
+use parquet::basic::Type as ParquetPhysicalType;
+use parquet::data_type::ByteArray;
 use parquet::file::properties::WriterProperties;
+use parquet::file::writer::SerializedFileWriter;
+use parquet::schema::types::Type as ParquetType;
 use serde_json::{json, Map, Value};
 use std::collections::HashSet;
 use std::fs::File;
@@ -183,6 +188,53 @@ fn write_read_parquet(
     read_parquet(tmpdir, name)
 }
 
+/// Write a Parquet file with a single BSON column using the low-level API,
+/// since Arrow has no native BSON type but the Parquet spec supports it as
+/// BYTE_ARRAY with the BSON logical type annotation.
+fn write_bson_parquet(path: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    use parquet::basic::Repetition;
+    use parquet::data_type::ByteArrayType;
+    let field = Arc::new(
+        ParquetType::primitive_type_builder("c", ParquetPhysicalType::BYTE_ARRAY)
+            .with_logical_type(Some(LogicalType::Bson))
+            .with_repetition(Repetition::REQUIRED)
+            .build()?,
+    );
+    let schema = Arc::new(
+        ParquetType::group_type_builder("schema")
+            .with_fields(vec![field])
+            .build()?,
+    );
+    let file = File::create(path)?;
+    let props = Arc::new(WriterProperties::builder().build());
+    let mut writer = SerializedFileWriter::new(file, schema, props)?;
+    {
+        let mut row_group = writer.next_row_group()?;
+        if let Some(mut col_writer) = row_group.next_column()? {
+            // Minimal valid BSON document: {length=5, terminator=0}
+            col_writer.typed::<ByteArrayType>().write_batch(
+                &[ByteArray::from(vec![5u8, 0, 0, 0, 0])],
+                None,
+                None,
+            )?;
+            col_writer.close()?;
+        }
+        row_group.close()?;
+    }
+    writer.close()?;
+    Ok(())
+}
+
+/// Read a parquet file at an arbitrary path (not relative to tmpdir).
+fn read_parquet_path(path: &Path) -> Result<(), Box<dyn std::error::Error>> {
+    let file = File::open(path)?;
+    let reader = ParquetRecordBatchReaderBuilder::try_new(file)?.build()?;
+    for batch in reader {
+        batch?;
+    }
+    Ok(())
+}
+
 /// Write a parquet file and verify that the requested encoding was actually used
 /// in the first column of the first row group.
 fn write_verify_encoding(
@@ -228,8 +280,9 @@ fn write_verify_encoding(
 
 fn main() {
     let tmpdir = TempDir::new().unwrap();
-    let proof_fixture_path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("..").join("..").join("..").join("fixtures").join("proof").join("proof.parquet");
+    let fixtures_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..").join("..").join("..").join("fixtures");
+    let proof_fixture_path = fixtures_dir.join("proof").join("proof.parquet");
     let proof_path: Option<&std::path::Path> = if proof_fixture_path.exists() {
         Some(proof_fixture_path.as_path())
     } else {
@@ -374,6 +427,39 @@ fn main() {
         }
         encoding.insert(enc_name.to_string(), Value::Object(type_results));
     }
+
+    // BYTE_STREAM_SPLIT_EXTENDED: parquet format 2.11 extends BYTE_STREAM_SPLIT to all
+    // fixed-width types. In parquet-rs v55 the same BYTE_STREAM_SPLIT encoding covers the
+    // extended set; we test with the same types as BYTE_STREAM_SPLIT.
+    {
+        let mut type_results = Map::new();
+        for ptype in &type_names {
+            let ptype_str = ptype.to_string();
+            let enc_write_file = tmpdir.path().join(format!("enc_BYTE_STREAM_SPLIT_EXTENDED_{ptype_str}.parquet"));
+            let result = test_rw_with_proof(
+                || {
+                    let batch = make_typed_batch(&ptype_str)?;
+                    let props = WriterProperties::builder()
+                        .set_dictionary_enabled(false)
+                        .set_encoding(Encoding::BYTE_STREAM_SPLIT)
+                        .build();
+                    write_verify_encoding(
+                        &tmpdir,
+                        &format!("enc_BYTE_STREAM_SPLIT_EXTENDED_{ptype_str}"),
+                        &batch,
+                        props,
+                        Encoding::BYTE_STREAM_SPLIT,
+                    )
+                },
+                || read_parquet(&tmpdir, &format!("enc_BYTE_STREAM_SPLIT_EXTENDED_{ptype}")),
+                Some(&enc_write_file),
+                proof_path,
+            );
+            type_results.insert(ptype.to_string(), result);
+        }
+        encoding.insert("BYTE_STREAM_SPLIT_EXTENDED".to_string(), Value::Object(type_results));
+    }
+
     results.insert("encoding".into(), Value::Object(encoding));
 
     // --- Logical Types ---
@@ -566,7 +652,15 @@ fn main() {
         )
     });
 
-    logical_types.insert("BSON".into(), json!({"write": false, "read": false}));
+    logical_types.insert("BSON".into(), {
+        let wf = tmpdir.path().join("lt_bson.parquet");
+        test_rw_with_proof(
+            || write_bson_parquet(&tmpdir.path().join("lt_bson.parquet")),
+            || read_parquet(&tmpdir, "lt_bson"),
+            Some(&wf),
+            proof_path,
+        )
+    });
     logical_types.insert("INTERVAL".into(), {
         let wf = tmpdir.path().join("lt_interval.parquet");
         test_rw_with_proof(
@@ -581,6 +675,27 @@ fn main() {
             proof_path,
         )
     });
+
+    // UNKNOWN logical type: Arrow DataType::Null maps to Parquet UNKNOWN (always-null column)
+    logical_types.insert("UNKNOWN".into(), {
+        let wf = tmpdir.path().join("lt_unknown.parquet");
+        test_rw_with_proof(
+            || {
+                let schema = Schema::new(vec![Field::new("c", DataType::Null, true)]);
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![Arc::new(NullArray::new(2))])?;
+                let props = WriterProperties::builder().build();
+                write_parquet(&tmpdir, "lt_unknown", &batch, props)
+            },
+            || read_parquet(&tmpdir, "lt_unknown"),
+            Some(&wf),
+            proof_path,
+        )
+    });
+
+    // VARIANT, GEOMETRY, GEOGRAPHY - not yet supported in parquet-rs v55
+    logical_types.insert("VARIANT".into(), json!({"write": false, "read": false}));
+    logical_types.insert("GEOMETRY".into(), json!({"write": false, "read": false}));
+    logical_types.insert("GEOGRAPHY".into(), json!({"write": false, "read": false}));
 
     results.insert("logical_types".into(), Value::Object(logical_types));
 
@@ -801,23 +916,10 @@ fn main() {
         )
     });
 
-    // Column Encryption
-    advanced.insert("COLUMN_ENCRYPTION".into(), {
-        let wf = tmpdir.path().join("adv_enc.parquet");
-        test_rw_with_proof(
-            || {
-                let batch = make_simple_batch();
-                let props = WriterProperties::builder()
-                    .set_column_index_truncate_length(Some(64))
-                    .build();
-                write_parquet(&tmpdir, "adv_enc", &batch, props)?;
-                Err::<(), Box<dyn std::error::Error>>("Encryption not directly supported via simple API".into())
-            },
-            || Err("Encryption not directly supported via simple API".into()),
-            Some(&wf),
-            proof_path,
-        )
-    });
+    // Column Encryption: parquet-rs v55 supports encryption but requires the
+    // `encryption` feature which adds AES-GCM dependencies not included in this build.
+    // Mark as not supported for this build configuration.
+    advanced.insert("COLUMN_ENCRYPTION".into(), json!({"write": false, "read": false}));
 
     advanced.insert("PREDICATE_PUSHDOWN".into(), {
         let wf = tmpdir.path().join("adv_pred.parquet");
@@ -869,6 +971,63 @@ fn main() {
         )
     });
     advanced.insert("SCHEMA_EVOLUTION".into(), json!({"write": false, "read": false}));
+
+    // Size Statistics: written automatically by parquet-rs when page-level statistics
+    // are enabled. Verify that the column metadata includes level histograms (part of
+    // SizeStatistics) via the page index API.
+    advanced.insert("SIZE_STATISTICS".into(), {
+        let wf = tmpdir.path().join("adv_size_stats.parquet");
+        test_rw_with_proof(
+            || {
+                // Write a nullable BYTE_ARRAY column with page statistics so that
+                // both level histograms and unencoded byte counts are recorded.
+                let schema = Schema::new(vec![Field::new("c", DataType::Utf8, true)]);
+                let arr: Arc<dyn arrow::array::Array> = Arc::new(StringArray::from(vec![
+                    Some("hello"), None, Some("world"),
+                ]));
+                let batch = RecordBatch::try_new(Arc::new(schema), vec![arr])?;
+                let props = WriterProperties::builder()
+                    .set_statistics_enabled(parquet::file::properties::EnabledStatistics::Page)
+                    .build();
+                write_parquet(&tmpdir, "adv_size_stats", &batch, props)?;
+                // Verify size statistics are present via the page index
+                let path = tmpdir.path().join("adv_size_stats.parquet");
+                let file = File::open(&path)?;
+                let builder = ParquetRecordBatchReaderBuilder::try_new(file)?;
+                let col_meta = builder.metadata().row_group(0).column(0);
+                // definition_level_histogram is part of SizeStatistics; present for
+                // nullable columns when written with EnabledStatistics::Page.
+                if col_meta.unencoded_byte_array_data_bytes().is_none()
+                    && col_meta.definition_level_histogram().is_none()
+                {
+                    return Err("No size statistics (level histograms) found in column metadata".into());
+                }
+                Ok(())
+            },
+            || read_parquet(&tmpdir, "adv_size_stats"),
+            Some(&wf),
+            proof_path,
+        )
+    });
+
+    // Page CRC32: parquet-rs v55 can read files with page CRC32 checksums but
+    // does not yet support writing them (see TODO in column/page.rs).
+    // Test read support using the pre-generated fixture.
+    {
+        let fixture_path = fixtures_dir.join("advanced_features").join("adv_PAGE_CRC32.parquet");
+        let (write_ok, write_log) = (false, Some("write not yet supported in parquet-rs v55".to_string()));
+        let (read_ok, read_log) = if fixture_path.exists() {
+            test_feature(|| read_parquet_path(&fixture_path))
+        } else {
+            (false, Some("fixture not found".to_string()))
+        };
+        let mut cell = serde_json::Map::new();
+        cell.insert("write".into(), json!(write_ok));
+        cell.insert("read".into(), json!(read_ok));
+        if let Some(log) = write_log { cell.insert("write_log".into(), json!(log)); }
+        if let Some(log) = read_log { cell.insert("read_log".into(), json!(log)); }
+        advanced.insert("PAGE_CRC32".into(), Value::Object(cell));
+    }
 
     results.insert("advanced_features".into(), Value::Object(advanced));
 

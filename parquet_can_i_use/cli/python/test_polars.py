@@ -378,7 +378,15 @@ def main():
         pl.scan_parquet(p).select("col").collect()
     results["advanced_features"]["PROJECTION_PUSHDOWN"] = test_rw(write_projection_pushdown, read_projection_pushdown, write_path=os.path.join(tmpdir, "adv_proj.parquet"))
 
-    results["advanced_features"]["PAGE_INDEX"] = {"write": False, "read": False}
+    # PAGE_INDEX - Polars can read files with page indexes via the fixture.
+    def write_page_index():
+        raise NotImplementedError("Polars does not expose PAGE_INDEX write control")
+    def read_page_index():
+        fixture = FIXTURES_DIR / "advanced_features" / "adv_PAGE_INDEX.parquet"
+        if not fixture.exists():
+            raise FileNotFoundError(f"PAGE_INDEX fixture not found: {fixture}")
+        pl.read_parquet(str(fixture))
+    results["advanced_features"]["PAGE_INDEX"] = test_rw(write_page_index, read_page_index)
     results["advanced_features"]["BLOOM_FILTER"] = {"write": False, "read": False}
     results["advanced_features"]["COLUMN_ENCRYPTION"] = {"write": False, "read": False}
 
@@ -392,11 +400,25 @@ def main():
 
     results["advanced_features"]["SCHEMA_EVOLUTION"] = {"write": False, "read": False}
 
-    # Size Statistics (Parquet format 2.10.0) - not directly exposed in Polars public API
-    results["advanced_features"]["SIZE_STATISTICS"] = {"write": False, "read": False}
+    # Size Statistics (Parquet format 2.10.0) - test read support using fixture.
+    def write_size_statistics():
+        raise NotImplementedError("Polars does not expose SIZE_STATISTICS write control")
+    def read_size_statistics():
+        fixture = FIXTURES_DIR / "advanced_features" / "adv_SIZE_STATISTICS.parquet"
+        if not fixture.exists():
+            raise FileNotFoundError(f"SIZE_STATISTICS fixture not found: {fixture}")
+        pl.read_parquet(str(fixture))
+    results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics)
 
-    # Page CRC32 checksum - not yet supported in Polars
-    results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}
+    # Page CRC32 checksum - test read support using fixture.
+    def write_page_crc32():
+        raise NotImplementedError("Polars does not support writing page CRC32 checksums")
+    def read_page_crc32():
+        fixture = FIXTURES_DIR / "advanced_features" / "adv_PAGE_CRC32.parquet"
+        if not fixture.exists():
+            raise FileNotFoundError(f"PAGE_CRC32 fixture not found: {fixture}")
+        pl.read_parquet(str(fixture))
+    results["advanced_features"]["PAGE_CRC32"] = test_rw(write_page_crc32, read_page_crc32)
 
     print(json.dumps(results, indent=2))
 

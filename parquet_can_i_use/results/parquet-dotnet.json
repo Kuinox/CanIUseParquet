@@ -6,49 +6,49 @@
       "write": true,
       "read": true,
       "write_log": "sha256:07c3af3acc55c2ed5e299a67d4cb04adfbe30793f61d925988e832c8499422de\nUEFSMRUAFUwVTCwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAIAIIAMCAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVABYGFqYBFqYBJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjamAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALUAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "SNAPPY": {
       "write": true,
       "read": true,
       "write_log": "sha256:d1aa54cd41555a23dd19272dd0ad18ff2e872525092f3ee077c3cd842e624087\nUEFSMRUAFUwVGCwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAACYYgAggAwICAHoBABUCGSxIBHJvb3QVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJggcFQIZJQoGGRgDY29sFQIWBhamARZyJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjZyAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAswAAAFBBUjE=",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "GZIP": {
       "write": true,
       "read": true,
-      "write_log": "sha256:04b8fb7d00b4eb3423fa09aca06b35a5c670ab9f3f8ff085224fa6a4d44b1723\nUEFSMRUAFUwVRiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAB\u002BLCAAAAAAAAgNq4FBgZmJiIAAAAAAA//8DAAjBXl8mAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVBBYGFqYBFqABJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjagAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALUAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "write_log": "sha256:04b8fb7d00b4eb3423fa09aca06b35a5c670ab9f3f8ff085224fa6a4d44b1723\nUEFSMRUAFUwVRiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAB+LCAAAAAAAAgNq4FBgZmJiIAAAAAAA//8DAAjBXl8mAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVBBYGFqYBFqABJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjagAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALUAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "BROTLI": {
       "write": true,
       "read": true,
       "write_log": "sha256:c8ca0954a0dd092122b17b14adb3e9aa9ed3d20a83ee71db4e973e23e48c16d7\nUEFSMRUAFUwVLiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAABslAPiPk1zjZl8DCCAAqgGQqCcQmEsBFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVCBYGFqYBFogBJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjaIAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALUAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZO": {
       "write": false,
       "read": false,
-      "write_log": "System.AggregateException: One or more errors occurred. (The method or operation is not implemented.)\n ---\u003E System.NotImplementedException: The method or operation is not implemented.\n   at Parquet.File.DefaultCompressor.LzoCompress(MemoryStream source, CompressionLevel level)\n   at Parquet.File.DefaultCompressor.CompressAsync(CompressionMethod method, CompressionLevel level, MemoryStream source)\n   at Parquet.File.DataColumnWriter.CompressAndWriteAsync(PageHeader ph, MemoryStream uncompressedData, ColumnMetrics cs, CancellationToken cancellationToken)\n   at Parquet.File.DataColumnWriter.WriteColumnAsync(ColumnChunk chunk, DataColumn column, SchemaElement tse, CancellationToken cancellationToken)\n   at Parquet.File.DataColumnWriter.WriteAsync(FieldPath fullPath, DataColumn column, CancellationToken cancellationToken)\n   at Parquet.ParquetRowGroupWriter.WriteColumnAsync(DataColumn column, Dictionary\u00602 customMetadata, CancellationToken cancellationToken)\n   --- End of inner exception stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at Program.WriteParquet(String name, CompressionMethod compression) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 97\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_8() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 285\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "Parquet.ParquetException: \u0027col\u0027 does not exist in this file\n   at Parquet.ParquetRowGroupReader.ReadColumnAsync(DataField field, CancellationToken cancellationToken)\n   at Program.ReadParquet(String name) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 109\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_9() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 285\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.AggregateException: One or more errors occurred. (The method or operation is not implemented.)\n ---> System.NotImplementedException: The method or operation is not implemented.\n   at Parquet.File.DefaultCompressor.LzoCompress(MemoryStream source, CompressionLevel level)\n   at Parquet.File.DefaultCompressor.CompressAsync(CompressionMethod method, CompressionLevel level, MemoryStream source)\n   at Parquet.File.DataColumnWriter.CompressAndWriteAsync(PageHeader ph, MemoryStream uncompressedData, ColumnMetrics cs, CancellationToken cancellationToken)\n   at Parquet.File.DataColumnWriter.WriteColumnAsync(ColumnChunk chunk, DataColumn column, SchemaElement tse, CancellationToken cancellationToken)\n   at Parquet.File.DataColumnWriter.WriteAsync(FieldPath fullPath, DataColumn column, CancellationToken cancellationToken)\n   at Parquet.ParquetRowGroupWriter.WriteColumnAsync(DataColumn column, Dictionary`2 customMetadata, CancellationToken cancellationToken)\n   --- End of inner exception stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at Program.WriteParquet(String name, CompressionMethod compression) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 112\n   at Program.<>c.<Main>b__43_8() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 300\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "Parquet.ParquetException: 'col' does not exist in this file\n   at Parquet.ParquetRowGroupReader.ReadColumnAsync(DataField field, CancellationToken cancellationToken)\n   at Program.ReadParquet(String name) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 124\n   at Program.<>c.<Main>b__43_9() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 300\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     },
     "LZ4": {
       "write": true,
       "read": true,
-      "write_log": "sha256:c715ec703be6142f7f39ada9ce7f6829525c51f975e6196a4861246d8dfdc9d3\nUEFSMRUAFUwVIiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAH\u002BACCADAgIAAQAHUAAAAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVChYGFqYBFnwmCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAABamARYGNnwAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCzAAAAUEFSMQ==",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "write_log": "sha256:c715ec703be6142f7f39ada9ce7f6829525c51f975e6196a4861246d8dfdc9d3\nUEFSMRUAFUwVIiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAH+ACCADAgIAAQAHUAAAAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVChYGFqYBFnwmCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAABamARYGNnwAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCzAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "LZ4_RAW": {
       "write": true,
       "read": true,
-      "write_log": "sha256:83161957474a1c048f227008ae036d6ad409c1daee1a38d154cc2e91666ecb1a\nUEFSMRUAFUwVIiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAH\u002BACCADAgIAAQAHUAAAAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVDhYGFqYBFnwmCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAABamARYGNnwAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCzAAAAUEFSMQ==",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "write_log": "sha256:83161957474a1c048f227008ae036d6ad409c1daee1a38d154cc2e91666ecb1a\nUEFSMRUAFUwVIiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAH+ACCADAgIAAQAHUAAAAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVDhYGFqYBFnwmCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAABamARYGNnwAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCzAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "ZSTD": {
       "write": true,
       "read": true,
       "write_log": "sha256:1389d17516b26e2c71d6b7dab03d6e2df07e8cbf29f017702170f8904fc2eca5\nUEFSMRUAFUwVLiwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAACi1L/0gJnUAAECACCADAgIAAAEAIuACFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVDBYGFqYBFogBJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjaIAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALUAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     }
   },
   "encoding": {
@@ -57,37 +57,37 @@
         "write": true,
         "read": true,
         "write_log": "sha256:bbca8641233c715f4683e94613ec27903412b06bcdfe93a9a716221ed9072290\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAAwsAQAAAAIAAAADAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklAAYZGANjb2wVAhYGFnIWdiYIPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAAAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAsQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
         "read": true,
         "write_log": "sha256:e1fbf8ae7c22777ae39cfb4f4f95618f8f595689e6dbf480a6fde2bc0d304f0d\nUEFSMRUAFTAVLiwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAAAYBAEACQE8AgAAAAAAAAADAAAAAAAAABUCGSxIBHJvb3QVAgAVBCUAGANjb2wlJEysE0ARAAAAFgYZHBkcJggcFQQZJQAGGRgDY29sFQIWBhaqARaoASYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAABaqARYGNqgBAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAxQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
         "read": true,
         "write_log": "sha256:64a15c293d94614a26b79da2f77885912f91fe4152cea442b50b7d53a9986ce1\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPwAAAAwsAACAPwAAAEAAAEBAFQIZLEgEcm9vdBUCABUIJQAYA2NvbAAWBhkcGRwmCBwVCBklAAYZGANjb2wVAhYGFnIWdiYIPBgEAABAQBgEAACAPxYAKAQAAEBAGAQAAIA/AAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAqAAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": true,
         "read": true,
         "write_log": "sha256:244ec30678aaa987b71a77ce93356d80c3691deab380fba136d1aca110359cd2\nUEFSMRUAFTAVLCwVBhUAFQYVBhwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8AAAAYAAAFAQTwPwUHKAAAQAAAAAAAAAhAFQIZLEgEcm9vdBUCABUKJQAYA2NvbAAWBhkcGRwmCBwVChklAAYZGANjb2wVAhYGFqoBFqYBJgg8GAgAAAAAAAAIQBgIAAAAAAAA8D8WACgIAAAAAAAACEAYCAAAAAAAAPA/AAAAFqoBFgY2pgEAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQC8AAAAUEFSMQ==",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": true,
         "read": true,
         "write_log": "sha256:f9a29c09e86dbbfc4e613b64d2b74c5594c67bb4ea05ee4646c96aa250d3506f\nUEFSMRUAFQIVBiwVBhUAFQYVBhw2AAAAAAEABRUCGSxIBHJvb3QVAgAVACUAGANjb2wAFgYZHBkcJggcFQAZJQAGGRgDY29sFQIWBhYsFjAmCDw2AAAAABYsFgY2MAAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpAJAAAABQQVIx",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
         "read": true,
         "write_log": "sha256:1537708174017789f26a58c34a67b79fd287fa36fcd234b1b768fa5d721f4677\nUEFSMRUAFSoVLiwVBhUAFQYVBhw2AAAAABVQAgAAAAYBAQAAAAEBAAAAAgEAAAADFQIZLEgEcm9vdBUCABUMJQIYA2NvbAAWBhkcGRwmCBwVDBklAAYZGANjb2wVAhYGFlQWWCYIPDYAAAAAFlQWBjZYAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAkAAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "PLAIN_DICTIONARY": {
@@ -95,25 +95,25 @@
         "write": true,
         "read": true,
         "write_log": "sha256:bbca8641233c715f4683e94613ec27903412b06bcdfe93a9a716221ed9072290\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAAwsAQAAAAIAAAADAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklAAYZGANjb2wVAhYGFnIWdiYIPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAAAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAsQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
         "read": true,
         "write_log": "sha256:e1fbf8ae7c22777ae39cfb4f4f95618f8f595689e6dbf480a6fde2bc0d304f0d\nUEFSMRUAFTAVLiwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAAAYBAEACQE8AgAAAAAAAAADAAAAAAAAABUCGSxIBHJvb3QVAgAVBCUAGANjb2wlJEysE0ARAAAAFgYZHBkcJggcFQQZJQAGGRgDY29sFQIWBhaqARaoASYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAABaqARYGNqgBAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAxQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
         "read": true,
         "write_log": "sha256:64a15c293d94614a26b79da2f77885912f91fe4152cea442b50b7d53a9986ce1\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPwAAAAwsAACAPwAAAEAAAEBAFQIZLEgEcm9vdBUCABUIJQAYA2NvbAAWBhkcGRwmCBwVCBklAAYZGANjb2wVAhYGFnIWdiYIPBgEAABAQBgEAACAPxYAKAQAAEBAGAQAAIA/AAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAqAAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": true,
         "read": true,
         "write_log": "sha256:244ec30678aaa987b71a77ce93356d80c3691deab380fba136d1aca110359cd2\nUEFSMRUAFTAVLCwVBhUAFQYVBhwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8AAAAYAAAFAQTwPwUHKAAAQAAAAAAAAAhAFQIZLEgEcm9vdBUCABUKJQAYA2NvbAAWBhkcGRwmCBwVChklAAYZGANjb2wVAhYGFqoBFqYBJgg8GAgAAAAAAAAIQBgIAAAAAAAA8D8WACgIAAAAAAAACEAYCAAAAAAAAPA/AAAAFqoBFgY2pgEAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQC8AAAAUEFSMQ==",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
@@ -128,22 +128,22 @@
       "INT32": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
@@ -152,7 +152,7 @@
       "BYTE_ARRAY": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "RLE": {
@@ -160,37 +160,37 @@
         "write": true,
         "read": true,
         "write_log": "sha256:bbca8641233c715f4683e94613ec27903412b06bcdfe93a9a716221ed9072290\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAAwsAQAAAAIAAAADAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklAAYZGANjb2wVAhYGFnIWdiYIPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAAAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAsQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
         "read": true,
         "write_log": "sha256:e1fbf8ae7c22777ae39cfb4f4f95618f8f595689e6dbf480a6fde2bc0d304f0d\nUEFSMRUAFTAVLiwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAAAYBAEACQE8AgAAAAAAAAADAAAAAAAAABUCGSxIBHJvb3QVAgAVBCUAGANjb2wlJEysE0ARAAAAFgYZHBkcJggcFQQZJQAGGRgDY29sFQIWBhaqARaoASYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAABaqARYGNqgBAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAxQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": true,
         "read": true,
         "write_log": "sha256:64a15c293d94614a26b79da2f77885912f91fe4152cea442b50b7d53a9986ce1\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPwAAAAwsAACAPwAAAEAAAEBAFQIZLEgEcm9vdBUCABUIJQAYA2NvbAAWBhkcGRwmCBwVCBklAAYZGANjb2wVAhYGFnIWdiYIPBgEAABAQBgEAACAPxYAKAQAAEBAGAQAAIA/AAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAqAAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": true,
         "read": true,
         "write_log": "sha256:244ec30678aaa987b71a77ce93356d80c3691deab380fba136d1aca110359cd2\nUEFSMRUAFTAVLCwVBhUAFQYVBhwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8AAAAYAAAFAQTwPwUHKAAAQAAAAAAAAAhAFQIZLEgEcm9vdBUCABUKJQAYA2NvbAAWBhkcGRwmCBwVChklAAYZGANjb2wVAhYGFqoBFqYBJgg8GAgAAAAAAAAIQBgIAAAAAAAA8D8WACgIAAAAAAAACEAYCAAAAAAAAPA/AAAAFqoBFgY2pgEAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQC8AAAAUEFSMQ==",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": true,
         "read": true,
         "write_log": "sha256:f9a29c09e86dbbfc4e613b64d2b74c5594c67bb4ea05ee4646c96aa250d3506f\nUEFSMRUAFQIVBiwVBhUAFQYVBhw2AAAAAAEABRUCGSxIBHJvb3QVAgAVACUAGANjb2wAFgYZHBkcJggcFQAZJQAGGRgDY29sFQIWBhYsFjAmCDw2AAAAABYsFgY2MAAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpAJAAAABQQVIx",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BYTE_ARRAY": {
         "write": true,
         "read": true,
         "write_log": "sha256:1537708174017789f26a58c34a67b79fd287fa36fcd234b1b768fa5d721f4677\nUEFSMRUAFSoVLiwVBhUAFQYVBhw2AAAAABVQAgAAAAYBAQAAAAEBAAAAAgEAAAADFQIZLEgEcm9vdBUCABUMJQIYA2NvbAAWBhkcGRwmCBwVDBklAAYZGANjb2wVAhYGFlQWWCYIPDYAAAAAFlQWBjZYAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAkAAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "BIT_PACKED": {
@@ -224,13 +224,13 @@
         "write": true,
         "read": true,
         "write_log": "sha256:bbca8641233c715f4683e94613ec27903412b06bcdfe93a9a716221ed9072290\nUEFSMRUAFRgVHCwVBhUAFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAAwsAQAAAAIAAAADAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklAAYZGANjb2wVAhYGFnIWdiYIPBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAAAAAFnIWBjZ2AChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAsQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "INT64": {
         "write": true,
         "read": true,
         "write_log": "sha256:e1fbf8ae7c22777ae39cfb4f4f95618f8f595689e6dbf480a6fde2bc0d304f0d\nUEFSMRUAFTAVLiwVBhUAFQYVBhwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAAAAAYBAEACQE8AgAAAAAAAAADAAAAAAAAABUCGSxIBHJvb3QVAgAVBCUAGANjb2wlJEysE0ARAAAAFgYZHBkcJggcFQQZJQAGGRgDY29sFQIWBhaqARaoASYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAAABaqARYGNqgBAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAxQAAAFBBUjE=",
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "FLOAT": {
         "write": false,
@@ -273,7 +273,7 @@
       "BYTE_ARRAY": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "DELTA_BYTE_ARRAY": {
@@ -300,7 +300,7 @@
       "BYTE_ARRAY": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       }
     },
     "BYTE_STREAM_SPLIT": {
@@ -315,12 +315,12 @@
       "FLOAT": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "DOUBLE": {
         "write": false,
         "read": true,
-        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
       },
       "BOOLEAN": {
         "write": false,
@@ -337,25 +337,25 @@
       "write": true,
       "read": true,
       "write_log": "sha256:9a162aca0fb6fb48aace8057f9df7422486fe4c9da6773d65820841f2a098dd7\nUEFSMRUAFSoVLiwVBhUAFQYVBhwYAWMYAWEWACgBYxgBYQAAABVQAgAAAAYBAQAAAGEBAAAAYgEAAABjFQIZLEgEcm9vdBUCABUMJQIYA2NvbCUATBwAAAAWBhkcGRwmCBwVDBklAAYZGANjb2wVAhYGFmwWcCYIPBgBYxgBYRYAKAFjGAFhAAAAFmwWBjZwAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAogAAAFBBUjE=",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "DATE": {
       "write": true,
       "read": true,
       "write_log": "sha256:c2a4c93389c09aeddc29ce3e5dedadfdd44c9b8864e927005746cd79c1a8d916\nUEFSMRUAFRAVFCwVBBUAFQYVBhwYBENMAAAYBJ5LAAAWACgEQ0wAABgEnksAAAAAAAgcnksAAENMAAAVAhksSARyb290FQIAFQIlABgDY29sJQxMbAAAABYEGRwZHCYIHBUCGSUABhkYA2NvbBUCFgQWahZuJgg8GARDTAAAGASeSwAAFgAoBENMAAAYBJ5LAAAAAAAWahYENm4AKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCuAAAAUEFSMQ==",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_MILLIS": {
       "write": true,
       "read": true,
       "write_log": "sha256:01c54bb8c2f0ec3dbe51226979c02eb97ca25d8f389f45f20227d52bed6b8aa8\nUEFSMRUAFRAVFCwVBBUAFQYVBhwYBEClrgIYBIDuNgAWACgEQKWuAhgEgO42AAAAAAgcgO42AEClrgIVAhksSARyb290FQIAFQIlABgDY29sJQ5MfBEcHAAAAAAAFgQZHBkcJggcFQIZJQAGGRgDY29sFQIWBBZqFm4mCDwYBEClrgIYBIDuNgAWACgEQKWuAhgEgO42AAAAABZqFgQ2bgAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALMAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_MICROS": {
       "write": true,
       "read": true,
       "write_log": "sha256:96037974dcd7576746a6475229c3d79a1cbb456c228005aaae3fcb2482b6a5d7\nUEFSMRUAFRAVFCwVBBUAFQYVBhwYBIDuNgAYBEB3GwAWACgEgO42ABgEQHcbAAAAAAgcgO42AEB3GwAVAhksSARyb290FQIAFQIlABgDY29sJQ5MfBEcHAAAAAAAFgQZHBkcJggcFQIZJQAGGRgDY29sFQIWBBZqFm4mCDwYBIDuNgAYBEB3GwAWACgEgO42ABgEQHcbAAAAABZqFgQ2bgAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALMAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIME_NANOS": {
       "write": false,
@@ -364,14 +364,14 @@
     "TIMESTAMP_MILLIS": {
       "write": true,
       "read": true,
-      "write_log": "sha256:5169140e582e84aee8bfd55f4cdc26d590a27aa3b648a4487da683d153ddef01\nUEFSMRUAFTAVNCwVBBUAFQYVBhwYDHDOORvYBwAAwY0lABgMDC6B6pEEAADBjSUAFgAoDHDOORvYBwAAwY0lABgMDC6B6pEEAADBjSUAAAAAGFwMLoHqkQQAAMGNJQBwzjkb2AcAAMGNJQAVAhksSARyb290FQIAFQYlABgDY29sABYEGRwZHCYIHBUGGSUABhkYA2NvbBUCFgQWygEWzgEmCDwYDHDOORvYBwAAwY0lABgMDC6B6pEEAADBjSUAFgAoDHDOORvYBwAAwY0lABgMDC6B6pEEAADBjSUAAAAAFsoBFgQ2zgEAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQDMAAAAUEFSMQ==",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "write_log": "sha256:53c0fab909c237a910ecfece373d1d11fbacc5da97af4b7a4ea302f5b14ec393\nUEFSMRUAFTAVNCwVBBUAFQYVBhwYDFiWx5K4MAAAwY0lABgM9PUOYnItAADBjSUAFgAoDFiWx5K4MAAAwY0lABgM9PUOYnItAADBjSUAAAAAGFz09Q5ici0AAMGNJQBYlseSuDAAAMGNJQAVAhksSARyb290FQIAFQYlABgDY29sABYEGRwZHCYIHBUGGSUABhkYA2NvbBUCFgQWygEWzgEmCDwYDFiWx5K4MAAAwY0lABgM9PUOYnItAADBjSUAFgAoDFiWx5K4MAAAwY0lABgM9PUOYnItAADBjSUAAAAAFsoBFgQ2zgEAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQDMAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "TIMESTAMP_MICROS": {
       "write": false,
       "read": false,
-      "write_log": "System.NotSupportedException: DateTimeOffset support was dropped due to numerous ambiguity issues, please use DateTime from now on.\n   at Parquet.Schema.DataField..ctor(String name, Type clrType, Nullable\u00601 isNullable, Nullable\u00601 isArray, String propertyName)\n   at Parquet.Schema.DataField\u00601..ctor(String name, Nullable\u00601 nullable)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_28() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 560\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "System.IO.FileNotFoundException: Could not find file \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/lt_tsus.parquet\u0027.\nFile name: \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/lt_tsus.parquet\u0027\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64\u0026 fileLength, UnixFileMode\u0026 filePermissions, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable\u00601 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_29() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 561\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.NotSupportedException: DateTimeOffset support was dropped due to numerous ambiguity issues, please use DateTime from now on.\n   at Parquet.Schema.DataField..ctor(String name, Type clrType, Nullable`1 isNullable, Nullable`1 isArray, String propertyName)\n   at Parquet.Schema.DataField`1..ctor(String name, Nullable`1 nullable)\n   at Program.<>c.<Main>b__43_28() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 575\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "System.IO.FileNotFoundException: Could not find file '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/lt_tsus.parquet'.\nFile name: '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/lt_tsus.parquet'\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64& fileLength, UnixFileMode& filePermissions, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.<>c.<Main>b__43_29() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 576\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     },
     "TIMESTAMP_NANOS": {
       "write": false,
@@ -385,13 +385,13 @@
       "write": true,
       "read": true,
       "write_log": "sha256:76c44648cb8c255196ab96168d5d875d94adb537c418a347f2af1f5b7d3f0383\nUEFSMRUAFSAVJCwVBBUAFQYVBhwYCMgBAAAAAAAAGAh7AAAAAAAAABYAKAjIAQAAAAAAABgIewAAAAAAAAAAAAAQPHsAAAAAAAAAyAEAAAAAAAAVAhksSARyb290FQIAFQQVChUAGANjb2wlChUEFRQsXBUEFRQAAAAWBBkcGRwmCBwVBBklAAYZGANjb2wVAhYEFpoBFp4BJgg8GAjIAQAAAAAAABgIewAAAAAAAAAWACgIyAEAAAAAAAAYCHsAAAAAAAAAAAAAFpoBFgQ2ngEAKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQDMAAAAUEFSMQ==",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "UUID": {
       "write": true,
       "read": true,
-      "write_log": "sha256:04536cee0c33ddac8f4ce10a9fdb3d9a7b8b895e91a9b52a1ebbe3136b68f69c\nUEFSMRUAFUAVRCwVBBUAFQYVBhw2AAAAACB8aogEllRfS9yKuc3hhd0LxmjHuPPMZk9phw/qygs8ZTIVAhksSARyb290FQIAFQ4VIBUAGANjb2xs7AAAABYEGRwZHCYIHBUOGSUABhkYA2NvbBUCFgQWahZuJgg8NgAAAAAWahYENm4AKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCWAAAAUEFSMQ==",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "write_log": "sha256:2076d0c55b99b6e3f84517c9489b786de71edce8dc6cfeab6c7a7160b5825189\nUEFSMRUAFUAVRCwVBBUAFQYVBhw2AAAAACB8mZk0KIb2TXGp4wYxgh7p5iSvc83+fk68uuES7HnV7ukVAhksSARyb290FQIAFQ4VIBUAGANjb2xs7AAAABYEGRwZHCYIHBUOGSUABhkYA2NvbBUCFgQWahZuJgg8NgAAAAAWahYENm4AKEpQYXJxdWV0Lk5ldCB2ZXJzaW9uIDUuNS4wIChidWlsZCA0YjA4ZWNkY2ViZjNlM2E3MWU0MmFkNDA3MWE2ZTE5MzQ0NTNiZDhmKQCWAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "JSON": {
       "write": false,
@@ -405,7 +405,7 @@
       "write": true,
       "read": true,
       "write_log": "sha256:b25a071666d0a8bc08ca9aeb47dcb1a6345940fc799e91a146288899d304e69e\nUEFSMRUAFSoVLiwVBhUAFQYVBhwYAUMYAUEWACgBQxgBQQAAABVQAgAAAAYBAQAAAEEBAAAAQgEAAABDFQIZLEgEcm9vdBUCABUMJQIYA2NvbCUATBwAAAAWBhkcGRwmCBwVDBklAAYZGANjb2wVAhYGFmwWcCYIPBgBQxgBQRYAKAFDGAFBAAAAFmwWBjZwAChKUGFycXVldC5OZXQgdmVyc2lvbiA1LjUuMCAoYnVpbGQgNGIwOGVjZGNlYmYzZTNhNzFlNDJhZDQwNzFhNmUxOTM0NDUzYmQ4ZikAogAAAFBBUjE=",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "BSON": {
       "write": false,
@@ -420,38 +420,38 @@
     "LIST": {
       "write": false,
       "read": false,
-      "write_log": "System.ArgumentNullException: repetition levels are required (RL=1) (Parameter \u0027repetitionLevels\u0027)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data, Int32[] definitionLevels, Int32[] repetitionLevels, Boolean dataMayContainNulls)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_36() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 590\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "System.IO.FileNotFoundException: Could not find file \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_list.parquet\u0027.\nFile name: \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_list.parquet\u0027\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64\u0026 fileLength, UnixFileMode\u0026 filePermissions, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable\u00601 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_37() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 591\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.ArgumentNullException: repetition levels are required (RL=1) (Parameter 'repetitionLevels')\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data, Int32[] definitionLevels, Int32[] repetitionLevels, Boolean dataMayContainNulls)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data)\n   at Program.<>c.<Main>b__43_36() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 605\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "System.IO.FileNotFoundException: Could not find file '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_list.parquet'.\nFile name: '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_list.parquet'\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64& fileLength, UnixFileMode& filePermissions, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.<>c.<Main>b__43_37() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 606\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     },
     "MAP": {
       "write": false,
       "read": false,
-      "write_log": "System.ArgumentException: map\u0027s key cannot be nullable (Parameter \u0027keyField\u0027)\n   at Parquet.Schema.MapField..ctor(String name, Field keyField, Field valueField)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_38() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 595\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "System.IO.FileNotFoundException: Could not find file \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_map.parquet\u0027.\nFile name: \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_map.parquet\u0027\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64\u0026 fileLength, UnixFileMode\u0026 filePermissions, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable\u00601 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_39() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 596\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.ArgumentException: map's key cannot be nullable (Parameter 'keyField')\n   at Parquet.Schema.MapField..ctor(String name, Field keyField, Field valueField)\n   at Program.<>c.<Main>b__43_38() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 610\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "System.IO.FileNotFoundException: Could not find file '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_map.parquet'.\nFile name: '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_map.parquet'\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64& fileLength, UnixFileMode& filePermissions, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.<>c.<Main>b__43_39() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 611\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     },
     "STRUCT": {
       "write": true,
       "read": true,
-      "write_log": "sha256:d2b63f8707c1b334aff2b345f135a959cb04e164dce3b92f8185996b6547c27f\nUEFSMRUAFVgVJCwVBBUKFQYVBhwYBAIAAAAYBAEAAAAWACgEAgAAABgEAQAAAAAAACwoAgAAAAQBgAggAgIBC3IBABUAFVgVJCwVBBUKFQYVBhwYBAQAAAAYBAMAAAAWACgEBAAAABgEAwAAAAAAACwoAgAAAAQBgAggAgYBC3IBABUCGUxIBHJvb3QVAgA1AhgDY29sFQQAFQIlABgBeCUiTKwTIBEAAAAVAiUAGAF5JSJMrBMgEQAAABYEGRwZLCYIHBUCGSUKBhkoA2NvbAF4FQIWBBayARZ\u002BJgg8GAQCAAAAGAQBAAAAFgAoBAIAAAAYBAEAAAAAAAAmhgEcFQIZJQoGGSgDY29sAXkVAhYEFrIBFn4mhgE8GAQEAAAAGAQDAAAAFgAoBAQAAAAYBAMAAAAAAAAW5AIWBDb8AQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpAAsBAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "write_log": "sha256:d2b63f8707c1b334aff2b345f135a959cb04e164dce3b92f8185996b6547c27f\nUEFSMRUAFVgVJCwVBBUKFQYVBhwYBAIAAAAYBAEAAAAWACgEAgAAABgEAQAAAAAAACwoAgAAAAQBgAggAgIBC3IBABUAFVgVJCwVBBUKFQYVBhwYBAQAAAAYBAMAAAAWACgEBAAAABgEAwAAAAAAACwoAgAAAAQBgAggAgYBC3IBABUCGUxIBHJvb3QVAgA1AhgDY29sFQQAFQIlABgBeCUiTKwTIBEAAAAVAiUAGAF5JSJMrBMgEQAAABYEGRwZLCYIHBUCGSUKBhkoA2NvbAF4FQIWBBayARZ+Jgg8GAQCAAAAGAQBAAAAFgAoBAIAAAAYBAEAAAAAAAAmhgEcFQIZJQoGGSgDY29sAXkVAhYEFrIBFn4mhgE8GAQEAAAAGAQDAAAAFgAoBAQAAAAYBAMAAAAAAAAW5AIWBDb8AQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpAAsBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "NESTED_LIST": {
       "write": false,
       "read": false,
-      "write_log": "System.ArgumentNullException: repetition levels are required (RL=2) (Parameter \u0027repetitionLevels\u0027)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data, Int32[] definitionLevels, Int32[] repetitionLevels, Boolean dataMayContainNulls)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_42() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 605\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "System.IO.FileNotFoundException: Could not find file \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_nlist.parquet\u0027.\nFile name: \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_nlist.parquet\u0027\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64\u0026 fileLength, UnixFileMode\u0026 filePermissions, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable\u00601 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_43() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 606\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.ArgumentNullException: repetition levels are required (RL=2) (Parameter 'repetitionLevels')\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data, Int32[] definitionLevels, Int32[] repetitionLevels, Boolean dataMayContainNulls)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data)\n   at Program.<>c.<Main>b__43_42() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 620\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "System.IO.FileNotFoundException: Could not find file '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_nlist.parquet'.\nFile name: '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_nlist.parquet'\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64& fileLength, UnixFileMode& filePermissions, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.<>c.<Main>b__43_43() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 621\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     },
     "NESTED_MAP": {
       "write": false,
       "read": false,
-      "write_log": "System.ArgumentException: map\u0027s key cannot be nullable (Parameter \u0027keyField\u0027)\n   at Parquet.Schema.MapField..ctor(String name, Field keyField, Field valueField)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_44() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 609\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "System.IO.FileNotFoundException: Could not find file \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_nmap.parquet\u0027.\nFile name: \u0027/tmp/parquet_dotnet_test_52a5dca14d524c49aeef2cb88f85e24c/nt_nmap.parquet\u0027\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64\u0026 fileLength, UnixFileMode\u0026 filePermissions, Boolean failForSymlink, Boolean\u0026 wasSymlink, Func\u00604 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable\u00601 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_45() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 610\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.ArgumentException: map's key cannot be nullable (Parameter 'keyField')\n   at Parquet.Schema.MapField..ctor(String name, Field keyField, Field valueField)\n   at Program.<>c.<Main>b__43_44() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 624\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "System.IO.FileNotFoundException: Could not find file '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_nmap.parquet'.\nFile name: '/tmp/parquet_dotnet_test_5916b146c57c448bb549af1710fa9e17/nt_nmap.parquet'\n   at Interop.ThrowExceptionForIoErrno(ErrorInfo errorInfo, String path, Boolean isDirError)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String path, OpenFlags flags, Int32 mode, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, UnixFileMode openPermissions, Int64& fileLength, UnixFileMode& filePermissions, Boolean failForSymlink, Boolean& wasSymlink, Func`4 createOpenException)\n   at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)\n   at System.IO.File.OpenRead(String path)\n   at Program.<>c.<Main>b__43_45() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 625\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     },
     "DEEP_NESTING": {
       "write": false,
       "read": false,
-      "write_log": "System.ArgumentNullException: repetition levels are required (RL=1) (Parameter \u0027repetitionLevels\u0027)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data, Int32[] definitionLevels, Int32[] repetitionLevels, Boolean dataMayContainNulls)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_46() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 613\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
-      "read_log": "Parquet.ParquetException: \u0027col/list/item/x\u0027 does not exist in this file\n   at Parquet.ParquetRowGroupReader.ReadColumnAsync(DataField field, CancellationToken cancellationToken)\n   at Program.\u003C\u003Ec.\u003CMain\u003Eb__43_47() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 614\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
+      "write_log": "System.ArgumentNullException: repetition levels are required (RL=1) (Parameter 'repetitionLevels')\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data, Int32[] definitionLevels, Int32[] repetitionLevels, Boolean dataMayContainNulls)\n   at Parquet.Data.DataColumn..ctor(DataField field, Array data)\n   at Program.<>c.<Main>b__43_46() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 628\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16",
+      "read_log": "Parquet.ParquetException: 'col/list/item/x' does not exist in this file\n   at Parquet.ParquetRowGroupReader.ReadColumnAsync(DataField field, CancellationToken cancellationToken)\n   at Program.<>c.<Main>b__43_47() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 629\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_dotnet/Program.cs:line 16"
     }
   },
   "advanced_features": {
@@ -459,7 +459,7 @@
       "write": true,
       "read": true,
       "write_log": "sha256:07c3af3acc55c2ed5e299a67d4cb04adfbe30793f61d925988e832c8499422de\nUEFSMRUAFUwVTCwVBhUKFQYVBhwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAAAIAIIAMCAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQIZLEgEcm9vdBUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmCBwVAhklCgYZGANjb2wVABYGFqYBFqYBJgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAAAAWpgEWBjamAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpALUAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "PAGE_INDEX": {
       "write": false,
@@ -485,7 +485,7 @@
       "write": true,
       "read": true,
       "write_log": "sha256:fcb49c70e1121128f39a894be81d86b2280f254438e70ce5b660a0e17cf436e6\nUEFSMRUAFUwVGCwVBBUKFQYVBhwYBAIAAAAYBAEAAAAWACgEAgAAABgEAQAAAAAAACYYgAggAgICAHoBABUAFSAVJCwVBBUAFQYVBhwYAXkYAXgWACgBeRgBeAAAABA8AgAAAAQBAQAAAHgBAAAAeRUCGTxIBHJvb3QVBAAVAiUAGAFhJSJMrBMgEQAAABUMJQIYAWIlAEwcAAAAFgQZHBksJggcFQIZJQoGGRgBYRUCFgQWpgEWciYIPBgEAgAAABgEAQAAABYAKAQCAAAAGAQBAAAAAAAAJnocFQwZJQAGGRgBYhUCFgQWYhZmJno8GAF5GAF4FgAoAXkYAXgAAAAWiAIWBDbYAQAoSlBhcnF1ZXQuTmV0IHZlcnNpb24gNS41LjAgKGJ1aWxkIDRiMDhlY2RjZWJmM2UzYTcxZTQyYWQ0MDcxYTZlMTkzNDQ1M2JkOGYpAOcAAABQQVIx",
-      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\u0022probe_int\u0022:[1337]}"
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
     },
     "SCHEMA_EVOLUTION": {
       "write": false,

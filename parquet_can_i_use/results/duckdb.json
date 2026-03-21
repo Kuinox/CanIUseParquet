@@ -484,9 +484,9 @@
     },
     "INT96": {
       "write": false,
-      "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "read": true,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 248, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "DECIMAL": {
       "write": true,
@@ -497,7 +497,7 @@
     "UUID": {
       "write": true,
       "read": true,
-      "write_log": "sha256:5a6c44b7e5a694a2c3384c135904389547bfce73228980e3aa8f7743c3576ef6\nUEFSMRUAFSwVMCwVAhUAFQYVBgAAFlQCAAAAAgEFI15nkzNO2aXKPlfCju3nFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQ4VIBUCGAFjbOwAAAAWAhkcGRwmABwVDhkVABkYAWMVAhYCFk4WUiYIPBgQBSNeZ5MzTtmlyj5Xwo7t5xgQBSNeZ5MzTtmlyj5Xwo7t5xYAKBAFI15nkzNO2aXKPlfCju3nGBAFI15nkzNO2aXKPlfCju3nEREAAAAWThYCJggWUgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAADLAAAAUEFSMQ==",
+      "write_log": "sha256:a406c26f12c70a0cfd069306dec835a4d86f06dee474f6f068c12dbae9137469\nUEFSMRUAFSwVMCwVAhUAFQYVBgAAFlQCAAAAAgE8H6gFyzpFfITz2xa0AlacFQIZLDUAGA1kdWNrZGJfc2NoZW1hFQIAFQ4VIBUCGAFjbOwAAAAWAhkcGRwmABwVDhkVABkYAWMVAhYCFk4WUiYIPBgQPB+oBcs6RXyE89sWtAJWnBgQPB+oBcs6RXyE89sWtAJWnBYAKBA8H6gFyzpFfITz2xa0AlacGBA8H6gFyzpFfITz2xa0AlacEREAAAAWThYCJggWUgAoKER1Y2tEQiB2ZXJzaW9uIHYxLjUuMCAoYnVpbGQgM2EzOTY3YWE4MSkZHBwAAADLAAAAUEFSMQ==",
       "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "JSON": {
@@ -508,9 +508,9 @@
     },
     "FLOAT16": {
       "write": false,
-      "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "read": true,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 248, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "ENUM": {
       "write": true,
@@ -520,9 +520,9 @@
     },
     "BSON": {
       "write": false,
-      "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "read": true,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 248, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "INTERVAL": {
       "write": true,
@@ -531,28 +531,28 @@
       "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "UNKNOWN": {
-      "write": false,
-      "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "write": true,
+      "read": true,
+      "write_log": "sha256:c39b080d170a6aba1ee38a75027da897e8a64b4c7aa4eb8845614d8f2cc1fa2c\nUEFSMRUAFQwVECwVAhUAFQYVBgAABhQCAAAAAgAVAhksNQAYDWR1Y2tkYl9zY2hlbWEVAgAVAiUCGAFjJSIAFgIZHBkcJgAcFQIZFQAZGAFjFQIWAhYuFjImCDw2AgAAABYuFgImCBYyACgoRHVja0RCIHZlcnNpb24gdjEuNS4wIChidWlsZCAzYTM5NjdhYTgxKRkcHAAAAH0AAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     },
     "VARIANT": {
       "write": false,
       "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 248, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 256, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "GEOMETRY": {
       "write": false,
       "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 248, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 256, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     },
     "GEOGRAPHY": {
       "write": false,
       "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 247, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 251, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 248, in write_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 256, in read_lt\n    raise NotImplementedError(\"Not supported\")\nNotImplementedError: Not supported\n"
     }
   },
   "nested_types": {
@@ -609,8 +609,8 @@
     "COLUMN_ENCRYPTION": {
       "write": false,
       "read": false,
-      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 295, in write_encryption\n    con.execute(f\"COPY (SELECT 1 AS col) TO '{p}' (FORMAT PARQUET, ENCRYPTION_CONFIG {{footer_key: 'test_key'}})\")\n_duckdb.Error:  DuckDB currently has a read-only crypto module loaded. Please ensure httpfs is loaded using `LOAD httpfs`, or for DuckDB database files consider READONLY mode. To write an encrypted database or parquet file that is NOT securely encrypted, one can use SET force_mbedtls_unsafe = 'true'.\n",
-      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 298, in read_encryption\n    con.execute(f\"SELECT * FROM read_parquet('{p}', encryption_config={{footer_key: 'test_key'}})\").fetchall()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_duckdb.InvalidInputException: Invalid Input Error: File '/tmp/tmpey73f78l/adv_enc.parquet' too small to be a Parquet file\n\nLINE 1: SELECT * FROM read_parquet('/tmp/tmpey73f78l/adv_enc.parquet', encryption...\n                      ^\n"
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 300, in write_encryption\n    con.execute(f\"COPY (SELECT 1 AS col) TO '{p}' (FORMAT PARQUET, ENCRYPTION_CONFIG {{footer_key: 'test_key'}})\")\n_duckdb.Error:  DuckDB currently has a read-only crypto module loaded. Please ensure httpfs is loaded using `LOAD httpfs`, or for DuckDB database files consider READONLY mode. To write an encrypted database or parquet file that is NOT securely encrypted, one can use SET force_mbedtls_unsafe = 'true'.\n",
+      "read_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 303, in read_encryption\n    con.execute(f\"SELECT * FROM read_parquet('{p}', encryption_config={{footer_key: 'test_key'}})\").fetchall()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_duckdb.InvalidInputException: Invalid Input Error: File '/tmp/tmpsphpxryt/adv_enc.parquet' too small to be a Parquet file\n\nLINE 1: SELECT * FROM read_parquet('/tmp/tmpsphpxryt/adv_enc.parquet', encryption...\n                      ^\n"
     },
     "DATA_PAGE_V2": {
       "write": true,
@@ -650,7 +650,9 @@
     },
     "PAGE_CRC32": {
       "write": false,
-      "read": false
+      "read": true,
+      "write_log": "Traceback (most recent call last):\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 17, in test_feature\n    fn()\n  File \"/home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/python/test_duckdb.py\", line 372, in write_crc32\n    raise NotImplementedError(\"DuckDB does not write page checksums\")\nNotImplementedError: DuckDB does not write page checksums\n",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\": [1337]}"
     }
   }
 }

@@ -231,26 +231,31 @@ def main():
         "DECIMAL": "SELECT 123.45::DECIMAL(10,2) AS c",
         "UUID": "SELECT uuid() AS c",
         "JSON": "SELECT '{\"key\":\"val\"}'::JSON AS c",
-        "FLOAT16": None,
+        "FLOAT16": None,  # DuckDB can read FLOAT16 but has no FLOAT16 write type
         "ENUM": "SELECT 'A'::VARCHAR AS c",
         "BSON": None,
         "INTERVAL": "SELECT INTERVAL 1 DAY AS c",
-        "UNKNOWN": None,  # DuckDB does not support the UNKNOWN logical type
-        "VARIANT": None,  # DuckDB does not yet write Parquet VARIANT
+        "UNKNOWN": "SELECT NULL::INTEGER AS c",  # null column = UNKNOWN in Parquet
+        "VARIANT": None,  # DuckDB does not yet write Parquet VARIANT logical type
         "GEOMETRY": None,  # DuckDB does not yet write Parquet GEOMETRY
         "GEOGRAPHY": None,  # DuckDB does not yet write Parquet GEOGRAPHY
     }
     for type_name, sql in lt_tests.items():
         path = os.path.join(tmpdir, f"lt_{type_name}.parquet")
+        fixture_path = FIXTURES_DIR / "logical_types" / f"lt_{type_name}.parquet"
         def write_lt(q=sql, p=path):
             if q is None:
                 raise NotImplementedError("Not supported")
             con.execute(f"COPY ({q}) TO '{p}' (FORMAT PARQUET)")
-        def read_lt(q=sql, p=path):
+        def read_lt(q=sql, p=path, fp=fixture_path):
             if q is None:
+                # For read-only support: try reading from fixture
+                if fp.exists():
+                    con.execute(f"SELECT * FROM read_parquet('{fp}')").fetchall()
+                    return
                 raise NotImplementedError("Not supported")
             con.execute(f"SELECT * FROM read_parquet('{p}')").fetchall()
-        results["logical_types"][type_name] = test_rw(write_lt, read_lt, write_path=path)
+        results["logical_types"][type_name] = test_rw(write_lt, read_lt, write_path=path if sql else None)
 
     # --- Nested Types ---
     nt_tests = {
@@ -361,8 +366,16 @@ def main():
         assert len(rows) > 0
     results["advanced_features"]["SIZE_STATISTICS"] = test_rw(write_size_statistics, read_size_statistics, write_path=os.path.join(tmpdir, "adv_size_stats.parquet"))
 
-    # Page CRC32 checksum - DuckDB does not write page checksums
-    results["advanced_features"]["PAGE_CRC32"] = {"write": False, "read": False}
+    # Page CRC32 checksum - DuckDB does not write page checksums.
+    # Test read support using the pre-generated fixture file.
+    def write_crc32():
+        raise NotImplementedError("DuckDB does not write page checksums")
+    def read_crc32_fixture():
+        fixture = FIXTURES_DIR / "advanced_features" / "adv_PAGE_CRC32.parquet"
+        if not fixture.exists():
+            raise FileNotFoundError(f"PAGE_CRC32 fixture not found: {fixture}")
+        con.execute(f"SELECT * FROM read_parquet('{fixture}')").fetchall()
+    results["advanced_features"]["PAGE_CRC32"] = test_rw(write_crc32, read_crc32_fixture)
 
     print(json.dumps(results, indent=2))
 

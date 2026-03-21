@@ -114,6 +114,27 @@ func findProofPath() string {
 	return ""
 }
 
+func findFixturesDir() string {
+	exePath, err := os.Executable()
+	if err == nil {
+		candidate := filepath.Join(filepath.Dir(exePath), "..", "..", "..", "fixtures")
+		if _, err := os.Stat(candidate); err == nil {
+			return candidate
+		}
+	}
+	candidates := []string{
+		"fixtures",
+		"../../../fixtures",
+		"parquet_can_i_use/fixtures",
+	}
+	for _, c := range candidates {
+		if _, err := os.Stat(c); err == nil {
+			return c
+		}
+	}
+	return ""
+}
+
 func readProofValues(proofPath string) (string, error) {
 	f, err := os.Open(proofPath)
 	if err != nil {
@@ -402,6 +423,7 @@ func main() {
 	defer os.RemoveAll(tmpdir)
 
 	proofPath := findProofPath()
+	fixturesDir := findFixturesDir()
 
 	results := map[string]interface{}{
 		"tool":    "parquet-go",
@@ -602,6 +624,10 @@ func main() {
 	logicalTypes["ENUM"] = RWResult{Write: false, Read: false}
 	logicalTypes["BSON"] = RWResult{Write: false, Read: false}
 	logicalTypes["INTERVAL"] = RWResult{Write: false, Read: false}
+	logicalTypes["UNKNOWN"] = RWResult{Write: false, Read: false}
+	logicalTypes["VARIANT"] = RWResult{Write: false, Read: false}
+	logicalTypes["GEOMETRY"] = RWResult{Write: false, Read: false}
+	logicalTypes["GEOGRAPHY"] = RWResult{Write: false, Read: false}
 	results["logical_types"] = logicalTypes
 
 	// --- Nested Types ---
@@ -674,6 +700,74 @@ func main() {
 		proofPath,
 	)
 	advanced["SCHEMA_EVOLUTION"] = RWResult{Write: false, Read: false}
+
+	// SIZE_STATISTICS: parquet-go does not expose explicit size-statistics control.
+	// Test read support using the pre-generated fixture.
+	{
+		readFn := func() error {
+			return fmt.Errorf("SIZE_STATISTICS fixture not found")
+		}
+		if fixturesDir != "" {
+			fixturePath := filepath.Join(fixturesDir, "advanced_features", "adv_SIZE_STATISTICS.parquet")
+			if _, err := os.Stat(fixturePath); err == nil {
+				readFn = func() error {
+					f, err := os.Open(fixturePath)
+					if err != nil {
+						return err
+					}
+					defer f.Close()
+					info, err := f.Stat()
+					if err != nil {
+						return err
+					}
+					pf, err := parquet.OpenFile(f, info.Size())
+					if err != nil {
+						return err
+					}
+					_ = pf
+					return nil
+				}
+			}
+		}
+		advanced["SIZE_STATISTICS"] = testRW(
+			func() error { return fmt.Errorf("parquet-go does not expose SIZE_STATISTICS write control") },
+			readFn,
+		)
+	}
+
+	// PAGE_CRC32: parquet-go does not write page checksums.
+	// Test read support using the pre-generated fixture.
+	{
+		readFn := func() error {
+			return fmt.Errorf("PAGE_CRC32 fixture not found")
+		}
+		if fixturesDir != "" {
+			fixturePath := filepath.Join(fixturesDir, "advanced_features", "adv_PAGE_CRC32.parquet")
+			if _, err := os.Stat(fixturePath); err == nil {
+				readFn = func() error {
+					f, err := os.Open(fixturePath)
+					if err != nil {
+						return err
+					}
+					defer f.Close()
+					info, err := f.Stat()
+					if err != nil {
+						return err
+					}
+					pf, err := parquet.OpenFile(f, info.Size())
+					if err != nil {
+						return err
+					}
+					_ = pf
+					return nil
+				}
+			}
+		}
+		advanced["PAGE_CRC32"] = testRW(
+			func() error { return fmt.Errorf("parquet-go does not write page CRC32 checksums") },
+			readFn,
+		)
+	}
 	results["advanced_features"] = advanced
 
 	out, _ := json.MarshalIndent(results, "", "  ")

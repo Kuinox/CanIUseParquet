@@ -1,0 +1,552 @@
+{
+  "tool": "parquet-sharp",
+  "version": "21.0.0.0",
+  "compression": {
+    "NONE": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:8ce981b65274b40dc9aaf34eb25778fe5ebf613f9aaaa8ec8a4490eb64dba4d3\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUAFgYWXhZeJjwmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABaUARUUFmYVLgAWXhYGJggWXgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAArgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "SNAPPY": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:eef1e9a58ad86f28d342c5f26e5fe5e9a52d122b595fc0bc2fe3b94e6c83661c\nUEFSMRUEFRgVHEwVBhUAEgAADCwBAAAAAgAAAAMAAAAVABUIFQwsFQYVEBUGFQYAAAQMAgMkABkRAhkYBAEAAAAZGAQDAAAAFQIZFgAAGRwWQBUuFgAAABUEGSw1ABgGc2NoZW1hFQIAFQIlABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGTUABhAZGANjb2wVAhYGFl4WZiZAJggcGAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAGSwVBBUAFQIAFQAVEBUCAAAWnAEVFBZuFS4AFl4WBiYIFmYAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAK4AAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "GZIP": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:bbc950cf0c4a7500d96d1c8eb9cbd552b4a74f0236e803b9c948d6443c0c0a9d\nUEFSMRUEFRgVOkwVBhUAEgAAH4sIAAAAAAAAA2NkYGBgAmJmIAYAkyLgsAwAAAAVABUIFTAsFQYVEBUGFQYAAB+LCAAAAAAAAANjYlZhAABoSON4BAAAABkRAhkYBAEAAAAZGAQDAAAAFQIZFgAAGRwWXhVSFgAAABUEGSw1ABgGc2NoZW1hFQIAFQIlABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGTUABhAZGANjb2wVBBYGFl4WqAEmXiYIHBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAABksFQQVABUCABUAFRAVAgAAFt4BFRQWsAEVLgAWXhYGJggWqAEAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAALEAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "BROTLI": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:638852adeeaccd559905fcbb1c61c0339ed7ee746505368142385ce3dc3a4744\nUEFSMRUEFRgVHEwVBhUAEgAAGwsAAKQABsoQUeLDPwAVABUIFRAsFQYVEBUGFQYAAIsBgAIDJAADGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBZAFTIWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUIFgYWXhZqJkAmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABagARUUFnIVLgAWXhYGJggWagAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAArgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "LZO": {
+      "write": false,
+      "read": false,
+      "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'While LZO compression is supported by the Parquet format in general, it is currently not supported by the C++ implementation.')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.WriteIntFile(String name, WriterProperties props) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 169\n   at Program.<>c__DisplayClass12_1.<Main>b__31() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 203\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+      "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.ReadIntFile(String name) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 178\n   at Program.<>c__DisplayClass12_1.<Main>b__32() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 204\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+    },
+    "LZ4": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:24b022e1d278d1f6acc53d8525edc90bed37610cb6d9aad3451264a7d50af66e\nUEFSMRUEFRgVKkwVBhUAEgAAAAAADAAAAA3AAQAAAAIAAAADAAAAFQAVCBUaLBUGFRAVBhUGAAAAAAAEAAAABUACAyQAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBZOFTwWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUKFgYWXhaCASZOJggcGAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAGSwVBBUAFQIAFQAVEBUCAAAWuAEVFBaKARUuABZeFgYmCBaCAQAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAsQAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "LZ4_RAW": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:4ba764bab0469ae9c1aec1fc5f529d158fdeaa3d1b72abc3b98952862d982174\nUEFSMRUEFRgVGkwVBhUAEgAAwAEAAAACAAAAAwAAABUAFQgVCiwVBhUQFQYVBgAAQAIDJAAZEQIZGAQBAAAAGRgEAwAAABUCGRYAABkcFj4VLBYAAAAVBBksNQAYBnNjaGVtYRUCABUCJQAYA2NvbCUiTKwTIBEAAAAWBhkcGRwmABwVAhk1AAYQGRgDY29sFQ4WBhZeFmImPiYIHBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAABksFQQVABUCABUAFRAVAgAAFpgBFRQWahUuABZeFgYmCBZiACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACuAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "ZSTD": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:14443f7a7f46f1c0f19036f5376b5261cca3aed1359350a39ddc203c714c2e49\nUEFSMRUEFRgVKkwVBhUAEgAAKLUv/SAMYQAAAQAAAAIAAAADAAAAFQAVCBUaLBUGFRAVBhUGAAAotS/9IAQhAAACAyQAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBZOFTwWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUMFgYWXhaCASZOJggcGAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAGSwVBBUAFQIAFQAVEBUCAAAWuAEVFBaKARUuABZeFgYmCBaCAQAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAsQAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    }
+  },
+  "encoding": {
+    "PLAIN": {
+      "INT32": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:bc003328a519f6e9eadd6ee5a9bfab3b3b6efbd436eba8b3b30f1225f9891bc3\nUEFSMRUAFRgVGCwVBhUAFQYVBgAAAQAAAAIAAAADAAAAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBYIFToWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZJQYAGRgDY29sFQAWBhY6FjomCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZHBUAFQAVAgAAFnAVFBZCFS4AFjoWBiYIFjoAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAKMAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "INT64": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:0b85846f870217feadf1e15ee234e79b95b1f9362e04a8dd0c3fb43aaeff03df\nUEFSMRUAFTAVMCwVBhUAFQYVBgAAAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAGRECGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUCGRYAABkcFggVUhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbCUkTKwTQBEAAAAWBhkcGRwmABwVBBklBgAZGANjb2wVABYGFlIWUiYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAZHBUAFQAVAgAAFpgBFRQWWhU+ABZSFgYmCBZSACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAAC0AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "FLOAT": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:912c8f9a90e3c69cc40a7e80dd202b53297246216b3cddc7c6a48d9823580159\nUEFSMRUAFRgVGCwVBhUAFQYVBgAAAACAPwAAAEAAAEBAGRECGRgEAACAPxkYBAAAQEAVAhkWAAAZHBYIFToWAAAAFQQZLDUAGAZzY2hlbWEVAgAVCCUAGANjb2wAFgYZHBkcJgAcFQgZJQYAGRgDY29sFQAWBhY6FjomCDwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPwAZHBUAFQAVAgAAFnAVFBZCFS4AFjoWBiYIFjoAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAJoAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "DOUBLE": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:a31c4d2eaeb0d98c8e3a957f077b69dc94765a436062d6ec25fa13d528c69e92\nUEFSMRUAFTAVMCwVBhUAFQYVBgAAAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAGRECGRgIAAAAAAAA8D8ZGAgAAAAAAAAIQBUCGRYAABkcFggVUhYAAAAVBBksNQAYBnNjaGVtYRUCABUKJQAYA2NvbAAWBhkcGRwmABwVChklBgAZGANjb2wVABYGFlIWUiYIPBgIAAAAAAAACEAYCAAAAAAAAPA/FgAoCAAAAAAAAAhAGAgAAAAAAADwPwAZHBUAFQAVAgAAFpgBFRQWWhU+ABZSFgYmCBZSACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACrAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "BOOLEAN": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:2eb7e2a3953cd24ee659ab5b82945cdee4fcdc5e49760c337dc81653180d9b0d\nUEFSMRUAFQIVAiwVBhUAFQYVBgAABRkRAhkYAQAZGAEBFQIZFgAAGRwWCBUkFgAAABUEGSw1ABgGc2NoZW1hFQIAFQAlABgDY29sABYGGRwZHCYAHBUAGSUGABkYA2NvbBUAFgYWJBYkJgg8GAEBGAEAFgAoAQEYAQAAGRwVABUAFQIAABZOFRQWLBUiABYkFgYmCBYkACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACOAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:7d053ac5e6280012ba478fe1588e402e2ba0436a8808d5bf393f1ed9c0cf7942\nUEFSMRUAFSoVKiwVBhUAFQYVBgAAAgAAAAYBAQAAAAEBAAAAAgEAAAADGRECGRgBARkYAQMVAhkWACkmAAYAGRwWCBVMFgAAGRYGABUEGSw1ABgGc2NoZW1hFQIAFQwlAhgDY29sABYGGRwZHCYAHBUMGSUGABkYA2NvbBUAFgYWTBZMJgg8NgAoAQMYAQEAGRwVABUAFQIAPBYGGQYZJgAGAAAWfhUaFlQVKgAWTBYGJggWTAAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAkgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      }
+    },
+    "PLAIN_DICTIONARY": {
+      "INT32": {
+        "write": false,
+        "read": false
+      },
+      "INT64": {
+        "write": false,
+        "read": false
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false
+      }
+    },
+    "RLE_DICTIONARY": {
+      "INT32": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:8ce981b65274b40dc9aaf34eb25778fe5ebf613f9aaaa8ec8a4490eb64dba4d3\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUAFgYWXhZeJjwmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABaUARUUFmYVLgAWXhYGJggWXgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAArgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "INT64": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:d3b982e48a80dbb079f5779030941148831d35f6ce62fad44e253c7b6f3752bb\nUEFSMRUEFTAVMEwVBhUAEgAAAQAAAAAAAAACAAAAAAAAAAMAAAAAAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbCUkTKwTQBEAAAAWBhkcGRwmABwVBBk1AAYQGRgDY29sFQAWBhZ2FnYmVCYIHBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAZLBUEFQAVAgAVABUQFQIAABa8ARUUFn4VPgAWdhYGJggWdgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAvgAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "FLOAT": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:684f4caf9e9b527cc156a02b536385e2d41742609ebefa21e360dcde4bb98ab2\nUEFSMRUEFRgVGEwVBhUAEgAAAACAPwAAAEAAAEBAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEAACAPxkYBAAAQEAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVCCUAGANjb2wAFgYZHBkcJgAcFQgZNQAGEBkYA2NvbBUAFgYWXhZeJjwmCBwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPwAZLBUEFQAVAgAVABUQFQIAABaUARUUFmYVLgAWXhYGJggWXgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAApQAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "DOUBLE": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:d6eba7b358530a51f361b65f26aa40de988fbb11d6989f246d76520ccefbabff\nUEFSMRUEFTAVMEwVBhUAEgAAAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgIAAAAAAAA8D8ZGAgAAAAAAAAIQBUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUKJQAYA2NvbAAWBhkcGRwmABwVChk1AAYQGRgDY29sFQAWBhZ2FnYmVCYIHBgIAAAAAAAACEAYCAAAAAAAAPA/FgAoCAAAAAAAAAhAGAgAAAAAAADwPwAZLBUEFQAVAgAVABUQFQIAABa8ARUUFn4VPgAWdhYGJggWdgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAtQAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "BOOLEAN": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:2eb7e2a3953cd24ee659ab5b82945cdee4fcdc5e49760c337dc81653180d9b0d\nUEFSMRUAFQIVAiwVBhUAFQYVBgAABRkRAhkYAQAZGAEBFQIZFgAAGRwWCBUkFgAAABUEGSw1ABgGc2NoZW1hFQIAFQAlABgDY29sABYGGRwZHCYAHBUAGSUGABkYA2NvbBUAFgYWJBYkJgg8GAEBGAEAFgAoAQEYAQAAGRwVABUAFQIAABZOFRQWLBUiABYkFgYmCBYkACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACOAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:cbf7f33f845dd462c26f354f66d7cde584e96721f2325ecb29ebd1e400e62add\nUEFSMRUEFR4VHkwVBhUAEgAAAQAAAAEBAAAAAgEAAAADFQAVFBUULBUGFRAVBhUGAAACAAAABgECAyQAGRECGRgBARkYAQMVAhkWACkmAAYAGRwWQhU2FgAAGRYGABUEGSw1ABgGc2NoZW1hFQIAFQwlAhgDY29sABYGGRwZHCYAHBUMGTUABhAZGANjb2wVABYGFnAWcCZCJggcNgAoAQMYAQEAGSwVBBUAFQIAFQAVEBUCADwWBhkGGSYABgAAFqIBFRoWeBUqABZwFgYmCBZwACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACdAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      }
+    },
+    "RLE": {
+      "INT32": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'RLE only supports BOOLEAN')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "INT64": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'RLE only supports BOOLEAN')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'RLE only supports BOOLEAN')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'RLE only supports BOOLEAN')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BOOLEAN": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:eecc47932e195fb3e667ed22a97aa43b1f22043bdb103e97fc54df526f6a60f5\nUEFSMRUAFQwVDCwVBhUGFQYVBgAAAgAAAAMFGRECGRgBABkYAQEVAhkWAAAZHBYIFS4WAAAAFQQZLDUAGAZzY2hlbWEVAgAVACUAGANjb2wAFgYZHBkcJgAcFQAZFQYZGANjb2wVABYGFi4WLiYIPBgBARgBABYAKAEBGAEAABkcFQAVBhUCAAAWWBUUFjYVIgAWLhYGJggWLgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAjQAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'RLE only supports BOOLEAN')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      }
+    },
+    "BIT_PACKED": {
+      "INT32": {
+        "write": false,
+        "read": false
+      },
+      "INT64": {
+        "write": false,
+        "read": false
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false
+      }
+    },
+    "DELTA_BINARY_PACKED": {
+      "INT32": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:626da5ae50a827beb4c429e3cbe9313ebd3789f7d501b319ea5cd86c8ef4bf7c\nUEFSMRUAFRQVFCwVBhUKFQYVBgAAgAEEAwICAAAAABkRAhkYBAEAAAAZGAQDAAAAFQIZFgAAGRwWCBU2FgAAABUEGSw1ABgGc2NoZW1hFQIAFQIlABgDY29sJSJMrBMgEQAAABYGGRwZHCYAHBUCGSUGChkYA2NvbBUAFgYWNhY2Jgg8GAQDAAAAGAQBAAAAFgAoBAMAAAAYBAEAAAAAGRwVABUKFQIAABZsFRQWPhUuABY2FgYmCBY2ACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACjAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "INT64": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:9344c1a3d58fd682bf66a98c2e32c4615d07cd77ce2018861092ee424e9584e7\nUEFSMRUAFRQVFCwVBhUKFQYVBgAAgAIEAwICAAAAABkRAhkYCAEAAAAAAAAAGRgIAwAAAAAAAAAVAhkWAAAZHBYIFTYWAAAAFQQZLDUAGAZzY2hlbWEVAgAVBCUAGANjb2wlJEysE0ARAAAAFgYZHBkcJgAcFQQZJQYKGRgDY29sFQAWBhY2FjYmCDwYCAMAAAAAAAAAGAgBAAAAAAAAABYAKAgDAAAAAAAAABgIAQAAAAAAAAAAGRwVABUKFQIAABZ8FRQWPhU+ABY2FgYmCBY2ACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACzAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BINARY_PACKED encoder only supports INT32 and INT64')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BINARY_PACKED encoder only supports INT32 and INT64')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BINARY_PACKED encoder only supports INT32 and INT64')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BINARY_PACKED encoder only supports INT32 and INT64')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      }
+    },
+    "DELTA_LENGTH_BYTE_ARRAY": {
+      "INT32": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "INT64": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_LENGTH_BYTE_ARRAY only supports BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:1a20f3401f66f2834ddb8705c8fd33f6daba43f85065ed26b287e96b810db16e\nUEFSMRUAFSYVJiwVBhUMFQYVBgAAAgAAAAYBgAEEAwIAAAAAAAECAxkRAhkYAQEZGAEDFQIZFgApJgAGABkcFggVSBYAABkWBgAVBBksNQAYBnNjaGVtYRUCABUMJQIYA2NvbAAWBhkcGRwmABwVDBklBgwZGANjb2wVABYGFkgWSCYIPDYAKAEDGAEBABkcFQAVDBUCADwWBhkGGSYABgAAFnoVGhZQFSoAFkgWBiYIFkgAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAJIAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      }
+    },
+    "DELTA_BYTE_ARRAY": {
+      "INT32": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "INT64": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "FLOAT": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "DOUBLE": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'DELTA_BYTE_ARRAY only supports BYTE_ARRAY and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BYTE_ARRAY": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:4878e370afa6e9d7e428fd87a1506622a2a085699171d61a5f48a80ddcdc6759\nUEFSMRUAFToVOiwVBhUOFQYVBgAAAgAAAAYBgAEEAwAAAAAAAIABBAMCAAAAAAABAgMZEQIZGAEBGRgBAxUCGRYAKSYABgAZHBYIFVwWAAAZFgYAFQQZLDUAGAZzY2hlbWEVAgAVDCUCGANjb2wAFgYZHBkcJgAcFQwZJQYOGRgDY29sFQAWBhZcFlwmCDw2ACgBAxgBAQAZHBUAFQ4VAgA8FgYZBhkmAAYAABaOARUaFmQVKgAWXBYGJggWXAAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAkwAAAFBBUjE=",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      }
+    },
+    "BYTE_STREAM_SPLIT": {
+      "INT32": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:89c30b08c6976be9d20a78a3ff6577af141f927ab6d44eb07a8321adf1c925e0\nUEFSMRUAFRgVGCwVBhUSFQYVBgAAAQIDAAAAAAAAAAAAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBYIFToWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZJQYSGRgDY29sFQAWBhY6FjomCDwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZHBUAFRIVAgAAFnAVFBZCFS4AFjoWBiYIFjoAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAKMAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "INT64": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:635d98f94199f890c8cea7c92e6d89f8b5a9632e5324e84d1a5109ce77a15008\nUEFSMRUAFTAVMCwVBhUSFQYVBgAAAQIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRECGRgIAQAAAAAAAAAZGAgDAAAAAAAAABUCGRYAABkcFggVUhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbCUkTKwTQBEAAAAWBhkcGRwmABwVBBklBhIZGANjb2wVABYGFlIWUiYIPBgIAwAAAAAAAAAYCAEAAAAAAAAAFgAoCAMAAAAAAAAAGAgBAAAAAAAAAAAZHBUAFRIVAgAAFpgBFRQWWhU+ABZSFgYmCBZSACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAAC0AAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "FLOAT": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:7827fec23b20886f4221415902c4dbfd0b6235a56987db10885ca42286208675\nUEFSMRUAFRgVGCwVBhUSFQYVBgAAAAAAAAAAgABAP0BAGRECGRgEAACAPxkYBAAAQEAVAhkWAAAZHBYIFToWAAAAFQQZLDUAGAZzY2hlbWEVAgAVCCUAGANjb2wAFgYZHBkcJgAcFQgZJQYSGRgDY29sFQAWBhY6FjomCDwYBAAAQEAYBAAAgD8WACgEAABAQBgEAACAPwAZHBUAFRIVAgAAFnAVFBZCFS4AFjoWBiYIFjoAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAJoAAABQQVIx",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "DOUBLE": {
+        "write": true,
+        "read": true,
+        "write_log": "sha256:55ec688ca406b5a5be7317b46704553dfe018ff927779e6de10d7026bc1e7c96\nUEFSMRUAFTAVMCwVBhUSFQYVBgAAAAAAAAAAAAAAAAAAAAAAAAAA8AAIP0BAGRECGRgIAAAAAAAA8D8ZGAgAAAAAAAAIQBUCGRYAABkcFggVUhYAAAAVBBksNQAYBnNjaGVtYRUCABUKJQAYA2NvbAAWBhkcGRwmABwVChklBhIZGANjb2wVABYGFlIWUiYIPBgIAAAAAAAACEAYCAAAAAAAAPA/FgAoCAAAAAAAAAhAGAgAAAAAAADwPwAZHBUAFRIVAgAAFpgBFRQWWhU+ABZSFgYmCBZSACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACrAAAAUEFSMQ==",
+        "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+      },
+      "BOOLEAN": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'BYTE_STREAM_SPLIT only supports FLOAT, DOUBLE, INT32, INT64 and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      },
+      "BYTE_ARRAY": {
+        "write": false,
+        "read": false,
+        "write_log": "ParquetSharp.ParquetException: N7parquet16ParquetExceptionE (message: 'BYTE_STREAM_SPLIT only supports FLOAT, DOUBLE, INT32, INT64 and FIXED_LEN_BYTE_ARRAY')\n   at ParquetSharp.ExceptionInfo.Check(IntPtr exceptionInfo)\n   at ParquetSharp.ExceptionInfo.Return[TValue](IntPtr handle, GetFunction`1 getter)\n   at ParquetSharp.RowGroupWriter.NextColumn()\n   at Program.<>c__DisplayClass12_2`1.<Main>b__33() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 232\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16",
+        "read_log": "System.ArgumentException: read 0 rows, expected 3 rows\n   at ParquetSharp.LogicalColumnReader`1.ReadAll(Int32 rows)\n   at Program.<>c__DisplayClass12_2`1.<Main>b__34() in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 239\n   at Program.TestFeature(Action fn) in /home/runner/work/CanIUseParquet/CanIUseParquet/parquet_can_i_use/cli/dotnet/test_parquet_sharp/Program.cs:line 16"
+      }
+    }
+  },
+  "logical_types": {
+    "STRING": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:7f756af93b11ec21bccf45566938c8e4c8906cef3f49d3aa2528f277132672d8\nUEFSMRUEFR4VHkwVBhUAEgAAAQAAAGEBAAAAYgEAAABjFQAVFBUULBUGFRAVBhUGAAACAAAABgECAyQAGRECGRgBYRkYAWMVAhkWACkmAAYAGRwWQhU2FgAAGRYGABUEGSw1ABgGc2NoZW1hFQIAFQwlAhgDY29sJQBMHAAAABYGGRwZHCYAHBUMGTUABhAZGANjb2wVABYGFnAWcCZCJggcNgAoAWMYAWEAGSwVBBUAFQIAFQAVEBUCADwWBhkGGSYABgAAFqIBFRoWeBUqABZwFgYmCBZwACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACjAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "DATE": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:f8d0aca9c461293119300c78415012de17de71d11b38c3c23907dc3d53ed1a7d\nUEFSMRUEFRgVGEwVBhUAEgAAnksAAENMAAB4TgAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEnksAABkYBHhOAAAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlDExsAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUAFgYWXhZeJjwmCBwYBHhOAAAYBJ5LAAAWACgEeE4AABgEnksAAAAZLBUEFQAVAgAVABUQFQIAABaUARUUFmYVLgAWXhYGJggWXgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAqwAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "TIME_MILLIS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:beedbc35944321aa900609f52f69644eaa44f4f65dc69172cb29fd3a9458a297\nUEFSMRUEFRgVGEwVBhUAEgAAgO42AEB3GwDIrwAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEyK8AABkYBIDuNgAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlDkx8ERwcAAAAAAAWBhkcGRwmABwVAhk1AAYQGRgDY29sFQAWBhZeFl4mPCYIHBgEgO42ABgEyK8AABYAKASA7jYAGATIrwAAABksFQQVABUCABUAFRAVAgAAFpQBFRQWZhUuABZeFgYmCBZeACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACwAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "TIME_MICROS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:afa5170ce61a59c964523731d82931f69eea663b498c9f341478c655eb7ec7cf\nUEFSMRUEFTAVMEwVBhUAEgAAAKST1gAAAAAA0klrAAAAAEClrgIAAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgIQKWuAgAAAAAZGAgApJPWAAAAABUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbCUQTHwRHCwAAAAAABYGGRwZHCYAHBUEGTUABhAZGANjb2wVABYGFnYWdiZUJggcGAgApJPWAAAAABgIQKWuAgAAAAAWACgIAKST1gAAAAAYCEClrgIAAAAAABksFQQVABUCABUAFRAVAgAAFrwBFRQWfhU+ABZ2FgYmCBZ2ACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAADAAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "TIME_NANOS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:9f8ff9fe8b1322abd2409ef8279bc86307242e76854d1f590dae898d1ecf0eb7\nUEFSMRUEFTAVMEwVBhUAEgAAQEIPAAAAAACAhB4AAAAAAMDGLQAAAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgIQEIPAAAAAAAZGAjAxi0AAAAAABUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbGx8ERw8AAAAAAAWBhkcGRwmABwVBBk1AAYQGRgDY29sFQAWBhZ2FnYmVCYIHBgIwMYtAAAAAAAYCEBCDwAAAAAAFgAoCMDGLQAAAAAAGAhAQg8AAAAAAAAZLBUEFQAVAgAVABUQFQIAABa8ARUUFn4VPgAWdhYGJggWdgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAvgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "TIMESTAMP_MILLIS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:cd7b396294963d37172d7f81451053e6c972e87a7ea75da72380fb3f6e9f2e71\nUEFSMRUEFTAVMEwVBhUAEgAA45WrEJ0BAABjhOIQnQEAAOPx0RWdAQAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgI45WrEJ0BAAAZGAjj8dEVnQEAABUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbCUSTIwRHBwAAAAAABYGGRwZHCYAHBUEGTUABhAZGANjb2wVABYGFnYWdiZUJggcGAjj8dEVnQEAABgI45WrEJ0BAAAWACgI4/HRFZ0BAAAYCOOVqxCdAQAAABksFQQVABUCABUAFRAVAgAAFrwBFRQWfhU+ABZ2FgYmCBZ2ACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAADAAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "TIMESTAMP_MICROS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:d23e3808e403e3c4ec7c9150885c1f6449dd61d3f4c80387b91c353fd52fcf6d\nUEFSMRUEFTAVMEwVBhUAEgAAC5NBHolNBgALN9X0iU0GAAvzGDydTQYAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgIC5NBHolNBgAZGAgL8xg8nU0GABUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbCUUTIwRHCwAAAAAABYGGRwZHCYAHBUEGTUABhAZGANjb2wVABYGFnYWdiZUJggcGAgL8xg8nU0GABgIC5NBHolNBgAWACgIC/MYPJ1NBgAYCAuTQR6JTQYAABksFQQVABUCABUAFRAVAgAAFrwBFRQWfhU+ABZ2FgYmCBZ2ACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAADAAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "TIMESTAMP_NANOS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:c3c136c113fc85d848cbce6bbe8a5b7391fc3066e7953859de815b3ab8009a76\nUEFSMRUEFTAVMEwVBhUAEgAAhLhYMJ7fnhjs/hFh5OKeGBhgqMEyLp8YFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgIhLhYMJ7fnhgZGAgYYKjBMi6fGBUCGRYAABkcFlQVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUEJQAYA2NvbGyMERw8AAAAAAAWBhkcGRwmABwVBBk1AAYQGRgDY29sFQAWBhZ2FnYmVCYIHBgIGGCowTIunxgYCIS4WDCe354YFgAoCBhgqMEyLp8YGAiEuFgwnt+eGAAZLBUEFQAVAgAVABUQFQIAABa8ARUUFn4VPgAWdhYGJggWdgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAvgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "INT96": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:3f344e60def0f539cd4d380b6745c1f9007802df0341084312a148f0577f4e02\nUEFSMRUEFUgVSEwVBhUAEgAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAABwAAAAgAAAAJAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRwWbBUqFgAAABUEGSw1ABgGc2NoZW1hFQIAFQYlABgDY29sABYGGRwZHCYAHBUGGTUABhAZGANjb2wVABYGFo4BFo4BJmwmCCksFQQVABUCABUAFRAVAgAAFpYBFRQAFo4BFgYmCBaOAQAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAiQAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "DECIMAL": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:6a4c40d3e396269c4b4977b2dd4ced79363118f69c147ed65310ca9547b0de67\nUEFSMRUEFWAVYEwVBhUAEgAAAAAAAAAAAAAAAAAAAAAE0gAAAAAAAAAAAAAAAAAACSkAAAAAAAAAAAAAAAAAAA2AFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgQAAAAAAAAAAAAAAAAAAAE0hkYEAAAAAAAAAAAAAAAAAAADYAVAhkWAAAZHBaEARUqFgAAABUEGSw1ABgGc2NoZW1hFQIAFQ4VIBUAGANjb2wlChUGFTosXBUGFToAAAAWBhkcGRwmABwVDhk1AAYQGRgDY29sFQAWBhamARamASaEASYIHBgQAAAAAAAAAAAAAAAAAAANgBgQAAAAAAAAAAAAAAAAAAAE0hYAKBAAAAAAAAAAAAAAAAAAAA2AGBAAAAAAAAAAAAAAAAAAAATSABksFQQVABUCABUAFRAVAgAAFowCFRYWrgEVXgAWpgEWBiYIFqYBACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAADrAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "UUID": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:271aa004da13fe2f9075c9a9eb06ef62a6da0431da8eb21c095fd7215e8aaf18\nUEFSMRUEFWAVYEwVBhUAEgAA1/2K7ZWcQbiGnQhOF0tD4MuzKs+RAEt8tJqzDaF4gX5wgpLKTTZEGpCNu4NMd/LaFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgQcIKSyk02RBqQjbuDTHfy2hkYENf9iu2VnEG4hp0IThdLQ+AVAhkWAAAZHBaEARUqFgAAABUEGSw1ABgGc2NoZW1hFQIAFQ4VIBUAGANjb2xs7AAAABYGGRwZHCYAHBUOGTUABhAZGANjb2wVABYGFqYBFqYBJoQBJggcNgAoENf9iu2VnEG4hp0IThdLQ+AYEHCCkspNNkQakI27g0x38toAGSwVBBUAFQIAFQAVEBUCAAAWjAIVFhauARVeABamARYGJggWpgEAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAL0AAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "JSON": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:01e839f7f51b10966a3c429fdf750254d2fb0afe0cc3336bbf30c13035946ba3\nUEFSMRUEFUIVQkwVBhUAEgAABwAAAHsiYSI6MX0HAAAAeyJiIjoyfQcAAAB7ImMiOjN9FQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgHeyJhIjoxfRkYB3siYyI6M30VAhkWAAAZHBZmFSoWAAAZFioAFQQZLDUAGAZzY2hlbWEVAgAVDCUAGANjb2wlJkzMAAAAFgYZHBkcJgAcFQwZNQAGEBkYA2NvbBUAFgYWiAEWiAEmZiYIHDYAKAd7ImMiOjN9GAd7ImEiOjF9ABksFQQVABUCABUAFRAVAgA8FioZBhkGAAAWygEVGhaQARU6ABaIARYGJggWiAEAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAALIAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "FLOAT16": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:c702cccfd2d967eabb7b51d21715fa43d9c729331ef339a640caec1cbc5bcb97\nUEFSMRUEFQwVDEwVBhUAEgAAAD4AQQBDFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgCAD4ZGAIAQxUCGRYAABkcFjAVKhYAAAAVBBksNQAYBnNjaGVtYRUCABUOFQQVABgDY29sbPwAAAAWBhkcGRwmABwVDhk1AAYQGRgDY29sFQAWBhZSFlImMCYIHBgCAEMYAgA+FgAoAgBDGAIAPgAZLBUEFQAVAgAVABUQFQIAABaAARUUFloVJgAWUhYGJggWUgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAAowAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "ENUM": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:cd22e803210c4951653ab62f120229307f0cceab7082dc26512409e8b3f00782\nUEFSMRUEFQoVCkwVAhUAEgAAAQAAAEEVABUGFQYsFQYVEBUGFQYAAAEGABkRAhkYAUEZGAFBFQIZFgAAGRwWLhUoFgAAGRYGABUEGSw1ABgGc2NoZW1hFQIAFQwlABgDY29sJQhMTAAAABYGGRwZHCYAHBUMGTUABhAZGANjb2wVABYGFk4WTiYuJggcNgAoAUEYAUEAGSwVBBUAFQIAFQAVEBUCADwWBhkGGQYAABZ4FRoWVhUiABZOFgYmCBZOACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACgAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "BSON": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:6640ce8ce8574400f2d462a971ac63c7cc6c373962d39c029f936e37234483bf\nUEFSMRUEFRIVEkwVAhUAEgAABQAAAAUAAAAAFQAVBhUGLBUGFRAVBhUGAAABBgAZEQIZGAUFAAAAABkYBQUAAAAAFQIZFgAAGRwWNhUoFgAAGRYeABUEGSw1ABgGc2NoZW1hFQIAFQwlABgDY29sJShM3AAAABYGGRwZHCYAHBUMGTUABhAZGANjb2wVABYGFlYWViY2JggcNgAoBQUAAAAAGAUFAAAAAAAZLBUEFQAVAgAVABUQFQIAPBYeGQYZBgAAFpABFRoWXhUyABZWFgYmCBZWACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAACpAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "INTERVAL": {
+      "write": false,
+      "read": false
+    }
+  },
+  "nested_types": {
+    "LIST": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:b8028a34b16364a87ae155203ac1f4d5280af0473930a2aa2caf0871ba3e5c6e\nUEFSMRUEFTAVMEwVDBUAEgAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAAFQAVIhUiLBUMFRAVBhUGAAACAAAAAzICAAAADAIDA4jGAhkRAhkYBAEAAAAZGAQGAAAAFQIZFgAZJgYGGTYAAAwAGRwWVBVEFgAAABUEGUw1ABgGc2NoZW1hFQIANQIYA2NvbBUCFQZMPAAAADUEGARsaXN0FQIAFQIlABgEaXRlbSUiTKwTIBEAAAAWBhkcGRwmABwVAhk1AAYQGTgDY29sBGxpc3QEaXRlbRUAFgwWkAEWkAEmVCYIHBgEBgAAABgEAQAAABYAKAQGAAAAGAQBAAAAABksFQQVABUCABUAFRAVAgA8KSYGBhk2AAAMAAAW2AEVFBaYARVAABaQARYGJggWkAEAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBkcHAAAAOQAAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "MAP": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:b7da36e79327e7a3dc3c472845c95649c596a1fd816a7442b2c4db0946d45d04\nUEFSMRUEFQoVCkwVAhUAEgAAAQAAAGEVABUeFR4sFQYVEBUGFQYAAAIAAAAGAAIAAAAGAgEGABUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVIBUgLBUGFRAVBhUGAAACAAAABgACAAAABgICAyQAGRECGRgBYRkYAWEVAhkWABkmBgAZNgAABgAZEQIZGAQBAAAAGRgEAwAAABUCGRYAGSYGABk2AAAGABkcFi4VQBYAABkWBgAZHBaiARVCFgAAABUEGVw1ABgGc2NoZW1hFQIANQIYA2NvbBUCFQJMLAAAADUEGAlrZXlfdmFsdWUVBAAVDCUAGANrZXkAFQIlABgFdmFsdWUAFgYZHBksJgAcFQwZNQAGEBk4A2NvbAlrZXlfdmFsdWUDa2V5FQAWBhZmFmYmLiYIHDYAKAFhGAFhABksFQQVABUCABUAFRAVAgA8FgYZJgYAGTYAAAYAABbYAhUaFuQBFTQAJgAcFQIZNQAGEBk4A2NvbAlrZXlfdmFsdWUFdmFsdWUVABYGFnYWdiaiASZuHBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAABksFQQVABUCABUAFRAVAgA8KSYGABk2AAAGAAAW8gIVFhaYAhVAABbcARYGJggW3AEAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBksHAAAHAAAAFABAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "STRUCT": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:25f95f03e738529e4abd5f073898267c9fbe44492554f8f353f82f709f78f720\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAFQQVGBUYTBUGFQASAADNzIw/zcwMQDMzU0AVABUIFQgsFQYVEBUGFQYAAAIDJAAZEQIZGAQBAAAAGRgEAwAAABUCGRYAABkRAhkYBM3MjD8ZGAQzM1NAFQIZFgAAGRwWPBUqFgAAABkcFpoBFSoWAAAAFQQZTDUAGAZzY2hlbWEVAgA1ABgDY29sFQQAFQIlABgBeAAVCCUAGAF5ABYGGRwZLCYAHBUCGTUABhAZKANjb2wBeBUAFgYWXhZeJjwmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABagAhUUFsQBFS4AJgAcFQgZNQAGEBkoA2NvbAF5FQAWBhZeFl4mmgEmZhwYBDMzU0AYBM3MjD8WACgEMzNTQBgEzcyMPwAZLBUEFQAVAgAVABUQFQIAABa0AhUWFvIBFS4AFrwBFgYmCBa8AQAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGSwcAAAcAAAAFAEAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "NESTED_LIST": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:c3d1e9af7b3e4c0308c0ad98bb2a3453e77f2d20f84aae686781078efb3a6f12\nUEFSMRUEFUAVQEwVEBUAEgAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAABwAAAAgAAAAVABUkFSQsFRAVEBUGFQYAAAMAAAADGJgCAAAAEAQDA4jG+hkRAhkYBAEAAAAZGAQIAAAAFQIZFgAZNgYEBhlWAAAAABAAGRwWZBVGFgAAABUEGWw1ABgGc2NoZW1hFQIANQIYA2NvbBUCFQZMPAAAADUEGARsaXN0FQIANQIYBGl0ZW0VAhUGTDwAAAA1BBgEbGlzdBUCABUCJQAYBGl0ZW0lIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBlYA2NvbARsaXN0BGl0ZW0EbGlzdARpdGVtFQAWEBaiARaiASZkJggcGAQIAAAAGAQBAAAAFgAoBAgAAAAYBAEAAAAAGSwVBBUAFQIAFQAVEBUCADwpNgYEBhlWAAAAABAAABbwARUUFqoBFUYAFqIBFgYmCBaiAQAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAADQEAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "NESTED_MAP": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:7924145e6e7438df1721310786e2663bae496b3f6ba60412d9b66db17d9742d1\nUEFSMRUEFQoVCkwVAhUAEgAAAQAAAGEVABUeFR4sFQIVEBUGFQYAAAIAAAACAAIAAAACAgECABUEFQoVCkwVAhUAEgAAAQAAAGIVABUeFR4sFQIVEBUGFQYAAAIAAAACAAIAAAACBAECABUEFQgVCEwVAhUAEgAAKgAAABUAFR4VHiwVAhUQFQYVBgAAAgAAAAIAAgAAAAIEAQIAGRECGRgBYRkYAWEVAhkWABkmAgAZNgAAAgAZEQIZGAFiGRgBYhUCGRYAGTYCAAAZVgAAAAACABkRAhkYBCoAAAAZGAQqAAAAFQIZFgAZNgIAABlWAAAAAAIAGRwWLhVAFgAAGRYCABkcFpQBFUAWAAAZFgIAGRwW+AEVQBYAAAAVBBmMNQAYBnNjaGVtYRUCADUCGANjb2wVAhUCTCwAAAA1BBgJa2V5X3ZhbHVlFQQAFQwlABgDa2V5ADUCGAV2YWx1ZRUCFQJMLAAAADUEGAlrZXlfdmFsdWUVBAAVDCUAGANrZXkAFQIlABgFdmFsdWUAFgIZHBk8JgAcFQwZNQAGEBk4A2NvbAlrZXlfdmFsdWUDa2V5FQAWAhZmFmYmLiYIHDYAKAFhGAFhABksFQQVABUCABUAFRAVAgA8FgIZJgIAGTYAAAIAABbsAxUaFrgCFTQAJgAcFQwZNQAGEBlYA2NvbAlrZXlfdmFsdWUFdmFsdWUJa2V5X3ZhbHVlA2tleRUAFgIWZhZmJpQBJm4cNgAoAWIYAWIAGSwVBBUAFQIAFQAVEBUCADwWAhk2AgAAGVYAAAAAAgAAFoYEFRwW7AIVOgAmABwVAhk1AAYQGVgDY29sCWtleV92YWx1ZQV2YWx1ZQlrZXlfdmFsdWUFdmFsdWUVABYCFmQWZCb4ASbUARwYBCoAAAAYBCoAAAAWACgEKgAAABgEKgAAAAAZLBUEFQAVAgAVABUQFQIAPCk2AgAAGVYAAAAAAgAAFqIEFRYWpgMVRgAWsAIWAiYIFrACACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZPBwAABwAABwAAAAEAgAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "DEEP_NESTING": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:b38ce6a496b3b886d2b6993cd733818d1aa2ad9abe60c47b68dad245a366363a\nUEFSMRUEFTAVMEwVDBUAEgAAAQAAAAIAAAADAAAABAAAAAUAAAAGAAAAFQAVIhUiLBUMFRAVBhUGAAACAAAAAyYCAAAADAIDA4jGAhkRAhkYBAEAAAAZGAQGAAAAFQIZFgAZJgYGGTYAAAwAGRwWVBVEFgAAABUEGUw1ABgGc2NoZW1hFQIANQIYBWl0ZW1zFQIVBkw8AAAANQQYBGxpc3QVAgAVAiUAGARpdGVtJSJMrBMgEQAAABYGGRwZHCYAHBUCGTUABhAZOAVpdGVtcwRsaXN0BGl0ZW0VABYMFpABFpABJlQmCBwYBAYAAAAYBAEAAAAWACgEBgAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAPCkmBgYZNgAADAAAFtgBFRQWmAEVQAAWkAEWBiYIFpABACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZHBwAAADoAAAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    }
+  },
+  "advanced_features": {
+    "STATISTICS": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:8ce981b65274b40dc9aaf34eb25778fe5ebf613f9aaaa8ec8a4490eb64dba4d3\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUAFgYWXhZeJjwmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABaUARUUFmYVLgAWXhYGJggWXgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAArgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "PAGE_INDEX": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:8ce981b65274b40dc9aaf34eb25778fe5ebf613f9aaaa8ec8a4490eb64dba4d3\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAGRECGRgEAQAAABkYBAMAAAAVAhkWAAAZHBY8FSoWAAAAFQQZLDUAGAZzY2hlbWEVAgAVAiUAGANjb2wlIkysEyARAAAAFgYZHBkcJgAcFQIZNQAGEBkYA2NvbBUAFgYWXhZeJjwmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABaUARUUFmYVLgAWXhYGJggWXgAoIHBhcnF1ZXQtY3BwLWFycm93IHZlcnNpb24gMjEuMC4wGRwcAAAArgAAAFBBUjE=",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "BLOOM_FILTER": {
+      "write": false,
+      "read": false
+    },
+    "DATA_PAGE_V2": {
+      "write": false,
+      "read": false
+    },
+    "COLUMN_ENCRYPTION": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:bb13421c9d0bbd47a846346a0d452179d6a35fd8d7b46f31d83a05403df45448\nUEFSRSoAAAAObEDYremb1Tevmk7N1FDum8W0a9nzOFP+qsmsstt/VuptWTIed9bSqX8oAAAATqJNP42kLKjDoIBCakzPS/AnQ7/UVlC895Q6A1NYIkK7RXHNO9R+4S0AAADlDZE1Xq8ohn9AO+0va6+s4RBBbFWLCJd8dC2qYZ3rB3Fye4yekKka5GuoB9EgAAAAvlrgBVcPgymma5Tk21Uno/ezo3RQ+ci/b9ahwuj6wgszAAAAxUT4YaSbwzoLa+FQ+cqqwkJSfLlE85GufGApma27/YiqDrj2OppZTUS7LccOjPKo9ZbhKAAAAApu0o70uRH0z03plzf0sAJ16/ru/pC50SidVpTpIZBLwRqc4eJ8n1QcHCgIGteLmnTHCmMSAAAA/wAAAKlNzztboHFj1rdLObIZAiC3FkcS3XqajOVhb/7a276uC74W+YfN56dEDFOySZma4Y/hez2zFjlxxX/FhcIFFPd4XhPKCgntJAoY4lvOJnuu1/1wG3Xb5EGlhUWTTQlG2NcKmPbKZ273RU5ivEStO8m67kZM/ONUSQeU+3sCd7gLU/5T6EdKTfOPINaZlqgvdA/XqMc/djnWsdMyRPtKEKI/jRYUovu28CshIgAaDJPIo8/9RZ/qctkR0A3GRszaMO1xrMcfSDfKaKZbSWN3D/iSnXQ/KdN58BtvHu6T34wWmF1Msq53blhV/ytru7dpxqxe2sqOaIfKOSbH4sYwIRMBAABQQVJF",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "PREDICATE_PUSHDOWN": {
+      "write": false,
+      "read": false
+    },
+    "PROJECTION_PUSHDOWN": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:00a6a28cca3024f4a492fbfbc01be0b0523ed27e098f3f8defc827f6b324731a\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAFQQVHhUeTBUGFQASAAABAAAAYQEAAABiAQAAAGMVABUUFRQsFQYVEBUGFQYAAAIAAAAGAQIDJAAVBBUwFTBMFQYVABIAAAAAAAAAAPA/AAAAAAAAAEAAAAAAAAAIQBUAFQgVCCwVBhUQFQYVBgAAAgMkABkRAhkYBAEAAAAZGAQDAAAAFQIZFgAAGRECGRgBYRkYAWMVAhkWACkmAAYAGRECGRgIAAAAAAAA8D8ZGAgAAAAAAAAIQBUCGRYAABkcFjwVKhYAAAAZHBagARU2FgAAGRYGABkcFqICFSoWAAAAFQQZTDUAGAZzY2hlbWEVBgAVAiUAGAFhJSJMrBMgEQAAABUMJQIYAWIlAEwcAAAAFQolABgBYwAWBhkcGTwmABwVAhk1AAYQGRgBYRUAFgYWXhZeJjwmCBwYBAMAAAAYBAEAAAAWACgEAwAAABgEAQAAAAAZLBUEFQAVAgAVABUQFQIAABbiAxUUFswCFS4AJgAcFQwZNQAGEBkYAWIVABYGFnAWcCagASZmHDYAKAFjGAFhABksFQQVABUCABUAFRAVAgA8FgYZBhkmAAYAABb2AxUcFvoCFSoAJgAcFQoZNQAGEBkYAWMVABYGFnYWdiaiAibWARwYCAAAAAAAAAhAGAgAAAAAAADwPxYAKAgAAAAAAAAIQBgIAAAAAAAA8D8AGSwVBBUAFQIAFQAVEBUCAAAWkgQVFhakAxU+ABbEAhYGJggWxAIAKCBwYXJxdWV0LWNwcC1hcnJvdyB2ZXJzaW9uIDIxLjAuMBk8HAAAHAAAHAAAAHgBAABQQVIx",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    },
+    "SCHEMA_EVOLUTION": {
+      "write": true,
+      "read": true,
+      "write_log": "sha256:70f207b66ef5aaf903c9162ffd51837e9483d6f82e76446fa8b472ba173db26a\nUEFSMRUEFRgVGEwVBhUAEgAAAQAAAAIAAAADAAAAFQAVCBUILBUGFRAVBhUGAAACAyQAFQQVHhUeTBUGFQASAAABAAAAYQEAAABiAQAAAGMVABUUFRQsFQYVEBUGFQYAAAIAAAAGAQIDJAAZEQIZGAQBAAAAGRgEAwAAABUCGRYAABkRAhkYAWEZGAFjFQIZFgApJgAGABkcFjwVKhYAAAAZHBagARU2FgAAGRYGABUEGTw1ABgGc2NoZW1hFQQAFQIlABgBYSUiTKwTIBEAAAAVDCUCGAFiJQBMHAAAABYGGRwZLCYAHBUCGTUABhAZGAFhFQAWBhZeFl4mPCYIHBgEAwAAABgEAQAAABYAKAQDAAAAGAQBAAAAABksFQQVABUCABUAFRAVAgAAFq4CFRQW1gEVLgAmABwVDBk1AAYQGRgBYhUAFgYWcBZwJqABJmYcNgAoAWMYAWEAGSwVBBUAFQIAFQAVEBUCADwWBhkGGSYABgAAFsICFRwWhAIVKgAWzgEWBiYIFs4BACggcGFycXVldC1jcHAtYXJyb3cgdmVyc2lvbiAyMS4wLjAZLBwAABwAAAAJAQAAUEFSMQ==",
+      "read_log": "proof_sha256:9688ca3ca5c3623656f2eb3494ead25de336facf55c5899d9a588800a5c773aa\nvalues:{\"probe_int\":[1337]}"
+    }
+  }
+}

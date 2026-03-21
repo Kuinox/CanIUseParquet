@@ -58,6 +58,7 @@ func sha256Hex(data []byte) string {
 	return fmt.Sprintf("%x", h)
 }
 
+// findProofPath returns the path to the proof fixture file, or "" if not found.
 func findProofPath() string {
 	exePath, err := os.Executable()
 	if err == nil {
@@ -70,6 +71,28 @@ func findProofPath() string {
 		"fixtures/proof/proof.parquet",
 		"../../../fixtures/proof/proof.parquet",
 		"parquet_can_i_use/fixtures/proof/proof.parquet",
+	}
+	for _, c := range candidates {
+		if _, err := os.Stat(c); err == nil {
+			return c
+		}
+	}
+	return ""
+}
+
+// findFixturesDir returns the path to the fixtures directory, or "" if not found.
+func findFixturesDir() string {
+	exePath, err := os.Executable()
+	if err == nil {
+		candidate := filepath.Join(filepath.Dir(exePath), "..", "..", "..", "fixtures")
+		if _, err := os.Stat(candidate); err == nil {
+			return candidate
+		}
+	}
+	candidates := []string{
+		"fixtures",
+		"../../../fixtures",
+		"parquet_can_i_use/fixtures",
 	}
 	for _, c := range candidates {
 		if _, err := os.Stat(c); err == nil {
@@ -262,6 +285,30 @@ func readArrowParquet(tmpdir string, name string) error {
 	return nil
 }
 
+// readArrowParquetPath reads an arbitrary parquet file from an absolute path.
+func readArrowParquetPath(path string) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	reader, err := file.NewParquetReader(f)
+	if err != nil {
+		return err
+	}
+	defer reader.Close()
+	arrowReader, err := pqarrow.NewFileReader(reader, pqarrow.ArrowReadProperties{}, memory.DefaultAllocator)
+	if err != nil {
+		return err
+	}
+	tbl, err := arrowReader.ReadTable(context.Background())
+	if err != nil {
+		return err
+	}
+	tbl.Release()
+	return nil
+}
+
 // makeEncodingProps returns WriterProperties for the given encoding name.
 // Dictionary encodings use WithDictionaryDefault(true); all others use
 // WithEncoding(enc) with dictionary disabled.
@@ -303,6 +350,7 @@ func main() {
 	defer os.RemoveAll(tmpdir)
 
 	proofPath := findProofPath()
+	fixturesDir := findFixturesDir()
 
 	results := map[string]interface{}{
 		"tool":    "arrow-go",
@@ -702,8 +750,25 @@ func main() {
 		r.Release()
 	}
 
-	// UNKNOWN – null type; parquet does not have a native null column type
-	logicalTypes["UNKNOWN"] = RWResult{Write: false, Read: false}
+	// UNKNOWN – arrow.Null maps to Parquet's UNKNOWN (always-null) logical type.
+	{
+		wPath := filepath.Join(tmpdir, "lt_unknown.parquet")
+		logicalTypes["UNKNOWN"] = testRWWithProof(
+			func() error {
+				schema := arrow.NewSchema([]arrow.Field{{Name: "c", Type: arrow.Null, Nullable: true}}, nil)
+				bldr := array.NewNullBuilder(memory.DefaultAllocator)
+				bldr.AppendNull()
+				bldr.AppendNull()
+				arr := bldr.NewArray()
+				defer arr.Release()
+				rec := array.NewRecord(schema, []arrow.Array{arr}, 2)
+				defer rec.Release()
+				return writeArrowParquet(tmpdir, "lt_unknown", rec, parquet.NewWriterProperties())
+			},
+			func() error { return readArrowParquet(tmpdir, "lt_unknown") },
+			wPath, proofPath,
+		)
+	}
 
 	// VARIANT – not supported in arrow-go v18.3.0 (the version used here)
 	logicalTypes["VARIANT"] = RWResult{Write: false, Read: false}
@@ -944,8 +1009,24 @@ func main() {
 		advanced["SIZE_STATISTICS"] = RWResult{Write: false, Read: true, ReadLog: sizeStatsReadLog}
 	}
 
-	// PAGE_CRC32 – not exposed in arrow-go writer API
-	advanced["PAGE_CRC32"] = RWResult{Write: false, Read: false}
+	// PAGE_CRC32 – arrow-go writer API does not expose page checksum writing.
+	// Test read support using the pre-generated fixture file.
+	{
+		var readFn func() error
+		if fixturesDir != "" {
+			fixturePath := filepath.Join(fixturesDir, "advanced_features", "adv_PAGE_CRC32.parquet")
+			if _, statErr := os.Stat(fixturePath); statErr == nil {
+				readFn = func() error { return readArrowParquetPath(fixturePath) }
+			}
+		}
+		if readFn == nil {
+			readFn = func() error { return fmt.Errorf("PAGE_CRC32 fixture not found") }
+		}
+		advanced["PAGE_CRC32"] = testRW(
+			func() error { return fmt.Errorf("write not supported in arrow-go writer API") },
+			readFn,
+		)
+	}
 
 	// PREDICATE_PUSHDOWN – write a normal file; read back selecting a subset of row groups
 	{
