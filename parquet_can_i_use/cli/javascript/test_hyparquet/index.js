@@ -47,11 +47,10 @@ function findProofPath() {
   return existsSync(p) ? p : null;
 }
 
-async function readProofLog() {
-  const proofPath = findProofPath();
-  if (!proofPath) return null;
+async function readFileProofLog(filePath) {
+  if (!filePath || !existsSync(filePath)) return null;
   try {
-    const data = readFileSync(proofPath);
+    const data = readFileSync(filePath);
     const sha = sha256Hex(data);
     const buffer = toArrayBuffer(data);
     const metadata = parquetMetadata(buffer);
@@ -105,7 +104,7 @@ async function testRead(filePath) {
  * Since hyparquet is read-only, write is always false.
  * If no fixture is available, the feature is marked as not tested (write:false, read:false).
  */
-async function testReadFixture(fixturePath, proofLog) {
+async function testReadFixture(fixturePath) {
   if (!fixturePath || !existsSync(fixturePath)) {
     const reason = fixturePath
       ? `Fixture file not found: ${fixturePath}`
@@ -114,8 +113,9 @@ async function testReadFixture(fixturePath, proofLog) {
   }
   const { ok: readOk, log: readLog } = await testRead(fixturePath);
   const entry = { write: false, read: readOk };
-  if (readOk && proofLog) {
-    entry.read_log = proofLog;
+  if (readOk) {
+    const pl = await readFileProofLog(fixturePath);
+    if (pl) entry.read_log = pl;
   } else if (!readOk && readLog) {
     entry.read_log = readLog;
   }
@@ -150,7 +150,7 @@ async function writeAndRead(schema, rows) {
   const result = { write: true, read: readOk };
   if (wpl) result.write_log = wpl;
   if (readOk) {
-    const pl = await readProofLog();
+    const pl = await readFileProofLog(path);
     if (pl) result.read_log = pl;
   } else if (readLog) {
     result.read_log = readLog;
@@ -214,7 +214,6 @@ async function main() {
     ZSTD: 'ZSTD',
   };
   const schema = new ParquetSchema({ col: { type: 'INT32' } });
-  const proofLogForRead = await readProofLog();
   for (const [name, codec] of Object.entries(compressionCodecs)) {
     const fixturePath = FIXTURES_DIR ? join(FIXTURES_DIR, 'compression', `comp_${name}.parquet`) : null;
     try {
@@ -225,14 +224,15 @@ async function main() {
       const { ok: readOk, log: readLog } = await testRead(path);
       const entry = { write: false, read: readOk };
       if (readOk) {
-        if (proofLogForRead) entry.read_log = proofLogForRead;
+        const pl = await readFileProofLog(path);
+        if (pl) entry.read_log = pl;
       } else if (readLog) {
         entry.read_log = readLog;
       }
       results.compression[name] = entry;
     } catch (e) {
       // parquetjs does not support this codec; try fixture file instead
-      results.compression[name] = await testReadFixture(fixturePath, proofLogForRead);
+      results.compression[name] = await testReadFixture(fixturePath);
       if (!results.compression[name].read && !results.compression[name].read_log) {
         results.compression[name].write_log = e?.stack || String(e);
       }
@@ -253,7 +253,7 @@ async function main() {
     results.encoding[enc] = {};
     // Test against the fixture file for this encoding (one file covers all types for read).
     const fixturePath = FIXTURES_DIR ? join(FIXTURES_DIR, 'encodings', `enc_${enc}.parquet`) : null;
-    const encResult = await testReadFixture(fixturePath, proofLogForRead);
+    const encResult = await testReadFixture(fixturePath);
     for (const ptype of encodingTypes) {
       results.encoding[enc][ptype] = { ...encResult };
     }
@@ -265,21 +265,21 @@ async function main() {
   const logicalTypeTests = {
     STRING:           async () => writeAndRead(new ParquetSchema({ c: { type: 'UTF8' } }), [{ c: 'hello' }]),
     DATE:             async () => writeAndRead(new ParquetSchema({ c: { type: 'DATE' } }), [{ c: new Date('2024-01-01') }]),
-    TIME_MILLIS:      async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_MILLIS.parquet') : null, proofLogForRead),
-    TIME_MICROS:      async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_MICROS.parquet') : null, proofLogForRead),
-    TIME_NANOS:       async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_NANOS.parquet') : null, proofLogForRead),
+    TIME_MILLIS:      async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_MILLIS.parquet') : null),
+    TIME_MICROS:      async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_MICROS.parquet') : null),
+    TIME_NANOS:       async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIME_NANOS.parquet') : null),
     TIMESTAMP_MILLIS: async () => writeAndRead(new ParquetSchema({ c: { type: 'TIMESTAMP_MILLIS' } }), [{ c: new Date('2024-01-01') }]),
     TIMESTAMP_MICROS: async () => writeAndRead(new ParquetSchema({ c: { type: 'TIMESTAMP_MICROS' } }), [{ c: new Date('2024-01-01') }]),
-    TIMESTAMP_NANOS:  async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIMESTAMP_NANOS.parquet') : null, proofLogForRead),
-    INT96:            async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INT96.parquet') : null, proofLogForRead),
-    DECIMAL:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_DECIMAL.parquet') : null, proofLogForRead),
-    UUID:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UUID.parquet') : null, proofLogForRead),
+    TIMESTAMP_NANOS:  async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_TIMESTAMP_NANOS.parquet') : null),
+    INT96:            async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INT96.parquet') : null),
+    DECIMAL:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_DECIMAL.parquet') : null),
+    UUID:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UUID.parquet') : null),
     JSON:             async () => writeAndRead(new ParquetSchema({ c: { type: 'UTF8' } }), [{ c: '{"key":"val"}' }]),
-    FLOAT16:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_FLOAT16.parquet') : null, proofLogForRead),
-    ENUM:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_ENUM.parquet') : null, proofLogForRead),
-    BSON:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_BSON.parquet') : null, proofLogForRead),
-    INTERVAL:         async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INTERVAL.parquet') : null, proofLogForRead),
-    UNKNOWN:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UNKNOWN.parquet') : null, proofLogForRead),
+    FLOAT16:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_FLOAT16.parquet') : null),
+    ENUM:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_ENUM.parquet') : null),
+    BSON:             async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_BSON.parquet') : null),
+    INTERVAL:         async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_INTERVAL.parquet') : null),
+    UNKNOWN:          async () => testReadFixture(FIXTURES_DIR ? join(FIXTURES_DIR, 'logical_types', 'lt_UNKNOWN.parquet') : null),
     VARIANT:          async () => notSupported('VARIANT logical type is not supported by hyparquet'),
     GEOMETRY:         async () => notSupported('GEOMETRY logical type is not supported by hyparquet'),
     GEOGRAPHY:        async () => notSupported('GEOGRAPHY logical type is not supported by hyparquet'),
@@ -298,7 +298,7 @@ async function main() {
   const nestedTypeNames = ['LIST', 'MAP', 'STRUCT', 'NESTED_LIST', 'NESTED_MAP', 'DEEP_NESTING'];
   for (const name of nestedTypeNames) {
     const fixturePath = FIXTURES_DIR ? join(FIXTURES_DIR, 'nested_types', `nt_${name}.parquet`) : null;
-    results.nested_types[name] = await testReadFixture(fixturePath, proofLogForRead);
+    results.nested_types[name] = await testReadFixture(fixturePath);
   }
 
   // --- Advanced Features ---
@@ -314,7 +314,7 @@ async function main() {
   };
 
   for (const [feat, fixturePath] of Object.entries(advFixtures)) {
-    results.advanced_features[feat] = await testReadFixture(fixturePath, proofLogForRead);
+    results.advanced_features[feat] = await testReadFixture(fixturePath);
   }
 
   // Features that require write-side capabilities not testable via read-only fixtures:
