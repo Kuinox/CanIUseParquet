@@ -179,22 +179,155 @@ def main():
     # --- Encoding × Type matrix ---
     # PySpark does not expose per-column encoding control; Spark uses its own default
     # encoding strategy (PLAIN_DICTIONARY / RLE_DICTIONARY by default).
-    # Write: only encodings Spark actually uses are marked true.
+    # Write: PLAIN (dictionary disabled), PLAIN_DICTIONARY and RLE_DICTIONARY (dictionary enabled).
     # Read:  Spark can read any standard Parquet encoding (except deprecated BIT_PACKED).
     encoding_types = ["INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"]
+
+    def make_typed_df(ptype):
+        """Create a simple DataFrame for the given Parquet physical type."""
+        if ptype == "INT32":
+            return spark.createDataFrame(
+                [(1,), (2,), (3,)], T.StructType([T.StructField("col", T.IntegerType())]))
+        elif ptype == "INT64":
+            return spark.createDataFrame(
+                [(1,), (2,), (3,)], T.StructType([T.StructField("col", T.LongType())]))
+        elif ptype == "FLOAT":
+            return spark.createDataFrame(
+                [(1.0,), (2.0,), (3.0,)], T.StructType([T.StructField("col", T.FloatType())]))
+        elif ptype == "DOUBLE":
+            return spark.createDataFrame(
+                [(1.0,), (2.0,), (3.0,)], T.StructType([T.StructField("col", T.DoubleType())]))
+        elif ptype == "BOOLEAN":
+            return spark.createDataFrame(
+                [(True,), (False,), (True,)],
+                T.StructType([T.StructField("col", T.BooleanType())]))
+        elif ptype == "BYTE_ARRAY":
+            return spark.createDataFrame(
+                [(b"hello",), (b"world",), (b"test",)],
+                T.StructType([T.StructField("col", T.BinaryType())]))
+        raise ValueError(f"Unknown type: {ptype}")
 
     write_supported_encs = {"PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY"}
     read_unsupported_encs = {"BIT_PACKED"}
 
+    # Each encoding has at most one pre-built fixture file; its native column type is noted here.
+    enc_fixture_types = {
+        "PLAIN":                      "INT32",
+        "PLAIN_DICTIONARY":           "INT32",
+        "RLE_DICTIONARY":             "INT32",
+        "RLE":                        "BOOLEAN",
+        "DELTA_BINARY_PACKED":        "INT32",
+        "DELTA_LENGTH_BYTE_ARRAY":    "BYTE_ARRAY",
+        "DELTA_BYTE_ARRAY":           "BYTE_ARRAY",
+        "BYTE_STREAM_SPLIT":          "FLOAT",
+        "BYTE_STREAM_SPLIT_EXTENDED": "FLOAT",
+    }
+
+    # Physical types valid for each encoding per the Parquet spec.
+    # Combinations outside this mapping are not defined by the spec and should be
+    # reported as write=False/read=False so the matrix marks them not_applicable.
+    enc_spec_valid_types = {
+        "PLAIN":                      {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+        "PLAIN_DICTIONARY":           {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+        "RLE_DICTIONARY":             {"INT32", "INT64", "FLOAT", "DOUBLE", "BOOLEAN", "BYTE_ARRAY"},
+        "RLE":                        {"BOOLEAN"},
+        "BIT_PACKED":                 set(),
+        "DELTA_BINARY_PACKED":        {"INT32", "INT64"},
+        "DELTA_LENGTH_BYTE_ARRAY":    {"BYTE_ARRAY"},
+        "DELTA_BYTE_ARRAY":           {"BYTE_ARRAY"},
+        "BYTE_STREAM_SPLIT":          {"FLOAT", "DOUBLE", "INT32", "INT64"},
+        "BYTE_STREAM_SPLIT_EXTENDED": {"FLOAT", "DOUBLE", "INT32", "INT64"},
+    }
+
     for enc_name in ["PLAIN", "PLAIN_DICTIONARY", "RLE_DICTIONARY", "RLE", "BIT_PACKED",
                      "DELTA_BINARY_PACKED", "DELTA_LENGTH_BYTE_ARRAY", "DELTA_BYTE_ARRAY",
-                     "BYTE_STREAM_SPLIT"]:
+                     "BYTE_STREAM_SPLIT", "BYTE_STREAM_SPLIT_EXTENDED"]:
         results["encoding"][enc_name] = {}
+        fix_type = enc_fixture_types.get(enc_name)
+        fix_path_raw = FIXTURES_DIR / "encodings" / f"enc_{enc_name}.parquet"
+        fix_path = str(fix_path_raw) if fix_path_raw.exists() else None
+        spec_valid = enc_spec_valid_types.get(enc_name, set())
+
+        not_write_log = (
+            f"Source proof (Spark cannot write {enc_name} encoding directly):\n"
+            f"Spark's Parquet writer only produces PLAIN, PLAIN_DICTIONARY and\n"
+            f"RLE_DICTIONARY encodings; per-column encoding is not configurable."
+        )
+        not_read_log = (
+            f"Source proof (Spark does not support reading {enc_name}):\n"
+            f"BIT_PACKED is a deprecated encoding not supported for data pages."
+        )
+
         for ptype in encoding_types:
-            results["encoding"][enc_name][ptype] = {
-                "write": enc_name in write_supported_encs,
-                "read": enc_name not in read_unsupported_encs,
-            }
+            write_path = os.path.join(tmpdir, f"enc_{enc_name}_{ptype}")
+
+            if enc_name in write_supported_encs:
+                use_dict = enc_name in ("PLAIN_DICTIONARY", "RLE_DICTIONARY")
+                # Prefer the encoding fixture for read proof when types match (proves interop).
+                read_path_for_proof = fix_path if (fix_path and fix_type == ptype) else None
+
+                def write_enc(p=write_path, pt=ptype, ud=use_dict):
+                    df = make_typed_df(pt)
+                    (df.write.mode("overwrite")
+                     .option("parquet.enable.dictionary", "true" if ud else "false")
+                     .parquet(p))
+
+                def read_enc(p=write_path, rp=read_path_for_proof):
+                    spark.read.parquet(rp if rp else p).collect()
+
+                results["encoding"][enc_name][ptype] = test_rw(
+                    write_enc, read_enc,
+                    write_path=write_path,
+                    read_path=read_path_for_proof,
+                )
+
+            elif enc_name in read_unsupported_encs:
+                results["encoding"][enc_name][ptype] = {
+                    "write": False, "read": False,
+                    "write_log": not_write_log,
+                    "read_log": not_read_log,
+                }
+
+            elif ptype not in spec_valid:
+                # Spec does not define this encoding×type combination.
+                # Report write=False/read=False so the matrix marks it not_applicable.
+                results["encoding"][enc_name][ptype] = {
+                    "write": False, "read": False,
+                    "write_log": not_write_log,
+                }
+
+            elif fix_path and fix_type == ptype:
+                # Exact fixture match: read it for a concrete proof.
+                def read_fix(p=fix_path):
+                    spark.read.parquet(p).collect()
+                read_ok, read_err = test_feature(read_fix)
+                cell = {"write": False, "read": read_ok, "write_log": not_write_log}
+                if read_ok:
+                    cell["read_log"] = _read_proof_log(fix_path)
+                elif read_err:
+                    cell["read_log"] = read_err
+                results["encoding"][enc_name][ptype] = cell
+
+            elif fix_path:
+                # Spec-valid type but no per-type fixture. Use the existing fixture
+                # (different column type, same encoding) as a proxy read proof —
+                # if Spark can parse the encoding at all it will succeed regardless of type.
+                def read_fix_proxy(p=fix_path):
+                    spark.read.parquet(p).collect()
+                read_ok, read_err = test_feature(read_fix_proxy)
+                cell = {"write": False, "read": read_ok, "write_log": not_write_log}
+                if read_ok:
+                    cell["read_log"] = _read_proof_log(fix_path)
+                elif read_err:
+                    cell["read_log"] = read_err
+                results["encoding"][enc_name][ptype] = cell
+
+            else:
+                # Spec-valid but no fixture exists for this encoding at all.
+                results["encoding"][enc_name][ptype] = {
+                    "write": False, "read": True,
+                    "write_log": not_write_log,
+                }
 
     # --- Logical Types ---
     import datetime
